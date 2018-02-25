@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SignUpController">
    <children>
-      <ButtonBar layoutX="283.0" layoutY="240.0" prefHeight="40.0" prefWidth="200.0" />
-    <Button fx:id="btbsignUp_back" layoutX="169.0" layoutY="358.0" mnemonicParsing="false" onAction="#backToLogin" text="Sign Up" />
-      <TextField fx:id="txtName" layoutX="123.0" layoutY="128.0" />
-      <Text fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
+    <Button fx:id="btbsignUp_back" layoutX="169.0" layoutY="458.0" mnemonicParsing="false" onAction="#backToLogin" text="Sign Up" />
+      <TextField fx:id="txtName" layoutX="123.0" layoutY="126.0" />
+      <Text fontSmoothingType="LCD" layoutX="124.0" layoutY="122.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <TextField fx:id="txtUsername" layoutX="123.0" layoutY="190.0" />
-      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="186.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:  " wrappingWidth="166.99999570846558">
+      <TextField fx:id="txtUsername" layoutX="123.0" layoutY="184.0" />
+      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="178.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:  " wrappingWidth="166.99999570846558">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <PasswordField fx:id="txtPassword" layoutX="123.0" layoutY="260.0" />
-      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="255.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:  " wrappingWidth="166.99999570846558">
+      <PasswordField fx:id="txtPassword" layoutX="122.0" layoutY="263.0" />
+      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="259.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:  " wrappingWidth="166.99999570846558">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <CheckBox layoutX="123.0" layoutY="313.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="159.0" text="I am an athlete." />
-      <ImageView fitHeight="358.0" fitWidth="372.0" layoutX="342.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../Desktop/athletes.jpg" />
-         </image>
-      </ImageView>
+      <Text fontSmoothingType="LCD" layoutX="125.0" layoutY="313.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Repeat password:" wrappingWidth="166.99999570846558">
+         <font>
+            <Font name="System Font" size="15.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="txtPassword1" layoutX="120.0" layoutY="317.0" />
+      <ChoiceBox accessibleText="Athlete, Coach" layoutX="122.0" layoutY="379.0" prefHeight="27.0" prefWidth="167.0" />
+      <Text layoutX="125.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athlete or coach?" wrappingWidth="166.99999570846558">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="390.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; Kan fylle inn tekst her &gt;" />
    </children>
 </AnchorPane>
