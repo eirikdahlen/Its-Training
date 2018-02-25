@@ -11,10 +11,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SignUpController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.qpp.ui.SignUpController">
    <children>
       <ButtonBar layoutX="283.0" layoutY="240.0" prefHeight="40.0" prefWidth="200.0" />
-    <Button fx:id="btbsignUp_back" layoutX="169.0" layoutY="358.0" mnemonicParsing="false" onAction="#backToLogin" text="Sign Up" />
+    <Button fx:id="btbsignUp_back" layoutX="169.0" layoutY="358.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
       <TextField fx:id="txtName" layoutX="123.0" layoutY="128.0" />
       <Text fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
          <font>
@@ -39,5 +39,6 @@
             <Image url="@../../../../../Desktop/athletes.jpg" />
          </image>
       </ImageView>
+      <Button fx:id="btbBackToLoginFromSignUp" layoutX="37.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Back to Login" />
    </children>
 </AnchorPane>
