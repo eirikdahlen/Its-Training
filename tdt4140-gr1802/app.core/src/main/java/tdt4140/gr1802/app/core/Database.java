@@ -115,9 +115,9 @@ public class Database {
 
 	}
 	*/
-	public Coach getCoach(String usernam) {
+	public Coach getCoach(String username) {
 		
-		Document found = (Document) coachCollection.find(new Document("Username", usernam)).first();
+		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
 		
 		if(found == null) {
 			System.out.println("no Coach goes by this username");
@@ -129,10 +129,10 @@ public class Database {
 		return coach;
 	}
 	
-	public Athlete getAthlete(String usernam) {
+	public Athlete getAthlete(String username) {
 		
 		
-		Document found = (Document) athleteCollection.find(new Document("Username", usernam)).first();
+		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");

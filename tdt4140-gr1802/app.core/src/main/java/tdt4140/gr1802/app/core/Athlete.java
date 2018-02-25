@@ -8,9 +8,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class Athlete extends User {
 	
-	private List <String> coaches = new ArrayList<String> () ;
+	protected List <String> coaches = new ArrayList<String> () ;
 	
 	private List <String> queuedCoaches = new ArrayList <String> () ;
+	
+	protected List <String> pendingCoaches = new ArrayList <String> ();
+	
+	private Database database;
 	
 
 	public Athlete (String username, String name, List <String> coaches, List <String> queuedCoaches) {
@@ -18,8 +22,6 @@ public class Athlete extends User {
 		this.name = name ;
 		this.coaches = coaches ;
 		this.queuedCoaches = queuedCoaches ;
-		
-		
 	}
 	
 	public void queueCoach (String newCoach) {
@@ -38,27 +40,37 @@ public class Athlete extends User {
 		return queuedCoaches;
 	}
 
-	private void approveCoach () {
+	// Går igjennom alle trenere i køen og godkjenner/avslår forespørsler
+	public void approveCoach () {
 		for ( int n = 0; n < queuedCoaches.size(); n++) {
-			System.out.println(queuedCoaches.get(n));
+			String coach = queuedCoaches.get(n);
+			System.out.println(coach);
 			System.out.println("Type 'Accept' to accept this coach, 'Decline' to decline this coach");
 			Scanner scanner = new Scanner (System.in) ;
 			String answer = scanner.nextLine() ;
 			if ( answer == ("Accept")) {
-				coaches.add(queuedCoaches.get(n)) ;
+				coaches.add(coach) ;
+				database.getCoach(coach).pendingAthletes.remove(this.getUsername());
+				database.getCoach(coach).athletes.add(this.getUsername());
 				queuedCoaches.remove(n) ;
 			} else if (answer == "Decline") {
 				queuedCoaches.remove(n) ;
 			}
 		}
 	}
-/*	
+	
+	//  legger til trener i pendingCoach-listen og kaller queueAthlete() i Coach-klassen 
 	public void addCoach (String coach) {
 		if (coaches.contains(coach)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;
 		} else {
-			Database.getCoach(coach).queueAthlete(this.getUsername()) ;
+			pendingCoaches.add(coach);
+			database.getCoach(coach).queueAthlete(this.getUsername()) ;
 		}
 	}
-*/
+	
+	// Legger til treningsøkt
+	private void addWorkout() {
+		
+	}
 }
