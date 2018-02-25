@@ -1,4 +1,4 @@
-package tdt4140.gr1802.qpp.ui;
+package tdt4140.gr1802.app.ui;
 
 
 import java.io.IOException;

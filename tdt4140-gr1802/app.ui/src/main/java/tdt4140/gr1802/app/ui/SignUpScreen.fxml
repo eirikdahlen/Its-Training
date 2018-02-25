@@ -10,36 +10,46 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.qpp.ui.SignUpController">
    <children>
-
-      <ButtonBar layoutX="283.0" layoutY="240.0" prefHeight="40.0" prefWidth="200.0" />
-    <Button fx:id="btbsignUp_back" layoutX="169.0" layoutY="358.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
-      <TextField fx:id="txtName" layoutX="123.0" layoutY="128.0" />
-      <Text fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
+    <Button fx:id="btbsignUp_back" layoutX="172.0" layoutY="471.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
+      <TextField fx:id="txtName" layoutX="122.0" layoutY="127.0" />
+      <Text fx:id="txtName" fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
 
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <TextField fx:id="txtUsername" layoutX="123.0" layoutY="184.0" />
-      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="178.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:  " wrappingWidth="166.99999570846558">
+      <TextField fx:id="txtUsername" layoutX="123.0" layoutY="181.0" />
+      <Text fx:id="txtUsername" fontSmoothingType="LCD" layoutX="123.0" layoutY="178.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:  " wrappingWidth="166.99999570846558">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
       <PasswordField fx:id="txtPassword" layoutX="122.0" layoutY="263.0" />
-      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="259.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:  " wrappingWidth="166.99999570846558">
+      <Text fx:id="txtPassword" fontSmoothingType="LCD" layoutX="123.0" layoutY="259.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:  " wrappingWidth="166.99999570846558">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-
-      <CheckBox layoutX="123.0" layoutY="313.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="159.0" text="I am an athlete." />
-      <ImageView fitHeight="358.0" fitWidth="372.0" layoutX="342.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../Desktop/athletes.jpg" />
-         </image>
-      </ImageView>
       <Button fx:id="btbBackToLoginFromSignUp" layoutX="37.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Back to Login" />
+      <PasswordField fx:id="txtPasswordRetype" layoutX="123.0" layoutY="314.0" />
+      <Text fx:id="txtRetype" fontSmoothingType="LCD" layoutX="123.0" layoutY="309.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype password:" wrappingWidth="166.99999570846558">
+         <font>
+            <Font name="System Font" size="15.0" />
+         </font>
+      </Text>
+      <ChoiceBox fx:id="choiceBoxAthleteOrCoach" layoutX="123.0" layoutY="382.0" prefHeight="27.0" prefWidth="167.0">
+      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="376.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Athlete or coach?" wrappingWidth="166.99999570846558">
+         <font>
+            <Font name="System Font" size="15.0" />
+         </font>
+      </Text>
+      		<items>
+      			<FXCollections fx:factory="athleteOrCoachList">
+      					<String fx:value="Athlete" />
+      					<String fx:value="Coach" />
+      			</FXCollections>
+      		</items>
+      </ChoiceBox>
 
    </children>
 </AnchorPane>

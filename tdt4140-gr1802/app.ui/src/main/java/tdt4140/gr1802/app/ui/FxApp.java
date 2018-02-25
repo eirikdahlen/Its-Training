@@ -1,4 +1,4 @@
-package tdt4140.gr1802.qpp.ui;
+package tdt4140.gr1802.app.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

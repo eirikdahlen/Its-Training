@@ -1,4 +1,4 @@
-package tdt4140.gr1802.qpp.ui;
+package tdt4140.gr1802.app.ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -30,19 +31,56 @@ import javafx.event.ActionEvent;
 public class SignUpController {
 	
 	@FXML
-	private Label lblOverhead;
+	private Text txtName; 
+	
 	@FXML
-	private TextField txtUsername;
+	private Text txtUsername;
+	
 	@FXML
-	private TextField txtPassword;
+	private Text txtPassword;
+	
+	@FXML
+	private Text txtRetypePassword;
+	
+	@FXML
+	private Text txtAthOrCoa;
+	
+	@FXML
+	private TextField txtFieldName; 
+	
+	@FXML
+	private TextField txtFieldUsername;
+	
+	@FXML
+	private TextField txtFieldPassword;
+	
+	@FXML
+	private TextField txtPasswordRetype;
+	
 	@FXML
 	private Button btbsignUp_back; 
-	@FXML
-	private TextField txtName; 
+	
 	@FXML
 	private Button BackToLoginFromSignUp; 
+	
 	@FXML
-	private TextField txtError;
+	private ChoiceBox choiceBoxAthleteOrCoach;
+	
+	
+	public boolean checkValidName() {
+		// Check if name only contains lettes
+		if (txtName.getText().matches("[a-zA-Z]")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkUserName() {
+		return false; 
+	}
+	
+	
 	
 	
 	public boolean checkInformation(){
