@@ -28,7 +28,7 @@ import java.util.List;
 import javafx.event.ActionEvent;
 
 
-public class SignUpController {
+public class SignUpScreenController {
 	
 	@FXML
 	private Text txtName; 

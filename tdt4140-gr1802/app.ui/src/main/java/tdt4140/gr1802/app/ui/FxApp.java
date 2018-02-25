@@ -11,15 +11,12 @@ public class FxApp extends Application {
 	Stage window;
 	Scene loginScreen, signUpScreen, mainScreen;
 	
-	
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/application/LoginScreen.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
 		Scene scene = new Scene(root, 800, 600);
 		// scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
@@ -30,6 +27,11 @@ public class FxApp extends Application {
 	
 	public void setToSignUpStage(Stage stage) {
 		
+	}
+	
+	
+	public static void main(String[] args) {
+		launch(args);
 	}
 
 	

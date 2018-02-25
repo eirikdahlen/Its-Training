@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.qpp.ui.SignUpController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.qpp.ui.SignUpScreenController">
    <children>
     <Button fx:id="btbsignUp_back" layoutX="172.0" layoutY="471.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
       <TextField fx:id="txtName" layoutX="122.0" layoutY="127.0" />
