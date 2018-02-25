@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.qpp.ui.SignUpScreenController">
    <children>
-    <Button fx:id="btbsignUp_back" layoutX="172.0" layoutY="471.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
+    <Button fx:id="btbsignUp_back" layoutX="161.0" layoutY="466.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Sign Up" />
       <TextField fx:id="txtName" layoutX="122.0" layoutY="127.0" />
       <Text fx:id="txtName" fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
 
@@ -31,25 +31,14 @@
          </font>
       </Text>
       <Button fx:id="btbBackToLoginFromSignUp" layoutX="37.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Back to Login" />
-      <PasswordField fx:id="txtPasswordRetype" layoutX="123.0" layoutY="314.0" />
+      <PasswordField fx:id="txtFieldPasswordRetype" layoutX="123.0" layoutY="314.0" />
       <Text fx:id="txtRetype" fontSmoothingType="LCD" layoutX="123.0" layoutY="309.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype password:" wrappingWidth="166.99999570846558">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="choiceBoxAthleteOrCoach" layoutX="123.0" layoutY="382.0" prefHeight="27.0" prefWidth="167.0">
-      <Text fontSmoothingType="LCD" layoutX="123.0" layoutY="376.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Athlete or coach?" wrappingWidth="166.99999570846558">
-         <font>
-            <Font name="System Font" size="15.0" />
-         </font>
-      </Text>
-      		<items>
-      			<FXCollections fx:factory="athleteOrCoachList">
-      					<String fx:value="Athlete" />
-      					<String fx:value="Coach" />
-      			</FXCollections>
-      		</items>
-      </ChoiceBox>
+      <RadioButton fx:id="radioAthlete" layoutX="123.0" layoutY="363.0" mnemonicParsing="false" onAction="#radioAthleteButtonPressed" text="Athlete" />
+      <RadioButton fx:id="radioCoach" layoutX="209.0" layoutY="363.0" mnemonicParsing="false" onAction="#radioButtonPressed" text="Coach" />
 
    </children>
 </AnchorPane>
