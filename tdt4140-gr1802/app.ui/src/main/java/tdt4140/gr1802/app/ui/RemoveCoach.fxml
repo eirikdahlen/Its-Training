@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="tdt4140.gr1802.app.ui.RemoveCoachController">
+   <children>
+      <AnchorPane layoutX="-193.0" layoutY="-174.0" prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <TextField fx:id="txtUsername" layoutX="362.0" layoutY="377.0" promptText="Username" />
+            <Button fx:id="btbAdd" layoutX="539.0" layoutY="377.0" mnemonicParsing="false" onAction="#removeCoachButton" text="Remove coach" />
+            <Label layoutX="362.0" layoutY="322.0" text="Type in coach's username." />
+            <Label fx:id="txtResponse" layoutX="362.0" layoutY="432.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

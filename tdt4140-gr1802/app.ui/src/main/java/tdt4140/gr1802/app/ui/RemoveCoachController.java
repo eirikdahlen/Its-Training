@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Database;
 
-public class AddCoachController {
+public class RemoveCoachController {
 	
 	Athlete athlete; 
 	Database database = new Database();
@@ -25,25 +25,27 @@ public class AddCoachController {
 	private Button btbAdd ;
 	
 	
-	public void addCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{ 
+	public void removeCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{ 
 		
 		System.out.println("hei1");
-		if (database.coachUsernameExists(txtUsername.getText())) {
+		if (database.coachUsernameExists(txtUsername.getText()) && athlete.hasCoach(txtUsername.getText())) {
 			System.out.println("hei2");
-			athlete.addCoach(txtUsername.getText());
-			txtResponse.setText("Request sent to "+txtUsername.getText());
-		} else {
+			athlete.removeCoach(txtUsername.getText());
+			txtResponse.setText(txtUsername.getText()+"removed from your coach-list");
+		} else if (database.coachUsernameExists(txtUsername.getText()) && !athlete.hasCoach(txtUsername.getText())){
 			System.out.println("hei3");
+			txtResponse.setText(txtUsername.getText()+"is not in your coach-list");
+		} else {
+			System.out.println("hei4");
 			txtResponse.setText("Username does not exist");
 		}
-		System.out.println("hei4");
+		System.out.println("hei5");
 		txtUsername.clear();
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("hello");
 	}
-	
 	
 
 }
