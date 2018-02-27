@@ -66,4 +66,17 @@ public class Coach extends User {
 			database.getAthlete(athlete).queueCoach(this.getUsername());
 		}
 	}
+	
+	public Boolean hasAthlete(String athlete) {
+		if (athletes.contains(athlete)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void removeAthlete(String athlete) {
+		if (hasAthlete(athlete)) {
+			athletes.remove(athlete);
+		}
+	}
 }	
