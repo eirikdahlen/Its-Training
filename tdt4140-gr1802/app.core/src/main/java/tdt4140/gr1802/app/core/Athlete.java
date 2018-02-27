@@ -69,6 +69,19 @@ public class Athlete extends User {
 		}
 	}
 	
+	public Boolean hasCoach(String coach) {
+		if (coaches.contains(coach)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void removeCoach(String coach) {
+		if (hasCoach(coach)) {
+			coaches.remove(coach);
+		}
+	}
+	
 	// Legger til treningsøkt
 	private void addWorkout() {
 		
