@@ -1,44 +1,29 @@
 package tdt4140.gr1802.app.core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Workout {
 	
-	public String date;
-	
-	public String type;
-	
+	public String date, type, kilometres;
+
+	public int duration;
+		
 	public Athlete athlete;
 	
-	public int duration;
-
-	public int kilometres;
-	
-	public List<String> getPulsList() {
-		return pulsList;
-	}
-
-	public void setPulsList(List<String> pulsList) {
-		this.pulsList = pulsList;
-	}
-	
 	public List<String> pulsList = new ArrayList<String> ();
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
+	
+	public String filePath = "";
+	
+	CSVReader reader = new CSVReader(filePath);
+	
+	public Workout(Athlete athl, String filepath) throws IOException {
+		this.date = reader.getDate();
+		this.type = reader.getType();
+		this.duration = reader.getDuration();
+		this.kilometres = reader.getDistance();
+		this.athlete = athl;
 	}
 
 	public Athlete getAthlete() {
@@ -48,21 +33,5 @@ public class Workout {
 	public void setAthlete(Athlete athlete) {
 		this.athlete = athlete;
 	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public int getKilometres() {
-		
-		return kilometres;
-	}
-
-	public void setKilometres(int kilometres) {
-		this.kilometres = kilometres;
-	}
+	
 }
