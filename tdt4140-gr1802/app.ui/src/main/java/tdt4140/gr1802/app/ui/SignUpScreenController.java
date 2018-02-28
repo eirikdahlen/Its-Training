@@ -58,44 +58,6 @@ public class SignUpScreenController{
 	@FXML
 	private RadioButton radioCoach;
 
-	Database db = new Database();
-	
-	
-	public boolean checkValidName() {
-		// Check if name only contains letters
-		if (txtName.getText().matches("[a-zA-Z]")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean checkUserName() {
-		String typedUserName = txtFieldUsername.getText(); 
-		
-		if (db.coachUsernameExists(typedUserName) || db.athleteUsernameExists(typedUserName)) {
-			// Username exits in database
-			System.out.println("Username already in database");
-			return false;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean checkPasswordLenght() {
-		String typedPassword = txtFieldPassword.getText();
-		
-		if (typedPassword.length() <= 4) {
-			System.out.println("Password shorter than 4 chars");
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	public boolean checkEqualPasswords() {
-		return txtFieldPassword.getText().equals(txtFieldPasswordRetype.getText());
-	}
 	
 	private void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
 	private void coachAthleteButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
@@ -116,8 +78,6 @@ public class SignUpScreenController{
         Files.write(Paths.get("/Users/Andreas/tdt4100-2017-master/ws/Hola/src/application/Account.txt"), text.getBytes());
 		
 	}
-	
-	
 	
 	public void backToLogin(ActionEvent event) throws IOException{
 		if (checkInformation()){
