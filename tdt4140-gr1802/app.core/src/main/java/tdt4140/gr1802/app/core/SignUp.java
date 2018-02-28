@@ -38,7 +38,7 @@ public class SignUp {
 	}
 	
 	public boolean checkNameOnlyLetters(String inputUsername) {
-		if (inputUsername.matches("[a-zA-Z]")) {
+		if (inputUsername.matches("[a-zA-Z]+")) {
 			return true; 
 		} else {
 			return false; 

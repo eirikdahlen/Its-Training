@@ -38,7 +38,7 @@ public class LoginScreenController {
 	
 	public void signUpButton(ActionEvent event) throws IOException {
 		
-		Parent root2 = FXMLLoader.load(getClass().getResource("/ui/SignUpScreen.fxml"));
+		Parent root2 = FXMLLoader.load(getClass().getResource("/tdt4140.gr1802.app.ui/SignUpScreen.fxml"));
 		Scene scene = new Scene(root2,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
