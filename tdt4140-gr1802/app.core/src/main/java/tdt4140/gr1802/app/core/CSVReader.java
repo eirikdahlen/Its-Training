@@ -4,14 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVReader {
 	
 	private String filePath;
 	
+	
 	public CSVReader(String path) {
 		this.filePath = path;
 	}
+	
 	
 	public int converToMinutes(String dur) {
 		String[] duration = dur.split(":");
@@ -21,6 +25,7 @@ public class CSVReader {
 		
 		return hoursToMin*60 + minToMin + secToMin/60;
 	}
+	
 	
 	public String readFile(int i) throws IOException {
 		String csvSplitBy = ",";
@@ -56,33 +61,86 @@ public class CSVReader {
 		return type;
 	}
 	
+	
 	public int getDuration() throws IOException {
 		String dist = readFile(4);
 		return converToMinutes(dist);
 	}
-
+	
 	
 	public String getType() throws IOException {
 		return readFile(1);
 	}
 	
+	
 	public String getDate() throws IOException {
 		return readFile(2) + " " + readFile(3);
 	}
 
-	public String getDistance() throws IOException {
-		return readFile(5);
+	
+	public double getDistance() throws IOException {
+		return Double.parseDouble(readFile(5));
+
 	}
+	
+	
+	public List<String> getPulse() {
+
+		String csvFile = this.filePath;
+        
+		BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        
+        try {
+        	
+        		List<String> pulse = new ArrayList<String>(); 
+        		int i = 0;
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+		
+                // use comma as separator
+                String[] linje = line.split(cvsSplitBy);
+
+                if (i > 3 && i%10 == 0) {
+                	pulse.add(linje[2]);
+  
+ 	
+                }
+                i++;
+            }
+            //returns array
+            return pulse;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+
+    return null;
+
+}
 		
 	
 	public static void main(String[] args) throws IOException {
-		String path = "C:\\Users\\wgkva\\OneDrive - NTNU\\Datateknologi\\2. klasse\\"
-				+ "TDT4140 - Programvareutvikling\\CSV_FILES\\kul.csv";
+		String path = "/Users/petter/Documents/oppdatertCSV.csv";
 		CSVReader reader = new CSVReader(path);
 		int duration = reader.getDuration();
 		String type = reader.getType();
 		String date = reader.getDate();
-		String distance = reader.getDistance();
+		double distance = reader.getDistance();
+		
 	
 		System.out.println("Type: "+type);
 		System.out.println("Duration: "+duration+" minutes");

@@ -13,14 +13,14 @@ import com.mongodb.client.MongoDatabase;
 
 public class Database {
 	
-	//kobler til MongoDB 
+	//Connects to MongoDB 
 	private String uri = "mongodb://theodorastrupwiik:starwars123!@pu-shard-00-00-wgffn.mongodb.net:27017,pu-shard-00-01-wgffn.mongodb.net:27017,pu-shard-00-02-wgffn.mongodb.net:27017/admin?replicaSet=PU-shard-0&ssl=true";
 	private MongoClientURI clientURI = new MongoClientURI(uri);
 	private MongoClient mongoClient = new MongoClient(clientURI);
 	
 	private MongoDatabase athleteDatabase = mongoClient.getDatabase("Athlete");
 	private MongoDatabase coachDatabase = mongoClient.getDatabase("Coach");
-	private MongoDatabase sessionsDatabase = mongoClient.getDatabase("Sessions");
+	private MongoDatabase workoutDatabase = mongoClient.getDatabase("Workout");
 	
 	private MongoCollection coachCollection = coachDatabase.getCollection("Coach");
 	private MongoCollection athleteCollection = athleteDatabase.getCollection("Athlete");
@@ -36,32 +36,35 @@ public class Database {
 	public void createCoach(Coach coach) {
 		
 		//Checks if username is available 
-		if ( ! this.coachUsernameExists(coach.getUsername()) ) {
+		if ( ! this.usernameExists(coach.getUsername()) ) {
 		
-		//Legger til et coach-dokument i Coach-databasen
+		//Adds a coach-document to Coach-collection
 		Document document = new Document("Username", coach.getUsername());
 		document.append("Name",coach.getName());
 		document.append("Athletes", coach.getAthletes());
 		document.append("Requests", coach.getQueuedAthletes());
 		coachCollection.insertOne(document);
+		System.out.println("coach added to database");
 		}
 		
 		else {
 			System.out.println("Username in use. Could not add Coach");
 		}
 	}
+
 	
 	public void createAthlete(Athlete athlete) {
 		
 		//Checks if username is available 
-		if ( ! this.athleteUsernameExists(athlete.getUsername()) ) {
+		if ( ! this.usernameExists(athlete.getUsername()) ) {
 		
-		//Legger til et coach-dokument i Coach-databasen
+		//Adds an athlete-document to athlete-collection
 			Document document = new Document("Username", athlete.getUsername());
 			document.append("Name",athlete.getName());
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
-		athleteCollection.insertOne(document);
+			athleteCollection.insertOne(document);
+			System.out.println("athlete added to database");
 		}
 		
 		else {
@@ -69,52 +72,38 @@ public class Database {
 		}
 	}
 	
-	/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	 *  Session/Workout implementering
-	 *  
-	 *  
-	 *  
-	 *  
-	 *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
-	 
-	 
-	public void createSession(Session session) {
+	
+	public void createWorkout(Workout workout) {
 		
-		//creates new collection if it does not exists
-		MongoCollection userSessionsCollection = sessionsDatabase.getCollection(session.getAthlete().getUsername());
-		//check to see if collection exists
-		//if not, create collection
 		
-		if ( ! sessionIDExists(session.getAthlete(), session.getSessionID() )) {
-			Document doc = new Document("SessionID", session.getSessionID());
+		//checks if datetime is available for particular athlete 
+		if ( ! datetimeExists(workout.getAthlete(), workout.getDateString())) {
+			
+			//finds the athlete of the workout, and accesses his workout-collection
+			//automatically creates new collection if it does not exists
+			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(workout.getAthlete().getUsername());
+		
+			//creates document
+			Document doc = new Document("date", workout.getDateString());
+			
+			//adds workout-attributes
+			doc.append("type", workout.getType());
+			doc.append("duration", workout.getDuration());
+			doc.append("kilometres", workout.getKilometres());
 
-			doc.append("Pulse", session.getPulse());
-			userSessionsCollection.insertOne(doc);
+			doc.append("pulse", workout.getPulsList());
+
+			//pushes to database
+			userWorkoutCollection.insertOne(doc);
+			System.out.println("workout added to database");
 			
 		} else {
-			System.out.println("sessionID in use. Could not create session");
+			System.out.println("datetime already in use for particular athlete.");
 		}
-		
+
 	}
 	
 	
-	public boolean sessionIDExists(Athlete athlete, int sessionID) {
-		
-		
-		MongoCollection userSessionsCollection = sessionsDatabase.getCollection(athlete.getUsername());
-		Document found = (Document) userSessionsCollection.find(new Document("SessionID", sessionID)).first();
-		
-		
-		
-		if (found != null) {
-			System.out.println("sessionID in use for particular athlete");
-			return true;
-		}
-
-		return false;
-
-	}
-	*/
 	public Coach getCoach(String username) {
 		
 		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
@@ -128,6 +117,7 @@ public class Database {
 		
 		return coach;
 	}
+	
 	
 	public Athlete getAthlete(String username) {
 		
@@ -146,42 +136,96 @@ public class Database {
 	}
 	
 	
+	public Workout getWorkout(Athlete athlete, String date) {
+		
+		
+		//finds the athlete of the workout, and accesses his workout-collection
+		//automatically creates new collection if it does not exists
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+
+		
+		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
+		
+		if (found == null) {
+			System.out.println("no workout with this datetime");
+			return null;
+			
+		}
+			
+		//creates workout-object
+		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
+				found.getDouble("kilometres") , (List<String>) found.get("pulse") );
+		
+	
+		return workout;
+	}
+	
+	
+	public boolean datetimeExists(Athlete athlete, String date) {
+	
+	
+	MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+	Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
+	
+	
+	
+	if (found != null) {
+		System.out.println("datetime in use for particular athlete");
+		return true;
+	}
+
+	return false;
+
+	}
+	
+	
+	public boolean usernameExists(String username) {
+		//returns true if username exists in database
+	
+		if (coachUsernameExists(username)) {
+			System.out.println("Username in use by Coach");
+			return true;
+		}
+		
+		if (athleteUsernameExists(username)) {
+			System.out.println("Username in use by Athlete");
+			return true;
+		}
+
+		return false;
+	}
+	
 	
 	public boolean coachUsernameExists(String username) {
-		
-		//burde ha en liste over samtlige usernames? så kan man ha en generisk usernameExists-metode, og ikke to spesifikke
+	
 		
 		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
 		
 		if (found != null) {
-			System.out.println("username in use");
+
 			return true;
 		}
-
 		return false;
-
 	}
 	
+	
 	public boolean athleteUsernameExists(String username) {
-		
-		
-		//burde ha en liste over samtlige usernames? så kan man ha en generisk usernameExists-metode, og ikke to spesifikke
+	
 		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		
 		if (found != null) {
-			System.out.println("username in use");
 			return true;
 		}
 
+		
 		return false;
 
 	}
-	  
 
+	
 	public boolean isAthlete(String username) {
-		
-		//burde ha en liste over samtlige usernames? så kan man ha en generisk usernameExists-metode, og ikke to spesifikke
+
 		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		

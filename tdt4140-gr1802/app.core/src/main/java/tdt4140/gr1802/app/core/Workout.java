@@ -1,37 +1,124 @@
 package tdt4140.gr1802.app.core;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Workout {
 	
-	public String date, type, kilometres;
-
-	public int duration;
-		
-	public Athlete athlete;
+	private Date date;
 	
-	public List<String> pulsList = new ArrayList<String> ();
+	private String dateString, type;
+	
+	private double kilometres;
+
+	private int duration;
+		
+	private Athlete athlete;
+	
+	private List<String> pulsList = new ArrayList<String> ();
 	
 	public String filePath = "";
 	
-	CSVReader reader = new CSVReader(filePath);
-	
+
 	public Workout(Athlete athl, String filepath) throws IOException {
-		this.date = reader.getDate();
+		this.filePath = filepath;
+		CSVReader reader = new CSVReader(filePath);
+		
+		this.pulsList = reader.getPulse();
+		
+		this.dateString = reader.getDate();
 		this.type = reader.getType();
 		this.duration = reader.getDuration();
 		this.kilometres = reader.getDistance();
 		this.athlete = athl;
+		
+		
+		
+		//parse string to date-object
+		try {
+			this.date = parseDate(this.dateString);
+		}
+		catch(Exception fnf) {
+				fnf.printStackTrace();
+		}
+		
 	}
 
+	
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList) {
+		this.athlete = athl;
+		this.dateString = dateString;
+		this.type = type;
+		this.duration = duration;
+		this.kilometres = kilometres;
+		this.pulsList = pulsList;
+		
+		//parse string to date-object
+		try {
+			this.date = parseDate(this.dateString);
+		}
+		catch(Exception fnf) {
+				fnf.printStackTrace();
+		}
+		
+	}
+	
+	
+	public Date parseDate(String date) throws ParseException {
+		
+		
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		return df.parse(date);
+		
+	}
+
+	
 	public Athlete getAthlete() {
 		return athlete;
 	}
 
+	
 	public void setAthlete(Athlete athlete) {
 		this.athlete = athlete;
 	}
+
+	
+	public Date getDate() {
+		return date;
+	}
+
+	
+	public String getDateString() {
+		return dateString;
+	}
+
+	
+	public String getType() {
+		return type;
+	}
+
+	
+	public double getKilometres() {
+		return kilometres;
+	}
+
+	
+	public int getDuration() {
+		return duration;
+	}
+
+	
+	public List<String> getPulsList() {
+		return pulsList;
+	}
+
 	
 }
