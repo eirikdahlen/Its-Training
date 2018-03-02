@@ -237,5 +237,9 @@ public class Database {
 		return false;
 
 	}
+	
+	public String getPassword(String username) {
+		return null;
+	}
 		
 }
