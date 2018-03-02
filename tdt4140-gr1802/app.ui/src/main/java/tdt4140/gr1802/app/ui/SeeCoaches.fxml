@@ -18,12 +18,12 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
                      <children>
                         <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
-                        <VBox layoutX="-2.0" layoutY="-1.0" prefHeight="529.0" prefWidth="161.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="643.0" AnchorPane.topAnchor="-1.0">
+                        <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="btAddWorkout" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
-                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
-                              <Button fx:id="btSeeCoaches" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
-                              <Button fx:id="btCoachRequests" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
+                              <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
+                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" onAction="#clickSeeWorkouts" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
+                              <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickSeeCoaches" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
+                              <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
                         <TableView fx:id="tableView" layoutX="159.0" layoutY="-1.0" prefHeight="446.0" prefWidth="644.0" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">

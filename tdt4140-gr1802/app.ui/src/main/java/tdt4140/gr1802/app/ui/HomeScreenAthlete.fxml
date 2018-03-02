@@ -18,10 +18,10 @@
                         <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="btAddWorkout" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
-                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
-                              <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
-                              <Button fx:id="btCoachRequests" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
+                              <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
+                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" onAction="#clickSeeWorkouts" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
+                              <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickSeeCoaches" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
+                              <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0" />
