@@ -1,5 +1,7 @@
 package tdt4140.gr1802.app.ui;
 
+import tdt4140.gr1802.app.core.LogIn;
+
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,8 @@ import javafx.event.ActionEvent;
 
 public class LoginScreenController {
 	
+	LogIn login; 
+	
 	@FXML
 	private Label lblOverhead;
 	@FXML
@@ -36,6 +40,7 @@ public class LoginScreenController {
 	
 	
 	
+	
 	public void signUpButton(ActionEvent event) throws IOException {
 		
 		Parent root2 = FXMLLoader.load(getClass().getResource("/tdt4140.gr1802.app.ui/SignUpScreen.fxml"));
@@ -48,7 +53,13 @@ public class LoginScreenController {
 	
 	
 	public void loginButton(ActionEvent event) throws IOException {
-		if (txtUsername.getText().equals("Eirik") && txtPassword.getText().equals("passord")) {
+		String typedUsername = txtUsername.getText();
+		String typedPassword = txtPassword.getText();
+		
+		login = new LogIn(typedUsername, typedPassword);
+		
+		
+		if (login.validLogIn()) {
 			lblOverhead.setText("Login Success!");
 			Parent root3 = FXMLLoader.load(getClass().getResource("/ui/MainScreen.fxml"));
 			Scene scene = new Scene(root3);
@@ -56,10 +67,14 @@ public class LoginScreenController {
 			
 			window.setScene(scene);
 			window.show();
-		} else {
-			lblOverhead.setText("Login Failed!");
+		} else if (!login.checkUsernameAthlete(typedUsername) 
+				|| !login.checkUsernameCoach(typedUsername)) {
+			lblOverhead.setText("Username don't excists.");
 			
+		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
+			lblOverhead.setText("Username don't matches password.");
 		}
+		
 		/*
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Login.fxml"));
 		Scene scene = new Scene(root);
@@ -68,14 +83,6 @@ public class LoginScreenController {
 		secondStage.show();
 		*/
 		
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("Hello");
-	}
-	
-		
-		
-		
+	}	
 	
 }

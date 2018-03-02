@@ -2,7 +2,7 @@ package tdt4140.gr1802.app.core;
 
 public class LogIn {
 	
-	User inloggedUser;
+	User inloggedUser = null;
 	
 	Database db = new Database();
 	
@@ -18,6 +18,11 @@ public class LogIn {
 				inloggedUser = db.getCoach(username);
 		}
 		
+	}
+	
+	
+	public boolean validLogIn() {
+		return inloggedUser != null; 
 	}
 	
 	public boolean checkUsernameAthlete(String username) {
