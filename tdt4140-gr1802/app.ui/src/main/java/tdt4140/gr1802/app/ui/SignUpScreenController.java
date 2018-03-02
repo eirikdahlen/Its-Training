@@ -78,7 +78,7 @@ public class SignUpScreenController{
         Files.write(Paths.get("/Users/Andreas/tdt4100-2017-master/ws/Hola/src/application/Account.txt"), text.getBytes());
 		
 	}
-	
+		
 	public void backToLogin(ActionEvent event) throws IOException{
 		if (checkInformation()){
 			writeToFile();
