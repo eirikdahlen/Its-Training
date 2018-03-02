@@ -8,7 +8,9 @@ import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class Database {
@@ -156,9 +158,44 @@ public class Database {
 		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
 				found.getDouble("kilometres") , (List<String>) found.get("pulse") );
 		
-	
+		
 		return workout;
 	}
+	
+	
+	
+	public List<Workout> getAllWorkouts(Athlete athlete) {
+		
+		List<Workout> workouts = new ArrayList<Workout>();
+		
+		//finds the athlete of the workout, and accesses his workout-collection
+		//automatically creates new collection if it does not exists
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		
+		
+		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+		    while (cursor.hasNext()) {
+		    		Document doc = cursor.next();
+		        
+		        
+		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse") );
+		        
+		        workouts.add(workout);
+				
+		        
+		    }
+		}
+		
+			
+		return workouts;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	public boolean datetimeExists(Athlete athlete, String date) {
