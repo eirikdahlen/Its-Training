@@ -14,7 +14,9 @@ public class Athlete extends User {
 	
 	protected List <String> pendingCoaches = new ArrayList <String> ();
 	
-	private Database database;
+	private Database database = new Database();
+	
+	private List<Workout> allWorkouts;
 	
 
 	public Athlete (String username, String name, List <String> coaches, List <String> queuedCoaches) {
@@ -39,6 +41,7 @@ public class Athlete extends User {
 	public List<String> getQueuedCoaches() {
 		return queuedCoaches;
 	}
+	
 
 	// Går igjennom alle trenere i køen og godkjenner/avslår forespørsler
 	public void approveCoach () {
@@ -80,6 +83,10 @@ public class Athlete extends User {
 		if (hasCoach(coach)) {
 			coaches.remove(coach);
 		}
+	}
+	
+	public List<Workout> getAllWorkouts(){
+		return database.getAllWorkouts(this);
 	}
 	
 	// Legger til treningsøkt
