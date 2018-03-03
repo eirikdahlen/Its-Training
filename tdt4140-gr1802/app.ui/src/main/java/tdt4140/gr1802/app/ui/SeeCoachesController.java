@@ -18,6 +18,7 @@ import javafx.fxml.LoadException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,6 +46,8 @@ public class SeeCoachesController {
 	
 	public void init() {
 		fillList();
+		// Lar deg selektere flere valg i tabellen
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		update();
 		
 	}
@@ -60,13 +63,22 @@ public class SeeCoachesController {
 	
 	private void update() {
 		tableView.setItems(list);
-		
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach, String>("name"));
-		
 	}
 	
-	private void remove() {
+	public void remove() {
+		ObservableList<Coach> selectedRows, allCoaches;
+		allCoaches = tableView.getItems();
 		
+		// Gir oss selected rows
+		selectedRows = tableView.getSelectionModel().getSelectedItems();
+		
+		// Itererer over valgte rader og fjerner de
+		for (Coach coach : selectedRows) {
+			allCoaches.remove(coach);
+			list.remove(coach);
+		}
+		update();
 	}
 	
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
