@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.Database;
 
-import java.awt.TextArea;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -58,10 +58,13 @@ public class SignUpScreenController{
 	@FXML
 	private RadioButton radioCoach;
 
+	/*
+	@FXML
+	void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
+	@FXML
+	void coachAthleteButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
 	
-	private void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
-	private void coachAthleteButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
-	
+	*/
 	
 	
 	public boolean checkInformation(){
@@ -73,17 +76,13 @@ public class SignUpScreenController{
 		}
 	}
 	
-	public void writeToFile() throws IOException{
-		String text = txtName.getText();
-        Files.write(Paths.get("/Users/Andreas/tdt4100-2017-master/ws/Hola/src/application/Account.txt"), text.getBytes());
-		
-	}
+
 		
 	public void backToLogin(ActionEvent event) throws IOException{
 		if (checkInformation()){
-			writeToFile();
 			
-			Parent root2 = FXMLLoader.load(getClass().getResource("/ui/Login.fxml"));
+			
+			Parent root2 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
 			Scene toLoginScene = new Scene(root2,800,600);
 			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			

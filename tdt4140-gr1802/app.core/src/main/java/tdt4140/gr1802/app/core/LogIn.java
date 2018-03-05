@@ -4,9 +4,10 @@ public class LogIn {
 	
 	User inloggedUser = null;
 	
-	Database db = new Database();
+	Database db;
 	
-	public LogIn(String username, String password) {
+	public LogIn(String username, String password, Database db) {
+		this.db = db;
 		if ( checkUsernameAthlete(username) ||
 				checkUsernameMatchPassword(username, password)) {
 				// Athlete-login

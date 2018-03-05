@@ -1,5 +1,6 @@
 package tdt4140.gr1802.app.ui;
 
+import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.LogIn;
 
 import javafx.fxml.FXML;
@@ -52,21 +53,15 @@ public class LoginScreenController {
 	}
 	
 	
-	public void loginButton(ActionEvent event) throws IOException {
-		String typedUsername = txtUsername.getText();
-		String typedPassword = txtPassword.getText();
+	public void loginButton(ActionEvent event, String typedUsername, String typedPassword, Database db) throws IOException {
+
 		
-		login = new LogIn(typedUsername, typedPassword);
+		login = new LogIn(typedUsername, typedPassword, db);
 		
 		
 		if (login.validLogIn()) {
-			lblOverhead.setText("Login Success!");
-			Parent root3 = FXMLLoader.load(getClass().getResource("/ui/MainScreen.fxml"));
-			Scene scene = new Scene(root3);
-			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-			
-			window.setScene(scene);
-			window.show();
+			System.out.println("Login Success!");
+
 		} else if (!login.checkUsernameAthlete(typedUsername) 
 				|| !login.checkUsernameCoach(typedUsername)) {
 			lblOverhead.setText("Username don't excists.");
