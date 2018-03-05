@@ -26,6 +26,15 @@ public class Athlete extends User {
 		this.queuedCoaches = queuedCoaches ;
 	}
 	
+	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
+		this.username = username ;
+		this.password = password;
+		this.name = name ;
+		this.coaches = coaches ;
+		this.queuedCoaches = queuedCoaches ;
+	}
+	
+	
 	public void queueCoach (String newCoach) {
 		queuedCoaches.add(newCoach) ;
 	}

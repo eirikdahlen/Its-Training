@@ -42,6 +42,7 @@ public class Database {
 		
 		//Adds a coach-document to Coach-collection
 		Document document = new Document("Username", coach.getUsername());
+		document.append("Password", coach.getPassword());
 		document.append("Name",coach.getName());
 		document.append("Athletes", coach.getAthletes());
 		document.append("Requests", coach.getQueuedAthletes());
@@ -62,10 +63,12 @@ public class Database {
 		
 		//Adds an athlete-document to athlete-collection
 			Document document = new Document("Username", athlete.getUsername());
+			document.append("Password", athlete.getPassword());
 			document.append("Name",athlete.getName());
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
 			athleteCollection.insertOne(document);
+			
 			System.out.println("athlete added to database");
 		}
 		
@@ -118,6 +121,25 @@ public class Database {
 		Coach coach = new Coach(found.getString("Username"), found.getString("Name") , (List<String>) found.get("Athletes") , (List<String>) found.get("Requests"));
 		
 		return coach;
+	}
+	
+	public String getPassword(String username) {
+		
+		if (athleteUsernameExists(username) ) {
+			Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
+			String password = found.getString("Password");
+			return password;
+		}
+		
+		else {
+			Document found = (Document) coachCollection.find(new Document("Username", username)).first();
+			String password = found.getString("Password");
+			return password;
+			
+		}
+		
+		 
+		
 	}
 	
 	
@@ -280,9 +302,6 @@ public class Database {
 
 	}
 	
-	public String getPassword(String username) {
-		// TODO
-		return null;
-	}
+	
 		
 }

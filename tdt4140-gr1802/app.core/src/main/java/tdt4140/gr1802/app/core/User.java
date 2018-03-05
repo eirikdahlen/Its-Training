@@ -6,6 +6,16 @@ public abstract class User {
 		
 	protected String username ;
 	
+	protected String password;
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public void setPassword(String pass) {
+		this.password = pass;
+	}
+	
 	
 	public String getName() {
 		return name;
