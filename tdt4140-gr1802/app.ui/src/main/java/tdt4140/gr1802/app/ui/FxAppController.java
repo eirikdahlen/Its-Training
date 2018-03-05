@@ -32,6 +32,8 @@ public class FxAppController {
     @FXML
     private Button btbSignUp;
     
+  
+    
     private App app;
     
     Parent root;
@@ -69,21 +71,28 @@ public class FxAppController {
 
     @FXML
     void signUpButton(ActionEvent event) throws IOException {
-    	SignUpScreenController signUpScreen = new SignUpScreenController();
+    	
+    		String typedUsername = txtUsername.getText();
+    		String typedPassword = txtPassword.getText();
+    	
+    		SignUpScreenController signUpScreen = new SignUpScreenController();
+    		signUpScreen.getEventuallyTypedInformation(typedUsername, typedPassword);
 	
-    	this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
-	this.scene = new Scene(root);
-	this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-	this.changeScene();
+    		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
+    		this.scene = new Scene(root);
+    		this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    		this.changeScene();
     	
     	
     
     }
     
+   
     
     
-    void changeScene() {
-    	window.setScene(this.scene);
-    	window.show();
+    private void changeScene() {
+    		// Help-method for changing scene, should be called after root, scene and window are changed. 
+    		window.setScene(this.scene);
+    		window.show();
     }
 }

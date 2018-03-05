@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
@@ -50,24 +51,28 @@ public class SignUpScreenController{
 	@FXML
 	private TextField txtFieldPasswordRetype;
 	@FXML
-	private Button btbsignUp_back; 
+	private Button btbSignUpButton;
 	@FXML
-	private Button BackToLoginFromSignUp; 
+	private Button backToLoginFromSignupButton; 
 	@FXML
 	private RadioButton radioAthlete;
 	@FXML
 	private RadioButton radioCoach;
+	@FXML
+	private TextArea feedbackTextToUser;
 
-	/*
-	@FXML
-	void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
-	@FXML
-	void coachAthleteButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
-	
-	*/
+	// Methods for radio-button-function (can only choose one of athlete or coach)
+	public void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
+	public void radioCoachButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
 	
 	
-	public boolean checkInformation(){
+	public ArrayList<String> getEventuallyTypedInformation(String typedUsername, String typedPassword) {
+		ArrayList<String> nameAndPassword = new ArrayList<>();
+		nameAndPassword.add(typedUsername); nameAndPassword.add(typedUsername);
+		return nameAndPassword;
+	}
+	
+	public boolean checkEmptyInformation(){
 		if (txtName.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()){
 			return false; 
 		}
@@ -79,7 +84,7 @@ public class SignUpScreenController{
 
 		
 	public void backToLogin(ActionEvent event) throws IOException{
-		if (checkInformation()){
+		if (checkEmptyInformation()){
 			
 			
 			Parent root2 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
@@ -98,7 +103,8 @@ public class SignUpScreenController{
 	}
 	
 	public void backToLoginFromSignUpScreen (ActionEvent event) throws IOException{
-		Parent root5 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
+		
+		Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
 		Scene scene = new Scene(root5,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		window.setScene(scene);
@@ -106,6 +112,9 @@ public class SignUpScreenController{
 	}
 	
 
+	public void signUpButtonPressed(ActionEvent event) {
+		feedbackTextToUser.setText("Button pressed");
+	}
 	
 	
 	public static void main(String[] args) {
