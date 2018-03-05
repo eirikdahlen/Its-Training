@@ -36,11 +36,26 @@ public class DatabaseTest {
 		//test.testCreateWorkout();
 		//if datetime not in use, check to see if session is in MongoDB (in the right collection)
 		
-				
+		
+		//______________________
+		//test.testGetAllWorkouts();
+		//should print the three first workouts for athlete in test
+		
+		//_____________________
+		test.testAddCoachToAthlete();
+		//if coach not already in list, check to see if added to athlete's coaches-List MongoDB
+		
+		//____________________
+		//test.testGetCoachesForAthlete();
+		//check to see if printed list mathes coachList in database
+		
+			
 	}
 	
 	
 	public void testCreateAthlete() {
+		
+
 		
 		//adds athlete for testing
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
@@ -65,14 +80,124 @@ public class DatabaseTest {
 	public void testCreateWorkout() throws IOException {
 		
 		//adds athlete and workout for testing
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Kjetil123", "Kjetil", new ArrayList<String>(), new ArrayList<String>());
 		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv");
 		
-		//adds to database
+		//adds athlete to database
+		database.createAthlete(athlete1);
+		
+		//adds workout to database
 		database.createWorkout(workout1);
 	
 	}
+	
+	public void testGetAllWorkouts() {
+		
 
+		//creates athlete and workout for testing 
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
+		Workout workout2 = new Workout(athlete1, "02-01-2016 10:34:37","SKIING", 133,24.39, new ArrayList<String>() );
+		
+		//adds workout to database
+		database.createWorkout(workout1);
+		database.createWorkout(workout2);
+	
+		//retrieves workout-object from database
+		List<Workout> retrievedWorkouts = database.getAllWorkouts(athlete1);
+		
+		
+		//prints only the three first elemements to confirm test
+		int i = 0;
+		System.out.println();
+		System.out.println("Henter 3 workouts fra " + athlete1.getUsername());
+		for (Workout element : retrievedWorkouts) {
+		    System.out.println(element.getDateString());
+
+		   i++;
+		   if (i > 2) {
+			   break;
+		   }
+		}
+	}
+	
+	public void testAddCoachToAthlete() {
+		
+		//get coachList first -> print list -> update coach_list -> print again
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates athlete for testing	
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		
+		List<String> coaches = database.getCoachesForAthlete(athlete1);
+		
+		System.out.println("Coach-list before adding");
+		for (String element : coaches) {
+		    System.out.println(element);
+		}
+		//_______________________________________
+		
+		
+		
+		//creates coaches for testing 
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach2 = new Coach("Jens32", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		
+		//the actual addCoachToAthlete-method
+		database.addCoachToAthlete(athlete1, coach1.getUsername());
+		
+		
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		List<String> coaches2 = database.getCoachesForAthlete(athlete1);
+		
+		System.out.println("___________________");
+		System.out.println("coach list after update");
+		for (String element : coaches2) {
+		    System.out.println(element);
+		}
+		//_______________________________________
+		
+		
+	}
+	
+	public void testGetCoachesForAthlete() {
+		
+		
+		//creates athlete for testing	
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		
+		List<String> coaches = database.getCoachesForAthlete(athlete1);
+		
+		System.out.println("prints coach-list for "+athlete1.getUsername());
+		for (String element : coaches) {
+		    System.out.println(element);
+		}
+		
+	}
+
+	
+/*
+	public void testGetAllWorkoutsNonExistingAthlete() {
+		
+
+		//creates athlete and workout for testing 
+		Athlete athlete1 = new Athlete("Nils54", "Nils", new ArrayList<String>(), new ArrayList<String>());
+
+
+		//retrieves workout-object from database
+		List<Workout> retrievedWorkouts = database.getAllWorkouts(athlete1);
+		
+		for (Workout element : retrievedWorkouts) {
+		    System.out.println(element.getDateString());
+
+		    // ...
+		}
+
+	}
+	*/
+
+	
 	
 	
 	//_______jUnit_______
@@ -133,7 +258,11 @@ public class DatabaseTest {
 		
 		
 	}
-
 	
 
+
+	
 }
+	
+
+

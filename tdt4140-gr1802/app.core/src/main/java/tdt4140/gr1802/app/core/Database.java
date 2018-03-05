@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -12,6 +13,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Database {
 	
@@ -31,6 +35,8 @@ public class Database {
 	
 	
 	public Database() {
+		
+		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
 	
 	}
 	
@@ -118,12 +124,17 @@ public class Database {
 			return null;
 		}
 		
-		Coach coach = new Coach(found.getString("Username"), found.getString("Name") , (List<String>) found.get("Athletes") , (List<String>) found.get("Requests"));
+		Coach coach = new Coach(found.getString("Username"), found.getString("Password") ,found.getString("Name") , (List<String>) found.get("Athletes") , (List<String>) found.get("Requests"));
 		
 		return coach;
 	}
 	
 	public String getPassword(String username) {
+		
+		if (! this.usernameExists(username) ) {
+			System.out.println("username does not exist");
+			return null;
+		}
 		
 		if (athleteUsernameExists(username) ) {
 			Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
@@ -154,7 +165,7 @@ public class Database {
 			
 		}
 		
-		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
 		
 		return athlete;
 	}
@@ -217,6 +228,73 @@ public class Database {
 			
 		return workouts;
 	}
+	
+	public void addCoachToAthlete(Athlete athlete, String coachUsername) {
+		//method for adding coach to athlete's coach-list
+		
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<String> coaches = (ArrayList<String>) found.get("Coaches");
+			
+	
+			boolean alreadyPresent = false;
+			for (String element : coaches) {
+		    
+			    if ( element.equals(coachUsername) ) {
+			    	System.out.println("coach already in athlete-list");
+			    	alreadyPresent = true;
+			    	break;
+			    }
+		}
+			
+			if (! alreadyPresent ) {
+				//updates coach-list
+				coaches.add(coachUsername);
+				
+
+				//updates document with updated coach-array
+				
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+
+				Bson updatedvalue = new Document("Coaches", coaches);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found2, updateoperation);
+				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s coach-list.");
+	
+		}
+			
+	}
+}
+	
+	public List<String> getCoachesForAthlete(Athlete athlete) {
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		
+		if (found == null) {
+			System.out.println("no athlete with this username");
+			return null;
+		} else {
+			List<String> coaches = (ArrayList<String>) found.get("Coaches");
+			return coaches;
+	
+			
+		}
+	}
+	
+
+	
+	
+	
+	//TODO add "addCoach"-metode
+	//TODO add "addAthlete"-metode
+	
+	
+	
+	
+	
 	
 	
 	
