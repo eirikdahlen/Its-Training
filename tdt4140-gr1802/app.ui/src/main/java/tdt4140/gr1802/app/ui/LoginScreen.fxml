@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.LoginScreenController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="tdt4140.gr1802.app.ui.LoginScreenController">
    <children>
       <Button fx:id="btbLogin" layoutX="627.0" layoutY="20.0" mnemonicParsing="false" onAction="#loginButton" text="Login">
          <font>
