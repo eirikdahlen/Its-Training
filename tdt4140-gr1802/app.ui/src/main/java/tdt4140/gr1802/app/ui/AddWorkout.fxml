@@ -2,14 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.AddWorkoutController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="tdt4140.gr1802.app.ui.AddWorkoutController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -26,7 +25,11 @@
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0"/>
+                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                           <children>
+                              <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter Filepath" />
+                              <Button fx:id="addButton" layoutX="29.0" layoutY="119.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
+                           </children></Pane>
                      </children>
                   </AnchorPane>
               </items>

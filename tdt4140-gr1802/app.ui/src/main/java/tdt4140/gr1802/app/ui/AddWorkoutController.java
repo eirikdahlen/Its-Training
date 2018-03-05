@@ -1,5 +1,8 @@
 package tdt4140.gr1802.app.ui;
 
+import javafx.scene.control.TextField;
+
+
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -11,6 +14,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.Workout;
 
 public class AddWorkoutController {
 	
@@ -25,6 +31,26 @@ public class AddWorkoutController {
 	
 	@FXML
 	private Button btCoachRequests;
+	
+	@FXML
+	private TextField filepathTextField;
+	
+	@FXML
+	private Button addButton;
+	
+	
+	public void clickAddButton (ActionEvent event) throws IOException {
+		
+		String filepath = filepathTextField.getText();
+		System.out.println(filepath);
+		Athlete athl = new Athlete("Mengele22", "Michael Jackson", null, null);
+		Workout newWorkout = new Workout(athl, filepath);
+		Database database =  new Database(); 
+		database.createWorkout(newWorkout);
+		filepathTextField.setText("Workout Added");
+		
+	}
+	
 	
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
 		// Open new window 
