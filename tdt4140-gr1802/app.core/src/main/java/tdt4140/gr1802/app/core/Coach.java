@@ -45,7 +45,7 @@ public class Coach extends User {
 		queuedAthletes.add(newAthlete) ;
 	}
 	
-	// Går igjennom alle utøvere i køen og godtar/avslår forspørsler
+	// Iterate through  queued athletes and accepts/declines requests.
 	public void approveAthlete () {
 		for ( int n = 0; n < queuedAthletes.size(); n++) {
 			String athlete = queuedAthletes.get(n);
@@ -65,7 +65,7 @@ public class Coach extends User {
 		}
 	}
 	
-	// Legger til utøver i pendingAthletes-listen og kaller queueCoach() i Athletes-klassen
+	// Adds athletes i PendingAthletes-listen and calls queueCoach in Athlete-class.
 	public void addAthlete (String athlete) {
 		if (athletes.contains(athlete)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;

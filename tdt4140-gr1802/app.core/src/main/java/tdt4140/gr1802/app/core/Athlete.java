@@ -52,7 +52,7 @@ public class Athlete extends User {
 	}
 	
 
-	// Går igjennom alle trenere i køen og godkjenner/avslår forespørsler
+	// Iterate through queuedCoaches and accepts/declines requests. 
 	public void approveCoach () {
 		for ( int n = 0; n < queuedCoaches.size(); n++) {
 			String coach = queuedCoaches.get(n);
@@ -71,7 +71,7 @@ public class Athlete extends User {
 		}
 	}
 	
-	//  legger til trener i pendingCoach-listen og kaller queueAthlete() i Coach-klassen 
+	//  Adds coaches in pendingCoach-list and calls queueAthlete() in Coach-class. 
 	public void addCoach (String coach) {
 		if (coaches.contains(coach)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;
@@ -98,7 +98,7 @@ public class Athlete extends User {
 		return database.getAllWorkouts(this);
 	}
 	
-	// Legger til treningsøkt
+	// Adds workout.
 	private void addWorkout() {
 		
 	}
