@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
@@ -38,16 +39,23 @@ public class AddWorkoutController {
 	@FXML
 	private Button addButton;
 	
+	public static App app;
+	
+
+	public void setApp(App app) {
+		AddWorkoutController.app = app;
+	}
+	
 	
 	public void clickAddButton (ActionEvent event) throws IOException {
 		
 		String filepath = filepathTextField.getText();
-		System.out.println(filepath);
-		Athlete athl = new Athlete("Mengele22", "Michael Jackson", null, null);
+		Athlete athl = (Athlete) app.getUser();
 		Workout newWorkout = new Workout(athl, filepath);
 		Database database =  new Database(); 
 		database.createWorkout(newWorkout);
 		filepathTextField.setText("Workout Added");
+		
 		
 	}
 	
