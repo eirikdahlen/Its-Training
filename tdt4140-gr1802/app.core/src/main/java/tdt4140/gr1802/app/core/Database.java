@@ -313,6 +313,92 @@ public class Database {
 	}
 }
 	
+	public void addRequestAthleteToCoach(Coach coach, String athleteUsername) {
+		//method for adding athlete to coach's requests
+		
+		
+		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
+		
+		if (found == null) {
+			System.out.println("no coach with this username");
+		} else {
+			List<String> requestAthletes = (ArrayList<String>) found.get("Requests");
+			
+			
+			
+	
+			boolean alreadyPresent = false;
+			for (String element : requestAthletes) {
+		    
+			    if ( element.equals(athleteUsername) ) {
+			    	System.out.println("athlete already in request-list");
+			    	alreadyPresent = true;
+			    	break;
+			    }
+		}
+			
+			if (! alreadyPresent ) {
+				//updates coach-list
+				requestAthletes.add(athleteUsername);
+				
+
+				//updates document with updated coach-array
+				
+				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+
+				Bson updatedvalue = new Document("Requests", requestAthletes);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				coachCollection.updateOne(found2, updateoperation);
+				System.out.println("adding " + athleteUsername + " to "+coach.getUsername() + "'s request-list.");
+	
+		}
+			
+	}
+}
+	
+	public void addRequestCoachToAthlete(Athlete athlete, String coachUsername) {
+		//method for adding coach to athlete's requests
+		
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername() )).first();
+		
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<String> requestCoaches = (ArrayList<String>) found.get("Requests");
+			
+			
+			
+	
+			boolean alreadyPresent = false;
+			for (String element : requestCoaches) {
+		    
+			    if ( element.equals(coachUsername) ) {
+			    	System.out.println("athlete already in request-list");
+			    	alreadyPresent = true;
+			    	break;
+			    }
+		}
+			
+			if (! alreadyPresent ) {
+				//updates coach-list
+				requestCoaches.add(coachUsername);
+				
+
+				//updates document with updated coach-array
+				
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+
+				Bson updatedvalue = new Document("Requests", requestCoaches);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found2, updateoperation);
+				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s request-list.");
+	
+		}
+			
+	}
+}
+	
 	public void deleteCoachForAthlete(Athlete athlete, String coachUsername) {
 		
 	//method for deleting coach from athlete's coach-list
@@ -437,6 +523,35 @@ public class Database {
 			
 		}
 	}
+	
+	public List<String> getRequestsForCoach(Coach coach) {
+		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+		
+		if (found == null) {
+			System.out.println("no coach with this username");
+			return null;
+		} else {
+			List<String> requests = (ArrayList<String>) found.get("Requests");
+			return requests;
+	
+			
+		}
+	}
+	
+	public List<String> getRequestsForAthlete(Athlete athlete) {
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		
+		if (found == null) {
+			System.out.println("no athlete with this username");
+			return null;
+		} else {
+			List<String> coaches = (ArrayList<String>) found.get("Requests");
+			return coaches;
+	
+			
+		}
+	}
+	
 	
 
 	
