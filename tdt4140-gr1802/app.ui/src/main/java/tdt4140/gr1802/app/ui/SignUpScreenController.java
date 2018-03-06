@@ -34,7 +34,6 @@ import javafx.event.ActionEvent;
 public class SignUpScreenController{
 	
 	private SignUp signUp; 
-	
 	@FXML
 	private Text txtName; 
 	@FXML
@@ -42,7 +41,7 @@ public class SignUpScreenController{
 	@FXML
 	private Text txtPassword;
 	@FXML
-	private Text txtRetypePassword;
+	private Text txtRetype;
 	@FXML
 	private Text txtAthOrCoa;
 	@FXML
@@ -68,8 +67,6 @@ public class SignUpScreenController{
 	public void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
 	public void radioCoachButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
 	
-
-	
 	public boolean checkEmptyInformation(){
 		if (txtName.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()){
 			return false; 
@@ -79,24 +76,8 @@ public class SignUpScreenController{
 		}
 	}
 	
-
-		
-	public void backToLogin(ActionEvent event) throws IOException{
-		if (checkEmptyInformation()){
-			
-			
-			Parent root2 = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
-			Scene toLoginScene = new Scene(root2,800,600);
-			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-			
-			window.setScene(toLoginScene);
-			window.show();
-		}
-		
-	}
-	
+	//Redirects you back to login-screen(fxApp.fxml) when "back to login" button is pressed. 
 	public void backToLoginFromSignUpScreen (ActionEvent event) throws IOException{
-		
 		Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
 		Scene scene = new Scene(root5,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -105,6 +86,7 @@ public class SignUpScreenController{
 	}
 	
 	
+	//If all conditions are satisfied, user gets redirected to login-screen. 
 	@FXML
 	public void signUpButtonPressed(ActionEvent event) throws IOException {
 		String typedName = txtFieldName.getText();
@@ -153,12 +135,5 @@ public class SignUpScreenController{
 			window.show();
 		}
 	}
-	
-	// Currently not in use
-	/*public ArrayList<String> getEventuallyTypedInformation(String typedUsername, String typedPassword) {
-		ArrayList<String> nameAndPassword = new ArrayList<>();
-		nameAndPassword.add(typedUsername); nameAndPassword.add(typedUsername);
-		return nameAndPassword;
-	}*/
 	
 }

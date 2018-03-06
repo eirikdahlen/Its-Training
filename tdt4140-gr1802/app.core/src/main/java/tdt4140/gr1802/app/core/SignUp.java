@@ -1,16 +1,15 @@
 package tdt4140.gr1802.app.core;
 
 public class SignUp {
-	String username; 
-	String name;
-	String password; 
-	String repeatPassword; 
-	boolean isAthlete; //No need for isCoach if isAthlete is false, then the object will be Coach. 
-	static User newUser;
-	static boolean validLogin = false;
+	private String username; 
+	private String name;
+	private String password; 
+	private String repeatPassword; 
+	private boolean isAthlete; //No need for isCoach if isAthlete is false, then the object will be Coach. 
+	private static User newUser; // private static so we can exchange the user between other classes. 
+	private static boolean validLogin = false; 
+	private Database db;
 	
-	
-	Database db;
 	
 	public SignUp(String username, String name, String password, String repeatPassword, boolean isAthlete) {
 			this.username = username;
@@ -18,10 +17,9 @@ public class SignUp {
 			this.password = password;
 			this.repeatPassword = repeatPassword; 
 			this.isAthlete = isAthlete;
-			this.db = new Database();
-			
+			this.db = new Database();	
 		}
-	
+
 	public boolean checkNameOnlyLetters() {
 		if (this.name.matches("[a-zA-Z ]+")) {
 			return true; 
@@ -46,7 +44,6 @@ public class SignUp {
 			return true;
 		}
 	}
-	
 	
 	public boolean checkPasswordLength() {
 		if (this.password.length() <= 4) {
