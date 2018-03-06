@@ -494,6 +494,101 @@ public class Database {
 		
 	}
 	
+	public void deleteCoachRequestForAthlete(Athlete athlete, String coachUsername) {
+		
+	//method for deleting coach from athlete's coach-list
+		
+	
+	Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+	if (found == null) {
+		System.out.println("no athlete with this username");
+	} else {
+		List<String> coaches = (ArrayList<String>) found.get("Requests");
+		
+
+		boolean alreadyPresent = false;
+		for (String element : coaches) {
+	    
+		    if ( element.equals(coachUsername) ) {
+		    	alreadyPresent = true;
+		    	break;
+		    }
+	}
+		
+		if ( alreadyPresent ) {
+			//updates coach-list
+			coaches.remove(coachUsername);
+			
+			
+
+			//updates document with updated coach-array
+			
+			Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+
+			Bson updatedvalue = new Document("Requests", coaches);
+			Bson updateoperation = new Document("$set", updatedvalue);
+			athleteCollection.updateOne(found2, updateoperation);
+			System.out.println("deleted " + coachUsername + " from "+athlete.getUsername() + "'s request.");
+
+	} else {
+		System.out.println("coach not in athlete's request-list");
+		
+	}
+			
+	}
+		
+	
+		
+	}
+	
+	public void deleteAthleteRequestForCoach(Coach coach, String athleteUsername) {
+		//method for adding athlete to coach's athlete-listt
+			
+			
+			Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
+			
+			if (found == null) {
+				System.out.println("no coach with this username");
+			} else {
+				List<String> athletes = (ArrayList<String>) found.get("Requests");
+				
+				
+				
+		
+				boolean alreadyPresent = false;
+				for (String element : athletes) {
+			    
+				    if ( element.equals(athleteUsername) ) {
+			
+				    	alreadyPresent = true;
+				    	break;
+				    }
+			}
+				
+				if (alreadyPresent ) {
+					//updates coach-list
+					athletes.remove(athleteUsername);
+					
+
+					//updates document with updated coach-array
+					
+					Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+
+					Bson updatedvalue = new Document("Requests", athletes);
+					Bson updateoperation = new Document("$set", updatedvalue);
+					coachCollection.updateOne(found2, updateoperation);
+					System.out.println("deleting " + athleteUsername + " from "+coach.getUsername() + "'s request-list.");
+		
+			} else {
+				System.out.println("Athlete not in coach's request-list");
+			}
+				
+		}
+			
+			
+		}
+	
 	
 	
 	public List<String> getCoachesForAthlete(Athlete athlete) {
