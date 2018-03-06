@@ -5,10 +5,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -41,15 +38,6 @@
       </Button>
     <AnchorPane layoutX="-136.0" layoutY="63.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
       <TextArea fx:id="txtAreaFeedbackLogin" layoutX="416.0" layoutY="83.0" prefHeight="55.0" prefWidth="372.0" />
-      <HBox layoutX="31.0" layoutY="113.0" prefHeight="443.0" prefWidth="400.0">
-         <children>
-            <ImageView fitHeight="440.0" fitWidth="739.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../OneDrive/Bilder/12208323_10153346795422413_4571802329947829689_n.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </HBox>
       <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
    </children>
 </AnchorPane>

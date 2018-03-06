@@ -22,8 +22,10 @@ public class LogIn {
 	
 	public boolean validLogIn() {
 		if (checkUsernameAthlete(username) && checkUsernameMatchPassword(username, password)) {
+			inloggedUser = this.db.getAthlete(username);
 			return true;
 		} else if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
+			inloggedUser = this.db.getCoach(username);
 			return true;
 		}
 		return false; 
@@ -41,6 +43,7 @@ public class LogIn {
 		return db.getPassword(username).equals(password);
 	}
 	
+	public User getUser() { return this.inloggedUser; }
 	
 
 }

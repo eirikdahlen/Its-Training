@@ -74,16 +74,26 @@ public class FxAppController {
     		}
     		
     		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
+    			
+    			// --- Valid Athlete-login ---
+    			this.app.setUser(this.loginScreenController.getLogin().getUser());
+    			
     			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
     			this.scene = new Scene(root);
     			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
     			this.changeScene();
     		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
+    			
+    			// --- Valid Coach-login ---
+    			this.app.setUser(this.loginScreenController.getLogin().getUser());
+    			
     			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
     			this.scene = new Scene(root);
     			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
     			this.changeScene();
     		}
+    		
+    		System.out.println(this.app.getUser());
 
     }
     
@@ -95,12 +105,7 @@ public class FxAppController {
     		this.signUpScreenController = new SignUpScreenController();
     		System.out.println(this);
     		System.out.println(this.signUpScreenController);
-    	
-    		String typedUsername = txtUsername.getText();
-    		String typedPassword = txtPassword.getText();
-    	
-  
-    		//signUpScreenController.getEventuallyTypedInformation(typedUsername, typedPassword);
+    
     
  
     		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));

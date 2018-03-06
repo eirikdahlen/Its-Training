@@ -28,7 +28,9 @@ public class FxApp extends Application {
 	
 	
 	public static void main(String[] args) {
+		
 		launch(args);
+		System.out.println("main method in FxApp");
 	}
 
 	
