@@ -9,11 +9,11 @@ public class SignUpTest {
 	
 	@Test
 	public void testSignUpUsernameOnlyLetters() {
-		assertTrue(signup.checkNameOnlyLetters(signup.username));
+		assertTrue(signup.checkNameOnlyLetters());
 	}
 	
 	public void testPasswordEquality() {
 		signup = new SignUp(null, null, "123TEST", "123test", false);
-		assertFalse(signup.checkEqualPasswords("123TEST",  "123test"));
+		assertFalse(signup.checkEqualPasswords());
 	}
 }

@@ -29,7 +29,7 @@ public class FxAppController {
     @FXML
     private Button btbSignUp;
     @FXML
-    private TextArea txtAreaFeedbackLogin;
+    private Label txtLabelFeedback;
    
     private LoginScreenController loginScreenController;
     private SignUpScreenController signUpScreenController;
@@ -60,17 +60,17 @@ public class FxAppController {
     		// Check valid login and set TextAreaFeedback text
     		boolean validLogin = false;
     		
-    		if (loginScreenController.getLogin().validLogIn()) {
-    			txtAreaFeedbackLogin.setText("Logging in...");
-    			validLogin = true;
-    		} else if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
+    		if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
     			
-    			txtAreaFeedbackLogin.setText("Username don't exits");
-    			System.out.println(txtAreaFeedbackLogin.getText());
+    			txtLabelFeedback.setText("Username don't exits");
+    			System.out.println(txtLabelFeedback.getText());
     			
     		} else if (loginScreenController.getLogin().checkUserNameExits(typedUsername) &&
     				!loginScreenController.getLogin().checkUsernameMatchPassword(typedUsername, typedPassword)) {
-    			txtAreaFeedbackLogin.setText("Wrong password");
+    			txtLabelFeedback.setText("Wrong password");
+    		} else if (loginScreenController.getLogin().validLogIn()) {
+    			txtLabelFeedback.setText("Logging in...");
+    			validLogin = true;
     		}
     		
     		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
@@ -103,10 +103,6 @@ public class FxAppController {
     public void signUpButton(ActionEvent event) throws IOException {
     		
     		this.signUpScreenController = new SignUpScreenController();
-    		System.out.println(this);
-    		System.out.println(this.signUpScreenController);
-    
-    
  
     		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
     		this.scene = new Scene(root);

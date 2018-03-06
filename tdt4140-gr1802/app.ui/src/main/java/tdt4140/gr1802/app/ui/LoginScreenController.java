@@ -63,15 +63,15 @@ public class LoginScreenController {
 		login = new LogIn(typedUsername, typedPassword);
 		
 		
-		if (login.validLogIn()) {
-			System.out.println("Login Success!");
-
-		} else if (!login.checkUsernameAthlete(typedUsername) 
+		
+		if (!login.checkUsernameAthlete(typedUsername) 
 				|| !login.checkUsernameCoach(typedUsername)) {
 			System.out.println("Username don't excists.");
 			
 		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
 			System.out.println("Username don't matches password.");
+		} else if (login.validLogIn()) {
+			System.out.println("valid login");
 		}
 		
 		/*
