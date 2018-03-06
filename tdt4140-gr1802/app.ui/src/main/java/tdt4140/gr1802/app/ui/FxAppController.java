@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
@@ -19,72 +20,94 @@ public class FxAppController {
 
     @FXML
     private Button btbLogin;
-
     @FXML
     private TextField txtUsername;
-
     @FXML
     private PasswordField txtPassword;
-
     @FXML
     private Label lblOverhead;
-
     @FXML
     private Button btbSignUp;
-    
-  
+    @FXML
+    private TextArea txtAreaFeedbackLogin;
+   
+    private LoginScreenController loginScreenController;
+    private SignUpScreenController signUpScreenController;
     
     private App app;
     
-    Parent root;
-    Scene scene;
-    Stage window;
+    private Parent root;
+    private Scene scene;
+    private Stage window;
     
   
+    public String getTypedUsername() {
+    		return txtUsername.getText();
+    }
+    
 
     @FXML
     void loginButton(ActionEvent event) throws IOException {
     		app = new App();
     	
-    		LoginScreenController loginScreen = new LoginScreenController();
+    		loginScreenController = new LoginScreenController();
+    		
     		String typedUsername = txtUsername.getText();
     		String typedPassword = txtPassword.getText();
     		
-    		loginScreen.loginButton(event, typedUsername, typedPassword, app.getDb());
+    		loginScreenController.loginButton(event, typedUsername, typedPassword);
     		
-    		//
-    		if (app.getDb().isAthlete(typedUsername)) {
-    			app.setUser(app.getDb().getAthlete(typedUsername));
+    		// Check valid login and set TextAreaFeedback text
+    		boolean validLogin = false;
+    		
+    		if (loginScreenController.getLogin().validLogIn()) {
+    			txtAreaFeedbackLogin.setText("Logging in...");
+    			validLogin = true;
+    		} else if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
+    			
+    			txtAreaFeedbackLogin.setText("Username don't exits");
+    			System.out.println(txtAreaFeedbackLogin.getText());
+    			
+    		} else if (loginScreenController.getLogin().checkUserNameExits(typedUsername) &&
+    				!loginScreenController.getLogin().checkUsernameMatchPassword(typedUsername, typedPassword)) {
+    			txtAreaFeedbackLogin.setText("Wrong password");
     		}
     		
-    		
-
-    		this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
-		this.scene = new Scene(root);
-		this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		
-		this.changeScene();
+    		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
+    			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
+    			this.scene = new Scene(root);
+    			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    			this.changeScene();
+    		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
+    			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+    			this.scene = new Scene(root);
+    			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    			this.changeScene();
+    		}
 
     }
     
  
 
     @FXML
-    void signUpButton(ActionEvent event) throws IOException {
+    public void signUpButton(ActionEvent event) throws IOException {
+    		
+    		this.signUpScreenController = new SignUpScreenController();
+    		System.out.println(this);
+    		System.out.println(this.signUpScreenController);
     	
     		String typedUsername = txtUsername.getText();
     		String typedPassword = txtPassword.getText();
     	
-    		SignUpScreenController signUpScreen = new SignUpScreenController();
-    		signUpScreen.getEventuallyTypedInformation(typedUsername, typedPassword);
-	
+  
+    		//signUpScreenController.getEventuallyTypedInformation(typedUsername, typedPassword);
+    
+ 
     		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
     		this.scene = new Scene(root);
     		this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    		
     		this.changeScene();
-    	
-    	
-    
     }
     
    

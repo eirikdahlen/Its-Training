@@ -39,6 +39,8 @@ public class LoginScreenController {
 	@FXML
 	private Stage signUpStage;
 	
+	private Database db = new Database();
+	
 	
 	
 	
@@ -52,11 +54,13 @@ public class LoginScreenController {
 		window.show();
 	}
 	
+	public LogIn getLogin() {return this.login; }
 	
-	public void loginButton(ActionEvent event, String typedUsername, String typedPassword, Database db) throws IOException {
+	
+	public void loginButton(ActionEvent event, String typedUsername, String typedPassword) throws IOException {
 
 		
-		login = new LogIn(typedUsername, typedPassword, db);
+		login = new LogIn(typedUsername, typedPassword);
 		
 		
 		if (login.validLogIn()) {
@@ -64,10 +68,10 @@ public class LoginScreenController {
 
 		} else if (!login.checkUsernameAthlete(typedUsername) 
 				|| !login.checkUsernameCoach(typedUsername)) {
-			lblOverhead.setText("Username don't excists.");
+			System.out.println("Username don't excists.");
 			
 		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
-			lblOverhead.setText("Username don't matches password.");
+			System.out.println("Username don't matches password.");
 		}
 		
 		/*

@@ -4,26 +4,29 @@ public class LogIn {
 	
 	User inloggedUser = null;
 	
+	private String username; 
+	private String password;
+	
 	Database db;
 	
-	public LogIn(String username, String password, Database db) {
-		this.db = db;
-		if ( checkUsernameAthlete(username) ||
-				checkUsernameMatchPassword(username, password)) {
-				// Athlete-login
-				inloggedUser = db.getAthlete(username);
-		} else if (
-				checkUsernameCoach(username) ||
-				checkUsernameMatchPassword(username, password)) {
-				// Coach-login
-				inloggedUser = db.getCoach(username);
-		}
-		
+	public LogIn(String username, String password) {
+		this.username = username; 
+		this.password = password;
+		this.db = new Database();
+	}
+	
+	public boolean checkUserNameExits(String username) { 
+		return checkUsernameAthlete(username) || checkUsernameCoach(username);
 	}
 	
 	
 	public boolean validLogIn() {
-		return inloggedUser != null; 
+		if (checkUsernameAthlete(username) && checkUsernameMatchPassword(username, password)) {
+			return true;
+		} else if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
+			return true;
+		}
+		return false; 
 	}
 	
 	public boolean checkUsernameAthlete(String username) {
