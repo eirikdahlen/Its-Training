@@ -449,6 +449,8 @@ public class Database {
 	
 	public void deleteAthleteForCoach(Coach coach, String athleteUsername) {
 	//method for adding athlete to coach's athlete-listt
+		System.out.println("inni database");
+		System.out.println(coach.getUsername() + " "+athleteUsername);
 		
 		
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
