@@ -25,6 +25,8 @@ import tdt4140.gr1802.app.core.Database;
 
 public class CoachRequestsController {
 	
+	// Declearing variables for elements in fxml
+	
 	private Database database;
 	private Athlete athlete;
 

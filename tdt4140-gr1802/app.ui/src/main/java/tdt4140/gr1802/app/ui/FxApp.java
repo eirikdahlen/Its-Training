@@ -11,8 +11,6 @@ public class FxApp extends Application {
 	Stage window;
 	//Scene loginScreen, signUpScreen, mainScreen;
 	
-
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -21,18 +19,11 @@ public class FxApp extends Application {
 		// scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
 	}
 	
-	
-	
-	
+	// Main method that launches the app
 	public static void main(String[] args) {
-		
 		launch(args);
 		System.out.println("main method in FxApp");
 	}
-
-	
-
 }

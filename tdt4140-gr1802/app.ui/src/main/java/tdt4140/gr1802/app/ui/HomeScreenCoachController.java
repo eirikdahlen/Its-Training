@@ -13,13 +13,13 @@ import javafx.stage.Stage;
 
 public class HomeScreenCoachController {
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
 	
 	@FXML
 	private Button btAthleteRequests;
 
-	
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
@@ -38,6 +38,4 @@ public class HomeScreenCoachController {
 		window.setScene(scene);
 		window.show();
 	}
-	
-
 }

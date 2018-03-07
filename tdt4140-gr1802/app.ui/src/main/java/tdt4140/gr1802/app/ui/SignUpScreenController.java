@@ -33,6 +33,7 @@ import javafx.event.ActionEvent;
 
 public class SignUpScreenController{
 	
+	// Declearing variables for elements in fxml	
 	private SignUp signUp; 
 	@FXML
 	private Text txtName; 
@@ -97,27 +98,22 @@ public class SignUpScreenController{
 		System.out.println(typedName + typedUsername + typedPassword);
 		
 		boolean isAthlete = radioAthlete.isSelected(); 
-		
 		this.signUp = new SignUp(typedUsername, typedName, typedPassword, typedPasswordRetype, isAthlete);
-		
 		String textToLabel = "";
 		
+		// Feedback on possible errors, added in new line
 		if (!this.signUp.checkNameOnlyLetters()) {
 			textToLabel += "Name can only be letters. \n";
 		}
-		
 		if (!this.signUp.checkUserNameValidAndLenght()) {
 			textToLabel += "Usename must be only letters and numbers. \n";
 		}
-		
 		if (!this.signUp.checkUserNameNotExitsInDB()) {
 			textToLabel += "Username already in use. \n";
 		}
-		
 		if (!this.signUp.checkPasswordLength()) {
 			textToLabel += "Password must be 4 chars or longer. \n";
 		}
-		
 		if (!this.signUp.checkEqualPasswords()) {
 			textToLabel += "Passwors must be equal. \n";
 		}
@@ -135,5 +131,4 @@ public class SignUpScreenController{
 			window.show();
 		}
 	}
-	
 }

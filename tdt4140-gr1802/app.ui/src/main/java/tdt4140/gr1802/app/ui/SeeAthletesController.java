@@ -24,9 +24,11 @@ import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
 public class SeeAthletesController {
+	
 	private Database database = new Database();
 	private Coach coach;
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
 	
@@ -58,15 +60,12 @@ public class SeeAthletesController {
 	private TableColumn<Athlete, String> nameColumn;
 	
 	private CoachSeeWorkoutsController coachSeeWorkouts = new CoachSeeWorkoutsController();
-	
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
-	
-	
 	
 	// returns an ObservableList with all the Athletes registered to the coach logged in
 	public ObservableList<Athlete> getAthletes(){
-		
-		for (String uname:coach.getAthletes()) {
+		// Loops through the athletes for a coach and adds to list of athletes in application
+		for (String uname : coach.getAthletes()) {
 			Athlete athlete = database.getAthlete(uname);
 			if (athlete != null) {
 				athletes.add(athlete);
@@ -148,7 +147,6 @@ public class SeeAthletesController {
 	
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
-		
 		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -165,5 +163,4 @@ public class SeeAthletesController {
 		window.setScene(scene);
 		window.show();
 	}
-
 }

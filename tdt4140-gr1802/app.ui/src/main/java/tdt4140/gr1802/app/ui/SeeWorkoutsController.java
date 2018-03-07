@@ -26,9 +26,11 @@ import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
 
 public class SeeWorkoutsController{
+	
 	private Database database;
 	private Athlete athlete;
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private TableView<Workout> tableView;
 	
@@ -58,9 +60,7 @@ public class SeeWorkoutsController{
 	
 	@FXML
 	private Button btCoachRequests;
-	
 
-	
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
 	public ObservableList<Workout> getWorkouts(){
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
@@ -85,13 +85,12 @@ public class SeeWorkoutsController{
 		
 		// Fill table with values
 		tableView.setItems(getWorkouts());
-		
 	}
 	
-	// Side-menu buttons
+	// Side-menu buttons, changes scenes
 	public void clickAddWorkout(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root, 800, 600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
@@ -100,7 +99,7 @@ public class SeeWorkoutsController{
 	
 	public void clickSeeWorkouts (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root, 800, 600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		window.setScene(scene);
 		window.show();
@@ -108,22 +107,18 @@ public class SeeWorkoutsController{
 	
 	public void clickSeeCoaches(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeCoaches.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root, 800, 600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
 	public void clickCoachRequest(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root, 800, 600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
-	
-
 }

@@ -6,9 +6,11 @@ import junit.framework.TestSuite;
 
 public class TestExample extends TestCase {
 	
+	
+	// Test example
 	public TestExample( String testName)
 	{
-		super( testName );
+		super(testName);
 	}
 	
 	public static Test suite() {
@@ -18,5 +20,4 @@ public class TestExample extends TestCase {
 	public void testApp() {
 		assertTrue(true);
 	}
-
 }

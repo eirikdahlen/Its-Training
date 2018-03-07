@@ -22,6 +22,8 @@ import tdt4140.gr1802.app.core.Workout;
 
 public class CoachSeeWorkoutsController {
 	
+	// Declearing variables for elements in fxml
+	
 	@FXML
 	private TableView<Workout> tableView;
 	
@@ -59,17 +61,15 @@ public class CoachSeeWorkoutsController {
 	// Help-method that returns an ObservableList with all the Workouts for the chosen Athlete
 	public ObservableList<Workout> getWorkouts(){
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
-
-		for (Workout wo:athlete.getAllWorkouts()) {
+		for (Workout wo : athlete.getAllWorkouts()) {
 			workouts.add(wo);
 		}
-		
 		return workouts;
 	}
 	
 	public void initialize() {
 		// set up the columns in the table
-		txtAthlete.setText("Athlete: "+athlete.getName());
+		txtAthlete.setText("Athlete: " + athlete.getName());
 		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
@@ -93,7 +93,7 @@ public class CoachSeeWorkoutsController {
 	}
 	
 	public void clickAthleteRequests (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("AthleteRequests.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

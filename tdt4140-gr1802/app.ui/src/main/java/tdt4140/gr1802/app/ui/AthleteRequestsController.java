@@ -24,6 +24,8 @@ import tdt4140.gr1802.app.core.Database;
 
 public class AthleteRequestsController {
 	
+	// Declearing variables for elements in fxml
+	
 	private Database database;
 	private static Coach coach; 
 	
@@ -51,7 +53,8 @@ public class AthleteRequestsController {
 	
 	// Help-method that returns an ObervableList with all the Athlete-requests
 	public ObservableList<Athlete> getAthletes(){
-		for (String uname:coach.getQueuedAthletes()) {
+		// Adds all the queued athletes in the database
+		for (String uname : coach.getQueuedAthletes()) {
 			Athlete athlete = database.getAthlete(uname);
 			if (athlete != null) {
 				athletes.add(athlete);
@@ -124,5 +127,4 @@ public class AthleteRequestsController {
 		window.setScene(scene);
 		window.show();
 	}
-
 }

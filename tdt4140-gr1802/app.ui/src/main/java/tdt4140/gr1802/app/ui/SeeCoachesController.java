@@ -34,6 +34,7 @@ import tdt4140.gr1802.app.core.Database;
 
 public class SeeCoachesController {
 	
+	// Declearing variables for elements in fxml
 	private Database database;
 	private Athlete athlete;
 	
@@ -73,7 +74,7 @@ public class SeeCoachesController {
 	
 	// Returns an ObervableList with the Coaches registered to the Athlete logged in
 	public ObservableList<Coach> getCoaches(){
-		for (String uname:athlete.getCoaches()) {
+		for (String uname : athlete.getCoaches()) {
 			Coach coach = database.getCoach(uname);
 			if (coach != null) {
 				coaches.add(coach);
@@ -138,13 +139,13 @@ public class SeeCoachesController {
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
 	
 	public void clickSeeWorkouts (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
 		window.setScene(scene);
 		window.show();
 	}
@@ -166,7 +167,4 @@ public class SeeCoachesController {
 		window.setScene(scene);
 		window.show();
 	}
-	
-	
-
 }

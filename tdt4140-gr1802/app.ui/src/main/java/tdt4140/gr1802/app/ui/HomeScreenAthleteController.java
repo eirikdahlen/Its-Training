@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 public class HomeScreenAthleteController {
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private Button btAddWorkout;
 	
@@ -26,8 +27,6 @@ public class HomeScreenAthleteController {
 	@FXML
 	private Button btCoachRequests;
 	
-	
-	
 	// Side-menu buttons
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
 		// Open new window 
@@ -37,13 +36,13 @@ public class HomeScreenAthleteController {
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
 	
 	public void clickSeeWorkouts (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
 		window.setScene(scene);
 		window.show();
 	}
@@ -52,7 +51,7 @@ public class HomeScreenAthleteController {
 		Parent root = FXMLLoader.load(getClass().getResource("SeeCoaches.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		
+
 		window.setScene(scene);
 		window.show();
 	}
@@ -65,9 +64,4 @@ public class HomeScreenAthleteController {
 		window.setScene(scene);
 		window.show();
 	}
-	
-	
-	
-	
-
 }

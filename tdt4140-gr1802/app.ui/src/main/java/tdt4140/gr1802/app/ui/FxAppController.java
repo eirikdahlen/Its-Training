@@ -18,7 +18,8 @@ import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 
 public class FxAppController {
-
+	
+	// Declearing variables for elements in fxml
     @FXML
     private Button btbLogin;
     @FXML
@@ -36,99 +37,82 @@ public class FxAppController {
     private SignUpScreenController signUpScreenController = new SignUpScreenController();
     
     private AddWorkoutController addWorkoutController = new AddWorkoutController();
-    private    AthleteRequestsController athleteRequestsController = new AthleteRequestsController ();
+    private AthleteRequestsController athleteRequestsController = new AthleteRequestsController();
     private CoachRequestsController coachRequestsController = new CoachRequestsController();
     private SeeAthletesController seeAthletesController = new SeeAthletesController();
     private SeeCoachesController seeCoachesController = new SeeCoachesController();
     private SeeWorkoutsController seeWorkoutsController = new SeeWorkoutsController();
     
-    
     private App app;
-    
     private Parent root;
     private Scene scene;
     private Stage window;
     
-  
+    // Getter method for username
     public String getTypedUsername() {
-    		return txtUsername.getText();
+    	return txtUsername.getText();
     }
     
-
     @FXML
     void loginButton(ActionEvent event) throws IOException {
-    		app = new App();
-    	
-    		loginScreenController = new LoginScreenController();
-    		
-    		String typedUsername = txtUsername.getText();
-    		String typedPassword = txtPassword.getText();
-    		
-    		loginScreenController.loginButton(event, typedUsername, typedPassword);
-    		
-    		// Check valid login and set TextAreaFeedback text
-    		boolean validLogin = false;
-    		
-    		if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
-    			
-    			txtLabelFeedback.setText("Username don't exits");
-    			System.out.println(txtLabelFeedback.getText());
-    			
-    		} else if (loginScreenController.getLogin().checkUserNameExits(typedUsername) &&
-    				!loginScreenController.getLogin().checkUsernameMatchPassword(typedUsername, typedPassword)) {
-    			txtLabelFeedback.setText("Wrong password");
-    		} else if (loginScreenController.getLogin().validLogIn()) {
-    			txtLabelFeedback.setText("Logging in...");
-    			validLogin = true;
-    		}
-    		
-    		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
-    			
-    			// --- Valid Athlete-login ---
-    			
-    			App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
-    			System.out.println(App.athlete.getName());
-    			
-    			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
-    			this.scene = new Scene(root);
-    			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    			this.changeScene();
-    		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
-    			
-    			// --- Valid Coach-login ---
-    			//this.app.setUser(this.loginScreenController.getLogin().getUser());
-    			App.coach = App.db.getCoach(this.loginScreenController.getLogin().getUser().getUsername());
-    			
-    			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
-    			this.scene = new Scene(root);
-    			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    			this.changeScene();
-    		}
-    		
-
+		app = new App();
+	
+		loginScreenController = new LoginScreenController();
+		
+		String typedUsername = txtUsername.getText();
+		String typedPassword = txtPassword.getText();
+		
+		loginScreenController.loginButton(event, typedUsername, typedPassword);
+		
+		// Check valid login and set TextAreaFeedback text
+		boolean validLogin = false;
+		
+		// If-statements checking username and password
+		if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
+			txtLabelFeedback.setText("Username don't exits");
+			System.out.println(txtLabelFeedback.getText());
+		} else if (loginScreenController.getLogin().checkUserNameExits(typedUsername) &&
+				!loginScreenController.getLogin().checkUsernameMatchPassword(typedUsername, typedPassword)) {
+			txtLabelFeedback.setText("Wrong password");
+		} else if (loginScreenController.getLogin().validLogIn()) {
+			txtLabelFeedback.setText("Logging in...");
+			validLogin = true;
+		}
+		
+		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
+			// --- Valid Athlete-login ---
+			App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
+			System.out.println(App.athlete.getName());
+			
+			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
+			this.scene = new Scene(root);
+			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			this.changeScene();
+		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
+			// --- Valid Coach-login ---
+			//this.app.setUser(this.loginScreenController.getLogin().getUser());
+			App.coach = App.db.getCoach(this.loginScreenController.getLogin().getUser().getUsername());
+			
+			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+			this.scene = new Scene(root);
+			this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			this.changeScene();
+		}
     }
     
- 
-
     @FXML
     public void signUpButton(ActionEvent event) throws IOException {
-    		
-    		this.signUpScreenController = new SignUpScreenController();
- 
-    		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
-    		this.scene = new Scene(root);
-    		this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    		
-    		this.changeScene();
+		this.signUpScreenController = new SignUpScreenController();
+		this.root = FXMLLoader.load(getClass().getResource("SignUpScreen.fxml"));
+		this.scene = new Scene(root);
+		this.window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		this.changeScene();
     }
     
-   
-    
-    
+    // Help-method for changing scene, should be called after root, scene and window are changed. 
     private void changeScene() {
-    		// Help-method for changing scene, should be called after root, scene and window are changed. 
-    		window.setScene(this.scene);
-    		window.show();
+    	window.setScene(this.scene);
+    	window.show();
     }
     
 //    private void setControllers() {

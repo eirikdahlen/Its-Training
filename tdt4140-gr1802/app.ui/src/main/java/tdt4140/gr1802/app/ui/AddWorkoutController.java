@@ -21,6 +21,7 @@ import tdt4140.gr1802.app.core.Workout;
 
 public class AddWorkoutController {
 	
+	// Making variables for every element in the fxml-file
 	@FXML
 	private Button btAddWorkout;
 	
@@ -45,25 +46,24 @@ public class AddWorkoutController {
 	private static Athlete athlete;
 	
 	
-	
+	// Initialization method
 	public void initialize() {
 		this.athlete = App.athlete;
 		this.db = App.db;
 	}
 	
-	
+	// Method called when "Add" button clicked
 	public void clickAddButton (ActionEvent event) throws IOException {
 		try {
-		String filepath = filepathTextField.getText();
-		Workout newWorkout = new Workout(this.athlete, filepath);
-		db.createWorkout(newWorkout);
-		filepathTextField.setText("Workout Added");
+			// The text in the application is used as a filepath, adds workout to the DB
+			String filepath = filepathTextField.getText();
+			Workout newWorkout = new Workout(this.athlete, filepath);
+			db.createWorkout(newWorkout);
+			filepathTextField.setText("Workout Added");
 		}
 		catch(IOException e) {
 			filepathTextField.setText("Filepath is not valid");
 		}
-		
-		
 	}
 	
 	

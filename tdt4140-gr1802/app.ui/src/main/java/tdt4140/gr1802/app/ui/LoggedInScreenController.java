@@ -14,11 +14,10 @@ import javafx.stage.Stage;
 
 public class LoggedInScreenController {
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private Button backToLogin; 
-	
-	
-	
+
 	public void backToLoginScreen (ActionEvent event) throws IOException{
 		Parent root4 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
 		Scene scene = new Scene(root4,800,600);

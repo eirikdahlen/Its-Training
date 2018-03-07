@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 public class DatabaseTest {
 	
 	Database database;
@@ -15,7 +14,6 @@ public class DatabaseTest {
 		this.database = new Database();
 	}
 
-	
 	public static void main(String[] args) throws IOException {
 		
 		//uncomment the tests to run
@@ -32,7 +30,7 @@ public class DatabaseTest {
 		//if username not in use, check to see if coach is in MongoDB
 		
 		
-		//_____FUNKER BARE HVIS MAN HAR CSV FIL PÅ RIKTIG STED____
+		//_____Only works if you have csv-file on correct "place"____
 		//test.testCreateWorkout();
 		//if datetime not in use, check to see if session is in MongoDB (in the right collection)
 		
@@ -52,33 +50,24 @@ public class DatabaseTest {
 			
 	}
 	
-	
 	public void testCreateAthlete() {
-		
-
-		
 		//adds athlete for testing
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
-		
 	}
 	
-	
 	public void testCreateCoach() {
-		
-		//adds coack for testing
+		//adds coach for testing
 		Coach coach1 = new Coach("Petter74", "Petter", new ArrayList<String>(), new ArrayList<String>());
 		
 		//adds athlete to database
 		database.createCoach(coach1);
-		
 	}
 	
 	
 	public void testCreateWorkout() throws IOException {
-		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "Kjetil", new ArrayList<String>(), new ArrayList<String>());
 		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv");
@@ -88,12 +77,9 @@ public class DatabaseTest {
 		
 		//adds workout to database
 		database.createWorkout(workout1);
-	
 	}
 	
 	public void testGetAllWorkouts() {
-		
-
 		//creates athlete and workout for testing 
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
@@ -106,23 +92,20 @@ public class DatabaseTest {
 		//retrieves workout-object from database
 		List<Workout> retrievedWorkouts = database.getAllWorkouts(athlete1);
 		
-		
-		//prints only the three first elemements to confirm test
+		//prints only the three first elements to confirm test
 		int i = 0;
 		System.out.println();
 		System.out.println("Henter 3 workouts fra " + athlete1.getUsername());
 		for (Workout element : retrievedWorkouts) {
-		    System.out.println(element.getDateString());
-
-		   i++;
-		   if (i > 2) {
-			   break;
+			System.out.println(element.getDateString());
+			i++;
+			if (i > 2) {
+				break;
 		   }
 		}
 	}
 	
 	public void testAddCoachToAthlete() {
-		
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
@@ -137,16 +120,12 @@ public class DatabaseTest {
 		}
 		//_______________________________________
 		
-		
-		
 		//creates coaches for testing 
 		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
 		Coach coach2 = new Coach("Jens32", "Petter", new ArrayList<String>(), new ArrayList<String>());
 		
 		//the actual addCoachToAthlete-method
 		database.addCoachToAthlete(athlete1, coach1.getUsername());
-		
-		
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		List<String> coaches2 = database.getCoachesForAthlete(athlete1);
@@ -157,13 +136,9 @@ public class DatabaseTest {
 		    System.out.println(element);
 		}
 		//_______________________________________
-		
-		
 	}
 	
 	public void testGetCoachesForAthlete() {
-		
-		
 		//creates athlete for testing	
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		
@@ -173,10 +148,8 @@ public class DatabaseTest {
 		for (String element : coaches) {
 		    System.out.println(element);
 		}
-		
 	}
 
-	
 /*
 	public void testGetAllWorkoutsNonExistingAthlete() {
 		
@@ -198,8 +171,6 @@ public class DatabaseTest {
 	*/
 
 	
-	
-	
 	//_______jUnit_______
 
 	@Test
@@ -216,10 +187,7 @@ public class DatabaseTest {
 
 		//compares username, to see if its the same coach
 		assertEquals(athlete1.getUsername(), retrievedAthlete.getUsername());
-		
-		
 	}
-	
 	
 	@Test
 	public void testGetCoach() {
@@ -235,10 +203,7 @@ public class DatabaseTest {
 
 		//compares username, to see if its the same coach
 		assertEquals(coach1.getUsername(), retrievedCoach.getUsername());
-		
-		
 	}
-	
 	
 	@Test
 	public void testGetWorkout() throws IOException {
@@ -255,14 +220,5 @@ public class DatabaseTest {
 
 		//compares datestring, to see if its the same workout
 		assertEquals(workout1.getDateString(), retrievedWorkout.getDateString());
-		
-		
 	}
-	
-
-
-	
 }
-	
-
-

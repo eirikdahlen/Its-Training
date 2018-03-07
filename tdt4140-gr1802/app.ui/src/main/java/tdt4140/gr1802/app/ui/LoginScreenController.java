@@ -24,6 +24,7 @@ public class LoginScreenController {
 	
 	LogIn login; 
 	
+	// Declearing variables for elements in fxml
 	@FXML
 	private Label lblOverhead;
 	@FXML
@@ -41,11 +42,8 @@ public class LoginScreenController {
 	
 	private Database db = new Database();
 	
-	
-	
-	
+	// Method called when clicking Sign-up button
 	public void signUpButton(ActionEvent event) throws IOException {
-		
 		Parent root2 = FXMLLoader.load(getClass().getResource("/tdt4140.gr1802.app.ui/SignUpScreen.fxml"));
 		Scene scene = new Scene(root2,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -54,20 +52,17 @@ public class LoginScreenController {
 		window.show();
 	}
 	
-	public LogIn getLogin() {return this.login; }
-	
+	// Returns a login-object (uname, pword)
+	public LogIn getLogin() {
+		return this.login;
+	}
 	
 	public void loginButton(ActionEvent event, String typedUsername, String typedPassword) throws IOException {
-
-		
 		login = new LogIn(typedUsername, typedPassword);
-		
-		
-		
+
 		if (!login.checkUsernameAthlete(typedUsername) 
 				|| !login.checkUsernameCoach(typedUsername)) {
 			System.out.println("Username don't excists.");
-			
 		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
 			System.out.println("Username don't matches password.");
 		} else if (login.validLogIn()) {
@@ -81,7 +76,5 @@ public class LoginScreenController {
 		secondStage.setScene(scene);
 		secondStage.show();
 		*/
-		
 	}	
-	
 }
