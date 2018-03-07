@@ -43,6 +43,9 @@ public class CoachSeeWorkoutsController {
 	private TableColumn<Workout, Integer> averageHRColumn;
 	
 	@FXML
+	private TableColumn<Workout, String> typeColumn;
+	
+	@FXML
 	private Button btSeeAthletes;
 	
 	@FXML
@@ -77,6 +80,7 @@ public class CoachSeeWorkoutsController {
 		kilometresColumn.setCellValueFactory(new PropertyValueFactory<Workout,Double>("kilometres"));
 		maxHRColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("maxHR"));
 		averageHRColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("averageHR"));
+		typeColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("type"));
 		
 		// Fill table with values
 		tableView.setItems(getWorkouts());
