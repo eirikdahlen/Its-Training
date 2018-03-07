@@ -20,9 +20,9 @@ public class HomeScreenCoachController {
 	private Button btAthleteRequests;
 
 	
-	
+	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
@@ -31,7 +31,7 @@ public class HomeScreenCoachController {
 	}
 	
 	public void clickAthleteRequests (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("AthleteRequests.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

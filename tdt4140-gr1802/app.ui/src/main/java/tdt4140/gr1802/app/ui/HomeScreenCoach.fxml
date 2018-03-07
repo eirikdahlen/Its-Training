@@ -20,8 +20,8 @@
                         <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="btSeeAthletes" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
-                              <Button fx:id="btAthleteRequest" mnemonicParsing="false" text="Athlete Requests" />
+                              <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
+                              <Button fx:id="btAthleteRequest" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
