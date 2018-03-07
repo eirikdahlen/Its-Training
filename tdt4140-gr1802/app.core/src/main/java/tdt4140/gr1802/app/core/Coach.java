@@ -14,6 +14,7 @@ public class Coach extends User {
 	
 	private Database database = new Database();
 	
+	// TODO: delete this?
 	public Coach (String username, String name, List <String> athletes, List <String> queuedAthletes){
 		this.name = name ;
 		this.username = username ;
@@ -27,6 +28,12 @@ public class Coach extends User {
 		this.password = password;
 		this.athletes = athletes ;
 		this.queuedAthletes = queuedAthletes ;
+	}
+	
+	public Coach (String username, String password, String name) {
+		this.name = name;
+		this.username = username;
+		this.password = password;
 	}
 
 	public List<String> getQueuedAthletes() {
