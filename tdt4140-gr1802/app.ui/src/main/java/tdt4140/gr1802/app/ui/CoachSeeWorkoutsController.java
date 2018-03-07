@@ -1,11 +1,6 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,17 +11,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.Athlete;
-import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Workout;
 
-public class SeeWorkoutsController{
-	private Database database = new Database();
-	private Athlete athlete = database.getAthlete("Nils22");
+public class CoachSeeWorkoutsController {
 	
 	@FXML
 	private TableView<Workout> tableView;
@@ -47,27 +41,36 @@ public class SeeWorkoutsController{
 	private TableColumn<Workout, Integer> averageHRColumn;
 	
 	@FXML
-	private Button btAddWorkout;
+	private Button btSeeAthletes;
 	
 	@FXML
-	private Button btSeeWorkouts;
+	private Button btAthleteRequests;
 	
 	@FXML
-	private Button btSeeCoaches;
+	private Label txtAthlete;
 	
-	@FXML
-	private Button btCoachRequests;
+	private static Athlete athlete;
 	
-	// Returns an ObservableList with the Workouts registered for the Athlete logged in
+	// Set the Athlete
+	public void setAthlete(Athlete ath) {
+		athlete = ath;
+	}
+
+	// Help-method that returns an ObservableList with all the Workouts for the chosen Athlete
 	public ObservableList<Workout> getWorkouts(){
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
+
 		for (Workout wo:athlete.getAllWorkouts()) {
 			workouts.add(wo);
 		}
+		
 		return workouts;
 	}
 	
 	public void initialize() {
+		// set up the columns in the table
+		txtAthlete.setText("Athlete: "+athlete.getName());
+		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
 		durationColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("duration"));
@@ -80,8 +83,8 @@ public class SeeWorkoutsController{
 	}
 	
 	// Side-menu buttons
-	public void clickAddWorkout(ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
+	public void clickSeeAthletes (ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
@@ -89,32 +92,13 @@ public class SeeWorkoutsController{
 		window.show();
 	}
 	
-	public void clickSeeWorkouts (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
-		Scene scene = new Scene(root,800,600);
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		window.setScene(scene);
-		window.show();
-	}
-	
-	public void clickSeeCoaches(ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource("SeeCoaches.fxml"));
+	public void clickAthleteRequests (ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
-	public void clickCoachRequest(ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
-		Scene scene = new Scene(root,800,600);
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		
-		window.setScene(scene);
-		window.show();
-		
-	}
-	
 
 }

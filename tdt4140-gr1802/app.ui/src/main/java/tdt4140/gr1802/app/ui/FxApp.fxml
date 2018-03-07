@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -37,7 +36,7 @@
          </font>
       </Button>
     <AnchorPane layoutX="-136.0" layoutY="63.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-      <TextArea fx:id="txtAreaFeedbackLogin" layoutX="416.0" layoutY="83.0" prefHeight="55.0" prefWidth="372.0" />
       <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Label fx:id="txtLabelFeedback" layoutX="194.0" layoutY="96.0" prefHeight="17.0" prefWidth="420.0" />
    </children>
 </AnchorPane>

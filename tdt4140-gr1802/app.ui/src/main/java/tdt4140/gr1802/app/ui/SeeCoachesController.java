@@ -3,6 +3,7 @@ package tdt4140.gr1802.app.ui;
 
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,69 +19,109 @@ import javafx.fxml.LoadException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.Database;
 
 public class SeeCoachesController {
+	
+	private Database database = new Database();
+	private Athlete athlete = database.getAthlete("Nils22");
 	
 	@FXML
 	private TableView<Coach> tableView;
 	
 	@FXML
-	private TableColumn<Coach, String> selectColumn;
-	
-	@FXML
-	private TableColumn<Coach, Integer> IDColumn;
+	private TableColumn<Coach, String> usernameColumn;
 	
 	@FXML
 	private TableColumn<Coach, String> nameColumn;
 	
 	@FXML
-	private TableColumn<Coach, String> emailColumn;
+	private Button btAddCoach;
 	
-	private ObservableList<Coach> list = FXCollections.observableArrayList();
+	@FXML
+	private TextField newCoachTextField;
 	
-	public void init() {
-		fillList();
-		// Lar deg selektere flere valg i tabellen
-		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		update();
-		
-	}
+	@FXML
+	private Button btAddWorkout;
 	
-	private void fillList() {
-		String s = "eirik";
-		for (int i = 0; i < 20; i++) {
-			Coach c = new Coach(null, s, null, null);
-			list.add(c);
-			s += "a";
+	@FXML
+	private Button btSeeWorkouts;
+	
+	@FXML
+	private Button btCoachRequests;
+	
+	@FXML
+	private Button btRemove;
+	
+	@FXML
+	private Label txtAddCoachRespons;
+	
+	private ObservableList<Coach> coaches = FXCollections.observableArrayList();
+	
+	// Returns an ObervableList with the Coaches registered to the Athlete logged in
+	public ObservableList<Coach> getCoaches(){
+		for (String uname:athlete.getCoaches()) {
+			Coach coach = database.getCoach(uname);
+			if (coach != null) {
+				coaches.add(coach);
+			}
 		}
+		return coaches;
 	}
 	
-	private void update() {
-		tableView.setItems(list);
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach, String>("name"));
-	}
-	
-	public void remove() {
-		ObservableList<Coach> selectedRows, allCoaches;
-		allCoaches = tableView.getItems();
+	public void initialize() {
+		// Connect columns to right attribute
+		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("name"));
+		usernameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("username"));
 		
-		// Gir oss selected rows
+		// Make it legal to select multiple rows
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
+		// Fill table with values
+		tableView.setItems(getCoaches());
+	}
+	
+	public void addCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{
+		// Get the String from the TextField
+		String newCoach = newCoachTextField.getText();
+		
+		// Check which case that apply
+		if(database.coachUsernameExists(newCoach) && !athlete.getCoaches().contains(newCoach)) {
+			txtAddCoachRespons.setText("Request sent to "+newCoach);
+			athlete.sendCoachRequest(newCoach);
+		} else if (database.coachUsernameExists(newCoach) && athlete.getCoaches().contains(newCoach)){
+			txtAddCoachRespons.setText("This is already your coach");
+		} else if (!database.coachUsernameExists(newCoach)) {
+			txtAddCoachRespons.setText("Username does not exist");
+		}
+		
+		// Clear the TextField
+		newCoachTextField.clear();
+	}
+	
+	public void removeCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{
+		// ObservableList with the selectedRow
+		ObservableList<Coach> selectedRows;
 		selectedRows = tableView.getSelectionModel().getSelectedItems();
 		
-		// Itererer over valgte rader og fjerner de
+		// Iterate through all the selected rows, and deleting them
 		for (Coach coach : selectedRows) {
-			allCoaches.remove(coach);
-			list.remove(coach);
+			coaches.remove(coach);
+			athlete.removeCoach(coach.getUsername());
 		}
-		update();
 	}
 	
+	// Side-menu buttons
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
 		// Open new window 
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
@@ -110,7 +151,7 @@ public class SeeCoachesController {
 	}
 	
 	public void clickCoachRequest (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

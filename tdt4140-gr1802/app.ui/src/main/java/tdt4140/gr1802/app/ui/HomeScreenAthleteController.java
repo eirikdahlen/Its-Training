@@ -27,8 +27,7 @@ public class HomeScreenAthleteController {
 	private Button btCoachRequests;
 	
 	
-	
-	
+	// Side-menu buttons
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
 		// Open new window 
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
@@ -58,7 +57,7 @@ public class HomeScreenAthleteController {
 	}
 	
 	public void clickCoachRequest (ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

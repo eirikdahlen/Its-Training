@@ -7,12 +7,11 @@ public class LogIn {
 	private String username; 
 	private String password;
 	
-	Database db;
+	Database db = new Database();
 	
 	public LogIn(String username, String password) {
 		this.username = username; 
 		this.password = password;
-		this.db = new Database();
 	}
 	
 	public boolean checkUserNameExits(String username) { 
@@ -40,6 +39,10 @@ public class LogIn {
 	}
 	
 	public boolean checkUsernameMatchPassword(String username, String password) {
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(db);
+		System.out.println(db.getPassword(username));
 		return db.getPassword(username).equals(password);
 	}
 	

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeWorkoutsController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.CoachRequestsController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -21,22 +21,21 @@
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
-                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
+                              <Button fx:id="btSeeWorkouts" mnemonicParsing="false" onAction="#clickSeeWorkouts" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
                               <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickSeeCoaches" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
                            <children>
-                              <TableView fx:id="tableView" prefHeight="527.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" prefHeight="426.0" prefWidth="644.0">
                                 <columns>
-                                  <TableColumn fx:id="dateColumn" prefWidth="180.0" text="Date" />
-                                  <TableColumn fx:id="durationColumn" prefWidth="99.0" text="Duration" />
-                                    <TableColumn fx:id="kilometresColumn" prefWidth="82.0" text="Km" />
-                                    <TableColumn fx:id="maxHRColumn" prefWidth="117.0" text="Max HR" />
-                                    <TableColumn fx:id="averageHRColumn" prefWidth="136.0" text="Average HR" />
+                                  <TableColumn fx:id="usernameColumn" prefWidth="288.0" text="Username" />
+                                  <TableColumn fx:id="nameColumn" prefWidth="318.0" text="Name" />
                                 </columns>
                               </TableView>
+                              <Button fx:id="btDecline" layoutX="553.0" layoutY="457.0" mnemonicParsing="false" onAction="#declineButton" text="Decline" />
+                              <Button fx:id="btAccept" layoutX="461.0" layoutY="457.0" mnemonicParsing="false" onAction="#acceptButton" text="Accept" />
                            </children></Pane>
                      </children>
                   </AnchorPane>

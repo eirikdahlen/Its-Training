@@ -14,7 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.Database;
-
+import tdt4140.gr1802.app.core.SignUp;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,6 +32,8 @@ import javafx.event.ActionEvent;
 
 
 public class SignUpScreenController{
+	
+	private SignUp signUp; 
 	@FXML
 	private Text txtName; 
 	@FXML
@@ -39,7 +41,7 @@ public class SignUpScreenController{
 	@FXML
 	private Text txtPassword;
 	@FXML
-	private Text txtRetypePassword;
+	private Text txtRetype;
 	@FXML
 	private Text txtAthOrCoa;
 	@FXML
@@ -59,18 +61,11 @@ public class SignUpScreenController{
 	@FXML
 	private RadioButton radioCoach;
 	@FXML
-	private TextArea feedbackTextToUser;
+	private Label txtFeedback;
 
 	// Methods for radio-button-function (can only choose one of athlete or coach)
 	public void radioAthleteButtonPressed() {radioCoach.setSelected(false); radioAthlete.setSelected(true);}
 	public void radioCoachButtonPressed() {radioCoach.setSelected(true); radioAthlete.setSelected(false);}
-	
-	
-	public ArrayList<String> getEventuallyTypedInformation(String typedUsername, String typedPassword) {
-		ArrayList<String> nameAndPassword = new ArrayList<>();
-		nameAndPassword.add(typedUsername); nameAndPassword.add(typedUsername);
-		return nameAndPassword;
-	}
 	
 	public boolean checkEmptyInformation(){
 		if (txtName.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()){
@@ -81,29 +76,8 @@ public class SignUpScreenController{
 		}
 	}
 	
-
-		
-	public void backToLogin(ActionEvent event) throws IOException{
-		if (checkEmptyInformation()){
-			
-			
-			Parent root2 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
-			Scene toLoginScene = new Scene(root2,800,600);
-			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-			
-			window.setScene(toLoginScene);
-			window.show();
-		}
-
-		txtName.setText("");
-		txtUsername.setText("");
-		txtPassword.setText("");
-		
-		
-	}
-	
+	//Redirects you back to login-screen(fxApp.fxml) when "back to login" button is pressed. 
 	public void backToLoginFromSignUpScreen (ActionEvent event) throws IOException{
-		
 		Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
 		Scene scene = new Scene(root5,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -111,17 +85,55 @@ public class SignUpScreenController{
 		window.show();
 	}
 	
-
-	public void signUpButtonPressed(ActionEvent event) {
-		feedbackTextToUser.setText("Button pressed");
-	}
 	
-	
-	public static void main(String[] args) {
-	
-		System.out.println("hei");
+	//If all conditions are satisfied, user gets redirected to login-screen. 
+	@FXML
+	public void signUpButtonPressed(ActionEvent event) throws IOException {
+		String typedName = txtFieldName.getText();
+		String typedUsername = txtFieldUsername.getText();
+		String typedPassword = txtFieldPassword.getText();
+		String typedPasswordRetype = txtFieldPasswordRetype.getText();
 		
+		System.out.println(typedName + typedUsername + typedPassword);
 		
+		boolean isAthlete = radioAthlete.isSelected(); 
+		
+		this.signUp = new SignUp(typedUsername, typedName, typedPassword, typedPasswordRetype, isAthlete);
+		
+		String textToLabel = "";
+		
+		if (!this.signUp.checkNameOnlyLetters()) {
+			textToLabel += "Name can only be letters. \n";
+		}
+		
+		if (!this.signUp.checkUserNameValidAndLenght()) {
+			textToLabel += "Usename must be only letters and numbers. \n";
+		}
+		
+		if (!this.signUp.checkUserNameNotExitsInDB()) {
+			textToLabel += "Username already in use. \n";
+		}
+		
+		if (!this.signUp.checkPasswordLength()) {
+			textToLabel += "Password must be 4 chars or longer. \n";
+		}
+		
+		if (!this.signUp.checkEqualPasswords()) {
+			textToLabel += "Passwors must be equal. \n";
+		}
+		
+		txtFeedback.setText(textToLabel);
+		
+		if (this.signUp.validSignUp()) {
+			System.out.println("Valid sign up. User created.");
+			System.out.println("Redirecting to login screen");
+			
+			Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
+			Scene scene = new Scene(root5,800,600);
+			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			window.setScene(scene);
+			window.show();
+		}
 	}
 	
 }

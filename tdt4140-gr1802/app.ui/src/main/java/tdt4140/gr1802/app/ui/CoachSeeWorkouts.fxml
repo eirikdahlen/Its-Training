@@ -2,14 +2,18 @@
 
 <?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.CoachSeeWorkoutsController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -31,6 +35,19 @@
                                   <Region />
                                 </root>
                               </SubScene>
+                              <TableView fx:id="tableView" layoutY="40.0" prefHeight="488.0" prefWidth="644.0">
+                                <columns>
+                                  <TableColumn fx:id="dateColumn" prefWidth="163.0" text="Date" />
+                                  <TableColumn fx:id="durationColumn" prefWidth="109.0" text="Duration" />
+                                    <TableColumn fx:id="kilometresColumn" prefWidth="112.0" text="Km" />
+                                    <TableColumn fx:id="maxHRColumn" prefWidth="97.0" text="Max HR" />
+                                    <TableColumn fx:id="averageHRColumn" prefWidth="149.0" text="Average HR" />
+                                </columns>
+                              </TableView>
+                              <Label fx:id="txtAthlete" layoutX="22.0" layoutY="14.0" prefHeight="18.0" prefWidth="249.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
                            </children>
                         </Pane>
                      </children>

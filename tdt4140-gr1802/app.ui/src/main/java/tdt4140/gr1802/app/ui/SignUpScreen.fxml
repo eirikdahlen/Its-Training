@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SignUpScreenController">
    <children>
-    <Button fx:id="btbSignUpButton" layoutX="124.0" layoutY="402.0" mnemonicParsing="false" onAction="#signUpButtonPressed" text="Sign Up" />
+      <Button fx:id="btbBackToLoginFromSignUp" layoutX="37.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Back to Login" />
       <TextField fx:id="txtFieldName" layoutX="122.0" layoutY="127.0" />
       <Text fx:id="txtName" fontSmoothingType="LCD" layoutX="127.0" layoutY="124.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Name: " wrappingWidth="159.21875">
 
@@ -31,7 +31,6 @@
             <Font name="System Font" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="btbBackToLoginFromSignUp" layoutX="37.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToLoginFromSignUpScreen" text="Back to Login" />
       <PasswordField fx:id="txtFieldPasswordRetype" layoutX="123.0" layoutY="314.0" />
       <Text fx:id="txtRetype" fontSmoothingType="LCD" layoutX="123.0" layoutY="309.0" stroke="#8d6767" strokeType="OUTSIDE" strokeWidth="0.0" text="Retype password:" wrappingWidth="166.99999570846558">
          <font>
@@ -40,7 +39,7 @@
       </Text>
       <RadioButton fx:id="radioAthlete" layoutX="123.0" layoutY="363.0" mnemonicParsing="false" onAction="#radioAthleteButtonPressed" text="Athlete" />
       <RadioButton fx:id="radioCoach" layoutX="209.0" layoutY="363.0" mnemonicParsing="false" onAction="#radioCoachButtonPressed" text="Coach" />
-      <TextArea fx:id="feedbackTextToUser" layoutX="126.0" layoutY="443.0" prefHeight="127.0" prefWidth="167.0" />
-
+    <Button fx:id="btbSignUpButton" layoutX="124.0" layoutY="402.0" mnemonicParsing="false" onAction="#signUpButtonPressed" text="Sign Up" />
+      <Label fx:id="txtFeedback" layoutX="122.0" layoutY="454.0" prefHeight="128.0" prefWidth="290.0" />
    </children>
 </AnchorPane>

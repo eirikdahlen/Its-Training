@@ -10,10 +10,11 @@ public class Coach extends User {
 	
 	private List <String> queuedAthletes = new ArrayList <String> () ;
 	
-	protected List <String> pendingAthletes = new ArrayList <String> () ;
+	//protected List <String> pendingAthletes = new ArrayList <String> () ;
 	
-	private Database database;
+	private Database database = new Database();
 	
+	// TODO: delete this?
 	public Coach (String username, String name, List <String> athletes, List <String> queuedAthletes){
 		this.name = name ;
 		this.username = username ;
@@ -27,6 +28,12 @@ public class Coach extends User {
 		this.password = password;
 		this.athletes = athletes ;
 		this.queuedAthletes = queuedAthletes ;
+	}
+	
+	public Coach (String username, String password, String name) {
+		this.name = name;
+		this.username = username;
+		this.password = password;
 	}
 
 	public List<String> getQueuedAthletes() {
@@ -43,36 +50,48 @@ public class Coach extends User {
 	
 	public void queueAthlete (String newAthlete) {
 		queuedAthletes.add(newAthlete) ;
+		// add to queue in database
+		database.addRequestAthleteToCoach(this, newAthlete);
 	}
 	
-	// Går igjennom alle utøvere i køen og godtar/avslår forspørsler
-	public void approveAthlete () {
-		for ( int n = 0; n < queuedAthletes.size(); n++) {
-			String athlete = queuedAthletes.get(n);
-			System.out.println(athlete);
-			System.out.println("Type 'Accept' to accept this coach, 'Decline' to decline this coach");
-			Scanner scanner = new Scanner (System.in) ;
-			String answer = scanner.nextLine() ;
-			if ( answer == ("Accept")) {
-				athletes.add(athlete) ;
-				database.getAthlete(athlete).pendingCoaches.remove(this.username);
-				database.getAthlete(athlete).coaches.add(this.username);
-				queuedAthletes.remove(n) ;
-			} else if (answer == "Decline") {
-				queuedAthletes.remove(n);
-				database.getAthlete(athlete).pendingCoaches.remove(this.username);
-			}
+	// Iterate through  queued athletes and accepts/declines requests.
+	public void approveAthlete (String athleteUsername) {
+		if (queuedAthletes.contains(athleteUsername)) {
+			Athlete athlete = database.getAthlete(athleteUsername);
+			queuedAthletes.remove(athleteUsername);
+			// remove from queue in database
+			database.deleteAthleteRequestForCoach(this, athleteUsername);
+			athletes.add(athleteUsername);
+			athlete.addCoach(this.getUsername());
+			// add to coaches athletes-list in database
+			database.addAthleteToCoach(this, athleteUsername);
+			// add to athletes coach-list in database
+			database.addCoachToAthlete(athlete, this.getUsername());
 		}
 	}
 	
-	// Legger til utøver i pendingAthletes-listen og kaller queueCoach() i Athletes-klassen
-	public void addAthlete (String athlete) {
+	public void declineAthlete(String athleteUsername) {
+		if (queuedAthletes.contains(athleteUsername)) {
+			queuedAthletes.remove(athleteUsername);
+			// remove from queue in database
+			database.deleteAthleteRequestForCoach(this, athleteUsername);
+		}
+	}
+	
+	// Adds athletes i PendingAthletes-listen and calls queueCoach in Athlete-class.
+	public void sendAthleteRequest (String athlete) {
+		Athlete a = database.getAthlete(athlete);
 		if (athletes.contains(athlete)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;
 		} else {
-			pendingAthletes.add(athlete);
-			database.getAthlete(athlete).queueCoach(this.getUsername());
+			//pendingAthletes.add(athlete);
+			a.queueCoach(this.getUsername());
+			database.addRequestCoachToAthlete(a, this.getUsername());
 		}
+	}
+	
+	public void addAthlete(String athlete) {
+		athletes.add(athlete);
 	}
 	
 	public Boolean hasAthlete(String athlete) {
@@ -85,6 +104,8 @@ public class Coach extends User {
 	public void removeAthlete(String athlete) {
 		if (hasAthlete(athlete)) {
 			athletes.remove(athlete);
+			database.deleteAthleteForCoach(this, athlete);
+			database.deleteCoachForAthlete(database.getAthlete(athlete), this.getUsername());
 		}
 	}
 }	

@@ -3,13 +3,15 @@
 <?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.AthleteRequestsController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -21,7 +23,7 @@
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
-                              <Button fx:id="btAthleteRequest" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
+                              <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
@@ -31,6 +33,14 @@
                                   <Region />
                                 </root>
                               </SubScene>
+                              <TableView fx:id="tableView" prefHeight="437.0" prefWidth="644.0">
+                                <columns>
+                                  <TableColumn fx:id="usernameColumn" prefWidth="279.0" text="Username" />
+                                  <TableColumn fx:id="nameColumn" prefWidth="315.0" text="Name" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="btDecline" layoutX="551.0" layoutY="460.0" mnemonicParsing="false" onAction="#declineButton" text="Decline" />
+                              <Button fx:id="btAccept" layoutX="465.0" layoutY="460.0" mnemonicParsing="false" onAction="#acceptButton" text="Accept" />
                            </children>
                         </Pane>
                      </children>
