@@ -58,42 +58,28 @@ public class SeeWorkoutsController{
 	@FXML
 	private Button btCoachRequests;
 	
+	// Returns an ObservableList with the Workouts registered for the Athlete logged in
 	public ObservableList<Workout> getWorkouts(){
-		/*Athlete athlete = new Athlete("idaame", "Ida Merete", null, null);
-		List<String> liste = new ArrayList<>();
-		liste.add("123");
-		liste.add("189");
-		liste.add("178");
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
-		workouts.add(new Workout(athlete, "02-03-2018", "run", 500, 5.4, liste));
-		workouts.add(new Workout(athlete, "03-03-2018", "run", 600, 7.3, liste));*/
-		
-		System.out.println("heiiiiiii");
-		ObservableList<Workout> workouts = FXCollections.observableArrayList();
-		System.out.println("halla");
-		System.out.println(athlete.getName());
-		System.out.println(athlete.getAllWorkouts());
 		for (Workout wo:athlete.getAllWorkouts()) {
 			workouts.add(wo);
 		}
-		
 		return workouts;
 	}
 	
 	public void initialize() {
-		System.out.println("hei1");
-		// set up the columns in the table
+		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
 		durationColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("duration"));
 		kilometresColumn.setCellValueFactory(new PropertyValueFactory<Workout,Double>("kilometres"));
 		maxHRColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("maxHR"));
 		averageHRColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("averageHR"));
 		
-		System.out.println("hei2");
-		// load data
+		// Fill table with values
 		tableView.setItems(getWorkouts());
 	}
 	
+	// Side-menu buttons
 	public void clickAddWorkout(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
 		Scene scene = new Scene(root,800,600);
@@ -101,8 +87,16 @@ public class SeeWorkoutsController{
 		
 		window.setScene(scene);
 		window.show();
-		
 	}
+	
+	public void clickSeeWorkouts (ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
+		Scene scene = new Scene(root,800,600);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		window.setScene(scene);
+		window.show();
+	}
+	
 	public void clickSeeCoaches(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeCoaches.fxml"));
 		Scene scene = new Scene(root,800,600);
@@ -113,7 +107,7 @@ public class SeeWorkoutsController{
 		
 	}
 	public void clickCoachRequest(ActionEvent event) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

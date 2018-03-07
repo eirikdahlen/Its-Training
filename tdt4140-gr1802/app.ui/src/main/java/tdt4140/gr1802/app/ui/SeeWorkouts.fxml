@@ -30,11 +30,11 @@
                            <children>
                               <TableView fx:id="tableView" prefHeight="527.0" prefWidth="644.0">
                                 <columns>
-                                  <TableColumn fx:id="dateColumn" prefWidth="177.0" text="Date" />
-                                  <TableColumn fx:id="durationColumn" prefWidth="102.0" text="Duration" />
-                                    <TableColumn fx:id="kilometresColumn" prefWidth="102.0" text="Km" />
-                                    <TableColumn fx:id="maxHRColumn" prefWidth="133.0" text="Max HR" />
-                                    <TableColumn fx:id="averageHRColumn" prefWidth="129.0" text="Average HR" />
+                                  <TableColumn fx:id="dateColumn" prefWidth="180.0" text="Date" />
+                                  <TableColumn fx:id="durationColumn" prefWidth="99.0" text="Duration" />
+                                    <TableColumn fx:id="kilometresColumn" prefWidth="82.0" text="Km" />
+                                    <TableColumn fx:id="maxHRColumn" prefWidth="117.0" text="Max HR" />
+                                    <TableColumn fx:id="averageHRColumn" prefWidth="136.0" text="Average HR" />
                                 </columns>
                               </TableView>
                            </children></Pane>
