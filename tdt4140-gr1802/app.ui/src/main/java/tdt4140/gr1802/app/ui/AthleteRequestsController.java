@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,6 +45,9 @@ public class AthleteRequestsController {
 	@FXML
 	private Button btAthleteRequests;
 	
+	@FXML
+	private Label txtLabelUsername;
+	
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
 	
@@ -69,6 +73,10 @@ public class AthleteRequestsController {
 		App.updateCoach();
 		this.coach = App.coach;
 		this.database = App.db;
+		
+		// Sets username label
+		this.txtLabelUsername.setText(coach.getUsername());
+		
 		// Connect columns to right attribute
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("username"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("name"));

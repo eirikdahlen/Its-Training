@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -63,6 +64,9 @@ public class SeeWorkoutsController{
 	
 	@FXML
 	private Button btCoachRequests;
+	
+	@FXML
+	private Label txtLabelUsername;
 
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
 	public ObservableList<Workout> getWorkouts(){
@@ -78,6 +82,9 @@ public class SeeWorkoutsController{
 		//App.updateAthlete();
 		this.athlete = App.athlete;
 		this.database = App.db;
+		
+		// Set username label
+		this.txtLabelUsername.setText(this.athlete.getUsername());
 		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));

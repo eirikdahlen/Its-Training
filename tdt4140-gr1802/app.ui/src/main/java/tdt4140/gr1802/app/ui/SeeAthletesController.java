@@ -59,6 +59,9 @@ public class SeeAthletesController {
 	@FXML
 	private TableColumn<Athlete, String> nameColumn;
 	
+	@FXML
+	private Label txtLabelUsername;
+	
 	private CoachSeeWorkoutsController coachSeeWorkouts = new CoachSeeWorkoutsController();
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
@@ -77,6 +80,10 @@ public class SeeAthletesController {
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.coach;
+		
+		// Set username label
+		this.txtLabelUsername.setText(this.coach.getUsername());
+		
 		//this.database = App.db;
 		System.out.println("Seeathletes init");
 		

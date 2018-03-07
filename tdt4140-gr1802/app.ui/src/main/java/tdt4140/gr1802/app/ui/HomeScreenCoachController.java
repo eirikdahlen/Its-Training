@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class HomeScreenCoachController {
@@ -19,6 +20,14 @@ public class HomeScreenCoachController {
 	
 	@FXML
 	private Button btAthleteRequests;
+	
+	@FXML
+	private Label txtLabelUsername;
+	
+	public void initialize() {
+		// TODO: This controller has no Coach
+		// this.txtLabelUsername.setText(this.coach.getUsername());
+	}
 
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{

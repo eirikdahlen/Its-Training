@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
@@ -39,6 +40,10 @@ public class AddWorkoutController {
 	
 	@FXML
 	private Button addButton;
+	
+	@FXML
+	private Label txtLabelUsername;
+	
 	private Database db;
 	
 	public static App app;
@@ -50,6 +55,9 @@ public class AddWorkoutController {
 	public void initialize() {
 		this.athlete = App.athlete;
 		this.db = App.db;
+		
+		// Set username label
+		this.txtLabelUsername.setText(this.athlete.getUsername());
 	}
 	
 	// Method called when "Add" button clicked

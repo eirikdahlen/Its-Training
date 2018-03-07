@@ -68,6 +68,9 @@ public class SeeCoachesController {
 	@FXML
 	private Label txtAddCoachRespons;
 	
+	@FXML
+	private Label txtLabelUsername;
+	
 	private ObservableList<Coach> coaches = FXCollections.observableArrayList();
 	
 	
@@ -87,6 +90,9 @@ public class SeeCoachesController {
 		App.updateAthlete();
 		this.athlete = App.athlete;
 		this.database = App.db; 
+		
+		// Sets username label
+		this.txtLabelUsername.setText(this.athlete.getUsername());
 		
 		// Connect columns to right attribute
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("name"));

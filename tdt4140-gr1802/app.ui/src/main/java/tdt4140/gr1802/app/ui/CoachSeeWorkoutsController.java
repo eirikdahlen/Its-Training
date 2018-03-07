@@ -54,6 +54,9 @@ public class CoachSeeWorkoutsController {
 	@FXML
 	private Label txtAthlete;
 	
+	@FXML
+	private Label txtLabelUsername;
+	
 	private static Athlete athlete;
 	
 	// Set the Athlete
@@ -73,6 +76,9 @@ public class CoachSeeWorkoutsController {
 	public void initialize() {
 		// set up the columns in the table
 		txtAthlete.setText("Athlete: " + athlete.getName());
+		
+		//Set username label
+		this.txtLabelUsername.setText(this.athlete.getUsername());
 		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
