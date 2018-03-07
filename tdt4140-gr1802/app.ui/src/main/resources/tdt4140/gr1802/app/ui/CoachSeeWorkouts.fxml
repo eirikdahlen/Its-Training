@@ -37,11 +37,12 @@
                               </SubScene>
                               <TableView fx:id="tableView" layoutY="40.0" prefHeight="488.0" prefWidth="644.0">
                                 <columns>
-                                  <TableColumn fx:id="dateColumn" prefWidth="163.0" text="Date" />
-                                  <TableColumn fx:id="durationColumn" prefWidth="109.0" text="Duration" />
-                                    <TableColumn fx:id="kilometresColumn" prefWidth="112.0" text="Km" />
-                                    <TableColumn fx:id="maxHRColumn" prefWidth="97.0" text="Max HR" />
-                                    <TableColumn fx:id="averageHRColumn" prefWidth="149.0" text="Average HR" />
+                                  <TableColumn fx:id="dateColumn" prefWidth="162.62168884277344" text="Date" />
+                                    <TableColumn fx:id="typeColumn" prefWidth="93.9482421875" text="Type" />
+                                  <TableColumn fx:id="durationColumn" prefWidth="69.0517578125" text="Duration" />
+                                    <TableColumn fx:id="kilometresColumn" prefWidth="91.8765869140625" text="Km" />
+                                    <TableColumn fx:id="maxHRColumn" prefWidth="108.87652587890625" text="Max HR" />
+                                    <TableColumn fx:id="averageHRColumn" prefWidth="101.12347412109375" text="Average HR" />
                                 </columns>
                               </TableView>
                               <Label fx:id="txtAthlete" layoutX="22.0" layoutY="14.0" prefHeight="18.0" prefWidth="249.0">
