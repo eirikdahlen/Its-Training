@@ -1,3 +1,4 @@
+
 package tdt4140.gr1802.app.core;
 
 import java.io.IOException;
@@ -5,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 
 public class DatabaseTest {
 	
@@ -14,7 +16,10 @@ public class DatabaseTest {
 		this.database = new Database();
 	}
 
+	
 	public static void main(String[] args) throws IOException {
+		
+
 		
 		//uncomment the tests to run
 		
@@ -30,7 +35,7 @@ public class DatabaseTest {
 		//if username not in use, check to see if coach is in MongoDB
 		
 		
-		//_____Only works if you have csv-file on correct "place"____
+		//_____FUNKER BARE HVIS MAN HAR CSV FIL PÅ RIKTIG STED____
 		//test.testCreateWorkout();
 		//if datetime not in use, check to see if session is in MongoDB (in the right collection)
 		
@@ -40,34 +45,79 @@ public class DatabaseTest {
 		//should print the three first workouts for athlete in test
 		
 		//_____________________
-		test.testAddCoachToAthlete();
+		//test.testAddCoachToAthlete();
 		//if coach not already in list, check to see if added to athlete's coaches-List MongoDB
 		
 		//____________________
 		//test.testGetCoachesForAthlete();
-		//check to see if printed list mathes coachList in database
+		//check to see if printed list matches athlete's coach-list in database
 		
+		
+		//____________________
+		//test.testAddAthleteToCoach();
+		//if coach not already in coachs's athlete-list, adds to this list
+		
+		//____________________
+		//test.testDeleteCoachForAthlete();
+		//if coach in athlete's coach-list, check to see if deleted 
+		
+		//____________________
+		//test.testDeleteAthleteForCoach();
+		//if athlete in coach's athlete-list, check to see if deleted 
+		
+		//____________________
+		//test.testAddRequestAthleteToCoach();
+		//if athlete not in coach's request-list, check to see if added 
+		
+		//____________________
+		//test.testAddRequestCoachToAthlete();
+		//if athlete not in coach's request-list, check to see if added 
+		
+		
+		//____________________
+		//test.testDeleteCoachRequestForAthlete();
+		//if coach in athlete's request-list, check to see if deleted 
+		
+		
+		//____________________
+		//test.testDeleteAthleteRequestForCoach();
+		//test athlete in coach's request-list, check to see if deleted 
 			
 	}
 	
+	
 	public void testCreateAthlete() {
+		
+
+		
 		//adds athlete for testing
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
+		
 	}
 	
+	
 	public void testCreateCoach() {
-		//adds coach for testing
+		
+		//adds coack for testing
 		Coach coach1 = new Coach("Petter74", "Petter", new ArrayList<String>(), new ArrayList<String>());
 		
 		//adds athlete to database
 		database.createCoach(coach1);
+		
+		//legger til ekstra 
+		Coach coach2 = new Coach("Erna33", "erna123","Erna", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach3 = new Coach("Jens32","jens123", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		
+		database.createCoach(coach2);
+		database.createCoach(coach3);
 	}
 	
 	
 	public void testCreateWorkout() throws IOException {
+		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "Kjetil", new ArrayList<String>(), new ArrayList<String>());
 		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv");
@@ -77,9 +127,12 @@ public class DatabaseTest {
 		
 		//adds workout to database
 		database.createWorkout(workout1);
+	
 	}
 	
 	public void testGetAllWorkouts() {
+		
+
 		//creates athlete and workout for testing 
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
@@ -92,20 +145,23 @@ public class DatabaseTest {
 		//retrieves workout-object from database
 		List<Workout> retrievedWorkouts = database.getAllWorkouts(athlete1);
 		
-		//prints only the three first elements to confirm test
+		
+		//prints only the three first elemements to confirm test
 		int i = 0;
 		System.out.println();
 		System.out.println("Henter 3 workouts fra " + athlete1.getUsername());
 		for (Workout element : retrievedWorkouts) {
-			System.out.println(element.getDateString());
-			i++;
-			if (i > 2) {
-				break;
+		    System.out.println(element.getDateString());
+
+		   i++;
+		   if (i > 2) {
+			   break;
 		   }
 		}
 	}
 	
 	public void testAddCoachToAthlete() {
+		
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
@@ -120,12 +176,16 @@ public class DatabaseTest {
 		}
 		//_______________________________________
 		
+		
+		
 		//creates coaches for testing 
 		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
 		Coach coach2 = new Coach("Jens32", "Petter", new ArrayList<String>(), new ArrayList<String>());
 		
 		//the actual addCoachToAthlete-method
 		database.addCoachToAthlete(athlete1, coach1.getUsername());
+		
+		
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		List<String> coaches2 = database.getCoachesForAthlete(athlete1);
@@ -136,9 +196,141 @@ public class DatabaseTest {
 		    System.out.println(element);
 		}
 		//_______________________________________
+		
+		
+	
+	}
+	
+	public void testAddAthleteToCoach() {
+		
+		//get coachList first -> print list -> update coach_list -> print again
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates coach for testing	
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+	
+		List<String> athletes = database.getAthleteForCoach(coach1);
+
+		System.out.println("Athlete-list before adding");
+			for (String element : athletes) {
+				
+				System.out.println(element);
+		}
+		//_______________________________________
+//		
+		
+		
+		//creates athletes for testing 
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		
+		Athlete athlete2 = new Athlete("Nils100", "Nilse", new ArrayList<String>(), new ArrayList<String>());
+		
+		//the actual addAthleteToCoach-method
+		database.addAthleteToCoach(coach1, athlete1.getUsername());
+		
+		
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		List<String> athletes2 = database.getCoachesForAthlete(athlete1);
+		
+		System.out.println("___________________");
+		System.out.println("athlete-list after update");
+		for (String element : athletes) {
+		    System.out.println(element);
+		}
+		//_______________________________________
+
+		
+	}
+	
+	public void testAddRequestAthleteToCoach() {
+		//get coachList first -> print list -> update coach_list -> print again
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates coach for testing	
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+	
+		List<String> athletes = database.getRequestsForCoach(coach1);
+
+		System.out.println("request-list before adding");
+			for (String element : athletes) {
+				
+				System.out.println(element);
+		}
+		//_______________________________________
+//		
+		
+		
+		//creates athletes for testing 
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		
+	
+		
+		//the actual database-method
+		database.addRequestAthleteToCoach(coach1, athlete1.getUsername());
+		
+		
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates coach for testing	
+		
+	
+		List<String> athletes2 = database.getRequestsForCoach(coach1);
+
+		System.out.println("request-list after adding");
+			for (String element : athletes2) {
+				
+				System.out.println(element);
+		}
+
+		
+	}
+	
+	public void testAddRequestCoachToAthlete() {
+		//get coachList first -> print list -> update coach_list -> print again
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates athlete for testing	
+		Athlete athlete1 = new Athlete("Nils34", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		
+	
+		List<String> athletes = database.getRequestsForAthlete(athlete1);
+
+		System.out.println("request-list before adding");
+			for (String element : athletes) {
+				
+				System.out.println(element);
+		}
+		//_______________________________________
+//		
+		
+		
+		//creates coache for testing 
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		
+		//the actual database-method
+		database.addRequestCoachToAthlete(athlete1, coach1.getUsername());
+		
+		
+		
+		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
+		//creates coach for testing	
+		
+	
+		List<String> athletes2 = database.getRequestsForAthlete(athlete1);
+
+		System.out.println("request-list after adding");
+			for (String element : athletes2) {
+				
+				System.out.println(element);
+		}
+
+		
 	}
 	
 	public void testGetCoachesForAthlete() {
+		
+		
 		//creates athlete for testing	
 		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
 		
@@ -148,8 +340,36 @@ public class DatabaseTest {
 		for (String element : coaches) {
 		    System.out.println(element);
 		}
+		
+	}
+	
+	public void testDeleteCoachForAthlete() {
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		database.deleteCoachForAthlete(athlete1, coach1.getUsername());
+		
+	}
+	public void testDeleteAthleteForCoach() {
+		
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		database.deleteAthleteForCoach(coach1, athlete1.getUsername());
+		
 	}
 
+	
+	public void testDeleteCoachRequestForAthlete() {
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		database.deleteCoachRequestForAthlete(athlete1, coach1.getUsername());
+	}
+	
+	public void testDeleteAthleteRequestForCoach() {
+		
+		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		database.deleteAthleteRequestForCoach(coach1, athlete1.getUsername());
+	}
 /*
 	public void testGetAllWorkoutsNonExistingAthlete() {
 		
@@ -171,6 +391,8 @@ public class DatabaseTest {
 	*/
 
 	
+	
+	
 	//_______jUnit_______
 
 	@Test
@@ -187,7 +409,10 @@ public class DatabaseTest {
 
 		//compares username, to see if its the same coach
 		assertEquals(athlete1.getUsername(), retrievedAthlete.getUsername());
+		
+		
 	}
+	
 	
 	@Test
 	public void testGetCoach() {
@@ -203,7 +428,10 @@ public class DatabaseTest {
 
 		//compares username, to see if its the same coach
 		assertEquals(coach1.getUsername(), retrievedCoach.getUsername());
+		
+		
 	}
+	
 	
 	@Test
 	public void testGetWorkout() throws IOException {
@@ -220,5 +448,12 @@ public class DatabaseTest {
 
 		//compares datestring, to see if its the same workout
 		assertEquals(workout1.getDateString(), retrievedWorkout.getDateString());
+		
+		
 	}
+	
+
+
+	
 }
+	
