@@ -18,7 +18,7 @@ public class Athlete extends User {
 	
 	private List<Workout> allWorkouts;
 	
-
+	// TODO: delete this?
 	public Athlete (String username, String name, List <String> coaches, List <String> queuedCoaches) {
 		this.username = username ;
 		this.name = name ;
@@ -34,6 +34,12 @@ public class Athlete extends User {
 		this.name = name ;
 		this.coaches = coaches ;
 		this.queuedCoaches = queuedCoaches ;
+	}
+	
+	public Athlete (String username, String password, String name) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
 	}
 	
 	public void queueCoach (String newCoach) {
