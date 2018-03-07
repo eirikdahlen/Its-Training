@@ -2,7 +2,7 @@ package tdt4140.gr1802.app.ui;
 
 import javafx.scene.control.TextField;
 
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -61,7 +61,7 @@ public class AddWorkoutController {
 			db.createWorkout(newWorkout);
 			filepathTextField.setText("Workout Added");
 		}
-		catch(IOException e) {
+		catch(FileNotFoundException e) {
 			filepathTextField.setText("Filepath is not valid");
 		}
 	}

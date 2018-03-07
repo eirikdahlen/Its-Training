@@ -42,6 +42,7 @@ public class CSVReader {
 		
 		catch(FileNotFoundException fnf) {
 				fnf.printStackTrace();
+				throw fnf;
 		}
 		
 		catch(IOException io) {
