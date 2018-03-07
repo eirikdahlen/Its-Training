@@ -71,15 +71,20 @@ public class Workout {
 		this.kilometres = kilometres;
 		this.pulsList = pulsList;
 		if (!pulsList.isEmpty()) {
-			this.maxHR = Integer.parseInt(Collections.max(pulsList));
+			
 			int sum = 0;
+			this.maxHR = 0;
 			for (String puls: pulsList) {
 				int m = Integer.parseInt(puls);
 				sum += m;
+				if (m > this.maxHR ) {
+					this.maxHR = m;
+				}
 			}
 			this.averageHR = sum / pulsList.size();
 			
 			System.out.println(averageHR);
+			System.out.println("________maxHR = ");
 			System.out.println(maxHR);
 		}
 		
