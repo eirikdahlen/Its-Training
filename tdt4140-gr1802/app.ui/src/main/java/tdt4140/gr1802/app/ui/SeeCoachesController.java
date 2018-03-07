@@ -27,14 +27,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
 public class SeeCoachesController {
 	
-	private Database database = new Database();
-	private Athlete athlete = database.getAthlete("Nils22");
+	private Database database;
+	private Athlete athlete;
 	
 	@FXML
 	private TableView<Coach> tableView;
@@ -68,6 +69,8 @@ public class SeeCoachesController {
 	
 	private ObservableList<Coach> coaches = FXCollections.observableArrayList();
 	
+	
+	
 	// Returns an ObervableList with the Coaches registered to the Athlete logged in
 	public ObservableList<Coach> getCoaches(){
 		for (String uname:athlete.getCoaches()) {
@@ -80,6 +83,10 @@ public class SeeCoachesController {
 	}
 	
 	public void initialize() {
+		App.updateAthlete();
+		this.athlete = App.athlete;
+		this.database = App.db; 
+		
 		// Connect columns to right attribute
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("name"));
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("username"));
@@ -89,6 +96,7 @@ public class SeeCoachesController {
 		
 		// Fill table with values
 		tableView.setItems(getCoaches());
+		
 	}
 	
 	public void addCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{

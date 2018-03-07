@@ -24,12 +24,12 @@ public class Database {
 	private MongoClientURI clientURI = new MongoClientURI(uri);
 	private MongoClient mongoClient = new MongoClient(clientURI);
 	
-	private MongoDatabase athleteDatabase = mongoClient.getDatabase("Athlete");
-	private MongoDatabase coachDatabase = mongoClient.getDatabase("Coach");
-	private MongoDatabase workoutDatabase = mongoClient.getDatabase("Workout");
+	private MongoDatabase athleteDatabase;
+	private MongoDatabase coachDatabase;
+	private MongoDatabase workoutDatabase;
 	
-	private MongoCollection coachCollection = coachDatabase.getCollection("Coach");
-	private MongoCollection athleteCollection = athleteDatabase.getCollection("Athlete");
+	private MongoCollection coachCollection;
+	private MongoCollection athleteCollection;
 	
 	
 	
@@ -37,6 +37,7 @@ public class Database {
 	public Database() {
 		
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
+		refresh();
 	
 	}
 	
@@ -150,6 +151,20 @@ public class Database {
 		}
 		
 		 
+		
+	}
+	
+	public void refresh() {
+		
+
+		this.athleteDatabase = mongoClient.getDatabase("Athlete");
+		this.coachDatabase = mongoClient.getDatabase("Coach");
+		this.workoutDatabase = mongoClient.getDatabase("Workout");
+		
+		this.coachCollection = coachDatabase.getCollection("Coach");
+		this.athleteCollection = athleteDatabase.getCollection("Athlete");
+		
+		
 		
 	}
 	
@@ -609,7 +624,7 @@ public class Database {
 	
 	public List<String> getAthleteForCoach(Coach coach) {
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
-		
+		System.out.println("HENTER ATHLETES FOR COACH");
 		if (found == null) {
 			System.out.println("no coach with this username");
 			return null;

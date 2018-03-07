@@ -20,13 +20,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
 
 public class SeeWorkoutsController{
-	private Database database = new Database();
-	private Athlete athlete = database.getAthlete("Nils22");
+	private Database database;
+	private Athlete athlete;
 	
 	@FXML
 	private TableView<Workout> tableView;
@@ -58,9 +59,12 @@ public class SeeWorkoutsController{
 	@FXML
 	private Button btCoachRequests;
 	
+
+	
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
 	public ObservableList<Workout> getWorkouts(){
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
+		System.out.println("getWorkouts" + athlete.getAllWorkouts());
 		for (Workout wo:athlete.getAllWorkouts()) {
 			workouts.add(wo);
 		}
@@ -68,6 +72,10 @@ public class SeeWorkoutsController{
 	}
 	
 	public void initialize() {
+		//App.updateAthlete();
+		this.athlete = App.athlete;
+		this.database = App.db;
+		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
 		durationColumn.setCellValueFactory(new PropertyValueFactory<Workout,Integer>("duration"));
@@ -77,6 +85,7 @@ public class SeeWorkoutsController{
 		
 		// Fill table with values
 		tableView.setItems(getWorkouts());
+		
 	}
 	
 	// Side-menu buttons

@@ -27,6 +27,7 @@ public class HomeScreenAthleteController {
 	private Button btCoachRequests;
 	
 	
+	
 	// Side-menu buttons
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{
 		// Open new window 

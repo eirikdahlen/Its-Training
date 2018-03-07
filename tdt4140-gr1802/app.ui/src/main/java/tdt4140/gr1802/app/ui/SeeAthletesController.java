@@ -18,13 +18,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
 public class SeeAthletesController {
 	private Database database = new Database();
-	private Coach coach = database.getCoach("Petter74");
+	private Coach coach;
 	
 	@FXML
 	private Button btSeeAthletes;
@@ -60,8 +61,11 @@ public class SeeAthletesController {
 	
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
+	
+	
 	// returns an ObservableList with all the Athletes registered to the coach logged in
 	public ObservableList<Athlete> getAthletes(){
+		
 		for (String uname:coach.getAthletes()) {
 			Athlete athlete = database.getAthlete(uname);
 			if (athlete != null) {
@@ -72,12 +76,18 @@ public class SeeAthletesController {
 	}
 	
 	public void initialize() {
+		App.updateCoach();
+		this.coach = App.coach;
+		//this.database = App.db;
+		System.out.println("Seeathletes init");
+		
 		// Connect columns to right attribute
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("username"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("name"));
 		
 		// Fill table with values
 		tableView.setItems(getAthletes());
+		
 	}
 	
 	public void seeWorkoutsButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException {
@@ -138,6 +148,7 @@ public class SeeAthletesController {
 	
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
+		
 		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
 		Scene scene = new Scene(root,800,600);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

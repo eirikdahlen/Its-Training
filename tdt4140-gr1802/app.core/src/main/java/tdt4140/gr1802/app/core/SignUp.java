@@ -78,9 +78,9 @@ public class SignUp {
 			validLogin = true;
 			
 			if (isAthlete) {
-				newUser = new Athlete(this.username, this.password, this.name, null, null);
+				newUser = new Athlete(this.username, this.password, this.name);
 			} else {
-				newUser = new Coach(this.username, this.password, this.name, null, null);
+				newUser = new Coach(this.username, this.password, this.name);
 			}
 			
 			addNewUserToDB();

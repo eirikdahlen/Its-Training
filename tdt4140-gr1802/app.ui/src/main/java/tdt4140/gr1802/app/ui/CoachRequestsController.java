@@ -18,14 +18,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
 public class CoachRequestsController {
 	
-	private Database database = new Database();
-	private Athlete athlete = database.getAthlete("Nils22");
+	private Database database;
+	private Athlete athlete;
 
 	@FXML
 	private Button btAddWorkout;
@@ -50,6 +51,7 @@ public class CoachRequestsController {
 	
 	private ObservableList<Coach> coaches = FXCollections.observableArrayList();
 	
+	
 	// Help-method that returns an ObservableList with all the Coach-requests
 	public ObservableList<Coach> getCoaches(){
 		for (String uname:athlete.getQueuedCoaches()) {
@@ -62,6 +64,10 @@ public class CoachRequestsController {
 	}
 	
 	public void initialize() {
+		App.updateAthlete();
+		this.athlete = App.athlete;
+		this.database = App.db;
+		
 		// Connect columns to right attribute
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("name"));
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<Coach,String>("username"));
@@ -71,6 +77,8 @@ public class CoachRequestsController {
 		
 		// Fill table with values
 		tableView.setItems(getCoaches());
+		
+		
 	}
 	
 	public void acceptButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException{

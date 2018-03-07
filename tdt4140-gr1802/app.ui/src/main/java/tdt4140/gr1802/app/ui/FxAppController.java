@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
+import tdt4140.gr1802.app.core.Athlete;
 
 public class FxAppController {
 
@@ -31,8 +32,16 @@ public class FxAppController {
     @FXML
     private Label txtLabelFeedback;
    
-    private LoginScreenController loginScreenController;
-    private SignUpScreenController signUpScreenController;
+    private LoginScreenController loginScreenController = new LoginScreenController();
+    private SignUpScreenController signUpScreenController = new SignUpScreenController();
+    
+    private AddWorkoutController addWorkoutController = new AddWorkoutController();
+    private    AthleteRequestsController athleteRequestsController = new AthleteRequestsController ();
+    private CoachRequestsController coachRequestsController = new CoachRequestsController();
+    private SeeAthletesController seeAthletesController = new SeeAthletesController();
+    private SeeCoachesController seeCoachesController = new SeeCoachesController();
+    private SeeWorkoutsController seeWorkoutsController = new SeeWorkoutsController();
+    
     
     private App app;
     
@@ -76,7 +85,9 @@ public class FxAppController {
     		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
     			
     			// --- Valid Athlete-login ---
-    			this.app.setUser(this.loginScreenController.getLogin().getUser());
+    			
+    			App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
+    			System.out.println(App.athlete.getName());
     			
     			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
     			this.scene = new Scene(root);
@@ -85,7 +96,8 @@ public class FxAppController {
     		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
     			
     			// --- Valid Coach-login ---
-    			this.app.setUser(this.loginScreenController.getLogin().getUser());
+    			//this.app.setUser(this.loginScreenController.getLogin().getUser());
+    			App.coach = App.db.getCoach(this.loginScreenController.getLogin().getUser().getUsername());
     			
     			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
     			this.scene = new Scene(root);
@@ -93,7 +105,6 @@ public class FxAppController {
     			this.changeScene();
     		}
     		
-    		System.out.println(this.app.getUser());
 
     }
     
@@ -119,4 +130,19 @@ public class FxAppController {
     		window.setScene(this.scene);
     		window.show();
     }
+    
+//    private void setControllers() {
+//    	
+//    	    private AddWorkoutController addWorkoutController = new AddWorkoutController();
+//    	    private    AthleteRequestsController athleteRequestsController = new AthleteRequestsController ();
+//    	    private CoachRequestsController coachRequestsController = new CoachRequestsController();
+//    	    private SeeAthletesController seeAthletesController = new SeeAthletesController();
+//    	    private SeeCoachesController seeCoachesController = new SeeCoachesController();
+//    	    private SeeWorkoutsController seeWorkoutsController = new SeeWorkoutsController();
+//    	
+//    	
+//    	    addWorkoutController.setAthlete();
+//    	
+//    		
+//    }
 }

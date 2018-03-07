@@ -38,23 +38,30 @@ public class AddWorkoutController {
 	
 	@FXML
 	private Button addButton;
+	private Database db;
 	
 	public static App app;
 	
-
-	public void setApp(App app) {
-		AddWorkoutController.app = app;
+	private static Athlete athlete;
+	
+	
+	
+	public void initialize() {
+		this.athlete = App.athlete;
+		this.db = App.db;
 	}
 	
 	
 	public void clickAddButton (ActionEvent event) throws IOException {
-		
+		try {
 		String filepath = filepathTextField.getText();
-		Athlete athl = (Athlete) app.getUser();
-		Workout newWorkout = new Workout(athl, filepath);
-		Database database =  new Database(); 
-		database.createWorkout(newWorkout);
+		Workout newWorkout = new Workout(this.athlete, filepath);
+		db.createWorkout(newWorkout);
 		filepathTextField.setText("Workout Added");
+		}
+		catch(IOException e) {
+			filepathTextField.setText("Filepath is not valid");
+		}
 		
 		
 	}

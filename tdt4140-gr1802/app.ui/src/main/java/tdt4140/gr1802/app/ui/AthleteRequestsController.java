@@ -17,14 +17,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
 public class AthleteRequestsController {
 	
-	private Database database = new Database();
-	private Coach coach = database.getCoach("Petter74");
+	private Database database;
+	private static Coach coach; 
 	
 	@FXML
 	private TableView<Athlete> tableView;
@@ -43,6 +44,11 @@ public class AthleteRequestsController {
 	
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
+	
+	public void setCoach(Coach coach) {
+		this.coach = coach;
+	}
+	
 	// Help-method that returns an ObervableList with all the Athlete-requests
 	public ObservableList<Athlete> getAthletes(){
 		for (String uname:coach.getQueuedAthletes()) {
@@ -54,7 +60,12 @@ public class AthleteRequestsController {
 		return athletes;
 	}
 	
+	
+	
 	public void initialize() {
+		App.updateCoach();
+		this.coach = App.coach;
+		this.database = App.db;
 		// Connect columns to right attribute
 		usernameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("username"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Athlete,String>("name"));
@@ -64,6 +75,7 @@ public class AthleteRequestsController {
 		
 		// Fill table with values
 		tableView.setItems(getAthletes());
+		
 	}
 	
 	public void acceptButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException{

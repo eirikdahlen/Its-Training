@@ -2,8 +2,9 @@ package tdt4140.gr1802.app.core;
 
 public class App {
 	
-	private User user;
-	private Database db;
+	public static Athlete athlete;
+	public static Coach coach; 
+	public static Database db;
 	
 	public App() {
 		
@@ -11,13 +12,6 @@ public class App {
 		
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	public Database getDb() {
 		return db;
@@ -25,6 +19,14 @@ public class App {
 
 	public void setDb(Database db) {
 		this.db = db;
+	}
+	
+	public static void updateCoach() {
+		App.coach = db.getCoach(coach.getUsername());
+	}
+	
+	public static void updateAthlete() {
+		App.athlete = db.getAthlete(athlete.getUsername());
 	}
 	
 	
