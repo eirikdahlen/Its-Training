@@ -5,8 +5,10 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.FxAppController">
    <children>
@@ -25,9 +27,9 @@
             <Font name="Century Gothic" size="16.0" />
          </font>
       </PasswordField>
-      <Label fx:id="lblOverhead" layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="94.0" text="SuperApp ">
+      <Label fx:id="lblOverhead" layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="126.0" text="It's Training" AnchorPane.bottomAnchor="542.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="663.5" AnchorPane.topAnchor="14.0">
          <font>
-            <Font name="Century Gothic" size="18.0" />
+            <Font name="Century Gothic" size="23.0" />
          </font>
       </Label>
       <Button fx:id="btbSignUp" layoutX="706.0" layoutY="20.0" mnemonicParsing="false" onAction="#signUpButton" text="Sign Up">
@@ -36,7 +38,17 @@
          </font>
       </Button>
     <AnchorPane layoutX="-136.0" layoutY="63.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+    
       <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
       <Label fx:id="txtLabelFeedback" layoutX="194.0" layoutY="96.0" prefHeight="17.0" prefWidth="420.0" />
+      <HBox layoutX="79.0" layoutY="263.0" prefHeight="75.0" prefWidth="640.0">
+         <children>
+            <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;No pain no gain&quot;&#10;- Unknown" textAlignment="CENTER" wrappingWidth="642.13671875">
+               <font>
+                  <Font name="System Italic" size="25.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

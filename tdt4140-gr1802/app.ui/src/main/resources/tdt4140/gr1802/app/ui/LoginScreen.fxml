@@ -4,14 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="tdt4140.gr1802.app.ui.LoginScreenController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.LoginScreenController">
    <children>
       <Button fx:id="btbLogin" layoutX="627.0" layoutY="20.0" mnemonicParsing="false" onAction="#loginButton" text="Login">
          <font>
@@ -28,9 +27,9 @@
             <Font name="Century Gothic" size="16.0" />
          </font>
       </PasswordField>
-      <Label fx:id="lblOverhead" layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="94.0" text="SuperApp ">
+      <Label fx:id="lblOverhead" layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="126.0" text="It's Training" AnchorPane.bottomAnchor="542.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="663.5" AnchorPane.topAnchor="14.0">
          <font>
-            <Font name="Century Gothic" size="18.0" />
+            <Font name="Century Gothic" size="23.0" />
          </font>
       </Label>
       <Button fx:id="btbSignUp" layoutX="706.0" layoutY="20.0" mnemonicParsing="false" onAction="#signUpButton" text="Sign Up">
@@ -39,13 +38,13 @@
          </font>
       </Button>
     <AnchorPane layoutX="-136.0" layoutY="63.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-      <HBox layoutX="31.0" layoutY="113.0" prefHeight="443.0" prefWidth="738.0">
+      <HBox layoutX="80.0" layoutY="263.0" prefHeight="75.0" prefWidth="640.0" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.5" AnchorPane.topAnchor="263.0">
          <children>
-            <ImageView fitHeight="440.0" fitWidth="739.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../OneDrive/Bilder/12208323_10153346795422413_4571802329947829689_n.jpg" />
-               </image>
-            </ImageView>
+            <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;No pain no gain&quot;&#10;- Unknown" textAlignment="CENTER" wrappingWidth="642.13671875">
+               <font>
+                  <Font name="System Italic" size="25.0" />
+               </font>
+            </Text>
          </children>
       </HBox>
       <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
