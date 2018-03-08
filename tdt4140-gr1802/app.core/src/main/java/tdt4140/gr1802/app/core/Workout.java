@@ -123,11 +123,38 @@ public class Workout {
 	
 	public Date parseDate(String date) throws ParseException {
 		
-		
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		return df.parse(date);
 		
 	}
 
+
+	protected void setDate(Date date) { this.date = date; }
+
+
+	protected void setDateString(String dateString) { this.dateString = dateString; }
+
+
+	protected void setType(String type) { this.type = type; }
+
+
+	protected void setKilometres(double kilometres) { this.kilometres = kilometres; }
+
+
+	protected void setDuration(int duration) { this.duration = duration; }
+
+
+	protected void setPulsList(List<String> pulsList) {this.pulsList = pulsList; }
+	
+	
+	protected void setFilePath(String filePath) { this.filePath = filePath; }
+
+
+	protected void setMaxHR(int maxHR) { this.maxHR = maxHR; }
+
+
+	protected void setAverageHR(int averageHR) { this.averageHR = averageHR; }
+
+	
 	
 }
