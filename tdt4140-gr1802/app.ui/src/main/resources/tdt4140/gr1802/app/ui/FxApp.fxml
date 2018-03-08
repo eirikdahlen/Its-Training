@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.FxAppController">
    <children>
-      <Pane stylesheets="@StyleSheets/fontStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -27,33 +27,33 @@
             </ImageView>
             <Button fx:id="btbLogin" layoutX="297.0" layoutY="300.0" mnemonicParsing="false" onAction="#loginButton" opacity="0.83" prefHeight="32.0" prefWidth="90.0" text="Login">
                <font>
-                  <Font name="Cuties Caps" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Button>
             <TextField fx:id="txtUsername" layoutX="297.0" layoutY="189.0" opacity="0.82" prefHeight="34.0" prefWidth="206.0" promptText="Username">
                <font>
-                  <Font name="Cuties Caps" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </TextField>
             <PasswordField fx:id="txtPassword" layoutX="297.0" layoutY="244.0" opacity="0.82" prefHeight="34.0" prefWidth="206.0" promptText="Password">
                <font>
-                  <Font name="Cuties Caps" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </PasswordField>
             <Label fx:id="lblOverhead" alignment="CENTER" layoutX="271.0" layoutY="113.0" prefHeight="67.0" prefWidth="256.0" text="It's Training" textFill="WHITE">
                <font>
-                  <Font name="Cuties Caps" size="57.0" />
+                  <Font name="Calibri" size="45.0" />
                </font>
             </Label>
             <Button fx:id="btbSignUp" layoutX="412.0" layoutY="300.0" mnemonicParsing="false" onAction="#signUpButton" opacity="0.83" prefHeight="32.0" prefWidth="90.0" text="Sign Up">
                <font>
-                  <Font name="Cuties Caps" size="20.0" />
+                  <Font name="Calibri" size="20.0" />
                </font>
             </Button>
             <Label fx:id="txtLabelFeedback" layoutX="189.0" layoutY="373.0" prefHeight="17.0" prefWidth="420.0" textFill="WHITE" />
             <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No pain no gain&#10;- Unknown" wrappingWidth="163.7366943359375">
                <font>
-                  <Font name="Cuties Caps" size="30.0" />
+                  <Font name="Calibri" size="24.0" />
                </font>
             </Text>
          </children>
