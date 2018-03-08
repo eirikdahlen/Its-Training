@@ -81,10 +81,9 @@ public class FxAppController {
 		
 		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
 			// --- Valid Athlete-login ---
-			
 			app.setAthlete(app.getDb().getAthlete(this.loginScreenController.getLogin().getUser().getUsername()));
 			
-			// Might be deleted, must test first. 
+			// TODO: Might be deleted, must test first. 
 			//App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
 			
 			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
