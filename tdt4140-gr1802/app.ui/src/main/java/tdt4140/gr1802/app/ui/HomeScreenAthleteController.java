@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class HomeScreenAthleteController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Button btAddWorkout;
 	

@@ -14,6 +14,9 @@ public class LogIn {
 		this.password = password;
 	}
 	
+	// Getter for User
+	public User getUser() { return this.inloggedUser; }
+	
 	public boolean checkUserNameExits(String username) { 
 		return checkUsernameAthlete(username) || checkUsernameCoach(username);
 	}
@@ -45,8 +48,4 @@ public class LogIn {
 		System.out.println(db.getPassword(username));
 		return db.getPassword(username).equals(password);
 	}
-	
-	public User getUser() { return this.inloggedUser; }
-	
-
 }

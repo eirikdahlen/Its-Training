@@ -24,7 +24,7 @@ public class LoginScreenController {
 	
 	LogIn login; 
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Label lblOverhead;
 	@FXML

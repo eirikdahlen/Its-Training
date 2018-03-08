@@ -2,6 +2,7 @@ package tdt4140.gr1802.app.core;
 
 public abstract class User {
 	
+	// TODO: why protected not private? 
 	protected String name ;
 		
 	protected String username ;

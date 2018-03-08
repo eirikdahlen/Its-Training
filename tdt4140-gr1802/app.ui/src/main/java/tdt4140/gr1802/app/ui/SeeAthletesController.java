@@ -28,7 +28,7 @@ public class SeeAthletesController {
 	private Database database = new Database();
 	private Coach coach;
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
 	
@@ -79,12 +79,12 @@ public class SeeAthletesController {
 	
 	public void initialize() {
 		App.updateCoach();
-		this.coach = App.coach;
+		this.coach = App.getCoach();
 		
 		// Set username label
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		//this.database = App.db;
+		//TODO: this.database = App.db;
 		System.out.println("Seeathletes init");
 		
 		// Connect columns to right attribute

@@ -36,17 +36,13 @@ public class Coach extends User {
 		this.password = password;
 	}
 
-	public List<String> getQueuedAthletes() {
-		return queuedAthletes;
-	}
+	// Getters and setters
+	public List<String> getQueuedAthletes() { return queuedAthletes; }
 
-	public void setAthletes(List<String> athletes) {
-		this.athletes = athletes;
-	}
+	public void setAthletes(List<String> athletes) { this.athletes = athletes; }
 
-	public List<String> getAthletes() {
-		return athletes;
-	}
+	public List<String> getAthletes() { return athletes; }
+	
 	
 	public void queueAthlete (String newAthlete) {
 		queuedAthletes.add(newAthlete) ;

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class FxApp extends Application {
 	
-	Stage window;
+	private Stage window;
 	//Scene loginScreen, signUpScreen, mainScreen;
 	
 	@Override

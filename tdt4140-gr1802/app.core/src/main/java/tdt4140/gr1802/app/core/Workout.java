@@ -98,6 +98,28 @@ public class Workout {
 		
 	}
 	
+	// Getters and setters 
+	public Athlete getAthlete() { return athlete; }
+	
+	public void setAthlete(Athlete athlete) { this.athlete = athlete; }
+
+	public Date getDate() { return date; }
+	
+	public String getDateString() { return dateString; }
+	
+	public String getType() { return type; }
+	
+	public double getKilometres() { return kilometres; }
+	
+	public int getDuration() { return duration; }
+	
+	public List<String> getPulsList() { return pulsList; }
+	
+	public Integer getMaxHR() { return maxHR; }
+	
+	public Integer getAverageHR() { return averageHR; }
+
+	
 	
 	public Date parseDate(String date) throws ParseException {
 		
@@ -105,54 +127,6 @@ public class Workout {
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		return df.parse(date);
 		
-	}
-
-	
-	public Athlete getAthlete() {
-		return athlete;
-	}
-
-	
-	public void setAthlete(Athlete athlete) {
-		this.athlete = athlete;
-	}
-
-	
-	public Date getDate() {
-		return date;
-	}
-
-	
-	public String getDateString() {
-		return dateString;
-	}
-
-	
-	public String getType() {
-		return type;
-	}
-
-	
-	public double getKilometres() {
-		return kilometres;
-	}
-
-	
-	public int getDuration() {
-		return duration;
-	}
-
-	
-	public List<String> getPulsList() {
-		return pulsList;
-	}
-	
-	public Integer getMaxHR() {
-		return maxHR;
-	}
-	
-	public Integer getAverageHR() {
-		return averageHR;
 	}
 
 	

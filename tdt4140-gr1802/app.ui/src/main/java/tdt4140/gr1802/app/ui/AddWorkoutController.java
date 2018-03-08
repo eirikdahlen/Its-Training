@@ -46,18 +46,18 @@ public class AddWorkoutController {
 	
 	private Database db;
 	
-	public static App app;
+	private static App app;
 	
 	private static Athlete athlete;
 	
 	
 	// Initialization method
 	public void initialize() {
-		this.athlete = App.athlete;
-		this.db = App.db;
+		athlete = app.getAthlete();
+		this.db = app.getDb();
 		
 		// Set username label
-		this.txtLabelUsername.setText(this.athlete.getUsername());
+		this.txtLabelUsername.setText(athlete.getUsername());
 	}
 	
 	// Method called when "Add" button clicked
@@ -65,7 +65,7 @@ public class AddWorkoutController {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
 			String filepath = filepathTextField.getText();
-			Workout newWorkout = new Workout(this.athlete, filepath);
+			Workout newWorkout = new Workout(athlete, filepath);
 			db.createWorkout(newWorkout);
 			filepathTextField.setText("Workout Added");
 		}

@@ -22,7 +22,7 @@ import tdt4140.gr1802.app.core.Workout;
 
 public class CoachSeeWorkoutsController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	
 	@FXML
 	private TableView<Workout> tableView;

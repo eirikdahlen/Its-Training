@@ -19,7 +19,7 @@ import tdt4140.gr1802.app.core.Athlete;
 
 public class FxAppController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
     @FXML
     private Button btbLogin;
     @FXML
@@ -81,8 +81,11 @@ public class FxAppController {
 		
 		if (validLogin && loginScreenController.getLogin().checkUsernameAthlete(typedUsername)) {
 			// --- Valid Athlete-login ---
-			App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
-			System.out.println(App.athlete.getName());
+			
+			app.setAthlete(app.getDb().getAthlete(this.loginScreenController.getLogin().getUser().getUsername()));
+			
+			// Might be deleted, must test first. 
+			//App.athlete = App.db.getAthlete(this.loginScreenController.getLogin().getUser().getUsername());
 			
 			this.root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
 			this.scene = new Scene(root);
@@ -91,7 +94,10 @@ public class FxAppController {
 		} else if (validLogin && loginScreenController.getLogin().checkUsernameCoach(typedUsername)) {
 			// --- Valid Coach-login ---
 			//this.app.setUser(this.loginScreenController.getLogin().getUser());
-			App.coach = App.db.getCoach(this.loginScreenController.getLogin().getUser().getUsername());
+			this.app.setCoach(this.app.getDb().getCoach(this.loginScreenController.getLogin().getUser().getUsername()));
+			
+			// TODO: Might be deleted, must test first
+			//App.coach = App.db.getCoach(this.loginScreenController.getLogin().getUser().getUsername());
 			
 			this.root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
 			this.scene = new Scene(root);

@@ -26,7 +26,7 @@ import tdt4140.gr1802.app.core.Database;
 
 public class CoachRequestsController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	
 	private Database database;
 	private Athlete athlete;
@@ -71,8 +71,8 @@ public class CoachRequestsController {
 	
 	public void initialize() {
 		App.updateAthlete();
-		this.athlete = App.athlete;
-		this.database = App.db;
+		this.athlete = App.getAthlete();
+		this.database = App.getDb();
 		
 		// Set username label
 		this.txtLabelUsername.setText(this.athlete.getUsername());

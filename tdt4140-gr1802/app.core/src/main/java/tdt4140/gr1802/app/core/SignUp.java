@@ -19,6 +19,9 @@ public class SignUp {
 			this.isAthlete = isAthlete;
 			this.db = new Database();	
 		}
+	
+	// Getter for User
+	public User getUser() { return newUser; }
 
 	public boolean checkNameOnlyLetters() {
 		if (this.name.matches("[a-zA-Z ]+")) {
@@ -91,7 +94,7 @@ public class SignUp {
 		}
 	}
 
-	public User getUser() { return newUser; }
+
 	
 	public boolean isValidLogin() { return validLogin; }
 	

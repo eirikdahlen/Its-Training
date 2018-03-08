@@ -25,7 +25,7 @@ import tdt4140.gr1802.app.core.Database;
 
 public class AthleteRequestsController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	
 	private Database database;
 	private static Coach coach; 
@@ -51,8 +51,8 @@ public class AthleteRequestsController {
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
 	
-	public void setCoach(Coach coach) {
-		this.coach = coach;
+	public void setCoach(Coach newCoach) {
+		coach = newCoach;
 	}
 	
 	// Help-method that returns an ObervableList with all the Athlete-requests
@@ -71,8 +71,8 @@ public class AthleteRequestsController {
 	
 	public void initialize() {
 		App.updateCoach();
-		this.coach = App.coach;
-		this.database = App.db;
+		coach = App.getCoach();
+		this.database = App.getDb();
 		
 		// Sets username label
 		this.txtLabelUsername.setText(coach.getUsername());

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 public class LoggedInScreenController {
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Button backToLogin; 
 

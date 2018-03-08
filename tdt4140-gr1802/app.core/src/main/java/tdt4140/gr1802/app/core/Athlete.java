@@ -42,23 +42,22 @@ public class Athlete extends User {
 		this.name = name;
 	}
 	
+	// getters and setters 
+	public List<String> getCoaches() { return coaches; }
+	
+	public void setCoaches(List<String> coaches) { this.coaches = coaches; }
+
+	public List<String> getQueuedCoaches() { return queuedCoaches; }
+	
+	public List<Workout> getAllWorkouts(){ return database.getAllWorkouts(this); }
+	
+	
 	public void queueCoach (String newCoach) {
 		queuedCoaches.add(newCoach) ;
 		// add to queue in database
 		database.addRequestCoachToAthlete(this, newCoach);
 	}
 
-	public List<String> getCoaches() {
-		return coaches;
-	}
-
-	public void setCoaches(List<String> coaches) {
-		this.coaches = coaches;
-	}
-
-	public List<String> getQueuedCoaches() {
-		return queuedCoaches;
-	}
 	
 
 	// Iterate through queuedCoaches and accepts/declines requests. 
@@ -116,12 +115,10 @@ public class Athlete extends User {
 		}
 	}
 	
-	public List<Workout> getAllWorkouts(){
-		return database.getAllWorkouts(this);
-	}
+
 	
-	// Adds workout.
-	private void addWorkout() {
+	// TODO: Delete? Adds workout.
+	/*private void addWorkout() {
 		
-	}
+	}*/
 }
