@@ -453,6 +453,20 @@ public class DatabaseTest {
 	}
 	
 
+	
+	@Test
+	public void testGetPulseList() throws IOException {
+		
+		Athlete athl = new Athlete("williamkvaale","test123","William Kvaale");
+		
+		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+		
+		Workout wo1 = new Workout(athl, path);
+		
+		Workout wo2 = new Workout(database.getAthlete("williamkvaale"),path);
+		
+		assertTrue(wo1.getAthlete().getUsername().equals(wo2.getAthlete().getUsername()));
+	}
 
 	
 }
