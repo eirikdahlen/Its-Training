@@ -466,6 +466,10 @@ public class DatabaseTest {
 		Workout wo2 = new Workout(database.getAthlete("williamkvaale"),path);
 		
 		assertTrue(wo1.getAthlete().getUsername().equals(wo2.getAthlete().getUsername()));
+		
+		assertEquals(wo1.getPulsList(),wo2.getPulsList());
+		
+		
 	}
 
 	
