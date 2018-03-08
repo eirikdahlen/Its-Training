@@ -118,17 +118,7 @@ public class Workout {
 	public Integer getMaxHR() { return maxHR; }
 	
 	public Integer getAverageHR() { return averageHR; }
-
 	
-	
-	public Date parseDate(String date) throws ParseException {
-		
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		return df.parse(date);
-		
-	}
-
-
 	protected void setDate(Date date) { this.date = date; }
 
 
@@ -154,6 +144,14 @@ public class Workout {
 
 
 	protected void setAverageHR(int averageHR) { this.averageHR = averageHR; }
+	
+	// parse the date
+		public Date parseDate(String date) throws ParseException {
+			
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			return df.parse(date);
+			
+		}
 
 	
 	

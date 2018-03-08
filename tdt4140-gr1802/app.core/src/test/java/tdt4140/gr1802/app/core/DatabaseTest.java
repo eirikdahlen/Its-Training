@@ -16,11 +16,8 @@ public class DatabaseTest {
 		this.database = new Database();
 	}
 
-	
 	public static void main(String[] args) throws IOException {
-		
-
-		
+	
 		//uncomment the tests to run
 		
 		DatabaseTest test = new DatabaseTest();
@@ -91,7 +88,7 @@ public class DatabaseTest {
 
 		
 		//adds athlete for testing
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "12345", "Nils");
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
@@ -102,14 +99,14 @@ public class DatabaseTest {
 	public void testCreateCoach() {
 		
 		//adds coack for testing
-		Coach coach1 = new Coach("Petter74", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Petter74", "passord", "Petter");
 		
 		//adds athlete to database
 		database.createCoach(coach1);
 		
 		//legger til ekstra 
-		Coach coach2 = new Coach("Erna33", "erna123","Erna", new ArrayList<String>(), new ArrayList<String>());
-		Coach coach3 = new Coach("Jens32","jens123", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach2 = new Coach("Erna33", "erna123","Erna");
+		Coach coach3 = new Coach("Jens32","jens123", "Petter");
 		
 		database.createCoach(coach2);
 		database.createCoach(coach3);
@@ -119,7 +116,7 @@ public class DatabaseTest {
 	public void testCreateWorkout() throws IOException {
 		
 		//adds athlete and workout for testing
-		Athlete athlete1 = new Athlete("Kjetil123", "Kjetil", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Kjetil123", "passord", "Kjetil");
 		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv");
 		
 		//adds athlete to database
@@ -134,7 +131,7 @@ public class DatabaseTest {
 		
 
 		//creates athlete and workout for testing 
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "passord", "Nils");
 		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
 		Workout workout2 = new Workout(athlete1, "02-01-2016 10:34:37","SKIING", 133,24.39, new ArrayList<String>() );
 		
@@ -166,7 +163,7 @@ public class DatabaseTest {
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		//creates athlete for testing	
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "passord", "Nils");
 		
 		List<String> coaches = database.getCoachesForAthlete(athlete1);
 		
@@ -179,8 +176,8 @@ public class DatabaseTest {
 		
 		
 		//creates coaches for testing 
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
-		Coach coach2 = new Coach("Jens32", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
+		Coach coach2 = new Coach("Jens32", "passord","Petter");
 		
 		//the actual addCoachToAthlete-method
 		database.addCoachToAthlete(athlete1, coach1.getUsername());
@@ -207,7 +204,7 @@ public class DatabaseTest {
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		//creates coach for testing	
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33","passord", "Erna");
 	
 		List<String> athletes = database.getAthleteForCoach(coach1);
 
@@ -221,9 +218,9 @@ public class DatabaseTest {
 		
 		
 		//creates athletes for testing 
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "passord","Nils");
 		
-		Athlete athlete2 = new Athlete("Nils100", "Nilse", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete2 = new Athlete("Nils100","passord", "Nilse");
 		
 		//the actual addAthleteToCoach-method
 		database.addAthleteToCoach(coach1, athlete1.getUsername());
@@ -248,7 +245,7 @@ public class DatabaseTest {
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		//creates coach for testing	
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "passord", "Erna");
 	
 		List<String> athletes = database.getRequestsForCoach(coach1);
 
@@ -262,7 +259,7 @@ public class DatabaseTest {
 		
 		
 		//creates athletes for testing 
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22","passord", "Nils");
 		
 	
 		
@@ -291,7 +288,7 @@ public class DatabaseTest {
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
 		//creates athlete for testing	
-		Athlete athlete1 = new Athlete("Nils34", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils34", "passord","Nils");
 		
 	
 		List<String> athletes = database.getRequestsForAthlete(athlete1);
@@ -306,7 +303,7 @@ public class DatabaseTest {
 		
 		
 		//creates coache for testing 
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
 		
 		//the actual database-method
 		database.addRequestCoachToAthlete(athlete1, coach1.getUsername());
@@ -332,7 +329,7 @@ public class DatabaseTest {
 		
 		
 		//creates athlete for testing	
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22","passord", "Nils");
 		
 		List<String> coaches = database.getCoachesForAthlete(athlete1);
 		
@@ -344,30 +341,30 @@ public class DatabaseTest {
 	}
 	
 	public void testDeleteCoachForAthlete() {
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22","passord", "Nils");
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
 		database.deleteCoachForAthlete(athlete1, coach1.getUsername());
 		
 	}
 	public void testDeleteAthleteForCoach() {
 		
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
+		Athlete athlete1 = new Athlete("Nils22", "passord","Nils");
 		database.deleteAthleteForCoach(coach1, athlete1.getUsername());
 		
 	}
 
 	
 	public void testDeleteCoachRequestForAthlete() {
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22", "passord","Nils");
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
 		database.deleteCoachRequestForAthlete(athlete1, coach1.getUsername());
 	}
 	
 	public void testDeleteAthleteRequestForCoach() {
 		
-		Coach coach1 = new Coach("Erna33", "Erna", new ArrayList<String>(), new ArrayList<String>());
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Erna33", "passord","Erna");
+		Athlete athlete1 = new Athlete("Nils22", "passord", "Nils");
 		database.deleteAthleteRequestForCoach(coach1, athlete1.getUsername());
 	}
 /*
@@ -399,7 +396,7 @@ public class DatabaseTest {
 	public void testGetAthlete() {
 
 		//adds athlete for testing
-		Athlete athlete1 = new Athlete("Nils34", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils34", "passord","Nils");
 				
 		//adds athlete to database
 		database.createAthlete(athlete1);
@@ -418,7 +415,7 @@ public class DatabaseTest {
 	public void testGetCoach() {
 
 		//adds coack for testing
-		Coach coach1 = new Coach("Petter74", "Petter", new ArrayList<String>(), new ArrayList<String>());
+		Coach coach1 = new Coach("Petter74", "passord","Petter");
 				
 		//adds athlete to database
 		database.createCoach(coach1);
@@ -437,7 +434,7 @@ public class DatabaseTest {
 	public void testGetWorkout() throws IOException {
 
 		//creates athlete and workout for testing 
-		Athlete athlete1 = new Athlete("Nils22", "Nils", new ArrayList<String>(), new ArrayList<String>());
+		Athlete athlete1 = new Athlete("Nils22","passord", "Nils");
 		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
 		
 		//adds workout to database
@@ -448,10 +445,7 @@ public class DatabaseTest {
 
 		//compares datestring, to see if its the same workout
 		assertEquals(workout1.getDateString(), retrievedWorkout.getDateString());
-		
-		
 	}
-	
 
 	
 	@Test

@@ -31,66 +31,49 @@ public class Database {
 	private MongoCollection coachCollection;
 	private MongoCollection athleteCollection;
 	
-	
-	
-	
 	public Database() {
-		
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
 		refresh();
-	
 	}
 	
-	
+	// Create Coach in database
 	public void createCoach(Coach coach) {
-		
 		//Checks if username is available 
 		if ( ! this.usernameExists(coach.getUsername()) ) {
-		
-		//Adds a coach-document to Coach-collection
-		Document document = new Document("Username", coach.getUsername());
-		document.append("Password", coach.getPassword());
-		document.append("Name",coach.getName());
-		document.append("Athletes", coach.getAthletes());
-		document.append("Requests", coach.getQueuedAthletes());
-		coachCollection.insertOne(document);
-		System.out.println("coach added to database");
-		}
-		
-		else {
+			//Adds a coach-document to Coach-collection
+			Document document = new Document("Username", coach.getUsername());
+			document.append("Password", coach.getPassword());
+			document.append("Name",coach.getName());
+			document.append("Athletes", coach.getAthletes());
+			document.append("Requests", coach.getQueuedAthletes());
+			coachCollection.insertOne(document);
+			System.out.println("coach added to database");
+		} else {
 			System.out.println("Username in use. Could not add Coach");
 		}
 	}
 
-	
+	// Create Athlete in database
 	public void createAthlete(Athlete athlete) {
-		
 		//Checks if username is available 
 		if ( ! this.usernameExists(athlete.getUsername()) ) {
-		
-		//Adds an athlete-document to athlete-collection
+			//Adds an athlete-document to athlete-collection
 			Document document = new Document("Username", athlete.getUsername());
 			document.append("Password", athlete.getPassword());
 			document.append("Name",athlete.getName());
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
-			athleteCollection.insertOne(document);
-			
+			athleteCollection.insertOne(document);	
 			System.out.println("athlete added to database");
-		}
-		
-		else {
+		} else {
 			System.out.println("Username in use. Could not add Athlete");
 		}
 	}
 	
-	
+	// Create Workout in database
 	public void createWorkout(Workout workout) {
-		
-		
 		//checks if datetime is available for particular athlete 
 		if ( ! datetimeExists(workout.getAthlete(), workout.getDateString())) {
-			
 			//finds the athlete of the workout, and accesses his workout-collection
 			//automatically creates new collection if it does not exists
 			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(workout.getAthlete().getUsername());
@@ -108,118 +91,90 @@ public class Database {
 			//pushes to database
 			userWorkoutCollection.insertOne(doc);
 			System.out.println("workout added to database");
-			
 		} else {
 			System.out.println("datetime already in use for particular athlete.");
 		}
 
 	}
 	
-	
+	// Returns the Coach from the database
 	public Coach getCoach(String username) {
-		
 		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
 		
 		if(found == null) {
 			System.out.println("no Coach goes by this username");
 			return null;
 		}
-		
 		Coach coach = new Coach(found.getString("Username"), found.getString("Password") ,found.getString("Name") , (List<String>) found.get("Athletes") , (List<String>) found.get("Requests"));
-		
+	
 		return coach;
 	}
 	
+	// Returning the password to the user
 	public String getPassword(String username) {
-		
 		if (! this.usernameExists(username) ) {
 			System.out.println("username does not exist");
 			return null;
 		}
-		
 		if (athleteUsernameExists(username) ) {
 			Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 			String password = found.getString("Password");
 			return password;
-		}
-		
-		else {
+		} else {
 			Document found = (Document) coachCollection.find(new Document("Username", username)).first();
 			String password = found.getString("Password");
 			return password;
-			
 		}
-		
-		 
-		
 	}
 	
+	// Initializing variables, should be changed.
 	public void refresh() {
-		
-
 		this.athleteDatabase = mongoClient.getDatabase("Athlete");
 		this.coachDatabase = mongoClient.getDatabase("Coach");
 		this.workoutDatabase = mongoClient.getDatabase("Workout");
 		
 		this.coachCollection = coachDatabase.getCollection("Coach");
 		this.athleteCollection = athleteDatabase.getCollection("Athlete");
-		
-		
-		
 	}
 	
-	
+	// Returns the Athlete from the database
 	public Athlete getAthlete(String username) {
-		
-		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");
 			return null;
-			
 		}
-		
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
 		
 		return athlete;
 	}
 	
-	
+	// Returns the Workout from the database
 	public Workout getWorkout(Athlete athlete, String date) {
-		
-		
 		//finds the athlete of the workout, and accesses his workout-collection
 		//automatically creates new collection if it does not exists
 		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
-
-		
 		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
 		
 		if (found == null) {
 			System.out.println("no workout with this datetime");
 			return null;
-			
 		}
-			
 		//creates workout-object
 		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
 				found.getDouble("kilometres") , (List<String>) found.get("pulse") );
 		
-		
 		return workout;
 	}
 	
-	
-	
+	// Returns a list of all the Workouts for a spesific Athlete
 	public List<Workout> getAllWorkouts(Athlete athlete) {
-		
 		List<Workout> workouts = new ArrayList<Workout>();
 		
 		//finds the athlete of the workout, and accesses his workout-collection
 		//automatically creates new collection if it does not exists
 		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
-		
 		
 		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
 		
@@ -227,8 +182,7 @@ public class Database {
 		    		Document doc = cursor.next();
 		    		System.out.println(doc.get("date"));
 		    		System.out.println(doc.get("pulse"));
-		    		
-		        
+		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
 						doc.getDouble("kilometres") , (List<String>) doc.get("pulse") );
 		        
@@ -239,37 +193,30 @@ public class Database {
 			System.out.println("oi her var det litt smaafeil gitt");
 			e.printStackTrace();
 		}
-		
-			
 		return workouts;
 	}
 	
+	// Add Coach to the Athletes Coach-list
 	public void addCoachToAthlete(Athlete athlete, String coachUsername) {
 		////method for adding coach to athlete's coach-list
-		
-		
 		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");
 		} else {
 			List<String> coaches = (ArrayList<String>) found.get("Coaches");
-			
-	
 			boolean alreadyPresent = false;
-			for (String element : coaches) {
-		    
-			    if ( element.equals(coachUsername) ) {
-			    	System.out.println("coach already in athlete-list");
-			    	alreadyPresent = true;
-			    	break;
-			    }
-		}
 			
+			for (String element : coaches) {
+			    if ( element.equals(coachUsername) ) {
+				    	System.out.println("coach already in athlete-list");
+				    	alreadyPresent = true;
+				    	break;
+			    }
+			}
 			if (! alreadyPresent ) {
 				//updates coach-list
 				coaches.add(coachUsername);
-				
 
 				//updates document with updated coach-array
 				
@@ -279,41 +226,33 @@ public class Database {
 				Bson updateoperation = new Document("$set", updatedvalue);
 				athleteCollection.updateOne(found2, updateoperation);
 				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s coach-list.");
-	
+			}	
 		}
-			
 	}
-}
 	
+	// Add Athlete to the Coach Athletes-list
 	public void addAthleteToCoach(Coach coach, String athleteUsername) {
 		//method for adding athlete to coach's athlete-list
-		
-		
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
 		
 		if (found == null) {
 			System.out.println("no coach with this username");
 		} else {
 			List<String> athletes = (ArrayList<String>) found.get("Athletes");
-			
-			
-			
-	
+		
 			boolean alreadyPresent = false;
 			for (String element : athletes) {
 		    
 			    if ( element.equals(athleteUsername) ) {
-			    	System.out.println("athlete already in coach-list");
-			    	alreadyPresent = true;
-			    	break;
+				    	System.out.println("athlete already in coach-list");
+				    	alreadyPresent = true;
+				    	break;
 			    }
-		}
-			
+			}
 			if (! alreadyPresent ) {
 				//updates coach-list
 				athletes.add(athleteUsername);
-				
-
+		
 				//updates document with updated coach-array
 				
 				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
@@ -322,16 +261,13 @@ public class Database {
 				Bson updateoperation = new Document("$set", updatedvalue);
 				coachCollection.updateOne(found2, updateoperation);
 				System.out.println("adding " + athleteUsername + " to "+coach.getUsername() + "'s athlete-list.");
-	
+			}
 		}
-			
 	}
-}
 	
+	// Add Athlete to Coaches RequestAthlete-list
 	public void addRequestAthleteToCoach(Coach coach, String athleteUsername) {
 		//method for adding athlete to coach's requests
-		
-		
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
 		
 		if (found == null) {
@@ -339,67 +275,53 @@ public class Database {
 		} else {
 			List<String> requestAthletes = (ArrayList<String>) found.get("Requests");
 			
-			
-			
-	
 			boolean alreadyPresent = false;
 			for (String element : requestAthletes) {
 		    
 			    if ( element.equals(athleteUsername) ) {
-			    	System.out.println("athlete already in request-list");
-			    	alreadyPresent = true;
-			    	break;
+				    	System.out.println("athlete already in request-list");
+				    	alreadyPresent = true;
+				    	break;
 			    }
-		}
-			
+			}
 			if (! alreadyPresent ) {
 				//updates coach-list
 				requestAthletes.add(athleteUsername);
-				
-
+			
 				//updates document with updated coach-array
-				
 				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
 
 				Bson updatedvalue = new Document("Requests", requestAthletes);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				coachCollection.updateOne(found2, updateoperation);
 				System.out.println("adding " + athleteUsername + " to "+coach.getUsername() + "'s request-list.");
-	
+			}
 		}
-			
 	}
-}
 	
+	// Add Atlete to Coaches RequestAthlete-list
 	public void addRequestCoachToAthlete(Athlete athlete, String coachUsername) {
 		//method for adding coach to athlete's requests
-		
-		
 		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername() )).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");
 		} else {
 			List<String> requestCoaches = (ArrayList<String>) found.get("Requests");
-			
-			
-			
-	
+		
 			boolean alreadyPresent = false;
 			for (String element : requestCoaches) {
 		    
 			    if ( element.equals(coachUsername) ) {
-			    	System.out.println("athlete already in request-list");
-			    	alreadyPresent = true;
-			    	break;
+				    	System.out.println("athlete already in request-list");
+				    	alreadyPresent = true;
+				    	break;
 			    }
-		}
-			
+			}
 			if (! alreadyPresent ) {
 				//updates coach-list
 				requestCoaches.add(coachUsername);
-				
-
+		
 				//updates document with updated coach-array
 				
 				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
@@ -408,65 +330,52 @@ public class Database {
 				Bson updateoperation = new Document("$set", updatedvalue);
 				athleteCollection.updateOne(found2, updateoperation);
 				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s request-list.");
-	
+			}	
 		}
-			
 	}
-}
 	
+	// Delete Coach from Atletes Coach-list
 	public void deleteCoachForAthlete(Athlete athlete, String coachUsername) {
+		//method for deleting coach from athlete's coach-list
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 		
-	//method for deleting coach from athlete's coach-list
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<String> coaches = (ArrayList<String>) found.get("Coaches");
 		
+			boolean alreadyPresent = false;
+			for (String element : coaches) {
+		    
+			    if ( element.equals(coachUsername) ) {
+				    	alreadyPresent = true;
+				    	break;
+			    }
+			}
+			
+			if ( alreadyPresent ) {
+				//updates coach-list
+				coaches.remove(coachUsername);
+		
+				//updates document with updated coach-array
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 	
-	Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+				Bson updatedvalue = new Document("Coaches", coaches);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found2, updateoperation);
+				System.out.println("deleted " + coachUsername + " from "+athlete.getUsername() + "'s coach-list.");
 	
-	if (found == null) {
-		System.out.println("no athlete with this username");
-	} else {
-		List<String> coaches = (ArrayList<String>) found.get("Coaches");
-		
-
-		boolean alreadyPresent = false;
-		for (String element : coaches) {
-	    
-		    if ( element.equals(coachUsername) ) {
-		    	alreadyPresent = true;
-		    	break;
-		    }
-	}
-		
-		if ( alreadyPresent ) {
-			//updates coach-list
-			coaches.remove(coachUsername);
-			
-			
-
-			//updates document with updated coach-array
-			
-			Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
-
-			Bson updatedvalue = new Document("Coaches", coaches);
-			Bson updateoperation = new Document("$set", updatedvalue);
-			athleteCollection.updateOne(found2, updateoperation);
-			System.out.println("deleted " + coachUsername + " from "+athlete.getUsername() + "'s coach-list.");
-
-	} else {
-		System.out.println("coach not in athlete's coach-list");
-		
-	}
-			
-	}
-		
-	
-		
+			} else {
+				System.out.println("coach not in athlete's coach-list");
+			}
+		}
 	}
 	
+	// Delete Athlete from Coaches Athletes-list
 	public void deleteAthleteForCoach(Coach coach, String athleteUsername) {
-	//method for adding athlete to coach's athlete-listt
+		//method for adding athlete to coach's athlete-listt
 		System.out.println("inni database");
 		System.out.println(coach.getUsername() + " "+athleteUsername);
-		
 		
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
 		
@@ -474,140 +383,102 @@ public class Database {
 			System.out.println("no coach with this username");
 		} else {
 			List<String> athletes = (ArrayList<String>) found.get("Athletes");
-			
-			
-			
 	
 			boolean alreadyPresent = false;
 			for (String element : athletes) {
-		    
 			    if ( element.equals(athleteUsername) ) {
-		
-			    	alreadyPresent = true;
-			    	break;
+				    	alreadyPresent = true;
+				    	break;
 			    }
-		}
-			
+			}
 			if (alreadyPresent ) {
 				//updates coach-list
 				athletes.remove(athleteUsername);
-				
 
 				//updates document with updated coach-array
-				
 				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
 
 				Bson updatedvalue = new Document("Athletes", athletes);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				coachCollection.updateOne(found2, updateoperation);
 				System.out.println("deleting " + athleteUsername + " from "+coach.getUsername() + "'s athlete-list.");
-	
-		} else {
-			System.out.println("Athlete not in coach's athelte-list");
-		}
-			
-	}
-		
-		
-	}
-	
-	public void deleteCoachRequestForAthlete(Athlete athlete, String coachUsername) {
-		
-	//method for deleting coach from athlete's coach-list
-		
-	
-	Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
-	
-	if (found == null) {
-		System.out.println("no athlete with this username");
-	} else {
-		List<String> coaches = (ArrayList<String>) found.get("Requests");
-		
-
-		boolean alreadyPresent = false;
-		for (String element : coaches) {
-	    
-		    if ( element.equals(coachUsername) ) {
-		    	alreadyPresent = true;
-		    	break;
-		    }
-	}
-		
-		if ( alreadyPresent ) {
-			//updates coach-list
-			coaches.remove(coachUsername);
-			
-			
-
-			//updates document with updated coach-array
-			
-			Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
-
-			Bson updatedvalue = new Document("Requests", coaches);
-			Bson updateoperation = new Document("$set", updatedvalue);
-			athleteCollection.updateOne(found2, updateoperation);
-			System.out.println("deleted " + coachUsername + " from "+athlete.getUsername() + "'s request.");
-
-	} else {
-		System.out.println("coach not in athlete's request-list");
-		
-	}
-			
-	}
-		
-	
-		
-	}
-	
-	public void deleteAthleteRequestForCoach(Coach coach, String athleteUsername) {
-		//method for adding athlete to coach's athlete-listt
-			
-			
-			Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
-			
-			if (found == null) {
-				System.out.println("no coach with this username");
 			} else {
-				List<String> athletes = (ArrayList<String>) found.get("Requests");
-				
-				
-				
+				System.out.println("Athlete not in coach's athelte-list");
+			}
+		}
+	}
+	
+	// Delete Coach from Athletes RequestCoach-list
+	public void deleteCoachRequestForAthlete(Athlete athlete, String coachUsername) {
+		//method for deleting coach from athlete's coach-list
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 		
-				boolean alreadyPresent = false;
-				for (String element : athletes) {
-			    
-				    if ( element.equals(athleteUsername) ) {
-			
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<String> coaches = (ArrayList<String>) found.get("Requests");
+	
+			boolean alreadyPresent = false;
+			for (String element : coaches) {
+			    if ( element.equals(coachUsername) ) {
 				    	alreadyPresent = true;
 				    	break;
-				    }
+			    }
 			}
+			if ( alreadyPresent ) {
+				//updates coach-list
+				coaches.remove(coachUsername);
+				//updates document with updated coach-array
 				
-				if (alreadyPresent ) {
-					//updates coach-list
-					athletes.remove(athleteUsername);
-					
-
-					//updates document with updated coach-array
-					
-					Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
-
-					Bson updatedvalue = new Document("Requests", athletes);
-					Bson updateoperation = new Document("$set", updatedvalue);
-					coachCollection.updateOne(found2, updateoperation);
-					System.out.println("deleting " + athleteUsername + " from "+coach.getUsername() + "'s request-list.");
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+				Bson updatedvalue = new Document("Requests", coaches);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found2, updateoperation);
+				System.out.println("deleted " + coachUsername + " from "+athlete.getUsername() + "'s request.");
+			} else {
+				System.out.println("coach not in athlete's request-list");
+			}		
+		}	
+	}
+	
+	// Delete Athlete from Coaches RequestAthlete-list
+	public void deleteAthleteRequestForCoach(Coach coach, String athleteUsername) {
+		//method for adding athlete to coach's athlete-list
 		
+		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
+			
+		if (found == null) {
+			System.out.println("no coach with this username");
+		} else {
+			List<String> athletes = (ArrayList<String>) found.get("Requests");
+			
+			boolean alreadyPresent = false;
+			for (String element : athletes) {
+			    if ( element.equals(athleteUsername) ) {
+				    	alreadyPresent = true;
+				    	break;
+			    }
+			}	
+			if (alreadyPresent ) {
+				//updates coach-list
+				athletes.remove(athleteUsername);
+		
+				//updates document with updated coach-array
+					
+				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+
+				Bson updatedvalue = new Document("Requests", athletes);
+				Bson updateoperation = new Document("$set", updatedvalue);
+				coachCollection.updateOne(found2, updateoperation);
+				System.out.println("deleting " + athleteUsername + " from "+coach.getUsername() + "'s request-list.");
 			} else {
 				System.out.println("Athlete not in coach's request-list");
-			}
-				
-		}
-			
-			
-		}
+			}	
+		}	
+	}
 	
-	
-	
+	// Returns a list with all the Coaches usernames for the Athlete
 	public List<String> getCoachesForAthlete(Athlete athlete) {
 		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 		
@@ -617,11 +488,10 @@ public class Database {
 		} else {
 			List<String> coaches = (ArrayList<String>) found.get("Coaches");
 			return coaches;
-	
-			
 		}
 	}
 	
+	// Returns a list with all the Athletes usernames for the Coach
 	public List<String> getAthleteForCoach(Coach coach) {
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
 		System.out.println("HENTER ATHLETES FOR COACH");
@@ -631,25 +501,22 @@ public class Database {
 		} else {
 			List<String> athletes = (ArrayList<String>) found.get("Athletes");
 			return athletes;
-	
-			
 		}
 	}
 	
+	// Returns a list with all the AthleteRequests usernames for the Coach
 	public List<String> getRequestsForCoach(Coach coach) {
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
-		
 		if (found == null) {
 			System.out.println("no coach with this username");
 			return null;
 		} else {
 			List<String> requests = (ArrayList<String>) found.get("Requests");
 			return requests;
-	
-			
 		}
 	}
 	
+	// Returns a list with all the CoachRequests usernames for the Athlete
 	public List<String> getRequestsForAthlete(Athlete athlete) {
 		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
 		
@@ -659,108 +526,62 @@ public class Database {
 		} else {
 			List<String> coaches = (ArrayList<String>) found.get("Requests");
 			return coaches;
-	
-			
 		}
 	}
 	
-	
-
-	
-	
-	
-	//TODO add "addCoach"-metode
-	//TODO add "addAthlete"-metode
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// Check if athlete has a Workout at the datetime
 	public boolean datetimeExists(Athlete athlete, String date) {
-	
-	
-	MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
-	Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
-	
-	
-	
-	if (found != null) {
-		System.out.println("datetime in use for particular athlete");
-		return true;
-	}
-
-	return false;
-
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
+		
+		if (found != null) {
+			System.out.println("datetime in use for particular athlete");
+			return true;
+		}
+		return false;
 	}
 	
-	
+	// Check if the username exists
 	public boolean usernameExists(String username) {
 		//returns true if username exists in database
-	
 		if (coachUsernameExists(username)) {
 			System.out.println("Username in use by Coach");
 			return true;
 		}
-		
 		if (athleteUsernameExists(username)) {
 			System.out.println("Username in use by Athlete");
 			return true;
 		}
-
 		return false;
 	}
 	
-	
-	public boolean coachUsernameExists(String username) {
-	
-		
+	// Check if the Coachusername exists
+	public boolean coachUsernameExists(String username) {	
 		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
-		
 		if (found != null) {
-
 			return true;
 		}
 		return false;
 	}
 	
-	
+	// Check if the Athleteusername exists
 	public boolean athleteUsernameExists(String username) {
-	
-		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
-		
+
 		if (found != null) {
 			return true;
 		}
-
-		
 		return false;
-
 	}
-
 	
+	// Check if the user is an Athlete
 	public boolean isAthlete(String username) {
-
-		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
-		
 		if (found != null) {
 			System.out.println("username is Athlete");
 			return true;
 		}
-
 		return false;
-
 	}
 	
-	
-		
 }

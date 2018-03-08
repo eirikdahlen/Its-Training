@@ -23,6 +23,7 @@ public class SignUp {
 	// Getter for User
 	public User getUser() { return newUser; }
 
+	// Check if name only consist of letters
 	public boolean checkNameOnlyLetters() {
 		if (this.name.matches("[a-zA-Z ]+")) {
 			return true; 
@@ -31,6 +32,7 @@ public class SignUp {
 		}
 	}
 	
+	// Check if username is valid and has the right length
 	public boolean checkUserNameValidAndLenght() {
 		if (this.username.matches("[a-zA-Z0-9]+") && this.username.length() > 0) {
 			return true; 
@@ -39,6 +41,7 @@ public class SignUp {
 		}
 	}
 	
+	// Check if username exists in database
 	public boolean checkUserNameNotExitsInDB() {
 		if (db.coachUsernameExists(this.username) || (db.athleteUsernameExists(this.username))) {
 			System.out.println("Username already in db.");
@@ -48,6 +51,7 @@ public class SignUp {
 		}
 	}
 	
+	// Check password length
 	public boolean checkPasswordLength() {
 		if (this.password.length() <= 4) {
 			System.out.println("Password shorter than 4 chars.");
@@ -57,6 +61,7 @@ public class SignUp {
 		}	
 	}
 	
+	// Check if password is spelled correct both times
 	public boolean checkEqualPasswords() {
 		if (this.password.equals(this.repeatPassword)) {
 			return true;
@@ -65,6 +70,7 @@ public class SignUp {
 		}
 	}
 	
+	// Add new user to the database
 	public void addNewUserToDB() {
 		if (isAthlete) {
 			db.createAthlete((Athlete) newUser);
@@ -73,6 +79,7 @@ public class SignUp {
 		}
 	}
 	
+	// Return if the signup is valid
 	public boolean validSignUp() {
 		if (checkUserNameNotExitsInDB() &&
 				checkNameOnlyLetters() &&
@@ -85,20 +92,14 @@ public class SignUp {
 			} else {
 				newUser = new Coach(this.username, this.password, this.name);
 			}
-			
 			addNewUserToDB();
-			
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-
 	
+	// Return if the login is valid
 	public boolean isValidLogin() { return validLogin; }
 	
-	
-	
-
 }

@@ -8,32 +8,20 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class Athlete extends User {
 	
-	private List <String> coaches = new ArrayList<String> () ;
+	private List <String> coaches = new ArrayList<String>();
 	
-	private List <String> queuedCoaches = new ArrayList <String> () ;
-	
-	//protected List <String> pendingCoaches = new ArrayList <String> ();
+	private List <String> queuedCoaches = new ArrayList <String>();
 	
 	private Database database = new Database();
 	
 	private List<Workout> allWorkouts;
 	
-	// TODO: delete this?
-	public Athlete (String username, String name, List <String> coaches, List <String> queuedCoaches) {
-		this.username = username ;
-		this.name = name ;
-		if (coaches != null) {
-			this.coaches = coaches ;
-		} 
-		this.queuedCoaches = queuedCoaches ;
-	}
-	
 	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
-		this.username = username ;
+		this.username = username;
 		this.password = password;
-		this.name = name ;
-		this.coaches = coaches ;
-		this.queuedCoaches = queuedCoaches ;
+		this.name = name;
+		this.coaches = coaches;
+		this.queuedCoaches = queuedCoaches;
 	}
 	
 	public Athlete (String username, String password, String name) {
@@ -51,16 +39,15 @@ public class Athlete extends User {
 	
 	public List<Workout> getAllWorkouts(){ return database.getAllWorkouts(this); }
 	
-	
+	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
+	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.
 	public void queueCoach (String newCoach) {
-		queuedCoaches.add(newCoach) ;
+		queuedCoaches.add(newCoach);
 		// add to queue in database
 		database.addRequestCoachToAthlete(this, newCoach);
 	}
 
-	
-
-	// Iterate through queuedCoaches and accepts/declines requests. 
+	// Method for the athlete to approve coach-request (coaches in "queuedCoaches") 
 	public void approveCoach (String coachUsername) {
 		if (queuedCoaches.contains(coachUsername)) {
 			Coach coach = database.getCoach(coachUsername);
@@ -76,6 +63,7 @@ public class Athlete extends User {
 		}
 	}
 	
+	// Method for the athlete to decline a coach-request
 	public void declineCoach(String coachUsername) {
 		if (queuedCoaches.contains(coachUsername)) {
 			queuedCoaches.remove(coachUsername);
@@ -84,22 +72,23 @@ public class Athlete extends User {
 		}
 	}
 	
-	//  Adds coaches in pendingCoach-list and calls queueAthlete() in Coach-class. 
+	//  Calls the queueAthlete-method in the Coach-class, and queue them self in queuedAthletes at the Coach-object
 	public void sendCoachRequest (String coach) {
 		Coach c = database.getCoach(coach);
 		if (coaches.contains(coach)) {
 			System.out.println("Athlete is already asigned to this coach...");
 		} else {
-			//pendingCoaches.add(coach);
 			c.queueAthlete(this.getUsername()) ;
 			database.addRequestAthleteToCoach(c, this.getUsername());
 		}
 	}
 	
+	// When request approved by the Coach, add to the Coach-list
 	public void addCoach(String coach) {
 		coaches.add(coach);
 	}
 	
+	// Check if the Athlete has the coach
 	public Boolean hasCoach(String coach) {
 		if (coaches.contains(coach)) {
 			return true;
@@ -107,6 +96,7 @@ public class Athlete extends User {
 		return false;
 	}
 	
+	// Remove the coach from the coach-list and update the database for both the athlete and the coach.
 	public void removeCoach(String coach) {
 		if (hasCoach(coach)) {
 			coaches.remove(coach);
@@ -114,11 +104,4 @@ public class Athlete extends User {
 			database.deleteAthleteForCoach(database.getCoach(coach), this.getUsername());
 		}
 	}
-	
-
-	
-	// TODO: Delete? Adds workout.
-	/*private void addWorkout() {
-		
-	}*/
 }

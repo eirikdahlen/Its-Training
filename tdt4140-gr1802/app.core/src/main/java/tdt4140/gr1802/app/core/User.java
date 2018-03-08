@@ -1,14 +1,14 @@
 package tdt4140.gr1802.app.core;
 
 public abstract class User {
-	
-	// TODO: why protected not private? 
+
 	protected String name ;
 		
 	protected String username ;
 	
 	protected String password;
 	
+	// getter and setter for password
 	public String getPassword() {
 		return this.password;
 	}
@@ -17,7 +17,7 @@ public abstract class User {
 		this.password = pass;
 	}
 	
-	
+	// getter and setter for name
 	public String getName() {
 		return name;
 	}
@@ -26,10 +26,9 @@ public abstract class User {
 		this.name = name;
 	}
 
+	// getter for username
 	public String getUsername() {
 		return username;
 	}
-	
-	
 
 }

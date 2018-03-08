@@ -11,12 +11,11 @@ public class CSVReader {
 	
 	private String filePath;
 	
-	
 	public CSVReader(String path) {
 		this.filePath = path;
 	}
 	
-	
+	// Finds the length of the workout
 	public int converToMinutes(String dur) {
 		String[] duration = dur.split(":");
 		int hoursToMin = Integer.parseInt(duration[0]);
@@ -26,7 +25,7 @@ public class CSVReader {
 		return hoursToMin*60 + minToMin + secToMin/60;
 	}
 	
-	
+	// Processing the input CSV-file using Readers
 	public String readFile(int i) throws IOException {
 		String csvSplitBy = ",";
 		BufferedReader br = null;
@@ -62,29 +61,29 @@ public class CSVReader {
 		return type;
 	}
 	
-	
+	// Finds the duration
 	public int getDuration() throws IOException {
 		String dist = readFile(4);
 		return converToMinutes(dist);
 	}
 	
-	
+	// Finds the type
 	public String getType() throws IOException {
 		return readFile(1);
 	}
 	
-	
+	// Finds the Date
 	public String getDate() throws IOException {
 		return readFile(2) + " " + readFile(3);
 	}
 
-	
+	// Finds the distance
 	public double getDistance() throws IOException {
 		return Double.parseDouble(readFile(5));
 
 	}
 	
-	
+	// Finds the pulsedata
 	public List<String> getPulse() {
 
 		String csvFile = this.filePath;
@@ -94,7 +93,6 @@ public class CSVReader {
         String cvsSplitBy = ",";
         
         try {
-        	
         		List<String> pulse = new ArrayList<String>(); 
         		int i = 0;
 
@@ -106,8 +104,6 @@ public class CSVReader {
 
                 if (i > 3 && i%10 == 0) {
                 	pulse.add(linje[2]);
-  
- 	
                 }
                 i++;
             }
@@ -126,29 +122,8 @@ public class CSVReader {
                     e.printStackTrace();
                 }
             }
-            
         }
-
     return null;
-
-}
-		
-	
-	public static void main(String[] args) throws IOException {
-		String path = "/Users/petter/Documents/oppdatertCSV.csv";
-		CSVReader reader = new CSVReader(path);
-		int duration = reader.getDuration();
-		String type = reader.getType();
-		String date = reader.getDate();
-		double distance = reader.getDistance();
-		
-	
-		System.out.println("Type: "+type);
-		System.out.println("Duration: "+duration+" minutes");
-		System.out.println("Distance: "+distance+" km");
-		System.out.println("Date: "+date);
 	}
-
-
 
 }

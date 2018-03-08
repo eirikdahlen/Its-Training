@@ -6,21 +6,11 @@ import java.util.Scanner;
 
 public class Coach extends User {
 	
-	protected List <String> athletes = new ArrayList <String>() ;
+	private List<String> athletes = new ArrayList<String>();
 	
-	private List <String> queuedAthletes = new ArrayList <String> () ;
-	
-	//protected List <String> pendingAthletes = new ArrayList <String> () ;
+	private List<String> queuedAthletes = new ArrayList<String>();
 	
 	private Database database = new Database();
-	
-	// TODO: delete this?
-	public Coach (String username, String name, List <String> athletes, List <String> queuedAthletes){
-		this.name = name ;
-		this.username = username ;
-		this.athletes = athletes ;
-		this.queuedAthletes = queuedAthletes ;
-	}
 	
 	public Coach (String username, String password, String name, List <String> athletes, List <String> queuedAthletes){
 		this.name = name ;
@@ -43,14 +33,15 @@ public class Coach extends User {
 
 	public List<String> getAthletes() { return athletes; }
 	
-	
+	// Method called by a athlete-object. The athlete that calls this method wants to be this coaches athlete. The athlete will be
+	// queued in "queuedAthletes" so that the coach later can accept the athlete as his/her coach.
 	public void queueAthlete (String newAthlete) {
 		queuedAthletes.add(newAthlete) ;
 		// add to queue in database
 		database.addRequestAthleteToCoach(this, newAthlete);
 	}
 	
-	// Iterate through  queued athletes and accepts/declines requests.
+	// Method for the coach to approve athlete-request (athlete in "queuedAthletes") 
 	public void approveAthlete (String athleteUsername) {
 		if (queuedAthletes.contains(athleteUsername)) {
 			Athlete athlete = database.getAthlete(athleteUsername);
@@ -66,6 +57,8 @@ public class Coach extends User {
 		}
 	}
 	
+	
+	// Method for the coach to decline an athlete-request
 	public void declineAthlete(String athleteUsername) {
 		if (queuedAthletes.contains(athleteUsername)) {
 			queuedAthletes.remove(athleteUsername);
@@ -74,7 +67,7 @@ public class Coach extends User {
 		}
 	}
 	
-	// Adds athletes i PendingAthletes-listen and calls queueCoach in Athlete-class.
+	// Calls the queueCoach-method in the Athlete-class, and queue them self in queuedCoaches at the Athlete-object
 	public void sendAthleteRequest (String athlete) {
 		Athlete a = database.getAthlete(athlete);
 		if (athletes.contains(athlete)) {
@@ -86,10 +79,12 @@ public class Coach extends User {
 		}
 	}
 	
+	// When request approved by the Athlete, add to the Athlete-list
 	public void addAthlete(String athlete) {
 		athletes.add(athlete);
 	}
 	
+	// Check if the Coach has the Athlete in the Athletes-list
 	public Boolean hasAthlete(String athlete) {
 		if (athletes.contains(athlete)) {
 			return true;
@@ -97,6 +92,7 @@ public class Coach extends User {
 		return false;
 	}
 	
+	// Remove the athlete from the athlete-list and update the database for both the athlete and the coach.
 	public void removeAthlete(String athlete) {
 		if (hasAthlete(athlete)) {
 			athletes.remove(athlete);

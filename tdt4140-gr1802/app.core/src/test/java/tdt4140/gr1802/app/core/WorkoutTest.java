@@ -18,14 +18,13 @@ public class WorkoutTest {
 	
 	Workout workout;
 
-	Athlete athlete1 = new Athlete("Test123","Test Testesen", new ArrayList<String>(), new ArrayList<String>());
+	Athlete athlete1 = new Athlete("Test123","passord","Test Testesen");
 
 	String filePath = "src/test/resources/tdt4140/gr1802/app/core/CSV1.csv";
 	
 	public WorkoutTest() throws IOException {
 		this.workout = new Workout(athlete1, filePath);
 	}
-		
 	
 //	__JUnit__ 
 
@@ -94,7 +93,6 @@ public class WorkoutTest {
 		
 		assertTrue(workout.getMaxHR().equals(205));	
 	}
-	
 
 	@Test
 	public void testGetKilometres() {

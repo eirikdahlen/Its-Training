@@ -6,10 +6,9 @@ public class App {
 	private static Coach coach; 
 	private static Database db;
 	
+	// Creating the app
 	public App() {
-		
 		db = new Database();
-		
 	}
 	
 	// Athlete - Get and set 
@@ -25,11 +24,10 @@ public class App {
 	public static void setDb(Database newDb) { db = newDb; }
 	
 	
-	
+	// Method for getting hold of the current status of the coaches attributes
 	public static void updateCoach() { coach = db.getCoach(coach.getUsername()); }
 	
+	// Method for getting hold of the current status of the athletes attributes
 	public static void updateAthlete() { athlete = db.getAthlete(athlete.getUsername()); }
 	
-	
-
 }

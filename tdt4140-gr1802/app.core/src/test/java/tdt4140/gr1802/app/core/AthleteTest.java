@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class AthleteTest {
 
-	Athlete athlete = new Athlete ("frikkers", "Frikk Hald Andersen", null, null) ;
+	Athlete athlete = new Athlete ("frikkers", "passord", "Frikk Hald Andersen") ;
 	
 	// Testing name
 	@Test
