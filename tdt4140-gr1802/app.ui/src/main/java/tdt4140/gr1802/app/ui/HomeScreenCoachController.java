@@ -11,8 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
+import tdt4140.gr1802.app.core.Coach;
 
 public class HomeScreenCoachController {
+	
+	private Coach coach;
 	
 	// Declearing variables for elements in fxml
 	@FXML
@@ -25,8 +29,9 @@ public class HomeScreenCoachController {
 	private Label txtLabelUsername;
 	
 	public void initialize() {
-		// TODO: This controller has no Coach
-		// this.txtLabelUsername.setText(this.coach.getUsername());
+		App.updateCoach();
+		this.coach = App.getCoach();
+		this.txtLabelUsername.setText(this.coach.getUsername());
 	}
 
 	// Side-menu buttons

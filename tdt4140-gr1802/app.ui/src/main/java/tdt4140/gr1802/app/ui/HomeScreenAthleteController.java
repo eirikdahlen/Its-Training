@@ -12,8 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
+import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Coach;
 
 public class HomeScreenAthleteController {
+	
+	private Athlete athlete;
 	
 	// Declaring variables for elements in fxml
 	@FXML
@@ -32,8 +37,9 @@ public class HomeScreenAthleteController {
 	private Label txtLabelUsername;
 	
 	public void initialize() {
-		// TODO: This controller has no athlete
-		// this.txtLabelUsername.setText(this.Athlete.getUsername());
+		App.updateAthlete();
+		this.athlete = App.getAthlete();
+		this.txtLabelUsername.setText(this.athlete.getUsername());
 	}
 	
 	// Side-menu buttons
