@@ -79,6 +79,10 @@ public class DatabaseTest {
 		//____________________
 		//test.testDeleteAthleteRequestForCoach();
 		//test athlete in coach's request-list, check to see if deleted 
+		
+		//____________________
+		//test.testAddMaxHR()
+		//check to see if athletes MaxHR is updated
 			
 	}
 	
@@ -125,6 +129,13 @@ public class DatabaseTest {
 		//adds workout to database
 		database.createWorkout(workout1);
 	
+	}
+	
+	public void testAddMaxHR() {
+		Athlete athlete1 = new Athlete("Petter123", "passord", "Petter");
+		
+		database.addMaxHR(athlete1, 190);
+		
 	}
 	
 	public void testGetAllWorkouts() {

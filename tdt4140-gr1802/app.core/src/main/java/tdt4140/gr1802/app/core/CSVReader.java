@@ -11,6 +11,10 @@ public class CSVReader {
 	
 	private String filePath;
 	
+	//TODO: change to 5, now it only saves every 10 seconds
+	//all pulse-data in database uses 10
+	public static final int timeStep = 10;
+	
 	public CSVReader(String path) {
 		this.filePath = path;
 	}
@@ -83,6 +87,12 @@ public class CSVReader {
 
 	}
 	
+	public int getAthleteMaxHR() throws IOException {
+		System.out.println("TESTTEST");
+		System.out.println(readFile(22));
+		return Integer.parseInt(readFile(22));
+	}
+	
 	// Finds the pulsedata
 	public List<String> getPulse() {
 
@@ -101,8 +111,9 @@ public class CSVReader {
 		
                 // use comma as separator
                 String[] linje = line.split(cvsSplitBy);
-
-                if (i > 3 && i%10 == 0) {
+                
+                
+                if (i > 3 && i%(this.timeStep) == 0) {
                 	pulse.add(linje[2]);
                 }
                 i++;

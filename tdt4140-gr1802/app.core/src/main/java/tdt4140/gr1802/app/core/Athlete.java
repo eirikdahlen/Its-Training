@@ -16,6 +16,8 @@ public class Athlete extends User {
 	
 	private List<Workout> allWorkouts;
 	
+	private int maxHR;
+	
 	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
 		this.username = username;
 		this.password = password;
@@ -38,6 +40,11 @@ public class Athlete extends User {
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
 	public List<Workout> getAllWorkouts(){ return database.getAllWorkouts(this); }
+	
+	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
+	
+	public int getMaxHR() {return this.maxHR; }
+
 	
 	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
 	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.

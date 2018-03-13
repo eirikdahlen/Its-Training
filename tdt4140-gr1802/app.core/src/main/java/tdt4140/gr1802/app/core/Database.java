@@ -52,6 +52,7 @@ public class Database {
 			System.out.println("Username in use. Could not add Coach");
 		}
 	}
+	
 
 	// Create Athlete in database
 	public void createAthlete(Athlete athlete) {
@@ -61,6 +62,7 @@ public class Database {
 			Document document = new Document("Username", athlete.getUsername());
 			document.append("Password", athlete.getPassword());
 			document.append("Name",athlete.getName());
+			document.append("maxHR", 0);
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
 			athleteCollection.insertOne(document);	
@@ -69,6 +71,8 @@ public class Database {
 			System.out.println("Username in use. Could not add Athlete");
 		}
 	}
+	
+
 	
 	// Create Workout in database
 	public void createWorkout(Workout workout) {
@@ -87,7 +91,20 @@ public class Database {
 			doc.append("kilometres", workout.getKilometres());
 
 			doc.append("pulse", workout.getPulsList());
-
+		
+			
+			//adds maxHR to athlete if it does not exist 
+			Document found = (Document) athleteCollection.find(new Document("Username", workout.getAthlete().getUsername())).first();
+			
+			//TODO, fix, all athletes should have maxHR, so should be unnecessary to check  
+			try {
+			int HR = found.getInteger("maxHR");
+			} catch (Exception e) {
+				System.out.println("feil på maxHR");
+				System.out.println("athlete does not have maxHR, adds from workout");
+				this.addMaxHR(workout.getAthlete(), workout.getAthleteMaxHR() );	
+			}
+			
 			//pushes to database
 			userWorkoutCollection.insertOne(doc);
 			System.out.println("workout added to database");
@@ -95,6 +112,19 @@ public class Database {
 			System.out.println("datetime already in use for particular athlete.");
 		}
 
+	}
+	
+
+	
+	public void addMaxHR(Athlete athlete, int maxHR) {
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		
+		Bson updatedvalue = new Document("maxHR", maxHR);
+		Bson updateoperation = new Document("$set", updatedvalue);
+		athleteCollection.updateOne(found, updateoperation);
+		
+	
+		
 	}
 	
 	// Returns the Coach from the database
@@ -139,6 +169,7 @@ public class Database {
 	
 	// Returns the Athlete from the database
 	public Athlete getAthlete(String username) {
+		
 		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		
 		if (found == null) {
@@ -146,7 +177,19 @@ public class Database {
 			return null;
 		}
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+	
+		//TODO: fikse opp i dette, legge til i konstruktør
+		try {
+			athlete.setMaxHR( found.getInteger("maxHR") );
+		} catch (Exception e) {
+			System.out.println("feil på get maxHR");
+			//sets maxHR to 0 if it is not present in db
+			athlete.setMaxHR(0);
+			
+		}
 		
+		
+
 		return athlete;
 	}
 	
@@ -264,6 +307,7 @@ public class Database {
 			}
 		}
 	}
+	
 	
 	// Add Athlete to Coaches RequestAthlete-list
 	public void addRequestAthleteToCoach(Coach coach, String athleteUsername) {
