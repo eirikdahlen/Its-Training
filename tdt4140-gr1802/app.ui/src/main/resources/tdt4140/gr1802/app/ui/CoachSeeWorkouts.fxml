@@ -25,7 +25,7 @@
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
-                              <Button fx:id="btAthleteRequest" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
+                              <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
@@ -35,7 +35,7 @@
                                   <Region />
                                 </root>
                               </SubScene>
-                              <TableView fx:id="tableView" layoutY="40.0" prefHeight="488.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" layoutY="40.0" prefHeight="435.0" prefWidth="644.0">
                                 <columns>
                                   <TableColumn fx:id="dateColumn" prefWidth="162.62168884277344" text="Date" />
                                     <TableColumn fx:id="typeColumn" prefWidth="93.9482421875" text="Type" />
@@ -49,6 +49,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Label>
+                              <Button fx:id="btSeeWorkout" layoutX="515.0" layoutY="486.0" mnemonicParsing="false" onAction="#clickSeeWorkout" text="See Workout" />
                            </children>
                         </Pane>
                      </children>
