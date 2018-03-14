@@ -223,13 +223,11 @@ public class Database {
 		
 		    while (cursor.hasNext()) {
 		    		Document doc = cursor.next();
-		    		System.out.println(doc.get("date"));
-		    		System.out.println(doc.get("pulse"));
+
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
 						doc.getDouble("kilometres") , (List<String>) doc.get("pulse") );
 		        
-		        System.out.println("test2");
 		        workouts.add(workout);
 		    } 
 		} catch(Exception e) {
