@@ -68,6 +68,24 @@
                                  </font>
                               </Text>
                               <Label fx:id="avgHRLabel" layoutX="102.0" layoutY="108.0" prefHeight="17.0" prefWidth="107.0" />
+                              <Text layoutX="47.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="162.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moderate:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="305.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="lowLabel" layoutX="85.0" layoutY="163.0" prefHeight="17.0" prefWidth="67.0" />
+                              <Label fx:id="moderateLabel" layoutX="237.0" layoutY="163.0" prefHeight="17.0" prefWidth="61.0" />
+                              <Label fx:id="highLabel" layoutX="348.0" layoutY="163.0" prefHeight="17.0" prefWidth="79.0" />
                            </children></Pane>
                      </children>
                   </AnchorPane>

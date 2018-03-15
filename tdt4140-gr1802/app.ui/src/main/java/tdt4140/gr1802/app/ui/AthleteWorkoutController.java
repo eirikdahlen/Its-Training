@@ -60,6 +60,15 @@ public class AthleteWorkoutController {
 	private Label avgHRLabel;
 	
 	@FXML
+	private Label lowLabel;
+	
+	@FXML
+	private Label moderateLabel;
+	
+	@FXML
+	private Label highLabel;
+	
+	@FXML
 	private PieChart pulszonesChart;
 	
 	@FXML
@@ -82,15 +91,19 @@ public class AthleteWorkoutController {
 		this.athlete = App.getAthlete();
 		this.txtLabelUsername.setText(this.athlete.getUsername());
 		
+		List<Integer> timeInZones = analyzer.getTimeInHRZones(workout);
+		
 		// Set information text-fields
 		dateLabel.setText(workout.getDateString());
 		typeLabel.setText(workout.getType());
 		durationLabel.setText(String.valueOf(workout.getDuration()));
 		maxHRLabel.setText(String.valueOf(workout.getMaxHR()));
 		avgHRLabel.setText(String.valueOf(workout.getAverageHR()));
+		lowLabel.setText(String.valueOf(timeInZones.get(0))+" min");
+		moderateLabel.setText(String.valueOf(timeInZones.get(1)) + " min");
+		highLabel.setText(String.valueOf(timeInZones.get(2)) + " min");
 		
 		// Fill PieChart with pulsZones
-		List<Integer> timeInZones = analyzer.getTimeInHRZones(workout);
 		System.out.println(timeInZones);
 		pieChartData.add(new PieChart.Data("Low", timeInZones.get(0)));
 		pieChartData.add(new PieChart.Data("Moderate", timeInZones.get(1)));
