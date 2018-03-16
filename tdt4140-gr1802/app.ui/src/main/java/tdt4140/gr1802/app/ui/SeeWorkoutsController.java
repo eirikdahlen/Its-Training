@@ -17,12 +17,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
 
@@ -58,6 +60,11 @@ public class SeeWorkoutsController{
 	
 	@FXML
 	private Button btSeeWorkouts;
+	
+	@FXML
+	private Button hideButton;
+	
+	
 	
 	@FXML
 	private Button btSeeCoaches;
@@ -96,6 +103,10 @@ public class SeeWorkoutsController{
 		
 		// Fill table with values
 		tableView.setItems(getWorkouts());
+
+		// Make it legal to select multiple rows
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
 	}
 	
 	// Side-menu buttons, changes scenes
@@ -132,4 +143,17 @@ public class SeeWorkoutsController{
 		window.setScene(scene);
 		window.show();
 	}
+	
+	public void hideWorkout(ActionEvent event) {
+		ObservableList<Workout> selectedRows;
+		selectedRows = tableView.getSelectionModel().getSelectedItems();
+		
+		// Iterate through all the selected rows, and deleting them
+		for(Workout workout : selectedRows) {
+			System.out.println("inni loop");
+			database.setWorkoutVisibility(false, workout, this.athlete);
+		}
+		
+	}
+	
 }

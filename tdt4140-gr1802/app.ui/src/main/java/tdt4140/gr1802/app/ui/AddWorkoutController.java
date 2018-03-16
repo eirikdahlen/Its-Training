@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
@@ -44,11 +45,17 @@ public class AddWorkoutController {
 	@FXML
 	private Label txtLabelUsername;
 	
+	@FXML
+	private CheckBox checkBox;
+	
+	
 	private Database db;
 	
 	private static App app;
 	
 	private static Athlete athlete;
+	
+	private boolean visibility;
 	
 	
 	// Initialization method
@@ -60,13 +67,22 @@ public class AddWorkoutController {
 		this.txtLabelUsername.setText(athlete.getUsername());
 	}
 	
+	
 	// Method called when "Add" button clicked
 	public void clickAddButton (ActionEvent event) throws IOException {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
 			String filepath = filepathTextField.getText();
-			Workout newWorkout = new Workout(athlete, filepath);
+			if( checkBox.isSelected() ) {
+				this.visibility = false;
+			}
+			else {
+				this.visibility = true;
+			}
+			
+			Workout newWorkout = new Workout(athlete, filepath, this.visibility);
 			db.createWorkout(newWorkout);
+			System.out.println(this.visibility);
 			filepathTextField.setText("Workout Added");
 		}
 		catch(FileNotFoundException e) {
