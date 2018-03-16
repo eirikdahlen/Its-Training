@@ -40,7 +40,7 @@ public class Workout {
 		CSVReader reader = new CSVReader(filePath);
 		
 		this.pulsList = reader.getPulse();
-		
+		this.visibleForCoaches = true;
 		this.dateString = reader.getDate();
 		this.type = reader.getType();
 		this.duration = reader.getDuration();
@@ -102,6 +102,7 @@ public class Workout {
 		this.duration = duration;
 		this.kilometres = kilometres;
 		this.pulsList = pulsList;
+		this.visibleForCoaches = true;
 		
 		if (!pulsList.isEmpty()) {
 			
