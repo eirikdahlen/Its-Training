@@ -68,7 +68,8 @@ public class CoachSeeWorkoutsController {
 	public ObservableList<Workout> getWorkouts(){
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
 		for (Workout wo : athlete.getAllWorkouts()) {
-			workouts.add(wo);
+			//Check if visible for coaches before adding
+			if(wo.getVisibility()) {workouts.add(wo);}
 		}
 		return workouts;
 	}

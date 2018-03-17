@@ -32,12 +32,44 @@ public class Workout {
 	
 	private int averageHR;
 	
+	private boolean visibleForCoaches;
+	
 
 	public Workout(Athlete athl, String filepath) throws IOException {
 		this.filePath = filepath;
 		CSVReader reader = new CSVReader(filePath);
 		
 		this.pulsList = reader.getPulse();
+		this.visibleForCoaches = true;
+		this.dateString = reader.getDate();
+		this.type = reader.getType();
+		this.duration = reader.getDuration();
+		this.kilometres = reader.getDistance();
+		this.athlete = athl;
+		this.maxHR = Integer.parseInt(Collections.max(pulsList));
+		int sum = 0;
+		for (String puls: pulsList) {
+			int m = Integer.parseInt(puls);
+			sum += m;
+		}
+		this.averageHR = sum / pulsList.size();
+		
+		//parse string to date-object
+		try {
+			this.date = parseDate(this.dateString);
+		}
+		catch(Exception fnf) {
+				fnf.printStackTrace();
+		}
+		
+	}
+	
+	public Workout(Athlete athl, String filepath, boolean bool) throws IOException {
+		this.filePath = filepath;
+		CSVReader reader = new CSVReader(filePath);
+		
+		this.pulsList = reader.getPulse();
+		this.visibleForCoaches = bool;
 		
 		this.dateString = reader.getDate();
 		this.type = reader.getType();
@@ -70,6 +102,8 @@ public class Workout {
 		this.duration = duration;
 		this.kilometres = kilometres;
 		this.pulsList = pulsList;
+		this.visibleForCoaches = true;
+		
 		if (!pulsList.isEmpty()) {
 			
 			int sum = 0;
@@ -97,6 +131,47 @@ public class Workout {
 		}
 		
 	}
+	
+
+	//constructor with visibility boolean
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool) {
+		this.athlete = athl;
+		this.dateString = dateString;
+		this.type = type;
+		this.duration = duration;
+		this.kilometres = kilometres;
+		this.pulsList = pulsList;
+		this.visibleForCoaches = bool;
+		
+		if (!pulsList.isEmpty()) {
+			
+			int sum = 0;
+			this.maxHR = 0;
+			for (String puls: pulsList) {
+				int m = Integer.parseInt(puls);
+				sum += m;
+				if (m > this.maxHR ) {
+					this.maxHR = m;
+				}
+			}
+			this.averageHR = sum / pulsList.size();
+			
+			System.out.println(averageHR);
+			System.out.println("________maxHR = ");
+			System.out.println(maxHR);
+		}
+		
+		//parse string to date-object
+		try {
+			this.date = parseDate(this.dateString);
+		}
+		catch(Exception fnf) {
+				fnf.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	// Getters and setters 
 	public Athlete getAthlete() { return athlete; }
@@ -141,7 +216,14 @@ public class Workout {
 
 
 	protected void setMaxHR(int maxHR) { this.maxHR = maxHR; }
-
+	
+	public void setVisibility(boolean bool) {
+		this.visibleForCoaches = bool;
+	}
+	
+	public boolean getVisibility() {
+		return this.visibleForCoaches;
+	}
 
 	protected void setAverageHR(int averageHR) { this.averageHR = averageHR; }
 	
