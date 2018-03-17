@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Coach;
@@ -27,6 +29,15 @@ public class HomeScreenCoachController {
 	
 	@FXML
 	private Label txtLabelUsername;
+	
+	@FXML
+	private TableView tableViewTop5;
+	
+	@FXML
+	private TableColumn top5Name;
+	
+	@FXML
+	private TableColumn top5Workouts;
 	
 	public void initialize() {
 		App.updateCoach();
