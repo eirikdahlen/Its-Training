@@ -105,6 +105,8 @@ public class Database {
 				this.addMaxHR(workout.getAthlete(), workout.getAthleteMaxHR() );	
 			}
 			
+			doc.append("Visibility", workout.getVisibility());
+
 			//pushes to database
 			userWorkoutCollection.insertOne(doc);
 			System.out.println("workout added to database");
@@ -206,7 +208,7 @@ public class Database {
 		}
 		//creates workout-object
 		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
-				found.getDouble("kilometres") , (List<String>) found.get("pulse") );
+				found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility") );
 		
 		return workout;
 	}
@@ -226,7 +228,7 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse") );
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
 		        
 		        workouts.add(workout);
 		    } 
@@ -624,6 +626,15 @@ public class Database {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setWorkoutVisibility(boolean bool, Workout workout, Athlete athlete) {
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		Document found = (Document) userWorkoutCollection.find(new Document("date", workout.getDateString())).first();
+		
+		Bson updatedvalue = new Document("Visibility", bool);
+		Bson updateoperation = new Document("$set", updatedvalue);
+		userWorkoutCollection.updateOne(found, updateoperation);
 	}
 	
 }

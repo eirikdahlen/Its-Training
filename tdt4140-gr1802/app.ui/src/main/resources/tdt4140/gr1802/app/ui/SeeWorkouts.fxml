@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeWorkoutsController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeWorkoutsController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -30,7 +30,7 @@
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
                            <children>
-                              <TableView fx:id="tableView" prefHeight="458.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" prefHeight="427.0" prefWidth="644.0">
                                 <columns>
                                   <TableColumn fx:id="dateColumn" prefWidth="174.0" text="Date" />
                                     <TableColumn fx:id="typeColumn" prefWidth="69.0" text="Type" />
@@ -40,7 +40,7 @@
                                     <TableColumn fx:id="maxHRColumn" prefWidth="101.0" text="Max HR" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="btSeeWorkout" layoutX="519.0" layoutY="469.0" mnemonicParsing="false" onAction="#clickSeeWorkout" text="See Workout" />
+                              <Button fx:id="hideButton" layoutX="46.0" layoutY="453.0" mnemonicParsing="false" onAction="#hideWorkout" text="Hide" />
                            </children></Pane>
                      </children>
                   </AnchorPane>

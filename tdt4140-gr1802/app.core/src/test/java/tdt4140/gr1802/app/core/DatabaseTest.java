@@ -121,7 +121,7 @@ public class DatabaseTest {
 		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "passord", "Kjetil");
-		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv");
+		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv", true);
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
