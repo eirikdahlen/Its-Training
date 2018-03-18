@@ -3,6 +3,7 @@ package tdt4140.gr1802.app.core;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ public class WorkoutTest {
 
 	Athlete athlete1 = new Athlete("Test123","passord","Test Testesen");
 
-	String filePath = "src/test/resources/tdt4140/gr1802/app/core/CSV1.csv";
+//	String filePath = "src/test/resources/tdt4140/gr1802/app/core/CSV1.csv";
+	
+	URL path = getClass().getResource("CSV1.csv");
 	
 	public WorkoutTest() throws IOException {
-		this.workout = new Workout(athlete1, filePath);
+		this.workout = new Workout(athlete1, path);
 	}
 	
 //	__JUnit__ 

@@ -2,6 +2,7 @@
 package tdt4140.gr1802.app.core;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -121,7 +122,10 @@ public class DatabaseTest {
 		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "passord", "Kjetil");
-		Workout workout1 = new Workout(athlete1, "/Users/petter/Documents/oppdatertCSV.csv", true);
+		
+		URL path = getClass().getResource("CSV1.csv");
+		
+		Workout workout1 = new Workout(athlete1, path, true);
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
@@ -448,7 +452,10 @@ public class DatabaseTest {
 		Athlete athlete1 = new Athlete("williamkvaale","test123","William Kvaale");
 		
 		
-		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+//		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+		
+		URL path = getClass().getResource("CSV5.csv");
+		
 		Workout workout1 = new Workout(database.getAthlete("williamkvaale"),path);
 		
 		//adds workout to database
@@ -467,7 +474,9 @@ public class DatabaseTest {
 		
 		Athlete athl = new Athlete("williamkvaale","test123","William Kvaale");
 		
-		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+//		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+		
+		URL path = getClass().getResource("CSV1.csv");
 		
 		Workout wo1 = new Workout(athl, path);
 		

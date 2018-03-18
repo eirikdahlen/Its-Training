@@ -4,19 +4,21 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CSVReader {
 	
-	private String filePath;
+	private URL filePath;
 	
 	//TODO: change to 5, now it only saves every 10 seconds
 	//all pulse-data in database uses 10
 	public static final int timeStep = 10;
 	
-	public CSVReader(String path) {
-		this.filePath = path;
+	public CSVReader(URL filePath) {
+		this.filePath = filePath;
 	}
 	
 	// Finds the length of the workout
@@ -36,7 +38,7 @@ public class CSVReader {
 		String type = "";
 
 		try {
-			br = new BufferedReader(new FileReader(filePath));
+			br = new BufferedReader(new InputStreamReader(filePath.openStream()));
 			String linje = br.readLine();
 			linje = br.readLine();
 			String[] liste = linje.split(csvSplitBy);
@@ -96,7 +98,7 @@ public class CSVReader {
 	// Finds the pulsedata
 	public List<String> getPulse() {
 
-		String csvFile = this.filePath;
+		URL csvFile = this.filePath;
         
 		BufferedReader br = null;
         String line = "";
@@ -106,7 +108,7 @@ public class CSVReader {
         		List<String> pulse = new ArrayList<String>(); 
         		int i = 0;
 
-            br = new BufferedReader(new FileReader(csvFile));
+            br = new BufferedReader(new InputStreamReader(filePath.openStream()));
             while ((line = br.readLine()) != null) {
 		
                 // use comma as separator

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ public class Workout {
 	
 	private List<String> pulsList = new ArrayList<String> ();
 	
-	public String filePath = "";
+	public URL filePath;
 	
 	private int maxHR;
 	
@@ -37,8 +38,8 @@ public class Workout {
 	private boolean visibleForCoaches;
 	
 
-	public Workout(Athlete athl, String filepath) throws IOException {
-		this.filePath = filepath;
+	public Workout(Athlete athl, URL path) throws IOException {
+		this.filePath = path;
 		CSVReader reader = new CSVReader(filePath);
 		
 		this.pulsList = reader.getPulse();
@@ -66,7 +67,7 @@ public class Workout {
 		
 	}
 	
-	public Workout(Athlete athl, String filepath, boolean bool) throws IOException {
+	public Workout(Athlete athl, URL filepath, boolean bool) throws IOException {
 		this.filePath = filepath;
 		CSVReader reader = new CSVReader(filePath);
 		
@@ -214,7 +215,7 @@ public class Workout {
 	protected void setPulsList(List<String> pulsList) {this.pulsList = pulsList; }
 	
 	
-	protected void setFilePath(String filePath) { this.filePath = filePath; }
+	protected void setFilePath(URL filePath) { this.filePath = filePath; }
 
 
 	protected void setMaxHR(int maxHR) { this.maxHR = maxHR; }
