@@ -80,7 +80,7 @@ public class SignUpScreenController{
 	//Redirects you back to login-screen(fxApp.fxml) when "back to login" button is pressed. 
 	public void backToLoginFromSignUpScreen (ActionEvent event) throws IOException{
 		Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
-		Scene scene = new Scene(root5,800,600);
+		Scene scene = new Scene(root5,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		window.setScene(scene);
 		window.show();
@@ -125,7 +125,7 @@ public class SignUpScreenController{
 			System.out.println("Redirecting to login screen");
 			
 			Parent root5 = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
-			Scene scene = new Scene(root5,800,600);
+			Scene scene = new Scene(root5,1280,720);
 			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			window.setScene(scene);
 			window.show();

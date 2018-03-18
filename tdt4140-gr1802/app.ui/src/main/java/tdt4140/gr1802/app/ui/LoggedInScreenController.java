@@ -20,7 +20,7 @@ public class LoggedInScreenController {
 
 	public void backToLoginScreen (ActionEvent event) throws IOException{
 		Parent root4 = FXMLLoader.load(getClass().getResource("/ui/LoginScreen.fxml"));
-		Scene scene = new Scene(root4,800,600);
+		Scene scene = new Scene(root4,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		window.setScene(scene);
 		window.show();

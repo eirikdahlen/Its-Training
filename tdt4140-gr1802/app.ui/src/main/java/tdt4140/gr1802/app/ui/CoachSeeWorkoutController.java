@@ -123,7 +123,7 @@ public class CoachSeeWorkoutController {
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			
 		window.setScene(scene);
@@ -132,7 +132,7 @@ public class CoachSeeWorkoutController {
 		
 	public void clickAthleteRequests (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("AthleteRequests.fxml"));
-		Scene scene = new Scene(root,800,600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			
 		window.setScene(scene);
