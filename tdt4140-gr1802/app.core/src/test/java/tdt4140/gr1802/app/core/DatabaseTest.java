@@ -407,7 +407,7 @@ public class DatabaseTest {
 	public void testGetAthlete() {
 
 		//adds athlete for testing
-		Athlete athlete1 = new Athlete("Nils34", "passord","Nils");
+		Athlete athlete1 = new Athlete("TeddyWestside", "theodor","Bajsunge");
 				
 		//adds athlete to database
 		database.createAthlete(athlete1);
@@ -426,7 +426,7 @@ public class DatabaseTest {
 	public void testGetCoach() {
 
 		//adds coack for testing
-		Coach coach1 = new Coach("Petter74", "passord","Petter");
+		Coach coach1 = new Coach("petter22", "petter123","Petter");
 				
 		//adds athlete to database
 		database.createCoach(coach1);
@@ -445,8 +445,11 @@ public class DatabaseTest {
 	public void testGetWorkout() throws IOException {
 
 		//creates athlete and workout for testing 
-		Athlete athlete1 = new Athlete("Nils22","passord", "Nils");
-		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
+		Athlete athlete1 = new Athlete("williamkvaale","test123","William Kvaale");
+		
+		
+		String path = "src/test/resources/tdt4140/gr1802/app/core/CSV5.csv";
+		Workout workout1 = new Workout(database.getAthlete("williamkvaale"),path);
 		
 		//adds workout to database
 		database.createWorkout(workout1);
