@@ -30,6 +30,8 @@ public class Workout {
 	
 	private int maxHR;
 	
+	private int athleteMaxHR;
+	
 	private int averageHR;
 	
 	private boolean visibleForCoaches;
@@ -77,6 +79,7 @@ public class Workout {
 		this.kilometres = reader.getDistance();
 		this.athlete = athl;
 		this.maxHR = Integer.parseInt(Collections.max(pulsList));
+		this.athleteMaxHR = reader.getAthleteMaxHR();
 		int sum = 0;
 		for (String puls: pulsList) {
 			int m = Integer.parseInt(puls);
@@ -155,10 +158,7 @@ public class Workout {
 				}
 			}
 			this.averageHR = sum / pulsList.size();
-			
-			System.out.println(averageHR);
-			System.out.println("________maxHR = ");
-			System.out.println(maxHR);
+	
 		}
 		
 		//parse string to date-object
@@ -193,6 +193,8 @@ public class Workout {
 	public Integer getMaxHR() { return maxHR; }
 	
 	public Integer getAverageHR() { return averageHR; }
+	
+	public int getAthleteMaxHR() { return this.athleteMaxHR; }
 	
 	protected void setDate(Date date) { this.date = date; }
 

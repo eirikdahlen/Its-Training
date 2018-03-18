@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Workout;
@@ -52,12 +53,17 @@ public class CoachSeeWorkoutsController {
 	private Button btAthleteRequests;
 	
 	@FXML
+	private Button btSeeWorkout;
+	
+	@FXML
 	private Label txtAthlete;
 	
 	@FXML
 	private Label txtLabelUsername;
 	
 	private static Athlete athlete;
+	private Coach coach;
+	private CoachSeeWorkoutController coachSeeWorkoutController = new CoachSeeWorkoutController();
 	
 	// Set the Athlete
 	public void setAthlete(Athlete ath) {
@@ -78,8 +84,12 @@ public class CoachSeeWorkoutsController {
 		// set up the columns in the table
 		txtAthlete.setText("Athlete: " + athlete.getName());
 		
+		// Set the Coach that is logged in
+		App.updateCoach();
+		this.coach = App.getCoach();
+		
 		//Set username label
-		this.txtLabelUsername.setText(this.athlete.getUsername());
+		this.txtLabelUsername.setText(this.coach.getUsername());
 		
 		// Connect columns to right attribute
 		dateColumn.setCellValueFactory(new PropertyValueFactory<Workout,String>("dateString"));
@@ -91,6 +101,23 @@ public class CoachSeeWorkoutsController {
 		
 		// Fill table with values
 		tableView.setItems(getWorkouts());
+	}
+	
+	public void clickSeeWorkout(ActionEvent event) throws IOException{
+		// ObservableList with the selectedRow
+		ObservableList<Workout> selectedRow;
+		selectedRow = tableView.getSelectionModel().getSelectedItems();
+						
+		// The Athlete selected
+		Workout workout = selectedRow.get(0);
+		coachSeeWorkoutController.setWorkout(workout);
+				
+		Parent root = FXMLLoader.load(getClass().getResource("CoachSeeWorkout.fxml"));
+		Scene scene = new Scene(root, 800, 600);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+				
+		window.setScene(scene);
+		window.show();
 	}
 	
 	// Side-menu buttons

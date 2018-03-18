@@ -74,6 +74,9 @@ public class SeeWorkoutsController{
 	
 	@FXML
 	private Label txtLabelUsername;
+	
+	private AthleteWorkoutController athleteWorkoutController = new AthleteWorkoutController();
+	private Workout workout;
 
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
 	public ObservableList<Workout> getWorkouts(){
@@ -107,6 +110,23 @@ public class SeeWorkoutsController{
 		// Make it legal to select multiple rows
 		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
+	}
+	
+	public void clickSeeWorkout(ActionEvent event) throws IOException{
+		// ObservableList with the selectedRow
+		ObservableList<Workout> selectedRow;
+		selectedRow = tableView.getSelectionModel().getSelectedItems();
+				
+		// The Athlete selected
+		Workout workout = selectedRow.get(0);
+		athleteWorkoutController.setWorkout(workout);
+		
+		Parent root = FXMLLoader.load(getClass().getResource("AthleteWorkout.fxml"));
+		Scene scene = new Scene(root, 800, 600);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
 	}
 	
 	// Side-menu buttons, changes scenes
