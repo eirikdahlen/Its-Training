@@ -122,7 +122,7 @@ public class SeeWorkoutsController{
 		athleteWorkoutController.setWorkout(workout);
 		
 		Parent root = FXMLLoader.load(getClass().getResource("AthleteWorkout.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
@@ -132,7 +132,7 @@ public class SeeWorkoutsController{
 	// Side-menu buttons, changes scenes
 	public void clickAddWorkout(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
@@ -141,7 +141,7 @@ public class SeeWorkoutsController{
 	
 	public void clickSeeWorkouts (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeWorkouts.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		window.setScene(scene);
 		window.show();
@@ -149,7 +149,7 @@ public class SeeWorkoutsController{
 	
 	public void clickSeeCoaches(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("SeeCoaches.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
@@ -157,7 +157,7 @@ public class SeeWorkoutsController{
 	}
 	public void clickCoachRequest(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);

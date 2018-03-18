@@ -15,7 +15,7 @@ public class FxApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		Parent root = FXMLLoader.load(getClass().getResource("FxApp.fxml"));
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root,1280,720);
 		// scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
