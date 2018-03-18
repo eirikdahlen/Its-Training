@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,7 +73,9 @@ public class AddWorkoutController {
 	public void clickAddButton (ActionEvent event) throws IOException {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
-			String filepath = filepathTextField.getText();
+			String path = filepathTextField.getText();
+			URL filePath = getClass().getResource(path);
+			
 			if( checkBox.isSelected() ) {
 				this.visibility = false;
 			}
@@ -80,7 +83,7 @@ public class AddWorkoutController {
 				this.visibility = true;
 			}
 			
-			Workout newWorkout = new Workout(athlete, filepath, this.visibility);
+			Workout newWorkout = new Workout(athlete, filePath, this.visibility);
 			db.createWorkout(newWorkout);
 			System.out.println(this.visibility);
 			filepathTextField.setText("Workout Added");
