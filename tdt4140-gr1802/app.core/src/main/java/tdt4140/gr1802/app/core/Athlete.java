@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class Athlete extends User {
+public class Athlete extends User implements Comparable<Athlete> {
 	
 	private List <String> coaches = new ArrayList<String>();
 	
@@ -15,6 +15,7 @@ public class Athlete extends User {
 	private Database database = new Database();
 	
 	private List<Workout> allWorkouts;
+	
 	
 	private int maxHR;
 	
@@ -44,7 +45,7 @@ public class Athlete extends User {
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
 	public int getMaxHR() {return this.maxHR; }
-
+	
 	
 	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
 	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.
@@ -110,5 +111,10 @@ public class Athlete extends User {
 			database.deleteCoachForAthlete(this, coach);
 			database.deleteAthleteForCoach(database.getCoach(coach), this.getUsername());
 		}
+	}
+
+	@Override
+	public int compareTo(Athlete o) {
+		return this.allWorkouts.size() - o.allWorkouts.size();
 	}
 }

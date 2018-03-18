@@ -1,6 +1,8 @@
 package tdt4140.gr1802.app.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -99,5 +101,27 @@ public class Coach extends User {
 			database.deleteAthleteForCoach(this, athlete);
 			database.deleteCoachForAthlete(database.getAthlete(athlete), this.getUsername());
 		}
+	}
+	
+	// Get coach top 5 athletes 
+	public List<Athlete> getTop5Athletes() {
+		List<Athlete> sorted = new ArrayList<>();
+		List<Athlete> top5 = new ArrayList<>();
+		
+		for (String name : athletes) {
+			sorted.add(database.getAthlete(name));
+		}
+		
+		Collections.sort(sorted);
+		
+		if (sorted.size() <= 5) {
+			top5.addAll(sorted);
+		} else {
+			top5.add(sorted.get(0)); top5.add(sorted.get(1)); top5.add(sorted.get(2)); top5.add(sorted.get(3)); top5.add(sorted.get(4));
+
+		}
+		
+		return top5; 
+		
 	}
 }	
