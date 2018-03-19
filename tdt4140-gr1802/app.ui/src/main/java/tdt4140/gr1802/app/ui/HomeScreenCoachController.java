@@ -1,7 +1,6 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -18,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
@@ -48,7 +48,7 @@ public class HomeScreenCoachController {
 		}
 	}
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
 	
@@ -59,13 +59,17 @@ public class HomeScreenCoachController {
 	private Label txtLabelUsername;
 	
 	@FXML
-	private TableView<Athlete> tableViewTop5;
+	private TableView<Athlete> tableViewTop3;
 	
 	@FXML
-	private TableColumn<Athlete, String> top5Name;
+	private TableColumn<Athlete, String> top3Name;
 	
 	@FXML
-	private TableColumn<Athlete, Integer> top5Workouts;
+	private TableColumn<Athlete, Integer> top3Workouts;
+	
+	// Home-tab
+	@FXML 
+	private Text homeTabWelcomeText;
 	
 	@FXML
 	private ChoiceBox<String> activitiesChoice;
@@ -108,6 +112,17 @@ public class HomeScreenCoachController {
 		this.db = App.getDb();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
+		// ------------- HOME -------------
+		System.out.println(coach.getName());
+		System.out.println(homeTabWelcomeText);
+		homeTabWelcomeText.setText("Welcome " + coach.getName() + "!");
+		// Fill Top 3
+		List<Athlete> top3 = coach.getTop3Athletes();
+		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
+		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
+		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
+		tableViewTop3.setItems(obsList);
+		
 		
 		// **** ACTIVITIES TAB ****
 		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
@@ -146,6 +161,13 @@ public class HomeScreenCoachController {
 		
 		actWorkoutsTableView.setItems(obsActivityWorkouts);
 	}
+	
+	// ------------- HOME ------------- 
+	
+	
+	
+	
+	// -----------------------------------
 
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
@@ -165,4 +187,8 @@ public class HomeScreenCoachController {
 		window.setScene(scene);
 		window.show();
 	}
+	
+	
+	
+	
 }

@@ -2,7 +2,6 @@ package tdt4140.gr1802.app.core;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -113,10 +112,16 @@ public class CSVReader {
 		
                 // use comma as separator
                 String[] linje = line.split(cvsSplitBy);
-                
+               
                 
                 if (i > 3 && i%(this.timeStep) == 0) {
-                	pulse.add(linje[2]);
+                	
+                	//need to represent non-recorded pulse-step by 0:
+                	if (! linje[2].equals("") ) {
+                		pulse.add(linje[2]);
+                	} else { 
+                		pulse.add("0"); 
+                		}
                 }
                 i++;
             }
