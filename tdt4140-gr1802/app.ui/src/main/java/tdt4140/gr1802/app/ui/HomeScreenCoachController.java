@@ -49,7 +49,7 @@ public class HomeScreenCoachController {
 		App.updateCoach();
 		this.coach = App.getCoach();
 		this.txtLabelUsername.setText(this.coach.getUsername());
-		
+		/*
 		// Fill Top 5 
 		List<Athlete> top5 = coach.getTop5Athletes();
 		
@@ -60,7 +60,7 @@ public class HomeScreenCoachController {
 		
 		
 		tableViewTop5.setItems(obsList);
-	
+	*/
 	}
 
 	// Side-menu buttons
