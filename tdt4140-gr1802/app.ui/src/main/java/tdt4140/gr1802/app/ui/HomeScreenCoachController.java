@@ -37,31 +37,38 @@ public class HomeScreenCoachController {
 	private Label txtLabelUsername;
 	
 	@FXML
-	private TableView<Athlete> tableViewTop5;
+	private TableView<Athlete> tableViewTop3;
 	
 	@FXML
-	private TableColumn<Athlete, String> top5Name;
+	private TableColumn<Athlete, String> top3Name;
 	
 	@FXML
-	private TableColumn<Athlete, Integer> top5Workouts;
+	private TableColumn<Athlete, Integer> top3Workouts;
 	
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		// Fill Top 5 
-		List<Athlete> top5 = coach.getTop5Athletes();
+		System.out.println("Alle aths" + coach.getAthletes());
+		// Fill Top 3 
+		List<Athlete> top3 = coach.getTop3Athletes();
+		System.out.println("top3 " + top3);
+		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
+		System.out.println("obslist " + obsList);
 		
-		top5Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
-		//top5Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		
-		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top5);
+		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
+		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		
-		
-		tableViewTop5.setItems(obsList);
+		tableViewTop3.setItems(obsList);
 	
 	}
+	
+	// ------------- WELCOME ------------- 
+	
+	
+	// -----------------------------------
 
 	// Side-menu buttons
 	public void clickSeeAthletes (ActionEvent event) throws IOException{
@@ -81,4 +88,20 @@ public class HomeScreenCoachController {
 		window.setScene(scene);
 		window.show();
 	}
+	
+	
+	
+	
 }
+
+//Help-class to fill rows 
+	class Top3RowAthlete {
+		
+		public String name;
+		public int numbWorkout;
+		
+		public Top3RowAthlete(Athlete ath) {
+			this.name = ath.getName();
+			this.numbWorkout = ath.getAllWorkouts().size();
+		}			
+	}
