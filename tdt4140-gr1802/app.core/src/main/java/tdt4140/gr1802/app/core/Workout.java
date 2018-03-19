@@ -1,8 +1,5 @@
 package tdt4140.gr1802.app.core;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -83,8 +80,13 @@ public class Workout {
 		this.athleteMaxHR = reader.getAthleteMaxHR();
 		int sum = 0;
 		for (String puls: pulsList) {
-			int m = Integer.parseInt(puls);
-			sum += m;
+			
+			//if pulse is not recorded, its represented by "0", so need to a check for this:
+			if (! puls.equals("0") ) {
+				int m = Integer.parseInt(puls);
+				sum += m;
+			} 
+			
 		}
 		this.averageHR = sum / pulsList.size();
 		
