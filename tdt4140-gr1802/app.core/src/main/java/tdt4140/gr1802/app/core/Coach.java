@@ -104,25 +104,26 @@ public class Coach extends User {
 		}
 	}
 	
-	// Get coach top 5 athletes 
-	public List<Athlete> getTop5Athletes() {
+	// Get coach top 3 athletes 
+	public List<Athlete> getTop3Athletes() {
 		List<Athlete> sorted = new ArrayList<>();
-		List<Athlete> top5 = new ArrayList<>();
+		List<Athlete> top3 = new ArrayList<>();
 		
 		for (String name : athletes) {
+			database.getAthlete(name).getAllWorkouts();
 			sorted.add(database.getAthlete(name));
 		}
+		System.out.println("sorted before sort: " + sorted);
+		if (sorted.size() > 1) { Collections.sort(sorted);}
 		
-		Collections.sort(sorted);
-		
-		if (sorted.size() <= 5) {
-			top5.addAll(sorted);
+		if (sorted.size() <= 3) {
+			top3.addAll(sorted);
 		} else {
-			top5.add(sorted.get(0)); top5.add(sorted.get(1)); top5.add(sorted.get(2)); top5.add(sorted.get(3)); top5.add(sorted.get(4));
+			top3.add(sorted.get(0)); top3.add(sorted.get(1)); top3.add(sorted.get(2));
 
 		}
 		
-		return top5; 
+		return top3; 
 		
 	}
 	// ----- get athletes not working out since -----

@@ -17,6 +17,8 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private List<Workout> allWorkouts;
 	
+	private int numbWorkouts;
+	
 	
 	private int maxHR;
 	
@@ -41,7 +43,9 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
-	public List<Workout> getAllWorkouts(){ return database.getAllWorkouts(this); }
+	public int getNumbWorkouts() {this.numbWorkouts = database.getAllWorkouts(this).size(); return this.numbWorkouts; }
+	
+	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
 	
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
@@ -116,7 +120,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	@Override
 	public int compareTo(Athlete o) {
-		return this.allWorkouts.size() - o.allWorkouts.size();
+		return o.getAllWorkouts().size() - this.getAllWorkouts().size();
 	}
 	
 	public Date getDateLastWorkout() {
