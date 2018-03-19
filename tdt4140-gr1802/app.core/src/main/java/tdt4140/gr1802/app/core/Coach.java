@@ -1,10 +1,9 @@
 package tdt4140.gr1802.app.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Coach extends User {
 	
@@ -12,7 +11,7 @@ public class Coach extends User {
 	
 	private List<String> queuedAthletes = new ArrayList<String>();
 	
-	private Database database = new Database();
+	private Database database = App.getDb();
 	
 	public Coach (String username, String password, String name, List <String> athletes, List <String> queuedAthletes){
 		this.name = name ;

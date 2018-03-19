@@ -11,11 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
-import tdt4140.gr1802.app.core.Athlete;
+
 
 public class FxAppController {
 	

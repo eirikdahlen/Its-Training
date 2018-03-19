@@ -1,8 +1,5 @@
 package tdt4140.gr1802.app.core;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;

@@ -17,7 +17,7 @@ public class SignUp {
 			this.password = password;
 			this.repeatPassword = repeatPassword; 
 			this.isAthlete = isAthlete;
-			this.db = new Database();	
+			this.db = App.getDb();	
 		}
 	
 	// Getter for User

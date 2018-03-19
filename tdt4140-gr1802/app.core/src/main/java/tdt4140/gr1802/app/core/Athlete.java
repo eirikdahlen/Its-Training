@@ -1,10 +1,8 @@
 package tdt4140.gr1802.app.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
+
 
 public class Athlete extends User implements Comparable<Athlete> {
 	
@@ -12,7 +10,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private List <String> queuedCoaches = new ArrayList <String>();
 	
-	private Database database = new Database();
+	private Database database = App.getDb();
 	
 	private List<Workout> allWorkouts;
 	
