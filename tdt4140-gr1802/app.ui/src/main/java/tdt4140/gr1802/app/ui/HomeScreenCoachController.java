@@ -1,7 +1,6 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -16,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
@@ -45,12 +46,19 @@ public class HomeScreenCoachController {
 	@FXML
 	private TableColumn<Athlete, Integer> top3Workouts;
 	
+	// Home-tab
+	@FXML 
+	private Text homeTabWelcomeText;
+	
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		
+		// ------------- HOME -------------
+		System.out.println(coach.getName());
+		System.out.println(homeTabWelcomeText);
+		homeTabWelcomeText.setText("Welcome " + coach.getName() + "!");
 		// Fill Top 3
 		List<Athlete> top3 = coach.getTop3Athletes();
 		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
@@ -60,7 +68,9 @@ public class HomeScreenCoachController {
 	
 	}
 	
-	// ------------- WELCOME ------------- 
+	// ------------- HOME ------------- 
+	
+	
 	
 	
 	// -----------------------------------

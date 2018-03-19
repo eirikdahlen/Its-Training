@@ -61,6 +61,11 @@
                               <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
                            </columns>
                         </TableView>
+                        <Text fx:id="homeTabWelcomeText" layoutX="13.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>
