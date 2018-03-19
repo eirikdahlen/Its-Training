@@ -97,15 +97,3 @@ public class HomeScreenCoachController {
 	
 	
 }
-
-//Help-class to fill rows 
-	class Top3RowAthlete {
-		
-		public String name;
-		public int numbWorkout;
-		
-		public Top3RowAthlete(Athlete ath) {
-			this.name = ath.getName();
-			this.numbWorkout = ath.getAllWorkouts().size();
-		}			
-	}
