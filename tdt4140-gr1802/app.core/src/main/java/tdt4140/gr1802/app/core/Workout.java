@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Workout {
+public class Workout implements Comparable<Workout>{
 	
 	private Date date;
 	
@@ -239,6 +239,11 @@ public class Workout {
 			return df.parse(date);
 			
 		}
+
+	@Override
+	public int compareTo(Workout o) {
+		return this.date.compareTo(o.date);
+	}
 
 	
 	

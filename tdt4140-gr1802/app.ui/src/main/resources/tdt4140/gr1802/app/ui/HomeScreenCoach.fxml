@@ -50,17 +50,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="592.0">
                      <children>
-                        <Text layoutX="155.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 5 athletes:">
+                        <Text layoutX="888.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="28.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="tableViewTop5" layoutX="105.0" layoutY="141.0" prefHeight="152.0" prefWidth="200.0">
+                        <TableView fx:id="tableViewTop3" layoutX="874.0" layoutY="46.0" prefHeight="137.0" prefWidth="225.0">
                            <columns>
-                              <TableColumn fx:id="top5Name" prefWidth="128.0" text="Name" />
-                              <TableColumn fx:id="top5Workouts" prefWidth="71.0" text="Workouts" />
+                              <TableColumn fx:id="top3Name" prefWidth="128.0" text="Name" />
+                              <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
                            </columns>
                         </TableView>
+                        <Text fx:id="homeTabWelcomeText" layoutX="13.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>
