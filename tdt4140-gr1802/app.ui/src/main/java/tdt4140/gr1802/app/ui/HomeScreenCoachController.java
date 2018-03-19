@@ -26,7 +26,7 @@ public class HomeScreenCoachController {
 	
 	private Coach coach;
 	
-	// Declearing variables for elements in fxml
+	// Declaring variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
 	
@@ -50,17 +50,12 @@ public class HomeScreenCoachController {
 		this.coach = App.getCoach();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		System.out.println("Alle aths" + coach.getAthletes());
-		// Fill Top 3 
+		
+		// Fill Top 3
 		List<Athlete> top3 = coach.getTop3Athletes();
-		System.out.println("top3 " + top3);
 		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
-		System.out.println("obslist " + obsList);
-		
-		
 		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
-		
 		tableViewTop3.setItems(obsList);
 	
 	}
