@@ -25,9 +25,11 @@ public class Database {
 	private MongoDatabase athleteDatabase;
 	private MongoDatabase coachDatabase;
 	private MongoDatabase workoutDatabase;
+	private MongoDatabase dataDatabase;
 	
 	private MongoCollection coachCollection;
 	private MongoCollection athleteCollection;
+	private MongoCollection activityCollection;
 	
 	public Database() {
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
@@ -162,9 +164,11 @@ public class Database {
 		this.athleteDatabase = mongoClient.getDatabase("Athlete");
 		this.coachDatabase = mongoClient.getDatabase("Coach");
 		this.workoutDatabase = mongoClient.getDatabase("Workout");
+		this.dataDatabase = mongoClient.getDatabase("Data");
 		
 		this.coachCollection = coachDatabase.getCollection("Coach");
 		this.athleteCollection = athleteDatabase.getCollection("Athlete");
+		this.activityCollection = dataDatabase.getCollection("ActivityTypes");
 	}
 	
 	// Returns the Athlete from the database
@@ -187,10 +191,24 @@ public class Database {
 			athlete.setMaxHR(0);
 			
 		}
-		
-		
-
 		return athlete;
+	}
+	
+	public List<Athlete> getAllAthletes(){
+		List<Athlete> athletes = new ArrayList<Athlete>();
+		
+		try (MongoCursor<Document> cursor = athleteCollection.find().iterator()) {
+		    while (cursor.hasNext()) {
+		    		Document doc = cursor.next();
+		    		
+		    		Athlete athlete = new Athlete(doc.getString("Username"), doc.getString("Password"), doc.getString("Name"), (List<String>) doc.get("Coaches") , (List<String>) doc.get("Requests"));
+		    		athletes.add(athlete);
+		    } 
+		} catch(Exception e) {
+			System.out.println("oi her var det litt smaafeil gitt");
+			e.printStackTrace();
+		}
+		return athletes;
 	}
 	
 	// Returns the Workout from the database
@@ -635,4 +653,87 @@ public class Database {
 		userWorkoutCollection.updateOne(found, updateoperation);
 	}
 	
+	// **** ACTIVITIES TAB ****
+	public ArrayList<String> getAllActivities(){
+		ArrayList<String> activities = new ArrayList<String>();
+		
+		try (MongoCursor<Document> cursor = activityCollection.find().iterator()) {
+		    while (cursor.hasNext()) {
+		    		Document doc = cursor.next();
+		    		
+		    		String a = doc.getString("type");
+		    		activities.add(a);
+		    } 
+		} catch(Exception e) {
+			System.out.println("oi feil i getAllActivities");
+			e.printStackTrace();
+		}
+		return activities;
+	}
+	
+	public int getNrOfWorkoutsForAthlete(Athlete athlete, String activity) {
+		int count = 0;
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		
+		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+		    while (cursor.hasNext()) {
+		    		Document doc = cursor.next();
+		    		
+		    		String act = doc.getString("type");
+		    		if (act.equals(activity)) {
+		    			count++;
+		    		}
+		    } 
+		} catch(Exception e) {
+			System.out.println("oi her var det litt smaafeil gitt");
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	public List<Athlete> getAthletesForActivity(String activity){
+		List<Athlete> allAthletes = getAllAthletes();
+		List<Athlete> activityAthletes = new ArrayList<>();
+		
+		for (Athlete ath : allAthletes) {
+			
+			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(ath.getUsername());
+			Document found = (Document) userWorkoutCollection.find(new Document("type", activity)).first();
+			
+			if (found != null) {
+				activityAthletes.add(ath);
+			}
+		}
+		return activityAthletes;
+	}
+	
+	public List<Workout> getWorkoutsForActivity(String activity){
+		List<Athlete> allAthletes = getAllAthletes();
+		List<Workout> activityWorkouts = new ArrayList<>();
+		
+		for (Athlete ath : allAthletes) {
+			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(ath.getUsername());
+			
+			try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+			    while (cursor.hasNext()) {
+			    		Document doc = cursor.next();
+			    		if (doc.getString("type").equals(activity)) {
+			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
+					        
+			    			activityWorkouts.add(workout);
+			    		}
+			    } 
+			} catch(Exception e) {
+				System.out.println("oi her var det litt smaafeil gitt");
+				e.printStackTrace();
+			}
+		}
+		return activityWorkouts;	
+	}
+	
+	public static void main(String[] args) {
+		Database db = new Database();
+		System.out.println(db.getAthletesForActivity("RUNNING"));
+	}
 }
