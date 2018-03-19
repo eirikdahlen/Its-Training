@@ -117,4 +117,8 @@ public class Athlete extends User implements Comparable<Athlete> {
 	public int compareTo(Athlete o) {
 		return this.allWorkouts.size() - o.allWorkouts.size();
 	}
+	
+	public int getNrOfWorkouts(String activity) {
+		return database.getNrOfWorkoutsForAthlete(this, activity);
+	}
 }

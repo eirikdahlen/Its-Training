@@ -80,22 +80,22 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ChoiceBox fx:id="activityChoice" layoutX="162.0" layoutY="31.0" prefWidth="150.0" />
-                        <Text layoutX="63.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activity:" />
-                        <Button layoutX="343.0" layoutY="31.0" mnemonicParsing="false" text="Vis" />
-                        <TableView layoutX="26.0" layoutY="135.0" prefHeight="465.0" prefWidth="666.0">
+                        <ChoiceBox fx:id="activitiesChoice" layoutX="162.0" layoutY="31.0" prefHeight="27.0" prefWidth="192.0" />
+                        <Text layoutX="96.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activity:" />
+                        <Button fx:id="btShowActivities" layoutX="368.0" layoutY="31.0" mnemonicParsing="false" onAction="#clickShowActivities" text="Show" />
+                        <TableView fx:id="actWorkoutsTableView" layoutX="26.0" layoutY="135.0" prefHeight="465.0" prefWidth="666.0">
                           <columns>
-                            <TableColumn prefWidth="128.0" text="Date" />
-                            <TableColumn prefWidth="120.0" text="Duration (min)" />
-                              <TableColumn prefWidth="74.0" text="Km" />
-                              <TableColumn prefWidth="95.0" text="Avg HR" />
-                              <TableColumn prefWidth="197.0" text="Athlete" />
+                            <TableColumn fx:id="actWorkoutDateColumn" prefWidth="184.0" text="Date" />
+                            <TableColumn fx:id="actWorkoutDurationColumn" prefWidth="115.0" text="Duration (min)" />
+                              <TableColumn fx:id="actWorkoutKmColumn" prefWidth="81.0" text="Km" />
+                              <TableColumn fx:id="actWorkoutAvgHRColumn" text="Avg HR" />
+                              <TableColumn fx:id="actWorkoutAthleteColumn" prefWidth="154.0" text="Athlete" />
                           </columns>
                         </TableView>
-                        <TableView layoutX="720.0" layoutY="135.0" prefHeight="464.0" prefWidth="364.0">
+                        <TableView fx:id="actAthleteTableView" layoutX="720.0" layoutY="135.0" prefHeight="464.0" prefWidth="364.0">
                           <columns>
-                            <TableColumn prefWidth="172.3333740234375" text="Athlete" />
-                            <TableColumn prefWidth="147.6666259765625" text="Number of workouts" />
+                            <TableColumn fx:id="actAthleteAthColumn" prefWidth="172.3333740234375" text="Athlete" />
+                            <TableColumn fx:id="actAthleteNrColumn" prefWidth="147.6666259765625" text="Number of workouts" />
                           </columns>
                         </TableView>
                         <Text layoutX="851.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletes:">

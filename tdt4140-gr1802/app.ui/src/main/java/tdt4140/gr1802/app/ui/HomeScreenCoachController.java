@@ -22,10 +22,31 @@ import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.Workout;
 
 public class HomeScreenCoachController {
 	
 	private Coach coach;
+	private Database db;
+	
+	public class ActivityAthlete {
+		private String username;
+		private int nrOfWorkouts;
+		
+		public ActivityAthlete(String username, int nrOfWorkouts) {
+			this.username = username;
+			this.nrOfWorkouts = nrOfWorkouts;
+		}
+		
+		public String getUsername() {
+			return username;
+		}
+		
+		public int getNrOfWorkouts() {
+			return nrOfWorkouts;
+		}
+	}
 	
 	// Declearing variables for elements in fxml
 	@FXML
@@ -48,23 +69,82 @@ public class HomeScreenCoachController {
 	
 	@FXML
 	private ChoiceBox<String> activitiesChoice;
+	ObservableList<String> actChoiceList;
+	
+	@FXML
+	private Button btShowActivities;
+	
+	@FXML
+	private TableView<Workout> actWorkoutsTableView;
+	
+	@FXML
+	private TableColumn<Workout, String> actWorkoutDateColumn;
+	
+	@FXML
+	private TableColumn<Workout, Integer> actWorkoutDurationColumn;
+	
+	@FXML
+	private TableColumn<Workout, Integer> actWorkoutKmColumn;
+	
+	@FXML
+	private TableColumn<Workout, Integer> actWorkoutAvgHRColumn;
+	
+	@FXML
+	private TableColumn<Workout, Athlete> actWorkoutAthleteColumn;
+	
+	@FXML
+	private TableView<ActivityAthlete> actAthleteTableView;
+	
+	@FXML
+	private TableColumn<ActivityAthlete, String> actAthleteAthColumn;
+	
+	@FXML
+	private TableColumn<ActivityAthlete, Integer> actAthleteNrColumn;
+	
 	
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
+		this.db = App.getDb();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		// Fill Top 5 
-		List<Athlete> top5 = coach.getTop5Athletes();
 		
-		top5Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
-		//top5Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
-		
-		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top5);
-		
-		
-		tableViewTop5.setItems(obsList);
+		// **** ACTIVITIES TAB ****
+		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
+		activitiesChoice.setItems(actChoiceList);
 	
+	}
+	
+	// ***** ACTIVITIES TAB ****
+	public void clickShowActivities(ActionEvent event) {
+		// Get selected activity
+		String activity = activitiesChoice.getSelectionModel().getSelectedItem();
+		
+		// Set up Athletes-table
+		List<Athlete> activityAthletes = db.getAthletesForActivity(activity);
+		ObservableList<ActivityAthlete> obsActivityAthletes = FXCollections.observableArrayList();
+		
+		for (Athlete ath : activityAthletes) {
+			ActivityAthlete actAth = new ActivityAthlete(ath.getUsername(), ath.getNrOfWorkouts(activity));
+			obsActivityAthletes.add(actAth);
+		}
+		
+		actAthleteAthColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, String>("username"));
+		actAthleteNrColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, Integer>("nrOfWorkouts"));
+	
+		actAthleteTableView.setItems(obsActivityAthletes);
+		
+		// Set up Workouts-table
+		List<Workout> activityWorkouts = db.getWorkoutsForActivity(activity);
+		ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
+		
+		actWorkoutDateColumn.setCellValueFactory(new PropertyValueFactory<Workout, String>("dateString"));
+		actWorkoutDurationColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("duration"));
+		actWorkoutKmColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("kilometres"));
+		actWorkoutAvgHRColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("averageHR"));
+		actWorkoutAthleteColumn.setCellValueFactory(new PropertyValueFactory<Workout, Athlete>("athlete"));
+		
+		actWorkoutsTableView.setItems(obsActivityWorkouts);
 	}
 
 	// Side-menu buttons
