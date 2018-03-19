@@ -1,7 +1,9 @@
 package tdt4140.gr1802.app.core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -123,5 +125,18 @@ public class Coach extends User {
 		
 		return top3; 
 		
+	}
+	// ----- get athletes not working out since -----
+	// TODO: Move this method to analyze athletes? 
+	public List<Athlete> getAthletesNotWorkingOutSince(Date date) {
+		List<Athlete> resultAthletes = new ArrayList<>();
+		
+		for (String athName : this.athletes) {
+			if (database.getAthlete(athName).getDateLastWorkout().before(date)) {
+				resultAthletes.add(database.getAthlete(athName));
+			}
+		}
+		
+		return resultAthletes;	
 	}
 }	

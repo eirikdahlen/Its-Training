@@ -1,6 +1,9 @@
 package tdt4140.gr1802.app.core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -118,5 +121,18 @@ public class Athlete extends User implements Comparable<Athlete> {
 	@Override
 	public int compareTo(Athlete o) {
 		return o.getAllWorkouts().size() - this.getAllWorkouts().size();
+	}
+	
+	public Date getDateLastWorkout() {
+		List<Workout> sorted = new ArrayList<>();
+		sorted.addAll(this.getAllWorkouts());
+		
+		if (sorted.size() == 0) { return null; }
+		
+		Collections.sort(sorted);
+		
+		Workout lastWorkout = sorted.get(sorted.size()-1);
+		
+		return lastWorkout.getDate();
 	}
 }
