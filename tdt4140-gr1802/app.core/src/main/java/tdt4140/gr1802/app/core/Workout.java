@@ -83,8 +83,13 @@ public class Workout {
 		this.athleteMaxHR = reader.getAthleteMaxHR();
 		int sum = 0;
 		for (String puls: pulsList) {
-			int m = Integer.parseInt(puls);
-			sum += m;
+			
+			//if pulse is not recorded, its represented by "0", so need to a check for this:
+			if (! puls.equals("0") ) {
+				int m = Integer.parseInt(puls);
+				sum += m;
+			} 
+			
 		}
 		this.averageHR = sum / pulsList.size();
 		
