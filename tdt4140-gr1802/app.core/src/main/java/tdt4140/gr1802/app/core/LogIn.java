@@ -7,7 +7,7 @@ public class LogIn {
 	private String username; 
 	private String password;
 	
-	Database db = new Database();
+	Database db = App.getDb();
 	
 	public LogIn(String username, String password) {
 		this.username = username; 

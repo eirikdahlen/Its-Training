@@ -1,6 +1,6 @@
 package tdt4140.gr1802.app.ui;
 
-import tdt4140.gr1802.app.core.Database;
+
 import tdt4140.gr1802.app.core.LogIn;
 
 import javafx.fxml.FXML;
@@ -40,7 +40,7 @@ public class LoginScreenController {
 	@FXML
 	private Stage signUpStage;
 	
-	private Database db = new Database();
+
 	
 	// Method called when clicking Sign-up button
 	public void signUpButton(ActionEvent event) throws IOException {
