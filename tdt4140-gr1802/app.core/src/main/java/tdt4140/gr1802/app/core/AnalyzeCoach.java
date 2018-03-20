@@ -13,7 +13,7 @@ public class AnalyzeCoach {
 	public int getTotalTrainingTime(Coach coach) {
 		int totalTime = 0;
 		
-
+// hei på deg ga,mle sjokolade
 		List<String> athletesUsername = coach.getAthletes();
 
 		System.out.println(athletesUsername);
