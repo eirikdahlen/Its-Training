@@ -1,9 +1,14 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +30,7 @@ import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
+import tdt4140.gr1802.app.ui.HomeScreenCoachController.DateAthlete;
 
 public class HomeScreenCoachController {
 	
@@ -48,6 +55,18 @@ public class HomeScreenCoachController {
 		}
 	}
 	
+	public class DateAthlete {
+		private String name;
+		private Date lastWorkout;
+		
+		public DateAthlete(String name, Date lastWorkout) {
+			this.name = name; this.lastWorkout = lastWorkout;
+		}
+		
+		public String getName() { return this.name; }
+		public Date getLastWorkout() { return this.lastWorkout; }
+	}
+	
 	// Declaring variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
@@ -58,19 +77,19 @@ public class HomeScreenCoachController {
 	@FXML
 	private Label txtLabelUsername;
 	
-	@FXML
-	private TableView<Athlete> tableViewTop3;
+	// ------------- Home-tab -------------
+	@FXML private TableView<Athlete> tableViewTop3;
+	@FXML private TableColumn<Athlete, String> top3Name;
+	@FXML private TableColumn<Athlete, Integer> top3Workouts;
+	@FXML private Text homeTabWelcomeText;
 	
-	@FXML
-	private TableColumn<Athlete, String> top3Name;
+	@FXML private ComboBox<String> homeComboBoxDate;
+	@FXML private Button homeBtnOK;
+	@FXML private TableView<DateAthlete> homeTableViewAthletes;
+	@FXML private TableColumn<DateAthlete, String> homeColumnName;
+	@FXML private TableColumn<DateAthlete, Date> homeColumnDate;
 	
-	@FXML
-	private TableColumn<Athlete, Integer> top3Workouts;
-	
-	// Home-tab
-	@FXML 
-	private Text homeTabWelcomeText;
-	
+	// -------------------------------------
 	@FXML
 	private ChoiceBox<String> activitiesChoice;
 	ObservableList<String> actChoiceList;
@@ -123,6 +142,11 @@ public class HomeScreenCoachController {
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		tableViewTop3.setItems(obsList);
 		
+		List<String> dateChoices = new ArrayList<>();
+		dateChoices.add("7 days"); dateChoices.add("14 days"); dateChoices.add("30 days");
+		ObservableList<String> obsDateChoices = FXCollections.observableArrayList(dateChoices);
+		homeComboBoxDate.setItems(obsDateChoices);
+		
 		
 		// **** ACTIVITIES TAB ****
 		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
@@ -162,7 +186,36 @@ public class HomeScreenCoachController {
 		actWorkoutsTableView.setItems(obsActivityWorkouts);
 	}
 	
-	// ------------- HOME ------------- 
+	// ------------- HOME/WELCOME ------------- 
+	
+	public void clickHomeOKButton(ActionEvent event) {
+		String chosenTimePeriod = homeComboBoxDate.getValue();
+		if (chosenTimePeriod == null) { return; }
+		
+		LocalDate date = LocalDate.now();
+		
+		if (chosenTimePeriod.equals("7 days")) {
+			date = LocalDate.now().minusDays(7);
+		} else if (chosenTimePeriod.equals("14 days")) {
+			date = LocalDate.now().minusDays(14);
+		} else {
+			date = LocalDate.now().minusDays(30);	
+		}
+		
+		Date sinceDate = java.sql.Date.valueOf(date);
+		
+		List<Athlete> toShowAthletes = this.coach.getAthletesNotWorkingOutSince(sinceDate);
+		ObservableList<DateAthlete> obsToShowAthletes = FXCollections.observableArrayList();
+		
+		for (Athlete ath : toShowAthletes) {
+			obsToShowAthletes.add(new DateAthlete(ath.getName(), ath.getDateLastWorkout()));
+		}
+		homeColumnName.setCellValueFactory(new PropertyValueFactory<DateAthlete, String>("name"));
+		homeColumnDate.setCellValueFactory(new PropertyValueFactory<DateAthlete, Date>("lastWorkout"));
+		
+		homeTableViewAthletes.setItems(obsToShowAthletes);
+		System.out.println(obsToShowAthletes);	
+	}
 	
 	
 	
