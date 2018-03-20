@@ -1,10 +1,11 @@
 package tdt4140.gr1802.app.core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
+
 
 public class Athlete extends User implements Comparable<Athlete> {
 	
@@ -12,9 +13,11 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private List <String> queuedCoaches = new ArrayList <String>();
 	
-	private Database database = new Database();
+	private Database database = App.getDb();
 	
 	private List<Workout> allWorkouts;
+	
+	private int numbWorkouts;
 	
 	
 	private int maxHR;
@@ -40,7 +43,9 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
-	public List<Workout> getAllWorkouts(){ return database.getAllWorkouts(this); }
+	public int getNumbWorkouts() {this.numbWorkouts = database.getAllWorkouts(this).size(); return this.numbWorkouts; }
+	
+	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
 	
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
@@ -115,6 +120,23 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	@Override
 	public int compareTo(Athlete o) {
-		return this.allWorkouts.size() - o.allWorkouts.size();
+		return o.getAllWorkouts().size() - this.getAllWorkouts().size();
+	}
+	
+	public Date getDateLastWorkout() {
+		List<Workout> sorted = new ArrayList<>();
+		sorted.addAll(this.getAllWorkouts());
+		
+		if (sorted.size() == 0) { return null; }
+		
+		Collections.sort(sorted);
+		
+		Workout lastWorkout = sorted.get(sorted.size()-1);
+		
+		return lastWorkout.getDate();
+	}
+	
+	public int getNrOfWorkouts(String activity) {
+		return database.getNrOfWorkoutsForAthlete(this, activity);
 	}
 }

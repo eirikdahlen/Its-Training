@@ -25,7 +25,7 @@ import tdt4140.gr1802.app.core.Database;
 
 public class SeeAthletesController {
 	
-	private Database database = new Database();
+	private Database database = App.getDb();
 	private Coach coach;
 	
 	// Declaring variables for elements in fxml

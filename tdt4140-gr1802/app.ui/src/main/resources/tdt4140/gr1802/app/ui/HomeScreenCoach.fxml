@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -61,17 +62,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="592.0">
                      <children>
-                        <Text layoutX="155.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 5 athletes:">
+                        <Text layoutX="888.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="28.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="tableViewTop5" layoutX="105.0" layoutY="141.0" prefHeight="152.0" prefWidth="200.0">
+                        <TableView fx:id="tableViewTop3" layoutX="874.0" layoutY="46.0" prefHeight="137.0" prefWidth="225.0">
                            <columns>
-                              <TableColumn fx:id="top5Name" prefWidth="128.0" text="Name" />
-                              <TableColumn fx:id="top5Workouts" prefWidth="71.0" text="Workouts" />
+                              <TableColumn fx:id="top3Name" prefWidth="128.0" text="Name" />
+                              <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
                            </columns>
                         </TableView>
+                        <Text fx:id="homeTabWelcomeText" layoutX="13.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>
@@ -88,7 +94,37 @@
             </Tab>
             <Tab text="Activities">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox fx:id="activitiesChoice" layoutX="162.0" layoutY="31.0" prefHeight="27.0" prefWidth="192.0" />
+                        <Text layoutX="96.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Activity:" />
+                        <Button fx:id="btShowActivities" layoutX="368.0" layoutY="31.0" mnemonicParsing="false" onAction="#clickShowActivities" text="Show" />
+                        <TableView fx:id="actWorkoutsTableView" layoutX="26.0" layoutY="135.0" prefHeight="465.0" prefWidth="666.0">
+                          <columns>
+                            <TableColumn fx:id="actWorkoutDateColumn" prefWidth="184.0" text="Date" />
+                            <TableColumn fx:id="actWorkoutDurationColumn" prefWidth="115.0" text="Duration (min)" />
+                              <TableColumn fx:id="actWorkoutKmColumn" prefWidth="81.0" text="Km" />
+                              <TableColumn fx:id="actWorkoutAvgHRColumn" text="Avg HR" />
+                              <TableColumn fx:id="actWorkoutAthleteColumn" prefWidth="154.0" text="Athlete" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="actAthleteTableView" layoutX="720.0" layoutY="135.0" prefHeight="464.0" prefWidth="364.0">
+                          <columns>
+                            <TableColumn fx:id="actAthleteAthColumn" prefWidth="172.3333740234375" text="Athlete" />
+                            <TableColumn fx:id="actAthleteNrColumn" prefWidth="147.6666259765625" text="Number of workouts" />
+                          </columns>
+                        </TableView>
+                        <Text layoutX="851.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletes:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="285.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workouts:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Heatmap">

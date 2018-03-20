@@ -1,10 +1,11 @@
 package tdt4140.gr1802.app.core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Coach extends User {
 	
@@ -12,7 +13,7 @@ public class Coach extends User {
 	
 	private List<String> queuedAthletes = new ArrayList<String>();
 	
-	private Database database = new Database();
+	private Database database = App.getDb();
 	
 	public Coach (String username, String password, String name, List <String> athletes, List <String> queuedAthletes){
 		this.name = name ;
@@ -103,25 +104,39 @@ public class Coach extends User {
 		}
 	}
 	
-	// Get coach top 5 athletes 
-	public List<Athlete> getTop5Athletes() {
+	// Get coach top 3 athletes 
+	public List<Athlete> getTop3Athletes() {
 		List<Athlete> sorted = new ArrayList<>();
-		List<Athlete> top5 = new ArrayList<>();
+		List<Athlete> top3 = new ArrayList<>();
 		
 		for (String name : athletes) {
+			database.getAthlete(name).getAllWorkouts();
 			sorted.add(database.getAthlete(name));
 		}
+		System.out.println("sorted before sort: " + sorted);
+		if (sorted.size() > 1) { Collections.sort(sorted);}
 		
-		Collections.sort(sorted);
-		
-		if (sorted.size() <= 5) {
-			top5.addAll(sorted);
+		if (sorted.size() <= 3) {
+			top3.addAll(sorted);
 		} else {
-			top5.add(sorted.get(0)); top5.add(sorted.get(1)); top5.add(sorted.get(2)); top5.add(sorted.get(3)); top5.add(sorted.get(4));
+			top3.add(sorted.get(0)); top3.add(sorted.get(1)); top3.add(sorted.get(2));
 
 		}
 		
-		return top5; 
+		return top3; 
 		
+	}
+	// ----- get athletes not working out since -----
+	// TODO: Move this method to analyze athletes? 
+	public List<Athlete> getAthletesNotWorkingOutSince(Date date) {
+		List<Athlete> resultAthletes = new ArrayList<>();
+		
+		for (String athName : this.athletes) {
+			if (database.getAthlete(athName).getDateLastWorkout().before(date)) {
+				resultAthletes.add(database.getAthlete(athName));
+			}
+		}
+		
+		return resultAthletes;	
 	}
 }	
