@@ -66,14 +66,39 @@ public class HomeScreenCoachController {
 		private double highHR;
 		
 		
-		public RankAthlete(Athlete athlete){
+		public RankAthlete(Athlete athlete, boolean tirthy){
 			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
 			this.userName = athlete.getUsername();
-			this.numbWorkouts = athlete.getNumbWorkouts();
-			this.totalDuration = analyzer.getTotalDuration(db.getAllWorkouts(athlete));
-			this.lowHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(0);
-			this.medHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(1);
-			this.highHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(2);
+			
+			
+			List<Workout> workoutList = db.getAllWorkouts(athlete);
+			for (int i = 0; i < workoutList.size();i++) {
+				if (! workoutList.get(i).getVisibility()) {
+					workoutList.remove(i);
+				}
+			}
+			
+			if (tirthy) {
+				//local date
+				LocalDate dateRank = LocalDate.now().minusDays(30);
+				Date sinceDateRank = java.sql.Date.valueOf(dateRank);
+				//slett fra workout-liste
+				
+				
+				for (int i = 0; i < workoutList.size();i++) {
+					if (workoutList.get(i).getDate().before(sinceDateRank)) {
+						workoutList.remove(i);
+						
+					}
+				}
+				
+			}
+			
+			this.numbWorkouts = workoutList.size();
+			this.totalDuration = analyzer.getTotalDuration(workoutList);
+			this.lowHR = analyzer.getTimeInHRZones(workoutList).get(0);
+			this.medHR = analyzer.getTimeInHRZones(workoutList).get(1);
+			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);
 			
 		}
 		
@@ -313,7 +338,7 @@ public class HomeScreenCoachController {
 	
 	
 	//_______ALL-TIME TAB_____
-	// ***** ACTIVITIES TAB ****
+	
 		public void clickShowRanking(ActionEvent event) {
 			// Get selected activity
 			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
@@ -329,41 +354,36 @@ public class HomeScreenCoachController {
 				rankingAthletes.add(db.getAthlete(athleteUsername));
 			}
 			
-			
 			  
 			//All-Time Selected
 			if(rankingChoiceSelected == "All-time") {
 				
 				//Create tuples with Athlete and total duration (Athlete, Total duration)
 				for(Athlete athlete : rankingAthletes) {
-						RankAthlete rank = new RankAthlete(athlete);
+						RankAthlete rank = new RankAthlete(athlete, false);
 						obsRank.add(rank);
 				}
 				
+
+			} else {
 				
+				for(Athlete athlete : rankingAthletes) {
+					RankAthlete rank = new RankAthlete(athlete, true);
+					obsRank.add(rank);
+			}
 				
-				//ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
-				rankAthletesColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, String>("userName"));
-				rankNumberofSessionsColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Integer>("numbWorkouts"));
-				rankTotalDurationColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("totalDuration"));
-				rankLowHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("lowHR"));
-				rankModerateHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("medHR"));
-				rankHighHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("highHR"));
-				rankAthletesTableView.setItems(obsRank);
 				
 			}
 			
-//			// Set up Workouts-table
-//			List<Workout> activityWorkouts = db.getWorkoutsForActivity(activity);
-//			ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
-//			
-//			actWorkoutDateColumn.setCellValueFactory(new PropertyValueFactory<Workout, String>("dateString"));
-//			actWorkoutDurationColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("duration"));
-//			actWorkoutKmColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("kilometres"));
-//			actWorkoutAvgHRColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("averageHR"));
-//			actWorkoutAthleteColumn.setCellValueFactory(new PropertyValueFactory<Workout, Athlete>("athlete"));
-//			
-//			actWorkoutsTableView.setItems(obsActivityWorkouts);
+			//ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
+			rankAthletesColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, String>("userName"));
+			rankNumberofSessionsColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Integer>("numbWorkouts"));
+			rankTotalDurationColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("totalDuration"));
+			rankLowHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("lowHR"));
+			rankModerateHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("medHR"));
+			rankHighHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("highHR"));
+			rankAthletesTableView.setItems(obsRank);
+
 		}
 	
 	
