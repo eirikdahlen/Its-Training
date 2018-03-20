@@ -65,6 +65,9 @@ public class CoachSeeWorkoutController {
 	@FXML
 	private NumberAxis yAxis;
 	
+	@FXML
+	private Button homeScreenButton;
+	
 	private Coach coach;
 	private static Workout workout;
 	private AnalyzeWorkout analyzer = new AnalyzeWorkout();
@@ -135,6 +138,15 @@ public class CoachSeeWorkoutController {
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			
+		window.setScene(scene);
+		window.show();
+	}
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
 		window.setScene(scene);
 		window.show();
 	}
