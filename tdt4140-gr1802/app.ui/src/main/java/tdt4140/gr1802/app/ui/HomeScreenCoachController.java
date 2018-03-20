@@ -57,6 +57,52 @@ public class HomeScreenCoachController {
 		}
 	}
 	
+	public class RankAthlete{
+		private String userName;
+		private int numbWorkouts;
+		private int totalDuration;
+		private double lowHR;
+		private double medHR;
+		private double highHR;
+		
+		
+		public RankAthlete(Athlete athlete){
+			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
+			this.userName = athlete.getUsername();
+			this.numbWorkouts = athlete.getNumbWorkouts();
+			this.totalDuration = analyzer.getTotalDuration(db.getAllWorkouts(athlete));
+			this.lowHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(0);
+			this.medHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(1);
+			this.highHR = analyzer.getTimeInHRZones(db.getAllWorkouts(athlete)).get(2);
+			
+		}
+		
+		
+		public String getUserName() {
+			return userName;
+		}
+		public int getNumbWorkouts() {
+			return numbWorkouts;
+		}
+		public int getTotalDuration() {
+			return totalDuration;
+		}
+		public double getLowHR() {
+			return lowHR;
+		}
+		public double getMedHR() {
+			return medHR;
+		}
+		public double getHighHR() {
+			return highHR;
+		}
+		
+		
+		
+		
+		
+	}
+	
 	public class DateAthlete {
 		private String name;
 		private Date lastWorkout;
@@ -138,25 +184,25 @@ public class HomeScreenCoachController {
 	ObservableList<String> rankingChoiceList;
 	
 	@FXML
-	private TableView<Athlete> rankAthletesTableView;
+	private TableView<RankAthlete> rankAthletesTableView;
 	
 	@FXML
-	private TableColumn<Athlete, String> rankAthletesColumn;
+	private TableColumn<RankAthlete, String> rankAthletesColumn;
 	
 	@FXML
-	private TableColumn<Athlete, Integer> rankNumberofSessionsColumn;
+	private TableColumn<RankAthlete, Integer> rankNumberofSessionsColumn;
 	
 	@FXML
-	private TableColumn<Athlete, Double> rankTotalDurationColumn;
+	private TableColumn<RankAthlete, Double> rankTotalDurationColumn;
 	
 	@FXML
-	private TableColumn<Athlete, Double> rankLowHRColumn;
+	private TableColumn<RankAthlete, Double> rankLowHRColumn;
 	
 	@FXML
-	private TableColumn<Athlete, Double> rankModerateHRColumn;
+	private TableColumn<RankAthlete, Double> rankModerateHRColumn;
 	
 	@FXML
-	private TableColumn<Athlete, Double> rankHighHRColumn;
+	private TableColumn<RankAthlete, Double> rankHighHRColumn;
 	
 	
 	
@@ -271,10 +317,7 @@ public class HomeScreenCoachController {
 		public void clickShowRanking(ActionEvent event) {
 			// Get selected activity
 			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
-			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
-			List<Pair<Athlete, Integer>> totalDurationPair = new ArrayList<Pair<Athlete, Integer>>();
-			List<Pair<Athlete, Integer>> totalSessionsPair = new ArrayList<Pair<Athlete, Integer>>();
-			List<Pair<Athlete, List<Integer>>> totalZonesPair = new ArrayList<Pair<Athlete, List<Integer>>>();
+			ObservableList<RankAthlete> obsRank = FXCollections.observableArrayList();
 			
 			
 			
@@ -293,38 +336,23 @@ public class HomeScreenCoachController {
 				
 				//Create tuples with Athlete and total duration (Athlete, Total duration)
 				for(Athlete athlete : rankingAthletes) {
-					Pair<Athlete, Integer> tuple = new Pair<Athlete, Integer>(athlete, analyzer.getTotalDuration(athlete.getAllWorkouts()));
-					totalDurationPair.add(tuple);				
-				}
-				//create tuples for athlete and #Sessions
-				for(Athlete athlete : rankingAthletes) {
-					Pair<Athlete, Integer> tuple = new Pair<Athlete, Integer>(athlete, athlete.getNumbWorkouts());
-					totalSessionsPair.add(tuple);					
-				}
-				for(Athlete athlete : rankingAthletes) {
-					Pair<Athlete, List<Integer>> tuple = new Pair<Athlete, List<Integer>>(athlete, analyzer.getTimeInHRZones(athlete.getAllWorkouts()) );
-					totalZonesPair.add(tuple);
+						RankAthlete rank = new RankAthlete(athlete);
+						obsRank.add(rank);
 				}
 				
 				
 				
+				//ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
+				rankAthletesColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, String>("userName"));
+				rankNumberofSessionsColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Integer>("numbWorkouts"));
+				rankTotalDurationColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("totalDuration"));
+				rankLowHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("lowHR"));
+				rankModerateHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("medHR"));
+				rankHighHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("highHR"));
+				rankAthletesTableView.setItems(obsRank);
 				
 			}
 			
-			
-					
-//			ObservableList<ActivityAthlete> obsActivityAthletes = FXCollections.observableArrayList();
-//			
-//			for (Athlete ath : activityAthletes) {
-//				ActivityAthlete actAth = new ActivityAthlete(ath.getUsername(), ath.getNrOfWorkouts(activity));
-//				obsActivityAthletes.add(actAth);
-//			}
-//			
-//			actAthleteAthColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, String>("username"));
-//			actAthleteNrColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, Integer>("nrOfWorkouts"));
-//		
-//			actAthleteTableView.setItems(obsActivityAthletes);
-//			
 //			// Set up Workouts-table
 //			List<Workout> activityWorkouts = db.getWorkoutsForActivity(activity);
 //			ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
