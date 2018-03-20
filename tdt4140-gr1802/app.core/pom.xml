@@ -38,6 +38,10 @@
         		<artifactId>mongodb-driver</artifactId>
         		<version>3.6.3</version>
     		</dependency>
-		
+		<dependency>
+    			<groupId>io.jenetics</groupId>
+    			<artifactId>jpx</artifactId>
+    			<version>1.2.3</version>
+		</dependency>
 	</dependencies>
 </project>
