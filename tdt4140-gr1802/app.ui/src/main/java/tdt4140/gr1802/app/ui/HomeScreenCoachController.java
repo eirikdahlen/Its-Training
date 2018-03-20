@@ -125,6 +125,42 @@ public class HomeScreenCoachController {
 	private TableColumn<ActivityAthlete, Integer> actAthleteNrColumn;
 	
 	
+	
+	//_________STATS ALL-TIME TAB________
+	@FXML
+	private Button btShowRanking;
+	
+	@FXML
+	private ChoiceBox<String> rankingChoice;
+	
+	ObservableList<String> rankingChoiceList;
+	
+	@FXML
+	private TableView<Athlete> rankAthletesTableView;
+	
+	@FXML
+	private TableColumn<Athlete, String> rankAthletesColumn;
+	
+	@FXML
+	private TableColumn<Athlete, Integer> rankNumberofSessionsColumn;
+	
+	@FXML
+	private TableColumn<Athlete, Double> rankTotalDurationColumn;
+	
+	@FXML
+	private TableColumn<Athlete, Double> rankLowHRColumn;
+	
+	@FXML
+	private TableColumn<Athlete, Double> rankModerateHRColumn;
+	
+	@FXML
+	private TableColumn<Athlete, Double> rankHighHRColumn;
+	
+	
+	
+	//_________________________
+	
+	
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
@@ -151,6 +187,16 @@ public class HomeScreenCoachController {
 		// **** ACTIVITIES TAB ****
 		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
 		activitiesChoice.setItems(actChoiceList);
+		
+		
+		//_______STATS ALLTIME TAB________
+		System.out.println("PETTER TAB");
+		rankingChoiceList = FXCollections.observableArrayList();
+		rankingChoiceList.add("Last 30 days");
+		rankingChoiceList.add("All-time");
+		rankingChoice.setItems(rankingChoiceList);
+		
+		
 	
 	}
 	
@@ -216,6 +262,48 @@ public class HomeScreenCoachController {
 		homeTableViewAthletes.setItems(obsToShowAthletes);
 		System.out.println(obsToShowAthletes);	
 	}
+	
+	
+	//_______ALL-TIME TAB_____
+	// ***** ACTIVITIES TAB ****
+		public void clickShowRanking(ActionEvent event) {
+			// Get selected activity
+			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
+			
+			// Set up Athletes-table
+			List<String> rankingAthletesUsername = App.getCoach().getAthletes();
+			List<Athlete> rankingAthletes = new ArrayList<Athlete>();
+					
+			for (String athleteUsername : rankingAthletesUsername) {		
+				rankingAthletes.add(db.getAthlete(athleteUsername));
+			}
+			
+			
+					
+//			ObservableList<ActivityAthlete> obsActivityAthletes = FXCollections.observableArrayList();
+//			
+//			for (Athlete ath : activityAthletes) {
+//				ActivityAthlete actAth = new ActivityAthlete(ath.getUsername(), ath.getNrOfWorkouts(activity));
+//				obsActivityAthletes.add(actAth);
+//			}
+//			
+//			actAthleteAthColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, String>("username"));
+//			actAthleteNrColumn.setCellValueFactory(new PropertyValueFactory<ActivityAthlete, Integer>("nrOfWorkouts"));
+//		
+//			actAthleteTableView.setItems(obsActivityAthletes);
+//			
+//			// Set up Workouts-table
+//			List<Workout> activityWorkouts = db.getWorkoutsForActivity(activity);
+//			ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
+//			
+//			actWorkoutDateColumn.setCellValueFactory(new PropertyValueFactory<Workout, String>("dateString"));
+//			actWorkoutDurationColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("duration"));
+//			actWorkoutKmColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("kilometres"));
+//			actWorkoutAvgHRColumn.setCellValueFactory(new PropertyValueFactory<Workout, Integer>("averageHR"));
+//			actWorkoutAthleteColumn.setCellValueFactory(new PropertyValueFactory<Workout, Athlete>("athlete"));
+//			
+//			actWorkoutsTableView.setItems(obsActivityWorkouts);
+		}
 	
 	
 	
