@@ -139,4 +139,14 @@ public class Coach extends User {
 		
 		return resultAthletes;	
 	}
+	
+	public List<LocalDate> getDatesWithNotes() {
+		// TODO: Implement this
+		return null;
+	}
+	
+	public String getNote(LocalDate date) {
+		// TODO: Implement this
+		return null;
+	}
 }	
