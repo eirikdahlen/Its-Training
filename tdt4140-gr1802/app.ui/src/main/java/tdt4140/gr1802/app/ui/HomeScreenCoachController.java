@@ -25,6 +25,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
@@ -269,6 +271,12 @@ public class HomeScreenCoachController {
 		public void clickShowRanking(ActionEvent event) {
 			// Get selected activity
 			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
+			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
+			List<Pair<Athlete, Integer>> totalDurationPair = new ArrayList<Pair<Athlete, Integer>>();
+			List<Pair<Athlete, Integer>> totalSessionsPair = new ArrayList<Pair<Athlete, Integer>>();
+			List<Pair<Athlete, List<Integer>>> totalZonesPair = new ArrayList<Pair<Athlete, List<Integer>>>();
+			
+			
 			
 			// Set up Athletes-table
 			List<String> rankingAthletesUsername = App.getCoach().getAthletes();
@@ -276,6 +284,31 @@ public class HomeScreenCoachController {
 					
 			for (String athleteUsername : rankingAthletesUsername) {		
 				rankingAthletes.add(db.getAthlete(athleteUsername));
+			}
+			
+			
+			  
+			//All-Time Selected
+			if(rankingChoiceSelected == "All-time") {
+				
+				//Create tuples with Athlete and total duration (Athlete, Total duration)
+				for(Athlete athlete : rankingAthletes) {
+					Pair<Athlete, Integer> tuple = new Pair<Athlete, Integer>(athlete, analyzer.getTotalDuration(athlete.getAllWorkouts()));
+					totalDurationPair.add(tuple);				
+				}
+				//create tuples for athlete and #Sessions
+				for(Athlete athlete : rankingAthletes) {
+					Pair<Athlete, Integer> tuple = new Pair<Athlete, Integer>(athlete, athlete.getNumbWorkouts());
+					totalSessionsPair.add(tuple);					
+				}
+				for(Athlete athlete : rankingAthletes) {
+					Pair<Athlete, List<Integer>> tuple = new Pair<Athlete, List<Integer>>(athlete, analyzer.getTimeInHRZones(athlete.getAllWorkouts()) );
+					totalZonesPair.add(tuple);
+				}
+				
+				
+				
+				
 			}
 			
 			
