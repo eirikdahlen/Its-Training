@@ -48,6 +48,9 @@ public class AthleteRequestsController {
 	@FXML
 	private Label txtLabelUsername;
 	
+	@FXML
+	private Button homeScreenButton;
+	
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
 	
@@ -87,6 +90,16 @@ public class AthleteRequestsController {
 		// Fill table with values
 		tableView.setItems(getAthletes());
 		
+	}
+	
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
 	}
 	
 	public void acceptButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException{
@@ -135,4 +148,5 @@ public class AthleteRequestsController {
 		window.setScene(scene);
 		window.show();
 	}
+
 }

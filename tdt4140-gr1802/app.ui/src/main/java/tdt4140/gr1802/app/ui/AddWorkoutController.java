@@ -1,6 +1,7 @@
 package tdt4140.gr1802.app.ui;
 
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,6 +50,8 @@ public class AddWorkoutController {
 	@FXML
 	private CheckBox checkBox;
 	
+	@FXML
+	private Button homeScreenButton; 
 	
 	private Database db;
 	
@@ -57,6 +60,7 @@ public class AddWorkoutController {
 	private static Athlete athlete;
 	
 	private boolean visibility;
+	
 	
 	
 	// Initialization method
@@ -125,6 +129,16 @@ public class AddWorkoutController {
 	
 	public void clickCoachRequest (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
+	
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

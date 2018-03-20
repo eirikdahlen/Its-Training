@@ -50,17 +50,7 @@ public class HomeScreenCoachController {
 		this.coach = App.getCoach();
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		
-		// Fill Top 5 
-		List<Athlete> top5 = coach.getTop5Athletes();
-		
-		top5Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
-		//top5Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
-		
-		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top5);
-		
-		
-		tableViewTop5.setItems(obsList);
-	
+
 	}
 
 	// Side-menu buttons
