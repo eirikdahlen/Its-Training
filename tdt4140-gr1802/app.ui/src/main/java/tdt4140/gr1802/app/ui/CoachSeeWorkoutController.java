@@ -18,6 +18,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.shapes.Polyline;
 import com.lynden.gmapsfx.shapes.PolylineOptions;
 
+import io.jenetics.jpx.GPX;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +39,7 @@ import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.GPXReader;
 import tdt4140.gr1802.app.core.Workout;
 
 public class CoachSeeWorkoutController implements Initializable, MapComponentInitializedListener{
@@ -166,7 +168,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 
 	public void mapInitialized() {
 	    MapOptions mapOptions = new MapOptions();
-	    
+	    	    
 	    LatLong StartPoint = new LatLong(63.414236, 10.402698);
 	    LatLong l1 = new LatLong(63.414908, 10.402397);
 	    LatLong l2 = new LatLong(63.415119, 10.399565);
@@ -207,7 +209,23 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	        
 	        //Codeblock for getting polylines between the gps-positions from the workout. 
 	        
-	        LatLong[] ary = new LatLong[]{StartPoint, l1, l2, l3, l4, l5, l6, l7, l8,FinishPoint};
+//	        LatLong[] ary = new LatLong[]{StartPoint, l1, l2, l3, l4, l5, l6, l7, l8,FinishPoint};
+	        String path = "src/main/java/tdt4140/gr1802/app/core/roing8.gpx";
+	        
+	        GPX gpx = null;
+			try {
+				gpx = GPX.read(path);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+	        LatLong[] ary = null;
+			try {
+				ary = GPXReader.readGPX(gpx);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        
 	        MVCArray mvc = new MVCArray(ary);
 	        PolylineOptions polyOpts = new PolylineOptions()
 	        .path(mvc)
