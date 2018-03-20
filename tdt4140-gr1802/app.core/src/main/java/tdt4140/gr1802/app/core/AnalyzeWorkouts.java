@@ -38,6 +38,22 @@ public class AnalyzeWorkouts {
 	public List<Integer> getHRPercentage(List<Integer> timeInHRZones) {
 		return analyzeWorkout.getHRPercentage(timeInHRZones);
 	}
+	
+	public int getTotalDuration(List<Workout> workouts) {
+		int totalDuration = 0;
+		System.out.println("hallo");
+		for (Workout workout : workouts ) {
+			
+			//adds only if workout is visible for coach
+			if (workout.getVisibility()) {
+				totalDuration = totalDuration + workout.getDuration();
+			}
+			
+		}
+		
+
+		return totalDuration;
+	}
 		
 	
 	
