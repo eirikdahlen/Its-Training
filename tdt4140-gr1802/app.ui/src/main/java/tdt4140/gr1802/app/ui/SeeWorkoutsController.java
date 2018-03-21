@@ -63,7 +63,8 @@ public class SeeWorkoutsController{
 	@FXML
 	private Button hideButton;
 	
-	
+	@FXML
+	private Button homeScreenButton;
 	
 	@FXML
 	private Button btSeeCoaches;
@@ -172,7 +173,15 @@ public class SeeWorkoutsController{
 			System.out.println("inni loop");
 			database.setWorkoutVisibility(false, workout, this.athlete);
 		}
+	}
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
+		window.setScene(scene);
+		window.show();
 	}
 	
 }

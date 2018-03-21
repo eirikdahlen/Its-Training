@@ -2,27 +2,33 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
    <children>
-      <AnchorPane prefHeight="720.0" prefWidth="1281.0">
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="649.0" prefWidth="1281.0">
+            <SplitPane layoutY="71.0" prefHeight="649.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="71.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="649.0" prefWidth="1284.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="649.0" prefWidth="1280.0">
                      <children>
                         <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="706.0" startX="-100.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
@@ -39,8 +45,15 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="135.0" text="It's Training" AnchorPane.bottomAnchor="662.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="1133.0" AnchorPane.topAnchor="14.0">
+      <ImageView fitHeight="76.0" fitWidth="183.0" layoutX="-7.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="645.5038452148438" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="1106.0" AnchorPane.topAnchor="2.0">
+         <image>
+            <Image url="@Images/homescreen_pink.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <Label layoutX="21.0" layoutY="15.0" prefHeight="44.0" prefWidth="135.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="661.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="1126.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>
@@ -51,12 +64,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="592.0">
                      <children>
-                        <Text layoutX="888.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
+                        <Text layoutX="852.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="tableViewTop3" layoutX="874.0" layoutY="46.0" prefHeight="137.0" prefWidth="225.0">
+                        <TableView fx:id="tableViewTop3" layoutX="836.0" layoutY="43.0" prefHeight="137.0" prefWidth="225.0">
                            <columns>
                               <TableColumn fx:id="top3Name" prefWidth="128.0" text="Name" />
                               <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
@@ -67,18 +80,58 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
+                        <Text layoutX="17.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletes that not have worked out last">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="homeComboBoxDate" layoutX="351.0" layoutY="55.0" prefHeight="27.0" prefWidth="101.0" />
+                        <Button fx:id="homeBtnOK" layoutX="464.0" layoutY="55.0" mnemonicParsing="false" onAction="#clickHomeOKButton" text="OK" />
+                        <TableView fx:id="homeTableViewAthletes" layoutX="17.0" layoutY="86.0" prefHeight="200.0" prefWidth="486.0">
+                          <columns>
+                            <TableColumn fx:id="homeColumnName" prefWidth="267.0" text="Name" />
+                            <TableColumn fx:id="homeColumnDate" prefWidth="218.0" text="Last workout" />
+                          </columns>
+                        </TableView>
+                        <Text layoutX="18.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daily notes">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="homeTextFieldNote" layoutX="18.0" layoutY="446.0" prefHeight="155.0" prefWidth="359.0" />
+                        <ComboBox fx:id="homeComboBoxNoteDate" layoutX="134.0" layoutY="409.0" prefWidth="150.0" />
+                        <Button fx:id="homeBtnNotesOK" layoutX="292.0" layoutY="409.0" mnemonicParsing="false" onAction="#clickHomeOKNotesButton" text="OK" />
+                        <Button fx:id="homeBtnSave" layoutX="387.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickHomeSaveNoteButton" text="Save todays note" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Monthly">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab text="All time">
+            <Tab text="Ranking">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox fx:id="rankingChoice" layoutX="497.0" layoutY="48.0" prefHeight="48.0" prefWidth="242.0" />
+                        <Text layoutX="197.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="See ranking for " wrappingWidth="304.8926086425781">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btShowRanking" layoutX="796.0" layoutY="45.0" mnemonicParsing="false" onAction="#clickShowRanking" prefHeight="48.0" prefWidth="116.0" text="Show">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Button>
+                        <TableView fx:id="rankAthletesTableView" layoutX="166.0" layoutY="136.0" prefHeight="413.0" prefWidth="842.0">
+                          <columns>
+                            <TableColumn fx:id="rankAthletesColumn" prefWidth="115.0" text="Athlete" />
+                              <TableColumn fx:id="rankNumberofSessionsColumn" prefWidth="147.0" text="Number of sessions" />
+                              <TableColumn fx:id="rankTotalDurationColumn" minWidth="0.0" prefWidth="98.0" text="Total duration" />
+                              <TableColumn fx:id="rankLowHRColumn" prefWidth="143.0" text="Time in low-zone" />
+                            <TableColumn fx:id="rankModerateHRColumn" prefWidth="161.0" text="Time in moderate-zone" />
+                              <TableColumn fx:id="rankHighHRColumn" prefWidth="156.0" text="Time in high-zone" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Activities">

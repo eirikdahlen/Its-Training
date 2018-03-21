@@ -1,6 +1,9 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -13,12 +16,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
@@ -48,6 +55,89 @@ public class HomeScreenCoachController {
 		}
 	}
 	
+	public class RankAthlete{
+		private String userName;
+		private int numbWorkouts;
+		private int totalDuration;
+		private double lowHR;
+		private double medHR;
+		private double highHR;
+		
+		
+		public RankAthlete(Athlete athlete, boolean tirthy){
+			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
+			this.userName = athlete.getUsername();
+			
+			
+			List<Workout> workoutList = db.getAllWorkouts(athlete);
+			for (int i = 0; i < workoutList.size();i++) {
+				if (! workoutList.get(i).getVisibility()) {
+					workoutList.remove(i);
+				}
+			}
+			
+			if (tirthy) {
+				//local date
+				LocalDate dateRank = LocalDate.now().minusDays(30);
+				Date sinceDateRank = java.sql.Date.valueOf(dateRank);
+				//slett fra workout-liste
+				
+				
+				for (int i = 0; i < workoutList.size();i++) {
+					if (workoutList.get(i).getDate().before(sinceDateRank)) {
+						workoutList.remove(i);
+						
+					}
+				}
+				
+			}
+			
+			this.numbWorkouts = workoutList.size();
+			this.totalDuration = analyzer.getTotalDuration(workoutList);
+			this.lowHR = analyzer.getTimeInHRZones(workoutList).get(0);
+			this.medHR = analyzer.getTimeInHRZones(workoutList).get(1);
+			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);
+			
+		}
+		
+		
+		public String getUserName() {
+			return userName;
+		}
+		public int getNumbWorkouts() {
+			return numbWorkouts;
+		}
+		public int getTotalDuration() {
+			return totalDuration;
+		}
+		public double getLowHR() {
+			return lowHR;
+		}
+		public double getMedHR() {
+			return medHR;
+		}
+		public double getHighHR() {
+			return highHR;
+		}
+		
+		
+		
+		
+		
+	}
+	
+	public class DateAthlete {
+		private String name;
+		private Date lastWorkout;
+		
+		public DateAthlete(String name, Date lastWorkout) {
+			this.name = name; this.lastWorkout = lastWorkout;
+		}
+		
+		public String getName() { return this.name; }
+		public Date getLastWorkout() { return this.lastWorkout; }
+	}
+	
 	// Declaring variables for elements in fxml
 	@FXML
 	private Button btSeeAthletes;
@@ -58,19 +148,24 @@ public class HomeScreenCoachController {
 	@FXML
 	private Label txtLabelUsername;
 	
-	@FXML
-	private TableView<Athlete> tableViewTop3;
+	// ------------- Home-tab -------------
+	@FXML private TableView<Athlete> tableViewTop3;
+	@FXML private TableColumn<Athlete, String> top3Name;
+	@FXML private TableColumn<Athlete, Integer> top3Workouts;
+	@FXML private Text homeTabWelcomeText;
 	
-	@FXML
-	private TableColumn<Athlete, String> top3Name;
+	@FXML private ComboBox<String> homeComboBoxDate;
+	@FXML private Button homeBtnOK;
+	@FXML private TableView<DateAthlete> homeTableViewAthletes;
+	@FXML private TableColumn<DateAthlete, String> homeColumnName;
+	@FXML private TableColumn<DateAthlete, Date> homeColumnDate;
 	
-	@FXML
-	private TableColumn<Athlete, Integer> top3Workouts;
+	@FXML private ComboBox<LocalDate> homeComboBoxNoteDate;
+	@FXML private Button homeBtnNotesOK;
+	@FXML private TextField homeTextFieldNote;
+	@FXML private Button homeBtnSave;
 	
-	// Home-tab
-	@FXML 
-	private Text homeTabWelcomeText;
-	
+	// -------------------------------------
 	@FXML
 	private ChoiceBox<String> activitiesChoice;
 	ObservableList<String> actChoiceList;
@@ -106,6 +201,42 @@ public class HomeScreenCoachController {
 	private TableColumn<ActivityAthlete, Integer> actAthleteNrColumn;
 	
 	
+	
+	//_________STATS ALL-TIME TAB________
+	@FXML
+	private Button btShowRanking;
+	
+	@FXML
+	private ChoiceBox<String> rankingChoice;
+	
+	ObservableList<String> rankingChoiceList;
+	
+	@FXML
+	private TableView<RankAthlete> rankAthletesTableView;
+	
+	@FXML
+	private TableColumn<RankAthlete, String> rankAthletesColumn;
+	
+	@FXML
+	private TableColumn<RankAthlete, Integer> rankNumberofSessionsColumn;
+	
+	@FXML
+	private TableColumn<RankAthlete, Double> rankTotalDurationColumn;
+	
+	@FXML
+	private TableColumn<RankAthlete, Double> rankLowHRColumn;
+	
+	@FXML
+	private TableColumn<RankAthlete, Double> rankModerateHRColumn;
+	
+	@FXML
+	private TableColumn<RankAthlete, Double> rankHighHRColumn;
+	
+	
+	
+	//_________________________
+	
+	
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
@@ -124,9 +255,36 @@ public class HomeScreenCoachController {
 		tableViewTop3.setItems(obsList);
 		
 		
+		// Fill dates not working out
+		List<String> dateChoices = new ArrayList<>();
+		dateChoices.add("7 days"); dateChoices.add("14 days"); dateChoices.add("30 days");
+		ObservableList<String> obsDateChoices = FXCollections.observableArrayList(dateChoices);
+		homeComboBoxDate.setItems(obsDateChoices);
+		
+		// Fill dates for notes 
+		List<LocalDate> dates = this.coach.getDatesWithNotes();
+		if (! dates.contains(LocalDate.now())) {
+			dates.add(LocalDate.now());
+		}
+		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
+		// Add todays date as well
+		homeComboBoxNoteDate.setItems(obsDates);
+		
+		
+		
 		// **** ACTIVITIES TAB ****
 		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
 		activitiesChoice.setItems(actChoiceList);
+		
+		
+		//_______STATS ALLTIME TAB________
+		System.out.println("PETTER TAB");
+		rankingChoiceList = FXCollections.observableArrayList();
+		rankingChoiceList.add("Last 30 days");
+		rankingChoiceList.add("All-time");
+		rankingChoice.setItems(rankingChoiceList);
+		
+		
 	
 	}
 	
@@ -162,7 +320,122 @@ public class HomeScreenCoachController {
 		actWorkoutsTableView.setItems(obsActivityWorkouts);
 	}
 	
-	// ------------- HOME ------------- 
+	// ------------- HOME/WELCOME ------------- 
+	
+	public void clickHomeOKButton(ActionEvent event) {
+		String chosenTimePeriod = homeComboBoxDate.getValue();
+		if (chosenTimePeriod == null) { return; }
+		
+		LocalDate date = LocalDate.now();
+		
+		if (chosenTimePeriod.equals("7 days")) {
+			date = LocalDate.now().minusDays(7);
+		} else if (chosenTimePeriod.equals("14 days")) {
+			date = LocalDate.now().minusDays(14);
+		} else {
+			date = LocalDate.now().minusDays(30);	
+		}
+		
+		Date sinceDate = java.sql.Date.valueOf(date);
+		
+		List<Athlete> toShowAthletes = this.coach.getAthletesNotWorkingOutSince(sinceDate);
+		ObservableList<DateAthlete> obsToShowAthletes = FXCollections.observableArrayList();
+		
+		for (Athlete ath : toShowAthletes) {
+			obsToShowAthletes.add(new DateAthlete(ath.getName(), ath.getDateLastWorkout()));
+		}
+		homeColumnName.setCellValueFactory(new PropertyValueFactory<DateAthlete, String>("name"));
+		homeColumnDate.setCellValueFactory(new PropertyValueFactory<DateAthlete, Date>("lastWorkout"));
+		
+		homeTableViewAthletes.setItems(obsToShowAthletes);
+		System.out.println(obsToShowAthletes);	
+	}
+	
+	public void clickHomeOKNotesButton(ActionEvent event) {
+		LocalDate chosenDate = homeComboBoxNoteDate.getValue();
+		String note = this.coach.getNote(chosenDate);
+		homeTextFieldNote.setText(note);
+		if (chosenDate.isEqual(LocalDate.now())) {
+			// The chosen date is today, must be able to edit the note 
+			homeTextFieldNote.setEditable(true);
+		} else {
+			// The chosen is not today, should not be able to edit
+			homeTextFieldNote.setEditable(false);
+		}
+		
+	}
+	
+	public void clickHomeSaveNoteButton(ActionEvent event) {
+		
+		if (! homeComboBoxNoteDate.getValue().isEqual(LocalDate.now())) {
+			// Chosen date is not today, should not save new
+			return;
+		}
+		
+		if (this.homeTextFieldNote.getText().equals("") || this.homeTextFieldNote.getText().equals(null)) {
+			// No text to save
+			return;
+		}
+		
+		if (this.coach.getNote(LocalDate.now()).equals("")) {
+			// not saved note for today
+			this.coach.saveNote(LocalDate.now(), this.homeTextFieldNote.getText());
+		} else {
+			// note saved, should update the note
+			this.coach.updateNote(LocalDate.now(), this.homeTextFieldNote.getText());
+		}
+		
+	}
+	
+	
+	//_______ALL-TIME TAB_____
+	
+		public void clickShowRanking(ActionEvent event) {
+			// Get selected activity
+			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
+			ObservableList<RankAthlete> obsRank = FXCollections.observableArrayList();
+			
+			
+			
+			// Set up Athletes-table
+			List<String> rankingAthletesUsername = App.getCoach().getAthletes();
+			List<Athlete> rankingAthletes = new ArrayList<Athlete>();
+					
+			for (String athleteUsername : rankingAthletesUsername) {		
+				rankingAthletes.add(db.getAthlete(athleteUsername));
+			}
+			
+			  
+			//All-Time Selected
+			if(rankingChoiceSelected == "All-time") {
+				
+				//Create tuples with Athlete and total duration (Athlete, Total duration)
+				for(Athlete athlete : rankingAthletes) {
+						RankAthlete rank = new RankAthlete(athlete, false);
+						obsRank.add(rank);
+				}
+				
+
+			} else {
+				
+				for(Athlete athlete : rankingAthletes) {
+					RankAthlete rank = new RankAthlete(athlete, true);
+					obsRank.add(rank);
+			}
+				
+				
+			}
+			
+			//ObservableList<Workout> obsActivityWorkouts = FXCollections.observableArrayList(activityWorkouts);
+			rankAthletesColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, String>("userName"));
+			rankNumberofSessionsColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Integer>("numbWorkouts"));
+			rankTotalDurationColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("totalDuration"));
+			rankLowHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("lowHR"));
+			rankModerateHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("medHR"));
+			rankHighHRColumn.setCellValueFactory(new PropertyValueFactory<RankAthlete, Double>("highHR"));
+			rankAthletesTableView.setItems(obsRank);
+
+		}
 	
 	
 	

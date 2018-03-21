@@ -1,7 +1,9 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,15 +17,19 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Database;
 
 
 public class HomeScreenAthleteController {
 	
 	private Athlete athlete;
+	private Database db; 
+	
 	
 	// Declaring variables for elements in fxml
 	@FXML
@@ -53,6 +59,12 @@ public class HomeScreenAthleteController {
 	@FXML
 	private PieChart zoneChart;
 	
+	@FXML
+	private Label txtQuote; 
+	
+	@FXML 
+	private Label txtHelloUser; 
+	
 	
 	
 	ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -60,6 +72,7 @@ public class HomeScreenAthleteController {
 	
 	public void initialize() {
 		App.updateAthlete();
+		this.db = App.getDb();
 		this.athlete = App.getAthlete();
 		this.txtLabelUsername.setText(this.athlete.getUsername());
 		
@@ -78,8 +91,24 @@ public class HomeScreenAthleteController {
 		zoneChart.setData(pieChartData);
 		zoneChart.setTitle("Total time in pulse zones");
 		
+		//Random quotes
+		
+		txtHelloUser.setText("Welcome "+ athlete.getName()+"!");
+		
+		List<String> listQuotes = db.getQuotes();
+		int number = randomNumber(listQuotes);
+		this.txtQuote.setText(listQuotes.get(number));
+		
 		
 	}
+	
+	public static int randomNumber(List<String> list) {
+		Random rand = new Random();
+		int value = rand.nextInt(list.size()); 
+		return value; 
+				
+	}
+	
 	
 	// Side-menu buttons
 	public void clickAddWorkout (ActionEvent event) throws IOException, LoadException{

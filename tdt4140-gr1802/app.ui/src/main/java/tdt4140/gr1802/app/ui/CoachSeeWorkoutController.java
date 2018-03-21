@@ -94,6 +94,9 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
     
     private GeocodingService geocodingService;
     GPXReader gpxreader = new GPXReader();
+
+	@FXML
+	private Button homeScreenButton;
 	
 	private Coach coach;
 	private static Workout workout;
@@ -168,6 +171,15 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			
+		window.setScene(scene);
+		window.show();
+	}
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
 		window.setScene(scene);
 		window.show();
 	}

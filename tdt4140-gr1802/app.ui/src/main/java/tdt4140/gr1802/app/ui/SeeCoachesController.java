@@ -65,6 +65,9 @@ public class SeeCoachesController {
 	@FXML
 	private Label txtLabelUsername;
 	
+	@FXML
+	private Button homeScreenButton;
+	
 	private ObservableList<Coach> coaches = FXCollections.observableArrayList();
 	
 	
@@ -161,6 +164,15 @@ public class SeeCoachesController {
 	
 	public void clickCoachRequest (ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("CoachRequests.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
+	
+	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		
