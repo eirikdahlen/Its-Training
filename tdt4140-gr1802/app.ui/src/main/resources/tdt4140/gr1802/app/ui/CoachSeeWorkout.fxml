@@ -85,7 +85,7 @@
                                                    </font>
                                                 </Text>
                                                 <Label fx:id="avgHRLabel" layoutX="91.0" layoutY="184.0" prefHeight="17.0" prefWidth="107.0" />
-                                                <Label fx:id="athleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="36.0">
+                                                <Label fx:id="athleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="250.0">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -114,8 +114,8 @@
               </items>
             </SplitPane>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Line endX="1183" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>
