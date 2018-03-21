@@ -18,9 +18,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeAthletesController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeAthletesController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0">
          <children>
             <ImageView fitHeight="72.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,35 +30,35 @@
                   <DropShadow />
                </effect>
             </ImageView>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="650.0" prefWidth="1378.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="649.0" prefWidth="1271.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
                               <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                        <Pane layoutX="159.0" prefHeight="650.0" prefWidth="1218.0">
                            <children>
-                              <SubScene height="529.0" layoutY="-2.0" width="644.0">
+                              <SubScene height="650.0" layoutY="-2.0" width="1218.0">
                                 <root>
                                   <Region />
                                 </root>
                               </SubScene>
-                              <TableView fx:id="tableView" prefHeight="314.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" prefHeight="314.0" prefWidth="1218.0">
                                 <columns>
                                   <TableColumn fx:id="usernameColumn" prefWidth="246.0" text="Username" />
                                   <TableColumn fx:id="nameColumn" prefWidth="358.0" text="Name" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="btRemove" layoutX="550.0" layoutY="326.0" mnemonicParsing="false" onAction="#removeButton" text="Remove" />
-                              <Button fx:id="btSeeWorkouts" layoutX="419.0" layoutY="326.0" mnemonicParsing="false" onAction="#seeWorkoutsButton" text="See Workouts" />
-                              <Button fx:id="btAddAthlete" layoutX="374.0" layoutY="442.0" mnemonicParsing="false" onAction="#addAthleteButton" text="Add Athlete" />
-                              <TextField fx:id="addAthleteTextField" layoutX="186.0" layoutY="442.0" />
-                              <Text layoutX="269.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Athlete:">
+                              <Button fx:id="btRemove" layoutX="633.0" layoutY="323.0" mnemonicParsing="false" onAction="#removeButton" text="Remove" />
+                              <Button fx:id="btSeeWorkouts" layoutX="515.0" layoutY="323.0" mnemonicParsing="false" onAction="#seeWorkoutsButton" text="See Workouts" />
+                              <Button fx:id="btAddAthlete" layoutX="633.0" layoutY="438.0" mnemonicParsing="false" onAction="#addAthleteButton" text="Add Athlete" />
+                              <TextField fx:id="addAthleteTextField" layoutX="458.0" layoutY="438.0" />
+                              <Text layoutX="464.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Athlete:">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -70,14 +70,14 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Label layoutX="27.0" layoutY="14.0" prefHeight="44.0" prefWidth="156.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="542.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="621.0" AnchorPane.topAnchor="14.0">
+            <Label layoutX="27.0" layoutY="14.0" prefHeight="44.0" prefWidth="156.0" text="It's Training" textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="23.0" />
                </font>
             </Label>
             <Button fx:id="homeScreenButton" layoutX="22.0" layoutY="22.0" mnemonicParsing="false" onAction="#backToHomeScreen" opacity="0.0" prefHeight="27.0" prefWidth="137.0" text="Button" />
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Line endX="1280.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
       <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
