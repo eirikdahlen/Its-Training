@@ -94,7 +94,6 @@ public class HomeScreenAthleteController {
 		//Random quotes
 		
 		txtHelloUser.setText("Welcome "+ athlete.getName()+"!");
-		
 		List<String> listQuotes = db.getQuotes();
 		int number = randomNumber(listQuotes);
 		this.txtQuote.setText(listQuotes.get(number));
