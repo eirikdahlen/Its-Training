@@ -1,29 +1,39 @@
 # Gruppe 02 - It's Training
-<Et avsnitt med beskrivelse her>
+It's Training er en treningsplattform der trenere kan følge opp ulike utøvere. 
+Som trener har du tilgang til ulike analyseverktøy for å ha en god oppfølging.
+Som utøver har man mulighet til å holde oversikt over sine treningsøkter og sine trenere. 
+Treningsplattformen tar i bruk en trener-utøver relasjon der utøver selv kan velge hvem som skal være trener,
+og trener kan selv velge hvilke utøvere som ønskes. 
 
 ## Kom i gang
-<Forklaring av hvordan laste ned og kjøre>
+HTTPS-link er nødvendig for å kunne klone prosjektet. Denne finnes under prosjektet på GitLab.
+
+Åpne Command Prompt/Terminal og skriv følgende: 
+
+```
+git clone https://gitlab.stud.iie.ntnu.no/tdt4140-2018/02.git
+```
+Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
 ## Mappestruktur
 
 ### Forutsetninger
-<Hva må du ha for å kjøre>
-<Java?>
+- Java SE Runtime Environment 8
+- Java SE Development Kit 8
+- IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
-### Installere
-
-```
-kom med eksempel på kodelinje 
-```
 
 ## Kjøre tester 
 Hvordan teste programmet
 
-## Lansere 
+## Lansere
+For å lage en runnable jar fil må man: 
+gå til **_File_** -> **_Export.._** -> velge **_Runnable JAR_** -> velge **_fxApp_** under **_Launch Configuration_**.
+Deretter er det bare å følge instruksjonene. 
 
 ## Bygget med
-Maven
-JavaFX
+- Maven
+- JavaFX
 
 ## Anerkjennelser
-Takk til oss, studasser og faget 
+Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging :+1:.  
