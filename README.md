@@ -28,7 +28,7 @@ Hvordan teste programmet
 
 ## Lansere
 For å lage en runnable jar fil må man: 
-gå til *File* -> *export* -> velge *Runnable JAR* -> velge *fxApp* under Launch Configuration.
+gå til **_File_** -> **_export_** -> velge **_Runnable JAR_** -> velge **_fxApp_** under **_Launch Configuration_**.
 
 ## Bygget med
 Maven
