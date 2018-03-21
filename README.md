@@ -34,4 +34,5 @@ Maven
 JavaFX
 
 ## Anerkjennelser
-Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging.  
+:EMOJICODE:
+Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging :+1:.  
