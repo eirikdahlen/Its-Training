@@ -758,4 +758,59 @@ public class Database {
 		return quotes; 
 	}
 	
+	//**************HOME-TAB*******************
+		public List<String> getCoachNotes(String coachUsername) {
+			Document found = (Document) coachCollection.find(new Document("Username", coachUsername)).first();
+			if (found == null) { return null; }
+			List<String> notes = (ArrayList<String>) found.get("Notes");
+			return notes;
+		}
+		
+		public void addCoachNotes(String username, String note) {
+			
+			Document found = (Document) coachCollection.find(new Document("Username", username )).first();
+			
+			if (found == null) { System.out.println("No athlete with this username"); return; }
+			
+			List<String> notes = (ArrayList<String>) found.get("Notes");
+			
+			Document found2 = (Document) coachCollection.find(new Document("Username", username)).first();
+
+			
+			notes.add(note);
+			
+			Bson updatedvalue = new Document("Notes", notes);
+			Bson updateoperation = new Document("$set", updatedvalue);
+			coachCollection.updateOne(found2, updateoperation);
+			
+		}
+		
+		public void updateCoachNotes(String username, String note) {
+			List<String> notes = getCoachNotes(username); 
+			
+			int index = -1; 
+			for (int i = 0; i < notes.size(); i++) {
+				if (notes.get(i).substring(0, 10).equals(note.substring(0,10))) {
+					index = i; 
+				}
+			}
+			
+			if (index != -1) { notes.remove(index); notes.add(index, note); }
+			
+			Document found = (Document) coachCollection.find(new Document("Username", username )).first();
+			
+			if (found == null) { System.out.println("No athlete with this username"); return; }
+			
+			
+			Document found2 = (Document) coachCollection.find(new Document("Username", username)).first();
+
+			
+			Bson updatedvalue = new Document("Notes", notes);
+			Bson updateoperation = new Document("$set", updatedvalue);
+			coachCollection.updateOne(found2, updateoperation);
+			
+			
+		}
+
+	
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -139,4 +140,50 @@ public class Coach extends User {
 		
 		return resultAthletes;	
 	}
+	
+	public HashMap<LocalDate, String> getNotesMap() {
+		List<String> notes = database.getCoachNotes(this.username);
+		HashMap<LocalDate, String> dateString = new HashMap<>();
+		
+		for (String note : notes) {
+			int year = Integer.parseInt(note.substring(0, 4));
+			int month = Integer.parseInt(note.substring(5, 7));
+			int day = Integer.parseInt(note.substring(8, 10));
+			String text = note.substring(11);
+			
+			LocalDate date = LocalDate.of(year, month, day);
+			dateString.put(date, text);	
+		}
+		
+		return dateString;
+	}
+	
+	public List<LocalDate> getDatesWithNotes() {
+		List<LocalDate> dates = new ArrayList<>();
+		dates.addAll(getNotesMap().keySet());	
+		return dates;
+	}
+	
+	public String getNote(LocalDate date) {
+		HashMap<LocalDate, String> map = getNotesMap();
+		
+		for (HashMap.Entry<LocalDate, String> entry : map.entrySet()) {
+			if (entry.getKey().isEqual(date)) {
+				return entry.getValue();
+			}
+		}
+		
+		return "";
+	}
+	
+	public void saveNote(LocalDate date, String text) {
+		String asString = date.toString() + " " + text;
+		database.addCoachNotes(this.username, asString);
+	}
+	
+	public void updateNote(LocalDate date, String text) {
+		String asString = date.toString() + " " + text; 
+		database.updateCoachNotes(this.username, asString);
+	}
+
 }	
