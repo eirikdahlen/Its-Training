@@ -1,16 +1,33 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MVCArray;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapShape;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+import com.lynden.gmapsfx.shapes.Polyline;
+import com.lynden.gmapsfx.shapes.PolylineOptions;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,9 +47,10 @@ import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.GPXReader;
 import tdt4140.gr1802.app.core.Workout;
 
-public class HomeScreenCoachController {
+public class HomeScreenCoachController implements Initializable, MapComponentInitializedListener {
 	
 	private Coach coach;
 	private Database db;
@@ -232,12 +250,21 @@ public class HomeScreenCoachController {
 	@FXML
 	private TableColumn<RankAthlete, Double> rankHighHRColumn;
 	
+	// GmapsFX
+    @FXML
+    private GoogleMapView mapView;
+    
+    private GoogleMap map;
+    
+    private GeocodingService geocodingService;
+    GPXReader gpxreader = new GPXReader();
+	
 	
 	
 	//_________________________
 	
 	
-	public void initialize() {
+	public void initialize(URL location, ResourceBundle resources) {
 		App.updateCoach();
 		this.coach = App.getCoach();
 		this.db = App.getDb();
@@ -284,6 +311,8 @@ public class HomeScreenCoachController {
 		rankingChoiceList.add("All-time");
 		rankingChoice.setItems(rankingChoiceList);
 		
+		//GmapsFX
+		mapView.addMapInializedListener(this);
 		
 	
 	}
@@ -436,8 +465,41 @@ public class HomeScreenCoachController {
 			rankAthletesTableView.setItems(obsRank);
 
 		}
-	
-	
+		
+	// ---------------- MAP TAB -----------------------
+		public void mapInitialized() {
+			System.out.println("Halllllloeojgpjerg");
+	        geocodingService = new GeocodingService();
+	        MapOptions mapOptions = new MapOptions();
+	        List<List<Double>> liste = coach.getWorkoutsStartpoints();
+	        List<LatLong> liste2 = new ArrayList<>();
+	        System.out.println("liste: " + liste);
+	        
+	        
+	        for (List<Double> l : liste) {
+	        		liste2.add(new LatLong(l.get(0), l.get(1)));
+	        }
+	        System.out.println(liste2.size());
+	        
+	        mapOptions.center(new LatLong(56.948341, 12.452795))
+	        .mapType(MapTypeIdEnum.ROADMAP)
+	        .overviewMapControl(false)
+	        .panControl(false)
+	        .rotateControl(false)
+	        .scaleControl(false)
+	        .streetViewControl(false)
+	        .zoomControl(false)
+	        .zoom(4);
+
+	        map = mapView.createMap(mapOptions);
+	        
+	        for (LatLong latlong : liste2) {
+	        		MarkerOptions mo = new MarkerOptions();
+	        		mo.position(latlong);
+	        		Marker marker = new Marker(mo);
+	        		map.addMarker(marker);
+	        }
+	}
 	
 	
 	// -----------------------------------

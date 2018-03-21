@@ -61,7 +61,7 @@
          </font>
       </Label>
       <Line endX="1183.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>

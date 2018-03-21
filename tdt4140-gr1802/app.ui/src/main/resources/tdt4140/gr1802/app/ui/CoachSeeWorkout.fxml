@@ -85,7 +85,7 @@
                                                    </font>
                                                 </Text>
                                                 <Label fx:id="avgHRLabel" layoutX="91.0" layoutY="184.0" prefHeight="17.0" prefWidth="107.0" />
-                                                <Label fx:id="athleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="36.0">
+                                                <Label fx:id="athleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="250.0">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
@@ -98,7 +98,7 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
                                         <children> 
-                                                <GoogleMapView fx:id="mapView" prefHeight="750.0" prefWidth="761.0" AnchorPane.bottomAnchor="-185.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-441.0" AnchorPane.topAnchor="0.0"/>
+                                                <GoogleMapView fx:id="mapView" prefHeight="750.0" prefWidth="761.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0.0"/>
                                                 <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="26.0" layoutY="29.0" prefHeight="478.0" prefWidth="221.0" spacing="10.0" styleClass="panel-background" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="88.0" BorderPane.alignment="CENTER">
                                             </VBox>
                                         </children>
@@ -114,8 +114,8 @@
               </items>
             </SplitPane>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Line endX="1183" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>
