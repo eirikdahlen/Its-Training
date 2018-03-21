@@ -186,4 +186,21 @@ public class Coach extends User {
 		String asString = date.toString() + " " + text; 
 		database.updateCoachNotes(this.username, asString);
 	}
+	
+	public List<List<Double>> getWorkoutsStartpoints(){
+		List<List<Double>> liste = new ArrayList<>();
+		
+        for (String ath : this.getAthletes()) {
+    			Athlete athlete = database.getAthlete(ath);
+    			List<Workout> workouts = database.getAllWorkouts(athlete);
+    				for (Workout w : workouts) {
+    					List<List<Double>> gpx = w.getGpxData();
+    					if (gpx != null) {
+    						liste.add(gpx.get(0));
+    					}
+    				}
+        }
+        System.out.println("liste inni coach: "+liste);
+        return liste;
+	}
 }	

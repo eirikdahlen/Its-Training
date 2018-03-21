@@ -214,7 +214,6 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         for (List<Double> l : liste) {
         		liste2.add(new LatLong(l.get(0), l.get(1)));
         }
-  
         
         mapOptions.center(liste2.get(0))
         .mapType(MapTypeIdEnum.ROADMAP)
