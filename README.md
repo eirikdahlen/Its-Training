@@ -32,8 +32,8 @@ gå til **_File_** -> **_Export.._** -> velge **_Runnable JAR_** -> velge **_fxA
 Deretter er det bare å følge instruksjonene. 
 
 ## Bygget med
-Maven
-JavaFX
+- Maven
+- JavaFX
 
 ## Anerkjennelser
 Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging :+1:.  
