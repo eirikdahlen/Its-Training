@@ -14,8 +14,9 @@ Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Gett
 ## Mappestruktur
 
 ### Forutsetninger
-<Hva må du ha for å kjøre>
-<Java?>
+- Java SE Runtime Environment 8
+- Java SE Development Kit 8
+- IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
 ### Installere
 
