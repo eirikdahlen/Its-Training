@@ -42,6 +42,14 @@
                               <Label fx:id="lowLabel" layoutX="56.0" layoutY="395.0" prefHeight="17.0" prefWidth="73.0" />
                               <Label fx:id="moderateLabel" layoutX="204.0" layoutY="395.0" prefHeight="17.0" prefWidth="63.0" />
                               <Label fx:id="highLabel" layoutX="314.0" layoutY="395.0" prefHeight="17.0" prefWidth="63.0" />
+                              <Label fx:id="txtHelloUser" layoutX="14.0" layoutY="34.0" prefHeight="27.0" prefWidth="331.0">
+                                 <font>
+                                    <Font name="System Bold" size="22.0" />
+                                 </font></Label>
+                              <Label fx:id="txtQuote" layoutX="426.0" layoutY="382.0" prefHeight="115.0" prefWidth="211.0" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font></Label>
                            </children>
                         </Pane>
                      </children>

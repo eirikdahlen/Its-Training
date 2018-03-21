@@ -30,6 +30,7 @@ public class Database {
 	private MongoCollection coachCollection;
 	private MongoCollection athleteCollection;
 	private MongoCollection activityCollection;
+	private MongoCollection quotesCollection; 
 	
 	public Database() {
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
@@ -736,4 +737,25 @@ public class Database {
 		Database db = new Database();
 		System.out.println(db.getAthletesForActivity("RUNNING"));
 	}
+	
+	// QUOTES
+	
+	public List<String> getQuotes(){
+		List<String> quotes = new ArrayList();
+		MongoCollection quotesCollection = dataDatabase.getCollection("AthleteQuotes");
+		
+		try (MongoCursor<Document> cursor = quotesCollection.find().iterator()) {
+			while (cursor.hasNext()) {
+				Document doc = cursor.next(); 
+				if (doc.getString("text") != null) {
+					quotes.add(doc.getString("text"));
+				}
+			}
+		} catch(Exception e) {
+			System.out.println("Der møtte vi på veggen gitt!");
+			e.printStackTrace();
+		}
+		return quotes; 
+	}
+	
 }
