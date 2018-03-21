@@ -241,7 +241,6 @@ public class Database {
 		try {
 			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
 					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), null);
-			System.out.println((List<List<Double>>)found.get("gpx"));
 			workout.setGpxData((List<List<Double>>)found.get("gpx"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -267,7 +266,6 @@ public class Database {
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
 						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), null );
-		        System.out.println((List<List<Double>>)doc.get("gpx"));
 		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
 		        workouts.add(workout);
 		    } 
