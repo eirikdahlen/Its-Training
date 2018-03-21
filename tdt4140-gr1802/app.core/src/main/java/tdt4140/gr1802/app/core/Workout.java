@@ -68,7 +68,9 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		if (gpxFilepath != null) {
+			this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		}
 		
 	}
 	
@@ -105,7 +107,9 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		if (gpxFilepath != null) {
+			this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		}
 	}
 
 	
@@ -143,7 +147,9 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		if (gpxFilepath != null) {
+			this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		}
 		
 	}
 	
@@ -180,7 +186,9 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		if (gpxFilepath != null) {
+			this.gpxData = gpxReader.getLatLong(gpxFilepath);
+		}
 		
 	}
 	
