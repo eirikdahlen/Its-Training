@@ -1,7 +1,9 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +17,7 @@ import com.lynden.gmapsfx.javascript.object.MapShape;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.shapes.Polyline;
 import com.lynden.gmapsfx.shapes.PolylineOptions;
 
@@ -88,6 +91,9 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
     private GoogleMapView mapView;
     
     private GoogleMap map;
+    
+    private GeocodingService geocodingService;
+    GPXReader gpxreader = new GPXReader();
 	
 	private Coach coach;
 	private static Workout workout;
@@ -167,72 +173,66 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	}
 
 	public void mapInitialized() {
-	    MapOptions mapOptions = new MapOptions();
-	    	    
-	    LatLong StartPoint = new LatLong(63.414236, 10.402698);
-	    LatLong l1 = new LatLong(63.414908, 10.402397);
-	    LatLong l2 = new LatLong(63.415119, 10.399565);
-	    LatLong l3 = new LatLong(63.418065, 10.397748);
-	    LatLong l4 = new LatLong(63.418965, 10.397518);
-	    LatLong l5 = new LatLong(63.420687, 10.398544);
-	    LatLong l6 = new LatLong(63.421146, 10.397732);
-	    LatLong l7 = new LatLong(63.421797, 10.397347);
-	    LatLong l8 = new LatLong(63.422161, 10.395636);
-	    LatLong FinishPoint = new LatLong(63.422429, 10.395422);
-	   
-	        mapOptions.center(StartPoint)
-	                .mapType(MapTypeIdEnum.SATELLITE)
-	                .overviewMapControl(false)
-	                .panControl(false)
-	                .rotateControl(false)
-	                .scaleControl(false)
-	                .streetViewControl(false)
-	                .zoomControl(false)
-	                .zoom(15);
-	                   
-	        map = mapView.createMap(mapOptions);
-	        
-	        //Codeblock for getting markers at start -and finishpositions.
-	        
-	        MarkerOptions markerOptions1 = new MarkerOptions();
-	        markerOptions1.position(StartPoint).label("S");
-	        //markerOptions1.position(StartPoint).visible(true).title("Point1").icon("src/main/resources/tdt4140/gr1802/app/ui/Images/BluePointer.png");
-	        MarkerOptions markerOptions2 = new MarkerOptions();
-	        markerOptions2.position(FinishPoint).label("F");
-	       //markerOptions2.position(FinishPoint).visible(true).icon(MarkerImageFactory.createMarkerImage("/src/main/resources/tdt4140/gr1802/app/ui/Images/BluePointer.png", "png"));
-	        
-	        Marker StartPointMarker = new Marker(markerOptions1);
-	        Marker FinishPointMarker = new Marker(markerOptions2);
-	        
-	        map.addMarker(StartPointMarker);
-	        map.addMarker(FinishPointMarker);
-	        
-	        //Codeblock for getting polylines between the gps-positions from the workout. 
-	        
-//	        LatLong[] ary = new LatLong[]{StartPoint, l1, l2, l3, l4, l5, l6, l7, l8,FinishPoint};
-	        String path = "src/main/java/tdt4140/gr1802/app/core/roing8.gpx";
-	        
-	        GPX gpx = null;
-			try {
-				gpx = GPX.read(path);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			
-	        LatLong[] ary = null;
-			try {
-				ary = GPXReader.readGPX(gpx);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	        
-	        MVCArray mvc = new MVCArray(ary);
-	        PolylineOptions polyOpts = new PolylineOptions()
-	        .path(mvc)
-	        .strokeColor("blue")
-	        .strokeWeight(2);
-	        Polyline poly = new Polyline(polyOpts);
-	        map.addMapShape((MapShape)poly);
-	    }
+        geocodingService = new GeocodingService();
+        MapOptions mapOptions = new MapOptions();
+        List<LatLong> liste = new ArrayList<>();
+        URL url = this.getClass().getResource("roing8.gpx");
+        InputStream s = null;
+        try {
+			s = url.openStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println(url);
+        System.out.println(s);
+        try {
+			liste = gpxreader.getLatLong(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        //System.out.println(liste);
+       
+        
+        mapOptions.center(liste.get(0))
+        .mapType(MapTypeIdEnum.ROADMAP)
+        .overviewMapControl(false)
+        .panControl(false)
+        .rotateControl(false)
+        .scaleControl(false)
+        .streetViewControl(false)
+        .zoomControl(false)
+        .zoom(12);
+
+        map = mapView.createMap(mapOptions);
+        
+        MarkerOptions markerOptions1 = new MarkerOptions();
+        markerOptions1.position(liste.get(0)).label("S");
+        MarkerOptions markerOptions2 = new MarkerOptions();
+        markerOptions2.position(liste.get(liste.size()-1)).label("F");
+        
+        Marker StartPointMarker = new Marker(markerOptions1);
+        Marker FinishPointMarker = new Marker(markerOptions2);
+        
+        map.addMarker(StartPointMarker);
+        map.addMarker(FinishPointMarker);
+        
+        System.out.println("SIZE: "+ liste.size());
+        LatLong[] ary = new LatLong[liste.size()];
+        int i = 0;
+        for (LatLong values : liste) {
+        		ary[i] = values;
+        		i++;
+        }
+        //System.out.println(ary);
+       
+        MVCArray mvc = new MVCArray(ary);
+        PolylineOptions polyOpts = new PolylineOptions()
+        .path(mvc)
+        .strokeColor("pink")
+        .strokeWeight(2);
+        Polyline poly = new Polyline(polyOpts);
+        map.addMapShape((MapShape)poly);
+	}
 
 }
