@@ -5,10 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -32,7 +31,6 @@ import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
-import tdt4140.gr1802.app.ui.HomeScreenCoachController.DateAthlete;
 
 public class HomeScreenCoachController {
 	
@@ -162,6 +160,11 @@ public class HomeScreenCoachController {
 	@FXML private TableColumn<DateAthlete, String> homeColumnName;
 	@FXML private TableColumn<DateAthlete, Date> homeColumnDate;
 	
+	@FXML private ComboBox<LocalDate> homeComboBoxNoteDate;
+	@FXML private Button homeBtnNotesOK;
+	@FXML private TextField homeTextFieldNote;
+	@FXML private Button homeBtnSave;
+	
 	// -------------------------------------
 	@FXML
 	private ChoiceBox<String> activitiesChoice;
@@ -251,10 +254,22 @@ public class HomeScreenCoachController {
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		tableViewTop3.setItems(obsList);
 		
+		
+		// Fill dates not working out
 		List<String> dateChoices = new ArrayList<>();
 		dateChoices.add("7 days"); dateChoices.add("14 days"); dateChoices.add("30 days");
 		ObservableList<String> obsDateChoices = FXCollections.observableArrayList(dateChoices);
 		homeComboBoxDate.setItems(obsDateChoices);
+		
+		// Fill dates for notes 
+		List<LocalDate> dates = this.coach.getDatesWithNotes();
+		if (! dates.contains(LocalDate.now())) {
+			dates.add(LocalDate.now());
+		}
+		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
+		// Add todays date as well
+		homeComboBoxNoteDate.setItems(obsDates);
+		
 		
 		
 		// **** ACTIVITIES TAB ****
@@ -334,6 +349,42 @@ public class HomeScreenCoachController {
 		
 		homeTableViewAthletes.setItems(obsToShowAthletes);
 		System.out.println(obsToShowAthletes);	
+	}
+	
+	public void clickHomeOKNotesButton(ActionEvent event) {
+		LocalDate chosenDate = homeComboBoxNoteDate.getValue();
+		String note = this.coach.getNote(chosenDate);
+		homeTextFieldNote.setText(note);
+		if (chosenDate.isEqual(LocalDate.now())) {
+			// The chosen date is today, must be able to edit the note 
+			homeTextFieldNote.setEditable(true);
+		} else {
+			// The chosen is not today, should not be able to edit
+			homeTextFieldNote.setEditable(false);
+		}
+		
+	}
+	
+	public void clickHomeSaveNoteButton(ActionEvent event) {
+		
+		if (! homeComboBoxNoteDate.getValue().isEqual(LocalDate.now())) {
+			// Chosen date is not today, should not save new
+			return;
+		}
+		
+		if (this.homeTextFieldNote.getText().equals("") || this.homeTextFieldNote.getText().equals(null)) {
+			// No text to save
+			return;
+		}
+		
+		if (this.coach.getNote(LocalDate.now()).equals("")) {
+			// not saved note for today
+			this.coach.saveNote(LocalDate.now(), this.homeTextFieldNote.getText());
+		} else {
+			// note saved, should update the note
+			this.coach.updateNote(LocalDate.now(), this.homeTextFieldNote.getText());
+		}
+		
 	}
 	
 	

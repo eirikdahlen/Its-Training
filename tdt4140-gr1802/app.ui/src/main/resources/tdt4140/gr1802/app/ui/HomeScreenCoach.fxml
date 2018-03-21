@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -63,12 +64,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="592.0">
                      <children>
-                        <Text layoutX="888.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
+                        <Text layoutX="852.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="tableViewTop3" layoutX="874.0" layoutY="46.0" prefHeight="137.0" prefWidth="225.0">
+                        <TableView fx:id="tableViewTop3" layoutX="836.0" layoutY="43.0" prefHeight="137.0" prefWidth="225.0">
                            <columns>
                               <TableColumn fx:id="top3Name" prefWidth="128.0" text="Name" />
                               <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
@@ -92,6 +93,15 @@
                             <TableColumn fx:id="homeColumnDate" prefWidth="218.0" text="Last workout" />
                           </columns>
                         </TableView>
+                        <Text layoutX="18.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daily notes">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="homeTextFieldNote" layoutX="18.0" layoutY="446.0" prefHeight="155.0" prefWidth="359.0" />
+                        <ComboBox fx:id="homeComboBoxNoteDate" layoutX="134.0" layoutY="409.0" prefWidth="150.0" />
+                        <Button fx:id="homeBtnNotesOK" layoutX="292.0" layoutY="409.0" mnemonicParsing="false" onAction="#clickHomeOKNotesButton" text="OK" />
+                        <Button fx:id="homeBtnSave" layoutX="387.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickHomeSaveNoteButton" text="Save todays note" />
                      </children>
                   </AnchorPane>
             </content>
