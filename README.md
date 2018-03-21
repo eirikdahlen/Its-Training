@@ -1,5 +1,9 @@
 # Gruppe 02 - It's Training
-It's Traning er en treningsplattform der trenere kan følge opp ulike utøvere. 
+It's Training er en treningsplattform der trenere kan følge opp ulike utøvere. 
+Som trener har du tilgang til ulike analyseverktøy for å ha en god oppfølging.
+Som utøver har man mulighet til å holde oversikt over sine treningsøkter og sine trenere. 
+Treningsplattformen tar i bruk en trener-utøver relasjon der utøver selv kan velge hvem som skal være trener,
+og trener kan selv velge hvilke utøvere som ønskes. 
 
 ## Kom i gang
 HTTPS-link er nødvendig for å kunne klone prosjektet. Denne finnes under prosjektet på GitLab.
@@ -27,7 +31,8 @@ kom med eksempel på kodelinje
 ## Kjøre tester 
 Hvordan teste programmet
 
-## Lansere 
+## Lansere
+
 
 ## Bygget med
 Maven
