@@ -1,6 +1,7 @@
 package tdt4140.gr1802.app.core;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import com.lynden.gmapsfx.javascript.object.LatLong;
 
 public class Workout implements Comparable<Workout>{
 	
@@ -34,10 +37,12 @@ public class Workout implements Comparable<Workout>{
 	
 	private boolean visibleForCoaches;
 	
-	private String gpxFilepath;
+	private List<List<Double>> gpxData;
+	
+	private GPXReader gpxReader = new GPXReader();
 	
 
-	public Workout(Athlete athl, URL path, String gpxFilepath) throws IOException {
+	public Workout(Athlete athl, URL path, InputStream gpxFilepath) throws IOException {
 		this.filePath = path;
 		CSVReader reader = new CSVReader(filePath);
 		
@@ -63,11 +68,11 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxFilepath = gpxFilepath;
+		this.gpxData = gpxReader.getLatLong(gpxFilepath);
 		
 	}
 	
-	public Workout(Athlete athl, URL filepath, boolean bool, String gpxFilepath) throws IOException {
+	public Workout(Athlete athl, URL filepath, boolean bool, InputStream gpxFilepath) throws IOException {
 		this.filePath = filepath;
 		CSVReader reader = new CSVReader(filePath);
 		
@@ -100,11 +105,11 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxFilepath = gpxFilepath;
+		this.gpxData = gpxReader.getLatLong(gpxFilepath);
 	}
 
 	
-	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, String gpxFilepath) {
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, InputStream gpxFilepath) throws IOException {
 		this.athlete = athl;
 		this.dateString = dateString;
 		this.type = type;
@@ -138,13 +143,13 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxFilepath = gpxFilepath;
+		this.gpxData = gpxReader.getLatLong(gpxFilepath);
 		
 	}
 	
 
 	//constructor with visibility boolean
-	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool, String gpxFilepath) {
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool, InputStream gpxFilepath) throws IOException {
 		this.athlete = athl;
 		this.dateString = dateString;
 		this.type = type;
@@ -175,7 +180,7 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		this.gpxFilepath = gpxFilepath;
+		this.gpxData = gpxReader.getLatLong(gpxFilepath);
 		
 	}
 	
@@ -203,6 +208,10 @@ public class Workout implements Comparable<Workout>{
 	public Integer getAverageHR() { return averageHR; }
 	
 	public int getAthleteMaxHR() { return this.athleteMaxHR; }
+	
+	protected void setGpxData(List<List<Double>> list) {
+		this.gpxData = list;
+	}
 	
 	protected void setDate(Date date) { this.date = date; }
 
@@ -235,9 +244,17 @@ public class Workout implements Comparable<Workout>{
 		return this.visibleForCoaches;
 	}
 	
-	public String getGpxFilepath() {
-		return this.gpxFilepath;
+	public List<List<Double>> getGpxData() {
+		return this.gpxData;
 	}
+	
+	/*public List<String> getGpxDataDouble(){
+		List<String> data = new ArrayList<>();
+		for (LatLong ll : this.getGpxData()) {
+			data.add(ll.getLatitude()+","+ll.getLongitude());
+		}
+		return data;
+	}*/
 
 	protected void setAverageHR(int averageHR) { this.averageHR = averageHR; }
 	

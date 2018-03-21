@@ -22,17 +22,22 @@ import io.jenetics.jpx.WayPoint;
 
 public class GPXReader {
 	
-	public List<LatLong> getLatLong(InputStream stream) throws IOException{
-		List<LatLong> list = new ArrayList<>();
+	public List<List<Double>> getLatLong(InputStream stream) throws IOException{
+		List<List<Double>> list = new ArrayList<>();
 		GPX gpx = GPX.read(stream);
 		for (Track t : gpx.getTracks()) {
 			for(TrackSegment ts : t.getSegments()) {
 				for (WayPoint w : ts.getPoints()) {
-					//System.out.println(w.getLatitude().doubleValue());
-					//System.out.println(w.getLongitude().doubleValue());
+					List<Double> v = new ArrayList<>();
+					v.add(w.getLatitude().doubleValue());
+					v.add(w.getLongitude().doubleValue());
+					System.out.println(w.getLatitude().doubleValue());
+					System.out.println(w.getLongitude().doubleValue());
 					//list.add(w.getLatitude().doubleValue());
 					//list.add(w.getLongitude().doubleValue());
-					list.add(new LatLong(w.getLatitude().doubleValue(), w.getLongitude().doubleValue()));
+					System.out.println("higoheohgiohoihbolkvsbnf");
+					//list.add(new LatLong(w.getLatitude().doubleValue(), w.getLongitude().doubleValue()));
+					list.add(v);
 				}
 			}
 		}

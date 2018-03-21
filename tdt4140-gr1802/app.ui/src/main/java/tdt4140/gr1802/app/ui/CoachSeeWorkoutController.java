@@ -175,9 +175,10 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	public void mapInitialized() {
         geocodingService = new GeocodingService();
         MapOptions mapOptions = new MapOptions();
-        List<LatLong> liste = new ArrayList<>();
+        List<List<Double>> liste = workout.getGpxData();
+        List<LatLong> liste2 = new ArrayList<>();
         System.out.println("hei for test");
-        String path = workout.getGpxFilepath();
+        /*String path = workout.getGpxFilepath();
         System.out.println("Stien: "+path);
         URL url = this.getClass().getResource(path);
         System.out.println("hei etter test");
@@ -196,9 +197,14 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 			e.printStackTrace();
 		}
         //System.out.println(liste);
-       
+       */
         
-        mapOptions.center(liste.get(0))
+        for (List<Double> l : liste) {
+        		liste2.add(new LatLong(l.get(0), l.get(1)));
+        }
+  
+        
+        mapOptions.center(liste2.get(0))
         .mapType(MapTypeIdEnum.ROADMAP)
         .overviewMapControl(false)
         .panControl(false)
@@ -211,9 +217,9 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         map = mapView.createMap(mapOptions);
         
         MarkerOptions markerOptions1 = new MarkerOptions();
-        markerOptions1.position(liste.get(0)).label("S");
+        markerOptions1.position(liste2.get(0)).label("S");
         MarkerOptions markerOptions2 = new MarkerOptions();
-        markerOptions2.position(liste.get(liste.size()-1)).label("F");
+        markerOptions2.position(liste2.get(liste.size()-1)).label("F");
         
         Marker StartPointMarker = new Marker(markerOptions1);
         Marker FinishPointMarker = new Marker(markerOptions2);
@@ -224,7 +230,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         //System.out.println("SIZE: "+ liste.size());
         LatLong[] ary = new LatLong[liste.size()];
         int i = 0;
-        for (LatLong values : liste) {
+        for (LatLong values : liste2) {
         		ary[i] = values;
         		i++;
         }

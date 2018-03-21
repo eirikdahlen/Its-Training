@@ -142,7 +142,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testGetAllWorkouts() {
+	public void testGetAllWorkouts() throws IOException {
 		
 
 		//creates athlete and workout for testing 
