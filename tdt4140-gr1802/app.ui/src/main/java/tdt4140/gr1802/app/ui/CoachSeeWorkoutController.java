@@ -228,7 +228,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         map.addMarker(FinishPointMarker);
         
         //System.out.println("SIZE: "+ liste.size());
-        LatLong[] ary = new LatLong[liste.size()];
+        LatLong[] ary = new LatLong[liste2.size()];
         int i = 0;
         for (LatLong values : liste2) {
         		ary[i] = values;
