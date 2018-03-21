@@ -1,6 +1,7 @@
 package tdt4140.gr1802.app.core;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -93,7 +95,8 @@ public class Database {
 			doc.append("kilometres", workout.getKilometres());
 
 			doc.append("pulse", workout.getPulsList());
-		
+			System.out.println("Database vis gpx data: "+workout.getGpxData());
+			doc.append("gpx", workout.getGpxData());
 			
 			//adds maxHR to athlete if it does not exist 
 			Document found = (Document) athleteCollection.find(new Document("Username", workout.getAthlete().getUsername())).first();
@@ -213,6 +216,17 @@ public class Database {
 		return athletes;
 	}
 	
+	/*private List<LatLong> stringToLatLong(List<String> stringList){
+		List<LatLong> latlonglist = new ArrayList<>();
+		for (String s : stringList) {
+			String[] temp = s.split(",");
+			double l1 = Double.parseDouble(temp[0]);
+			double l2 = Double.parseDouble(temp[1]);
+			latlonglist.add(new LatLong(l1,l2));
+		}
+		return latlonglist;
+	}*/
+	
 	// Returns the Workout from the database
 	public Workout getWorkout(Athlete athlete, String date) {
 		//finds the athlete of the workout, and accesses his workout-collection
@@ -225,8 +239,15 @@ public class Database {
 			return null;
 		}
 		//creates workout-object
-		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
-				found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility") );
+		Workout workout = null;
+		try {
+			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
+					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), null);
+			workout.setGpxData((List<List<Double>>)found.get("gpx"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return workout;
 	}
@@ -246,8 +267,8 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
-		        
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), null );
+		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
 		        workouts.add(workout);
 		    } 
 		} catch(Exception e) {
@@ -721,7 +742,7 @@ public class Database {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
 			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") , null);
 					        
 			    			activityWorkouts.add(workout);
 			    		}

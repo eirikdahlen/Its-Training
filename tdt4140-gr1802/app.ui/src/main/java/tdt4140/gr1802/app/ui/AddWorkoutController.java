@@ -3,8 +3,10 @@ package tdt4140.gr1802.app.ui;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javafx.event.ActionEvent;
@@ -51,6 +53,8 @@ public class AddWorkoutController {
 	private CheckBox checkBox;
 	
 	@FXML
+	private TextField gpxField;
+	
 	private Button homeScreenButton; 
 	
 	private Database db;
@@ -78,7 +82,24 @@ public class AddWorkoutController {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
 			String path = filepathTextField.getText();
-			URL filePath = getClass().getResource(path);
+			URL filePath = new File(path).toURI().toURL();
+			
+			String gpxPath = gpxField.getText();
+			URL gpxFile = new File(gpxPath).toURI().toURL();
+			
+	        InputStream s = null;
+	        try {
+				s = gpxFile.openStream();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        System.out.println(gpxFile);
+	        System.out.println("stream : "+s);
+	        
+			
+			System.out.println(gpxPath);
+			System.out.println(filePath);
 			
 			if( checkBox.isSelected() ) {
 				this.visibility = false;
@@ -87,7 +108,7 @@ public class AddWorkoutController {
 				this.visibility = true;
 			}
 			
-			Workout newWorkout = new Workout(athlete, filePath, this.visibility);
+			Workout newWorkout = new Workout(athlete, filePath, this.visibility, s);
 			db.createWorkout(newWorkout);
 			System.out.println(this.visibility);
 			filepathTextField.setText("Workout Added");
