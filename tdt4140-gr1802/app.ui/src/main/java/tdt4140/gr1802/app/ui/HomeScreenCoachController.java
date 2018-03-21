@@ -2,10 +2,7 @@ package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
@@ -16,6 +13,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -26,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
@@ -38,6 +43,9 @@ public class HomeScreenCoachController {
 	
 	private Coach coach;
 	private Database db;
+	private Athlete choosenAthlete;
+	private AnalyzeWorkout analyzer = new AnalyzeWorkout();
+	private ObservableList<Athlete> obsAthleteTab;
 	
 	public class ActivityAthlete {
 		private String username;
@@ -158,8 +166,20 @@ public class HomeScreenCoachController {
 	@FXML
 	private TableColumn<Athlete, Double> rankHighHRColumn;
 	
+	//_________________ATHLETE TAB_________________________
 	
-	
+	@FXML private ChoiceBox<Athlete> cboxChooseAthlete;
+	@FXML private BarChart<Workout, String> chartWorkoutType, chartDuration, chartFrequency;
+	@FXML private Button btShowAthlete;
+	private ObservableList<BarChart.Data> stackedBarChartData = FXCollections.observableArrayList();
+	private ObservableList<BarChart.Data> barChartData = FXCollections.observableArrayList();
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private BarChart<String, Integer> chartHRZones;
+    @FXML private XYChart.Series<String, Integer> series1 = new XYChart.Series<String, Integer>();
+    @FXML private XYChart.Series<String, Integer> series2 = new XYChart.Series<String, Integer>();
+    @FXML private XYChart.Series<String, Integer> series3 = new XYChart.Series<String, Integer>();
+	 
 	//_________________________
 	
 	
@@ -198,7 +218,10 @@ public class HomeScreenCoachController {
 		rankingChoiceList.add("All-time");
 		rankingChoice.setItems(rankingChoiceList);
 		
+		//________ATHLETES TAB______
 		
+		obsAthleteTab = FXCollections.observableArrayList();
+		fillCBoxAthleteTab();
 	
 	}
 	
@@ -337,6 +360,62 @@ public class HomeScreenCoachController {
 //			
 //			actWorkoutsTableView.setItems(obsActivityWorkouts);
 		}
+	
+	//_____________ATHLETE TAB_______________
+	
+	public void searchAthlete() {
+		for (String athlete : coach.getAthletes()) {
+			if (cboxChooseAthlete.getValue().getUsername().equals(athlete)) {
+				choosenAthlete = db.getAthlete(athlete);
+			}
+		}
+		List<Athlete> allAthletes = new ArrayList<>();
+		
+		for (String athlete : coach.getAthletes()) {
+			allAthletes.add(db.getAthlete(athlete));
+		}
+		
+		List<Workout> workoutsForChoosenAthlete = db.getAllWorkouts(choosenAthlete);
+		System.out.println(workoutsForChoosenAthlete);
+		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
+        
+
+		
+	}
+	
+	private void fillCBoxAthleteTab() {
+		for (String athleteName : coach.getAthletes()) {
+			obsAthleteTab.add(db.getAthlete(athleteName));
+		}
+		cboxChooseAthlete.setItems(obsAthleteTab);
+		cboxChooseAthlete.setValue(obsAthleteTab.get(0));
+	}
+	
+	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		List<Integer> dataHRZonesAthlete = analyzer.getAnalyzedHRZonesMeanValueForAthlete(workoutsForAthlete);
+		List<Integer> dataHRZonesAll = analyzer.getAnalyzedHRZonesMeanValueForAll(allAthletes);
+		
+		chartHRZones.setMaxWidth(400);
+		chartHRZones.setMinWidth(400);
+		chartHRZones.setBarGap(20);
+		chartHRZones.setCategoryGap(50);
+        xAxis.setCategories(FXCollections.observableArrayList(
+                Arrays.asList(choosenAthlete.getName(), "Mean Value")));
+        xAxis.setLabel("Athletes");
+        yAxis.setLabel("% time in zones");
+        series1.setName("Low");
+        series1.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(0)));
+        series1.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(0)));
+        series2.setName("Moderate");
+        series2.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(1)));
+        series2.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(1)));
+        series3.setName("High");
+        series3.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(2)));
+        series3.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(2)));
+        System.out.println("" + series1.getData() + series2.getData() + series3.getData());
+        chartHRZones.getData().addAll(series1, series2, series3);
+        System.out.println(chartHRZones.getData());
+	}
 	
 	
 	
