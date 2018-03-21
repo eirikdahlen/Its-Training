@@ -22,11 +22,6 @@ Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Gett
 - Java SE Development Kit 8
 - IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
-### Installere
-
-```
-kom med eksempel på kodelinje 
-```
 
 ## Kjøre tester 
 Hvordan teste programmet
@@ -39,4 +34,4 @@ Maven
 JavaFX
 
 ## Anerkjennelser
-Takk til oss, studasser og faget 
+Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging.  
