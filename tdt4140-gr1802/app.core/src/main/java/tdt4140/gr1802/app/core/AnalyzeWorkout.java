@@ -179,5 +179,18 @@ public class AnalyzeWorkout {
 		return duration;
 	}
 	
+	public int getAnalyzedAmountForAthlete(List<Workout> workouts) {
+		return workouts.size();
+	}
+	
+	public int getAnalyzedAmountMeanValueForAll(List<Athlete> athletes) {
+		int amount = 0;
+		for (Athlete athlete : athletes) {
+			amount += athlete.getNumbWorkouts();
+		}
+		amount = amount/athletes.size();
+		return amount;
+	}
+	
 	
 }

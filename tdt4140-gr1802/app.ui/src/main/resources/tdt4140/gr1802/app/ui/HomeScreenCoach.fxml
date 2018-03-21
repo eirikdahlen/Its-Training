@@ -199,12 +199,12 @@
                               <NumberAxis fx:id="yAxisWorkoutType" side="LEFT" />
                            </yAxis>
                         </BarChart>
-                        <BarChart fx:id="chartFrequency" layoutX="561.0" layoutY="377.0" prefHeight="220.0" prefWidth="438.0" title="Frequency">
+                        <BarChart fx:id="chartAmount" layoutX="561.0" layoutY="377.0" prefHeight="220.0" prefWidth="438.0" title="Amount">
                            <xAxis>
-                              <CategoryAxis label="Athletes" prefHeight="30.0" prefWidth="365.0" side="BOTTOM" fx:id="xAxisFrequency" />
+                              <CategoryAxis label="Athletes" prefHeight="30.0" prefWidth="365.0" side="BOTTOM" fx:id="xAxisAmount" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis fx:id="yaxisFrequency" label="Frequency of Workouts" prefHeight="155.0" prefWidth="43.0" side="LEFT" />
+                              <NumberAxis fx:id="yAxisAmount" label="Number of Workouts" prefHeight="155.0" prefWidth="43.0" side="LEFT" />
                            </yAxis>
                         </BarChart>
                         <BarChart fx:id="chartHRZones" layoutX="27.0" layoutY="119.0" prefHeight="237.0" prefWidth="482.0" title="HR Zones">

@@ -172,13 +172,16 @@ public class HomeScreenCoachController {
 	@FXML private Button btShowAthlete;
 	private ObservableList<BarChart.Data> barChartDataHR = FXCollections.observableArrayList();
 	private ObservableList<BarChart.Data> barChartDataDuration = FXCollections.observableArrayList();
-    @FXML private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisFrequency;
-    @FXML private NumberAxis yAxisHR, yAxisDuration, yAxisWorkoutType, yAxisFrequency;
-    @FXML private BarChart<String, Integer> chartHRZones, chartDuration, chartWorkoutType, chartFrequency;
+	private ObservableList<BarChart.Data> barChartDataAmount = FXCollections.observableArrayList();
+    @FXML private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisAmount;
+    @FXML private NumberAxis yAxisHR, yAxisDuration, yAxisWorkoutType, yAxisAmount;
+    @FXML private BarChart<String, Integer> chartHRZones, chartDuration, chartWorkoutType, chartAmount;
     @FXML private XYChart.Series<String, Integer> HRZones1 = new XYChart.Series<>();
     @FXML private XYChart.Series<String, Integer> HRZones2 = new XYChart.Series<>();
     @FXML private XYChart.Series<String, Integer> HRZones3 = new XYChart.Series<>();
     @FXML private XYChart.Series<String, Integer> Duration1 = new XYChart.Series<>();
+    @FXML private XYChart.Series<String, Integer> Amount1 = new XYChart.Series<>();
+    
     
 	 
 	//_________________________
@@ -375,14 +378,10 @@ public class HomeScreenCoachController {
 		for (String athlete : coach.getAthletes()) {
 			allAthletes.add(db.getAthlete(athlete));
 		}
-		
 		List<Workout> workoutsForChoosenAthlete = db.getAllWorkouts(choosenAthlete);
-		System.out.println(workoutsForChoosenAthlete);
 		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
 		updateDurationChart(workoutsForChoosenAthlete, allAthletes);
-        
-
-		
+		updateAmountChart(workoutsForChoosenAthlete, allAthletes);
 	}
 	
 	private void fillCBoxAthleteTab() {
@@ -398,6 +397,9 @@ public class HomeScreenCoachController {
 		List<Integer> dataHRZonesAll = analyzer.getAnalyzedHRZonesMeanValueForAll(allAthletes);
 		
 		chartHRZones.getData().clear();
+		HRZones1.getData().clear();
+		HRZones2.getData().clear();
+		HRZones3.getData().clear();
         xAxisHR.setCategories(FXCollections.observableArrayList(
                 Arrays.asList(choosenAthlete.getName(), "Mean Value")));
         HRZones1.setName("Low");
@@ -419,15 +421,29 @@ public class HomeScreenCoachController {
 		int dataDurationAll = analyzer.getAnalyzedDurtionMeanValueForAll(allAthletes);
 		
 		chartDuration.getData().clear();
+		Duration1.getData().clear();
         xAxisDuration.setCategories(FXCollections.observableArrayList(
                 Arrays.asList(choosenAthlete.getName(), "Mean Value")));
         //HRZones1.setName("Duration");
         Duration1.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataDurationAthlete));
         Duration1.getData().add(new XYChart.Data<>("Mean Value", dataDurationAll));
         chartDuration.getData().add(Duration1);
-        System.out.println(chartHRZones.getData());
+        System.out.println(chartDuration.getData());
+	}
+	
+	private void updateAmountChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		int dataAmountAthlete = analyzer.getAnalyzedAmountForAthlete(workoutsForAthlete);
+		int dataAmountAll = analyzer.getAnalyzedAmountMeanValueForAll(allAthletes);
 		
-		
+		chartAmount.getData().clear();
+		Amount1.getData().clear();
+        xAxisAmount.setCategories(FXCollections.observableArrayList(
+                Arrays.asList(choosenAthlete.getName(), "Mean Value")));
+        //HRZones1.setName("Duration");
+        Amount1.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataAmountAthlete));
+        Amount1.getData().add(new XYChart.Data<>("Mean Value", dataAmountAll));
+        chartAmount.getData().add(Amount1);
+        System.out.println(chartAmount.getData());
 	}
 	
 	
