@@ -27,7 +27,8 @@ Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Gett
 Hvordan teste programmet
 
 ## Lansere
-
+For å lage en runnable jar fil må man: 
+gå til *File* -> *export* -> velge *Runnable JAR* -> velge *fxApp* under Launch Configuration.
 
 ## Bygget med
 Maven
