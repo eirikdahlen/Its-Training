@@ -93,6 +93,7 @@ public class HomeScreenCoachController {
 	@FXML private ComboBox<LocalDate> homeComboBoxNoteDate;
 	@FXML private Button homeBtnNotesOK;
 	@FXML private TextField homeTextFieldNote;
+	@FXML private Button homeBtnSave;
 	
 	// -------------------------------------
 	@FXML
@@ -156,9 +157,11 @@ public class HomeScreenCoachController {
 		
 		// Fill dates for notes 
 		List<LocalDate> dates = this.coach.getDatesWithNotes();
+		if (! dates.contains(LocalDate.now())) {
+			dates.add(LocalDate.now());
+		}
 		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
 		// Add todays date as well
-		obsDates.add(LocalDate.now());
 		homeComboBoxNoteDate.setItems(obsDates);
 		
 		
@@ -242,6 +245,28 @@ public class HomeScreenCoachController {
 		} else {
 			// The chosen is not today, should not be able to edit
 			homeTextFieldNote.setEditable(false);
+		}
+		
+	}
+	
+	public void clickHomeSaveNoteButton(ActionEvent event) {
+		
+		if (! homeComboBoxNoteDate.getValue().isEqual(LocalDate.now())) {
+			// Chosen date is not today, should not save new
+			return;
+		}
+		
+		if (this.homeTextFieldNote.getText().equals("") || this.homeTextFieldNote.getText().equals(null)) {
+			// No text to save
+			return;
+		}
+		
+		if (this.coach.getNote(LocalDate.now()).equals("")) {
+			// not saved note for today
+			this.coach.saveNote(LocalDate.now(), this.homeTextFieldNote.getText());
+		} else {
+			// note saved, should update the note
+			this.coach.updateNote(LocalDate.now(), this.homeTextFieldNote.getText());
 		}
 		
 	}

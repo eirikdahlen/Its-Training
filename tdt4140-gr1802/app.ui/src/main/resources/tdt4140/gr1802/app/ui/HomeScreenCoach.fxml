@@ -101,6 +101,7 @@
                         <TextField fx:id="homeTextFieldNote" layoutX="18.0" layoutY="446.0" prefHeight="155.0" prefWidth="359.0" />
                         <ComboBox fx:id="homeComboBoxNoteDate" layoutX="134.0" layoutY="409.0" prefWidth="150.0" />
                         <Button fx:id="homeBtnNotesOK" layoutX="292.0" layoutY="409.0" mnemonicParsing="false" onAction="#clickHomeOKNotesButton" text="OK" />
+                        <Button fx:id="homeBtnSave" layoutX="387.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickHomeSaveNoteButton" text="Save todays note" />
                      </children>
                   </AnchorPane>
             </content>
