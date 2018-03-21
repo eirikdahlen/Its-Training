@@ -5,10 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +29,6 @@ import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
-import tdt4140.gr1802.app.ui.HomeScreenCoachController.DateAthlete;
 
 public class HomeScreenCoachController {
 	
