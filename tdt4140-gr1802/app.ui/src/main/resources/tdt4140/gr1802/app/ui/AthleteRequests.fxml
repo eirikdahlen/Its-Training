@@ -20,32 +20,32 @@
    <children>
       <AnchorPane layoutY="1.0" prefHeight="600.0" prefWidth="800.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="649.0" prefWidth="1280.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="58.0" layoutX="669.0" layoutY="81.0" rotate="90.0" startX="-1079.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
                               <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                        <Pane layoutX="159.0" prefHeight="649.0" prefWidth="1122.0">
                            <children>
                               <SubScene height="529.0" layoutY="-2.0" width="644.0">
                                 <root>
                                   <Region />
                                 </root>
                               </SubScene>
-                              <TableView fx:id="tableView" prefHeight="437.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" layoutY="-2.0" prefHeight="564.0" prefWidth="1122.0">
                                 <columns>
-                                  <TableColumn fx:id="usernameColumn" prefWidth="279.0" text="Username" />
-                                  <TableColumn fx:id="nameColumn" prefWidth="315.0" text="Name" />
+                                  <TableColumn fx:id="usernameColumn" prefWidth="387.9999694824219" text="Username" />
+                                  <TableColumn fx:id="nameColumn" prefWidth="406.0" text="Name" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="btDecline" layoutX="551.0" layoutY="460.0" mnemonicParsing="false" onAction="#declineButton" text="Decline" />
-                              <Button fx:id="btAccept" layoutX="465.0" layoutY="460.0" mnemonicParsing="false" onAction="#acceptButton" text="Accept" />
+                              <Button fx:id="btDecline" layoutX="833.0" layoutY="582.0" mnemonicParsing="false" onAction="#declineButton" prefHeight="44.0" prefWidth="107.0" text="Decline" />
+                              <Button fx:id="btAccept" layoutX="966.0" layoutY="582.0" mnemonicParsing="false" onAction="#acceptButton" prefHeight="44.0" prefWidth="98.0" text="Accept" />
                            </children>
                         </Pane>
                      </children>
@@ -61,7 +61,7 @@
                </effect>
             </ImageView>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Line endX="1183.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
       <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
