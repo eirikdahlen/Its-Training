@@ -169,16 +169,17 @@ public class HomeScreenCoachController {
 	//_________________ATHLETE TAB_________________________
 	
 	@FXML private ChoiceBox<Athlete> cboxChooseAthlete;
-	@FXML private BarChart<Workout, String> chartWorkoutType, chartDuration, chartFrequency;
 	@FXML private Button btShowAthlete;
-	private ObservableList<BarChart.Data> stackedBarChartData = FXCollections.observableArrayList();
-	private ObservableList<BarChart.Data> barChartData = FXCollections.observableArrayList();
-    @FXML private CategoryAxis xAxis;
-    @FXML private NumberAxis yAxis;
-    @FXML private BarChart<String, Integer> chartHRZones;
-    @FXML private XYChart.Series<String, Integer> series1 = new XYChart.Series<String, Integer>();
-    @FXML private XYChart.Series<String, Integer> series2 = new XYChart.Series<String, Integer>();
-    @FXML private XYChart.Series<String, Integer> series3 = new XYChart.Series<String, Integer>();
+	private ObservableList<BarChart.Data> barChartDataHR = FXCollections.observableArrayList();
+	private ObservableList<BarChart.Data> barChartDataDuration = FXCollections.observableArrayList();
+    @FXML private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisFrequency;
+    @FXML private NumberAxis yAxisHR, yAxisDuration, yAxisWorkoutType, yAxisFrequency;
+    @FXML private BarChart<String, Integer> chartHRZones, chartDuration, chartWorkoutType, chartFrequency;
+    @FXML private XYChart.Series<String, Integer> HRZones1 = new XYChart.Series<>();
+    @FXML private XYChart.Series<String, Integer> HRZones2 = new XYChart.Series<>();
+    @FXML private XYChart.Series<String, Integer> HRZones3 = new XYChart.Series<>();
+    @FXML private XYChart.Series<String, Integer> Duration1 = new XYChart.Series<>();
+    
 	 
 	//_________________________
 	
@@ -378,6 +379,7 @@ public class HomeScreenCoachController {
 		List<Workout> workoutsForChoosenAthlete = db.getAllWorkouts(choosenAthlete);
 		System.out.println(workoutsForChoosenAthlete);
 		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
+		updateDurationChart(workoutsForChoosenAthlete, allAthletes);
         
 
 		
@@ -395,26 +397,37 @@ public class HomeScreenCoachController {
 		List<Integer> dataHRZonesAthlete = analyzer.getAnalyzedHRZonesMeanValueForAthlete(workoutsForAthlete);
 		List<Integer> dataHRZonesAll = analyzer.getAnalyzedHRZonesMeanValueForAll(allAthletes);
 		
-		chartHRZones.setMaxWidth(400);
-		chartHRZones.setMinWidth(400);
-		chartHRZones.setBarGap(20);
-		chartHRZones.setCategoryGap(50);
-        xAxis.setCategories(FXCollections.observableArrayList(
+		chartHRZones.getData().clear();
+        xAxisHR.setCategories(FXCollections.observableArrayList(
                 Arrays.asList(choosenAthlete.getName(), "Mean Value")));
-        xAxis.setLabel("Athletes");
-        yAxis.setLabel("% time in zones");
-        series1.setName("Low");
-        series1.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(0)));
-        series1.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(0)));
-        series2.setName("Moderate");
-        series2.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(1)));
-        series2.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(1)));
-        series3.setName("High");
-        series3.getData().add(new XYChart.Data<String, Integer>(choosenAthlete.getName(), dataHRZonesAthlete.get(2)));
-        series3.getData().add(new XYChart.Data<String, Integer>("Mean Value", dataHRZonesAll.get(2)));
-        System.out.println("" + series1.getData() + series2.getData() + series3.getData());
-        chartHRZones.getData().addAll(series1, series2, series3);
+        HRZones1.setName("Low");
+        HRZones1.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataHRZonesAthlete.get(0)));
+        HRZones1.getData().add(new XYChart.Data<>("Mean Value", dataHRZonesAll.get(0)));
+        HRZones2.setName("Moderate");
+        HRZones2.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataHRZonesAthlete.get(1)));
+        HRZones2.getData().add(new XYChart.Data<>("Mean Value", dataHRZonesAll.get(1)));
+        HRZones3.setName("High");
+        HRZones3.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataHRZonesAthlete.get(2)));
+        HRZones3.getData().add(new XYChart.Data<>("Mean Value", dataHRZonesAll.get(2)));
+        chartHRZones.getData().addAll(HRZones1, HRZones2, HRZones3);
         System.out.println(chartHRZones.getData());
+        
+	}
+	
+	private void updateDurationChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		int dataDurationAthlete = analyzer.getAnalyzedDurationMeanValueForAthlete(workoutsForAthlete);
+		int dataDurationAll = analyzer.getAnalyzedDurtionMeanValueForAll(allAthletes);
+		
+		chartDuration.getData().clear();
+        xAxisDuration.setCategories(FXCollections.observableArrayList(
+                Arrays.asList(choosenAthlete.getName(), "Mean Value")));
+        //HRZones1.setName("Duration");
+        Duration1.getData().add(new XYChart.Data<>(choosenAthlete.getName(), dataDurationAthlete));
+        Duration1.getData().add(new XYChart.Data<>("Mean Value", dataDurationAll));
+        chartDuration.getData().add(Duration1);
+        System.out.println(chartHRZones.getData());
+		
+		
 	}
 	
 	

@@ -185,34 +185,34 @@
                         <Button fx:id="btShowAthlete" layoutX="224.0" layoutY="75.0" mnemonicParsing="false" onAction="#searchAthlete" prefHeight="25.0" prefWidth="66.0" text="Show" />
                         <BarChart fx:id="chartDuration" layoutX="38.0" layoutY="377.0" prefHeight="220.0" prefWidth="438.0" title="Duration">
                            <xAxis>
-                              <CategoryAxis side="BOTTOM" />
+                              <CategoryAxis label="Athletes" prefHeight="33.0" prefWidth="362.0" side="BOTTOM" fx:id="xAxisDuration" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis side="LEFT" />
+                              <NumberAxis fx:id="yAxisDuration" label="Workout Duration" prefHeight="155.0" prefWidth="46.0" side="LEFT" />
                            </yAxis>
                         </BarChart>
                         <BarChart fx:id="chartWorkoutType" layoutX="561.0" layoutY="144.0" prefHeight="220.0" prefWidth="438.0" title="Workout Type">
                            <xAxis>
-                              <CategoryAxis side="BOTTOM" />
+                              <CategoryAxis side="BOTTOM" fx:id="xAxisWorkoutType" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis side="LEFT" />
+                              <NumberAxis fx:id="yAxisWorkoutType" side="LEFT" />
                            </yAxis>
                         </BarChart>
                         <BarChart fx:id="chartFrequency" layoutX="561.0" layoutY="377.0" prefHeight="220.0" prefWidth="438.0" title="Frequency">
                            <xAxis>
-                              <CategoryAxis side="BOTTOM" />
+                              <CategoryAxis label="Athletes" prefHeight="30.0" prefWidth="365.0" side="BOTTOM" fx:id="xAxisFrequency" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis side="LEFT" />
+                              <NumberAxis fx:id="yaxisFrequency" label="Frequency of Workouts" prefHeight="155.0" prefWidth="43.0" side="LEFT" />
                            </yAxis>
                         </BarChart>
-                        <BarChart fx:id="chartHRZones" layoutX="71.0" layoutY="119.0" prefHeight="268.0" prefWidth="438.0" title="HR Zones">
+                        <BarChart fx:id="chartHRZones" layoutX="27.0" layoutY="119.0" prefHeight="237.0" prefWidth="482.0" title="HR Zones">
                            <xAxis>
-                              <CategoryAxis prefHeight="50.0" prefWidth="358.0" side="BOTTOM" fx:id="xAxis" />
+                              <CategoryAxis label="Athletes" prefHeight="33.0" prefWidth="367.0" side="BOTTOM" fx:id="xAxisHR" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis fx:id="yAxis" prefHeight="164.0" prefWidth="41.0" side="LEFT" />
+                              <NumberAxis fx:id="yAxisHR" label="\% time in zone" prefHeight="154.0" prefWidth="41.0" side="LEFT" />
                            </yAxis>
                         </BarChart>
                      </children></AnchorPane>

@@ -153,6 +153,31 @@ public class AnalyzeWorkout {
 		
 	}
 	
+	public int getAnalyzedDurationMeanValueForAthlete(List<Workout> workouts) {
+		int duration = 0;
+		for (Workout workout : workouts) {
+			duration += workout.getDuration();
+		}
+		duration = duration/workouts.size();
+		System.out.println("Duration: " + duration);
+		
+		return duration;
+	}
+	
+	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) {
+		int duration = 0;
+		int counter = 0;
+		for (Athlete athlete : athletes) {
+			for (Workout workout : athlete.getAllWorkouts()) {
+				counter += 1;
+				duration += workout.getDuration();
+			}
+		}
+		duration = duration/counter;
+		System.out.println("Duration: " + duration);
+		
+		return duration;
+	}
 	
 	
 }
