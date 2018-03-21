@@ -24,13 +24,12 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <AnchorPane fx:id="logo" prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane fx:id="logo" prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="655.0" prefWidth="1280.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="575.0" prefWidth="1280.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
@@ -39,7 +38,7 @@
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                        <Pane layoutX="159.0" prefHeight="655.0" prefWidth="1127.0">
                            <children>
                               <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter Filepath" />
                               <Button fx:id="addButton" layoutX="29.0" layoutY="147.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
@@ -55,8 +54,9 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label layoutX="26.0" layoutY="17.0" prefHeight="42.0" prefWidth="143.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="661.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="1111.0" AnchorPane.topAnchor="17.0">
+      <Line endX="1183.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Line endX="751.0" layoutX="-261.0" layoutY="402.0" rotate="270.0" startX="89.0" />
+      <Label layoutX="26.0" layoutY="17.0" prefHeight="42.0" prefWidth="143.0" text="It's Training" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>
