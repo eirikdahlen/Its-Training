@@ -28,8 +28,8 @@ public class GPXReader {
 		for (Track t : gpx.getTracks()) {
 			for(TrackSegment ts : t.getSegments()) {
 				for (WayPoint w : ts.getPoints()) {
-					System.out.println(w.getLatitude().doubleValue());
-					System.out.println(w.getLongitude().doubleValue());
+					//System.out.println(w.getLatitude().doubleValue());
+					//System.out.println(w.getLongitude().doubleValue());
 					//list.add(w.getLatitude().doubleValue());
 					//list.add(w.getLongitude().doubleValue());
 					list.add(new LatLong(w.getLatitude().doubleValue(), w.getLongitude().doubleValue()));

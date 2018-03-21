@@ -33,6 +33,7 @@
                               <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter Filepath" />
                               <Button fx:id="addButton" layoutX="29.0" layoutY="147.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
                               <CheckBox fx:id="checkBox" layoutX="29.0" layoutY="101.0" mnemonicParsing="false" text="Private" />
+                              <TextField fx:id="gpxField" layoutX="155.0" layoutY="96.0" promptText="Gpx" />
                            </children></Pane>
                      </children>
                   </AnchorPane>
@@ -45,7 +46,7 @@
             </Label>
          </children></AnchorPane>
       <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="44.0" prefWidth="160.0" text="It's Training" AnchorPane.bottomAnchor="542.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="630.0" AnchorPane.topAnchor="14.0">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="145.0" text="It's Training" AnchorPane.bottomAnchor="666.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="1121.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>

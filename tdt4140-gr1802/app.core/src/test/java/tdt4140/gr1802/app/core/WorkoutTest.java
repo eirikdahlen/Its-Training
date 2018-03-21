@@ -26,7 +26,7 @@ public class WorkoutTest {
 	URL path = getClass().getResource("CSV1.csv");
 	
 	public WorkoutTest() throws IOException {
-		this.workout = new Workout(athlete1, path);
+		this.workout = new Workout(athlete1, path, null);
 	}
 	
 //	__JUnit__ 

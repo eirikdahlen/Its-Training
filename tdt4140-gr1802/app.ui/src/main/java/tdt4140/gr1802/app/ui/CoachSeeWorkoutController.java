@@ -176,7 +176,11 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         geocodingService = new GeocodingService();
         MapOptions mapOptions = new MapOptions();
         List<LatLong> liste = new ArrayList<>();
-        URL url = this.getClass().getResource("roing8.gpx");
+        System.out.println("hei for test");
+        String path = workout.getGpxFilepath();
+        System.out.println("Stien: "+path);
+        URL url = this.getClass().getResource(path);
+        System.out.println("hei etter test");
         InputStream s = null;
         try {
 			s = url.openStream();
@@ -217,7 +221,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         map.addMarker(StartPointMarker);
         map.addMarker(FinishPointMarker);
         
-        System.out.println("SIZE: "+ liste.size());
+        //System.out.println("SIZE: "+ liste.size());
         LatLong[] ary = new LatLong[liste.size()];
         int i = 0;
         for (LatLong values : liste) {

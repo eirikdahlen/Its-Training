@@ -34,8 +34,10 @@ public class Workout implements Comparable<Workout>{
 	
 	private boolean visibleForCoaches;
 	
+	private String gpxFilepath;
+	
 
-	public Workout(Athlete athl, URL path) throws IOException {
+	public Workout(Athlete athl, URL path, String gpxFilepath) throws IOException {
 		this.filePath = path;
 		CSVReader reader = new CSVReader(filePath);
 		
@@ -61,10 +63,11 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
+		this.gpxFilepath = gpxFilepath;
 		
 	}
 	
-	public Workout(Athlete athl, URL filepath, boolean bool) throws IOException {
+	public Workout(Athlete athl, URL filepath, boolean bool, String gpxFilepath) throws IOException {
 		this.filePath = filepath;
 		CSVReader reader = new CSVReader(filePath);
 		
@@ -97,11 +100,11 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
-		
+		this.gpxFilepath = gpxFilepath;
 	}
 
 	
-	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList) {
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, String gpxFilepath) {
 		this.athlete = athl;
 		this.dateString = dateString;
 		this.type = type;
@@ -135,12 +138,13 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
+		this.gpxFilepath = gpxFilepath;
 		
 	}
 	
 
 	//constructor with visibility boolean
-	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool) {
+	public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool, String gpxFilepath) {
 		this.athlete = athl;
 		this.dateString = dateString;
 		this.type = type;
@@ -171,6 +175,7 @@ public class Workout implements Comparable<Workout>{
 		catch(Exception fnf) {
 				fnf.printStackTrace();
 		}
+		this.gpxFilepath = gpxFilepath;
 		
 	}
 	
@@ -228,6 +233,10 @@ public class Workout implements Comparable<Workout>{
 	
 	public boolean getVisibility() {
 		return this.visibleForCoaches;
+	}
+	
+	public String getGpxFilepath() {
+		return this.gpxFilepath;
 	}
 
 	protected void setAverageHR(int averageHR) { this.averageHR = averageHR; }

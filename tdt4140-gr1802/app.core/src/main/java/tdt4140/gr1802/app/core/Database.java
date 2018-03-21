@@ -91,7 +91,7 @@ public class Database {
 			doc.append("kilometres", workout.getKilometres());
 
 			doc.append("pulse", workout.getPulsList());
-		
+			doc.append("gpxFilepath", workout.getGpxFilepath());
 			
 			//adds maxHR to athlete if it does not exist 
 			Document found = (Document) athleteCollection.find(new Document("Username", workout.getAthlete().getUsername())).first();
@@ -224,7 +224,7 @@ public class Database {
 		}
 		//creates workout-object
 		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
-				found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility") );
+				found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), found.getString("gpxFilepath") );
 		
 		return workout;
 	}
@@ -244,7 +244,7 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), doc.getString("gpxFilepath") );
 		        
 		        workouts.add(workout);
 		    } 
@@ -719,7 +719,7 @@ public class Database {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
 			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") , null);
 					        
 			    			activityWorkouts.add(workout);
 			    		}

@@ -2,6 +2,7 @@ package tdt4140.gr1802.app.ui;
 
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +50,9 @@ public class AddWorkoutController {
 	@FXML
 	private CheckBox checkBox;
 	
+	@FXML
+	private TextField gpxField;
+	
 	
 	private Database db;
 	
@@ -74,7 +78,11 @@ public class AddWorkoutController {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
 			String path = filepathTextField.getText();
-			URL filePath = getClass().getResource(path);
+			URL filePath = new File(path).toURI().toURL();
+			
+			String gpxPath = gpxField.getText();
+			System.out.println(gpxPath);
+			System.out.println(filePath);
 			
 			if( checkBox.isSelected() ) {
 				this.visibility = false;
@@ -83,7 +91,7 @@ public class AddWorkoutController {
 				this.visibility = true;
 			}
 			
-			Workout newWorkout = new Workout(athlete, filePath, this.visibility);
+			Workout newWorkout = new Workout(athlete, filePath, this.visibility, gpxPath);
 			db.createWorkout(newWorkout);
 			System.out.println(this.visibility);
 			filepathTextField.setText("Workout Added");
