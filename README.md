@@ -18,7 +18,7 @@ Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Gett
 ## Mappestruktur
 Vi har to hovedmapper i prosjektet vårt:
 
-app.core
+app.core, 
 app.ui
 
 
