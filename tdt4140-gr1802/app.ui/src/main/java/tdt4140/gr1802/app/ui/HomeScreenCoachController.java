@@ -3,6 +3,7 @@ package tdt4140.gr1802.app.ui;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -42,6 +50,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Athlete;
@@ -54,6 +63,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	private Coach coach;
 	private Database db;
+	private AnalyzeWorkout analyzer = new AnalyzeWorkout();
 	
 	public class ActivityAthlete {
 		private String username;
@@ -259,10 +269,37 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
     private GeocodingService geocodingService;
     GPXReader gpxreader = new GPXReader();
 	
+	//_________________ATHLETE TAB_________________________
 	
+	private Athlete choosenAthlete;
 	
+	@FXML 
+	private ChoiceBox<Athlete> cboxChooseAthlete;
+	
+	@FXML 
+	private Button btShowAthlete;
+	
+	private ObservableList<BarChart.Data<String, Number>> barChartDataHR = FXCollections.observableArrayList();
+	
+	private ObservableList<BarChart.Data<String, Number>> barChartDataDuration = FXCollections.observableArrayList();
+	
+	private ObservableList<BarChart.Data<String, Number>> barChartDataAmount = FXCollections.observableArrayList();
+	
+    @FXML 
+    private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisAmount;
+    
+    @FXML 
+    private NumberAxis yAxisHR, yAxisDuration, yAxisWorkoutType, yAxisAmount;
+    
+    @FXML 
+    private BarChart<String, Number> chartHRZones, chartDuration, chartWorkoutType, chartAmount;
+    
+    List<Workout> workoutsForChoosenAthlete = new ArrayList<>();
+    List<Athlete> allAthletes = new ArrayList<>();
+    
+    
+	 
 	//_________________________
-	
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		App.updateCoach();
@@ -314,9 +351,23 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		rankingChoiceList.add("All-time");
 		rankingChoice.setItems(rankingChoiceList);
 		
+		//________ATHLETES TAB______
+		ObservableList<Athlete> obsAthleteTab = FXCollections.observableArrayList();
+
+		for (String athleteName : coach.getAthletes()) {
+			obsAthleteTab.add(db.getAthlete(athleteName));
+		}
+		cboxChooseAthlete.setItems(obsAthleteTab);
+		
+		allAthletes = new ArrayList<>();
+		
 		//GmapsFX
 		mapView.addMapInializedListener(this);
 		
+		for (String athlete : coach.getAthletes()) {
+			allAthletes.add(db.getAthlete(athlete));
+		}
+
 	
 	}
 	
@@ -468,6 +519,78 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 			rankAthletesTableView.setItems(obsRank);
 
 		}
+	
+	//_____________ATHLETE TAB_______________
+	
+	public void searchAthlete(ActionEvent event) {
+		choosenAthlete = db.getAthlete(cboxChooseAthlete.getValue().getUsername());
+		workoutsForChoosenAthlete = db.getAllWorkouts(choosenAthlete);
+		
+		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
+		updateDurationChart(workoutsForChoosenAthlete, allAthletes);
+		updateAmountChart(workoutsForChoosenAthlete, allAthletes);
+	}
+
+	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		List<Integer> dataHRZonesAthlete = analyzer.getAnalyzedHRZonesMeanValueForAthlete(workoutsForAthlete);
+		List<Integer> dataHRZonesAll = analyzer.getAnalyzedHRZonesMeanValueForAll(allAthletes);
+		
+		XYChart.Series<String, Number> HRZones1 = new XYChart.Series<>();
+		XYChart.Series<String, Number> HRZones2 = new XYChart.Series<>();
+		XYChart.Series<String, Number> HRZones3 = new XYChart.Series<>();
+		
+		chartHRZones.getData().clear();
+        HRZones1.setName("Low");
+        System.out.println(choosenAthlete.getName());
+        HRZones1.getData().add(new XYChart.Data<String, Number>(choosenAthlete.getUsername(), dataHRZonesAthlete.get(0)));
+        System.out.println("testing");
+        HRZones1.getData().add(new XYChart.Data<String, Number>("Mean Value", dataHRZonesAll.get(0)));
+        System.out.println("testing2");
+        HRZones2.setName("Moderate");
+        HRZones2.getData().add(new XYChart.Data<String, Number>(choosenAthlete.getUsername(), dataHRZonesAthlete.get(1)));
+        System.out.println("testing3");
+        HRZones2.getData().add(new XYChart.Data<String, Number>("Mean Value", dataHRZonesAll.get(1)));
+        HRZones3.setName("High");
+        System.out.println("testing4");
+        HRZones3.getData().add(new XYChart.Data<String, Number>(choosenAthlete.getUsername(), dataHRZonesAthlete.get(2)));
+        System.out.println("testing5");
+        HRZones3.getData().add(new XYChart.Data<String, Number>("Mean Value", dataHRZonesAll.get(2)));
+        System.out.println("testing6");
+        chartHRZones.getData().addAll(HRZones1, HRZones2, HRZones3);
+        System.out.println("testing7");
+        System.out.println("charHRZones: "+chartHRZones.getData());
+        
+	}
+	
+	private void updateDurationChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		int dataDurationAthlete = analyzer.getAnalyzedDurationMeanValueForAthlete(workoutsForAthlete);
+		int dataDurationAll = analyzer.getAnalyzedDurtionMeanValueForAll(allAthletes);
+		
+		XYChart.Series<String, Number> Duration1 = new XYChart.Series<>();
+		
+		chartDuration.getData().clear();
+        Duration1.setName("Duration");
+        Duration1.getData().add(new XYChart.Data<>(choosenAthlete.getUsername(), dataDurationAthlete));
+        Duration1.getData().add(new XYChart.Data<>("Mean Value", dataDurationAll));
+        chartDuration.getData().add(Duration1);
+        System.out.println("Chart duration" + chartDuration.getData());
+	}
+	
+	private void updateAmountChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+		int dataAmountAthlete = analyzer.getAnalyzedAmountForAthlete(workoutsForAthlete);
+		int dataAmountAll = analyzer.getAnalyzedAmountMeanValueForAll(allAthletes);
+		
+		XYChart.Series<String, Number> Amount1 = new XYChart.Series<>();
+		
+		chartAmount.getData().clear();
+        Amount1.setName("Amount");
+        Amount1.getData().add(new XYChart.Data<>(choosenAthlete.getUsername(), dataAmountAthlete));
+        Amount1.getData().add(new XYChart.Data<>("Mean Value", dataAmountAll));
+        chartAmount.getData().add(Amount1);
+        System.out.println("Chart amount" + chartAmount.getData());
+	}
+	
+
 		
 	// ---------------- MAP TAB -----------------------
 		public void mapInitialized() {

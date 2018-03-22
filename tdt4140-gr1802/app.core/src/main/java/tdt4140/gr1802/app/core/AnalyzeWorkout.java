@@ -1,6 +1,7 @@
 package tdt4140.gr1802.app.core;
 
 import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 public class AnalyzeWorkout {
@@ -13,6 +14,7 @@ public class AnalyzeWorkout {
 	
 	//how many seconds is each pulse-step:
 	private final int timeSteps = CSVReader.timeStep;
+	
 	
 	
 	
@@ -105,6 +107,90 @@ public class AnalyzeWorkout {
 		
 	}
 	
+	public List<Integer> getAnalyzedHRZonesMeanValueForAthlete(List<Workout> workouts) {
+		int totLow = 0;
+		int totModerate = 0;
+		int totHigh = 0;
+		for (Workout workout : workouts) {
+			totLow += getHRPercentage(getTimeInHRZones(workout)).get(0);
+			totModerate += getHRPercentage(getTimeInHRZones(workout)).get(1);
+			totHigh += getHRPercentage(getTimeInHRZones(workout)).get(2);
+		}
+		totLow = totLow/workouts.size();
+		totModerate = totModerate/workouts.size();
+		totHigh = totHigh/workouts.size();
+		System.out.println("Low: " + totLow);
+		System.out.println("Moderate: " + totModerate);
+		System.out.println("High: " + totHigh);
+		
+		List<Integer> meanValueHRZones = Arrays.asList(totLow,totModerate,totHigh);
+		return meanValueHRZones;
+		
+	}
+	
+	public List<Integer> getAnalyzedHRZonesMeanValueForAll(List<Athlete> athletes) {
+		int totLow = 0;
+		int totModerate = 0;
+		int totHigh = 0;
+		int counter = 0;
+		for (Athlete athlete : athletes) {
+			for (Workout workout : athlete.getAllWorkouts()) {
+				counter += 1;
+				totLow += getHRPercentage(getTimeInHRZones(workout)).get(0);
+				totModerate += getHRPercentage(getTimeInHRZones(workout)).get(1);
+				totHigh += getHRPercentage(getTimeInHRZones(workout)).get(2);
+			}
+		}
+		totLow = totLow/counter;
+		totModerate = totModerate/counter;
+		totHigh = totHigh/counter;
+		System.out.println("Low: " + totLow);
+		System.out.println("Moderate: " + totModerate);
+		System.out.println("High: " + totHigh);
+		
+		List<Integer> meanValueHRZones = Arrays.asList(totLow,totModerate,totHigh);
+		return meanValueHRZones;
+		
+	}
+	
+	public int getAnalyzedDurationMeanValueForAthlete(List<Workout> workouts) {
+		int duration = 0;
+		for (Workout workout : workouts) {
+			duration += workout.getDuration();
+		}
+		duration = duration/workouts.size();
+		System.out.println("Duration: " + duration);
+		
+		return duration;
+	}
+	
+	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) {
+		int duration = 0;
+		int counter = 0;
+		for (Athlete athlete : athletes) {
+			for (Workout workout : athlete.getAllWorkouts()) {
+				counter += 1;
+				duration += workout.getDuration();
+			}
+		}
+		duration = duration/counter;
+		System.out.println("Duration: " + duration);
+		
+		return duration;
+	}
+	
+	public int getAnalyzedAmountForAthlete(List<Workout> workouts) {
+		return workouts.size();
+	}
+	
+	public int getAnalyzedAmountMeanValueForAll(List<Athlete> athletes) {
+		int amount = 0;
+		for (Athlete athlete : athletes) {
+			amount += athlete.getNumbWorkouts();
+		}
+		amount = amount/athletes.size();
+		return amount;
+	}
 	
 	
 }

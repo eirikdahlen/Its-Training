@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -25,7 +28,7 @@
 <?import javafx.scene.layout.*?>
 <?import com.lynden.gmapsfx.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
    <children>
       <AnchorPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -59,7 +62,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Label layoutX="21.0" layoutY="15.0" prefHeight="44.0" prefWidth="135.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="661.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="1126.0" AnchorPane.topAnchor="15.0">
+      <Label layoutX="21.0" layoutY="15.0" prefHeight="44.0" prefWidth="135.0" text="It's Training" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>
@@ -188,7 +191,41 @@
             </Tab>
             <Tab text="Athletes">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="46.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athlete vs. Mean Value">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox fx:id="cboxChooseAthlete" layoutX="46.0" layoutY="123.0" prefWidth="150.0" />
+                        <Button fx:id="btShowAthlete" layoutX="221.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchAthlete" prefHeight="25.0" prefWidth="66.0" text="Show" />
+                        <BarChart fx:id="chartDuration" layoutX="590.0" layoutY="34.0" prefHeight="289.0" prefWidth="490.0" title="Duration">
+                           <xAxis>
+                              <CategoryAxis prefHeight="33.0" prefWidth="362.0" side="BOTTOM" fx:id="xAxisDuration" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxisDuration" label="Minutes" prefHeight="155.0" prefWidth="46.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <BarChart fx:id="chartAmount" layoutX="595.0" layoutY="335.0" prefHeight="260.0" prefWidth="480.0" title="Amount">
+                           <xAxis>
+                              <CategoryAxis prefHeight="30.0" prefWidth="365.0" side="BOTTOM" fx:id="xAxisAmount" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxisAmount" label="Number of Workouts" prefHeight="155.0" prefWidth="43.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <BarChart fx:id="chartHRZones" layoutX="27.0" layoutY="206.0" prefHeight="259.0" prefWidth="501.0" title="HR Zones">
+                           <xAxis>
+                              <CategoryAxis prefHeight="33.0" prefWidth="367.0" side="BOTTOM" fx:id="xAxisHR" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxisHR" label="Percent" prefHeight="154.0" prefWidth="41.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <Text layoutX="46.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Athlete:" />
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
