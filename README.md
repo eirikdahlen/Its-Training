@@ -16,6 +16,13 @@ git clone https://gitlab.stud.iie.ntnu.no/tdt4140-2018/02.git
 Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
 ## Mappestruktur
+Vi har to hovedmapper i prosjektet vårt, app.core og app.ui. 
+app.core inneholder all logikk og kode for å knytte elementene sammen. 
+Logikk for tilknytning og opplastning til database ligger også i denne mappen.
+app.ui inneholder kontrolleren og fxml-filene. 
+main/java.app.ui inneholder alle kontrollere, som knytter core opp mot grensesnittet. 
+main/resources.ap.ui innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
+
 
 ### Forutsetninger
 - Java SE Runtime Environment 8
