@@ -84,18 +84,21 @@ public class SignUpScreenController{
 		
 		boolean isAthlete = radioAthlete.isSelected(); 
 		this.signUp = new SignUp(typedUsername, typedName, typedPassword, typedPasswordRetype, isAthlete);
+		System.out.println("signp"+this.signUp);
 		String textToLabel = "";
 		
 		// Feedback on possible errors, added in new line
 		if (!this.signUp.checkNameOnlyLetters()) {
 			textToLabel += "Name can only be letters. \n";
 		}
+		System.out.println("CHECKKKK");
 		if (!this.signUp.checkUserNameValidAndLenght()) {
 			textToLabel += "Usename must be only letters and numbers. \n";
 		}
 		if (!this.signUp.checkUserNameNotExitsInDB()) {
 			textToLabel += "Username already in use. \n";
 		}
+		System.out.println("CHECKKKK2");
 		if (!this.signUp.checkPasswordLength()) {
 			textToLabel += "Password must be 4 chars or longer. \n";
 		}
