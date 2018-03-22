@@ -641,10 +641,14 @@ public class Database {
 	
 	// Check if the Coachusername exists
 	public boolean coachUsernameExists(String username) {	
+		System.out.println("first linje");
 		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
+		System.out.println("second");
 		if (found != null) {
+			System.out.println("third");
 			return true;
 		}
+		System.out.println("fourth");
 		return false;
 	}
 	

@@ -8,7 +8,7 @@ public class SignUp {
 	private boolean isAthlete; //No need for isCoach if isAthlete is false, then the object will be Coach. 
 	private static User newUser; // private static so we can exchange the user between other classes. 
 	private static boolean validLogin = false; 
-	private Database db;
+	private Database db = new Database();
 	
 	
 	public SignUp(String username, String name, String password, String repeatPassword, boolean isAthlete) {
@@ -16,8 +16,7 @@ public class SignUp {
 			this.name = name;
 			this.password = password;
 			this.repeatPassword = repeatPassword; 
-			this.isAthlete = isAthlete;
-			this.db = App.getDb();	
+			this.isAthlete = isAthlete;	
 		}
 	
 	// Getter for User
@@ -43,6 +42,8 @@ public class SignUp {
 	
 	// Check if username exists in database
 	public boolean checkUserNameNotExitsInDB() {
+		System.out.println(this.username);
+		System.out.println(db);
 		if (db.coachUsernameExists(this.username) || (db.athleteUsernameExists(this.username))) {
 			System.out.println("Username already in db.");
 			return false; 
