@@ -293,7 +293,10 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		if (! dates.contains(LocalDate.now())) {
 			dates.add(LocalDate.now());
 		}
+		
 		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
+		FXCollections.sort(obsDates);
+		
 		// Add todays date as well
 		homeComboBoxNoteDate.setItems(obsDates);
 		

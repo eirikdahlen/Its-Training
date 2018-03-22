@@ -50,6 +50,7 @@ public class Database {
 			document.append("Name",coach.getName());
 			document.append("Athletes", coach.getAthletes());
 			document.append("Requests", coach.getQueuedAthletes());
+			document.append("Notes", coach.getNotes());
 			coachCollection.insertOne(document);
 			System.out.println("coach added to database");
 		} else {
