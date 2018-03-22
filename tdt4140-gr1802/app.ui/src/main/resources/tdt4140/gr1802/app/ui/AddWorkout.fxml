@@ -40,10 +40,10 @@
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="655.0" prefWidth="1127.0">
                            <children>
-                              <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter Filepath" />
-                              <Button fx:id="addButton" layoutX="29.0" layoutY="147.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
-                              <CheckBox fx:id="checkBox" layoutX="29.0" layoutY="101.0" mnemonicParsing="false" text="Private" />
-                              <TextField fx:id="gpxField" layoutX="155.0" layoutY="96.0" promptText="Gpx" />
+                              <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter CSV Filepath" />
+                              <Button fx:id="addButton" layoutX="29.0" layoutY="188.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
+                              <CheckBox fx:id="checkBox" layoutX="29.0" layoutY="142.0" mnemonicParsing="false" text="Private" />
+                              <TextField fx:id="gpxField" layoutX="29.0" layoutY="100.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter GPX Filepath" />
                            </children></Pane>
                      </children>
                   </AnchorPane>
