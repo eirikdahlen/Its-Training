@@ -1,6 +1,11 @@
 package tdt4140.gr1802.app.core;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
 
 public class AnalyzeWorkoutsTest {
 	
@@ -13,7 +18,7 @@ public class AnalyzeWorkoutsTest {
 		
 		//___________
 		System.out.println("time in zones:");
-		test.testGetTimeInHRZones();
+//		test.testGetTimeInHRZones();
 		//___________
 
 		//___________
@@ -26,7 +31,7 @@ public class AnalyzeWorkoutsTest {
 	
 	public void testGetTimeInHRZones() {
 		//imports athlete and workout from db for testing
-		Athlete athlete1 = db.getAthlete("Olaf90");
+		Athlete athlete1 = db.getAthlete("williamkvaale");
 		List<Workout> workoutList = db.getAllWorkouts(athlete1);
 		
 		
@@ -40,18 +45,17 @@ public class AnalyzeWorkoutsTest {
 	
 	}
 	
+	
+	@Test
 	public void testGetHRPercentage() {
 		
 		//imports athlete and workout from db for testing
-		Athlete athlete1 = db.getAthlete("Olaf90");
-		List<Workout> workoutList = db.getAllWorkouts(athlete1);
-		
-		
-		List<Integer> TimeInHrZones = analyzeWorkouts.getTimeInHRZones(workoutList);
+		List<Integer> TimeInHrZones = Arrays.asList(20,20,0);
 		
 		List<Integer> percentageInHRZones = analyzeWorkouts.getHRPercentage(TimeInHrZones);
 		
-		System.out.println(percentageInHRZones);
+		assertEquals(percentageInHRZones,Arrays.asList(50,50,0));
+//		System.out.println(percentageInHRZones);
 		
 	}
 	
