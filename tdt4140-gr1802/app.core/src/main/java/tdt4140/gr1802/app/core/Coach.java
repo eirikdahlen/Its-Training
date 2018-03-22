@@ -15,6 +15,8 @@ public class Coach extends User {
 	
 	private List<String> queuedAthletes = new ArrayList<String>();
 	
+	private List<String> notes = new ArrayList<String>();
+	
 	private Database database = App.getDb();
 	
 	public Coach (String username, String password, String name, List <String> athletes, List <String> queuedAthletes){
@@ -37,6 +39,8 @@ public class Coach extends User {
 	public void setAthletes(List<String> athletes) { this.athletes = athletes; }
 
 	public List<String> getAthletes() { return athletes; }
+	
+	public List<String> getNotes() { return notes; }
 	
 	// Method called by a athlete-object. The athlete that calls this method wants to be this coaches athlete. The athlete will be
 	// queued in "queuedAthletes" so that the coach later can accept the athlete as his/her coach.
