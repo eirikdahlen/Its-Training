@@ -26,8 +26,8 @@ app.core inneholder all logikk og kode for å knytte elementene sammen.
 Logikk for tilknytning og opplastning til database ligger også i denne mappen.
 
 app.ui inneholder kontrolleren og fxml-filene. 
-main/java.app.ui inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
-main/resources.ap.ui innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
+app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
+app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
 
 
 ### Forutsetninger
@@ -37,7 +37,9 @@ main/resources.ap.ui innholder alle fxml-filene, som bygger opp grensesnittet v�
 
 
 ## Kjøre tester 
-Hvordan teste programmet
+For å teste core-delen av programmet har vi jUnit-tester som ligger i app.core/src/test/java. 
+Her har vi en test-klasse til hver av klassene våre i src/main/java. 
+For å teste ui-delen av programmet gjøres det ved hjelp av brukertester. 
 
 ## Lansere
 For å lage en runnable jar fil må man: 
