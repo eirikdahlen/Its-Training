@@ -17,13 +17,13 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenAthleteController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="650.0" prefWidth="1280.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="100.0" layoutX="626.0" layoutY="82.0" rotate="90.0" startX="-1037.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
@@ -32,16 +32,25 @@
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                        <Pane layoutX="159.0" prefHeight="650.0" prefWidth="1121.0">
                            <children>
                               <HBox layoutX="56.0" layoutY="232.0" prefHeight="64.0" prefWidth="532.0" />
-                              <PieChart fx:id="zoneChart" layoutX="14.0" layoutY="107.0" prefHeight="275.0" prefWidth="317.0" />
-                              <Text layoutX="22.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low:" />
-                              <Text layoutX="133.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moderate:" />
-                              <Text layoutX="277.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High:" />
-                              <Label fx:id="lowLabel" layoutX="56.0" layoutY="395.0" prefHeight="17.0" prefWidth="73.0" />
-                              <Label fx:id="moderateLabel" layoutX="204.0" layoutY="395.0" prefHeight="17.0" prefWidth="63.0" />
-                              <Label fx:id="highLabel" layoutX="314.0" layoutY="395.0" prefHeight="17.0" prefWidth="63.0" />
+                              <PieChart fx:id="zoneChart" layoutX="379.0" layoutY="83.0" prefHeight="349.0" prefWidth="418.0" />
+                              <Text layoutX="383.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low:" />
+                              <Text layoutX="494.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moderate:" />
+                              <Text layoutX="638.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High:" />
+                              <Label fx:id="lowLabel" layoutX="417.0" layoutY="457.0" prefHeight="17.0" prefWidth="73.0" />
+                              <Label fx:id="moderateLabel" layoutX="565.0" layoutY="457.0" prefHeight="17.0" prefWidth="63.0" />
+                              <Label fx:id="highLabel" layoutX="675.0" layoutY="457.0" prefHeight="17.0" prefWidth="63.0" />
+                              <Label fx:id="txtHelloUser" layoutX="56.0" layoutY="32.0" prefHeight="27.0" prefWidth="325.0">
+                                 <font>
+                                    <Font name="System Bold" size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtQuote" layoutX="850.0" layoutY="449.0" prefHeight="158.0" prefWidth="237.0" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font></Label>
                            </children>
                         </Pane>
                      </children>
@@ -49,8 +58,8 @@
               </items>
             </SplitPane>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="615.0" layoutY="40.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Line endX="1183.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="40.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>

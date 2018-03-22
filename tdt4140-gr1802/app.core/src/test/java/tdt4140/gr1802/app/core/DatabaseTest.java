@@ -125,7 +125,7 @@ public class DatabaseTest {
 		
 		URL path = getClass().getResource("CSV1.csv");
 		
-		Workout workout1 = new Workout(athlete1, path, true);
+		Workout workout1 = new Workout(athlete1, path, true, null);
 		
 		//adds athlete to database
 		database.createAthlete(athlete1);
@@ -142,13 +142,13 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testGetAllWorkouts() {
+	public void testGetAllWorkouts() throws IOException {
 		
 
 		//creates athlete and workout for testing 
 		Athlete athlete1 = new Athlete("Nils22", "passord", "Nils");
-		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>() );
-		Workout workout2 = new Workout(athlete1, "02-01-2016 10:34:37","SKIING", 133,24.39, new ArrayList<String>() );
+		Workout workout1 = new Workout(athlete1, "01-01-2016 10:34:37","ROWING", 133,24.39, new ArrayList<String>(), null );
+		Workout workout2 = new Workout(athlete1, "02-01-2016 10:34:37","SKIING", 133,24.39, new ArrayList<String>(), null );
 		
 		//adds workout to database
 		database.createWorkout(workout1);
@@ -456,7 +456,7 @@ public class DatabaseTest {
 		
 		URL path = getClass().getResource("CSV5.csv");
 		
-		Workout workout1 = new Workout(database.getAthlete("williamkvaale"),path);
+		Workout workout1 = new Workout(database.getAthlete("williamkvaale"),path, null);
 		
 		//adds workout to database
 		database.createWorkout(workout1);
@@ -478,9 +478,9 @@ public class DatabaseTest {
 		
 		URL path = getClass().getResource("CSV1.csv");
 		
-		Workout wo1 = new Workout(athl, path);
+		Workout wo1 = new Workout(athl, path, null);
 		
-		Workout wo2 = new Workout(database.getAthlete("williamkvaale"),path);
+		Workout wo2 = new Workout(database.getAthlete("williamkvaale"),path, null);
 		
 		assertTrue(wo1.getAthlete().getUsername().equals(wo2.getAthlete().getUsername()));
 		

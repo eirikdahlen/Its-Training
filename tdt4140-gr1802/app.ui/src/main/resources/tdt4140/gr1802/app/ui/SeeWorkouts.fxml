@@ -14,15 +14,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeWorkoutsController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeWorkoutsController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="650.0" prefWidth="1280.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="655.0" prefWidth="1278.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
@@ -31,9 +30,9 @@
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
-                        <Pane layoutX="159.0" prefHeight="527.0" prefWidth="644.0">
+                        <Pane layoutX="159.0" prefHeight="649.0" prefWidth="1121.0">
                            <children>
-                              <TableView fx:id="tableView" prefHeight="427.0" prefWidth="644.0">
+                              <TableView fx:id="tableView" prefHeight="650.0" prefWidth="1122.0">
                                 <columns>
                                   <TableColumn fx:id="dateColumn" prefWidth="174.0" text="Date" />
                                     <TableColumn fx:id="typeColumn" prefWidth="69.0" text="Type" />
@@ -44,14 +43,16 @@
                                 </columns>
                               </TableView>
                               <Button fx:id="hideButton" layoutX="46.0" layoutY="453.0" mnemonicParsing="false" onAction="#hideWorkout" text="Hide" />
-                           </children></Pane>
+                           </children>
+                        </Pane>
+                        <Line endX="1280.0" startX="-400.0" AnchorPane.bottomAnchor="656.3" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="518.9000000000001" AnchorPane.topAnchor="-0.5" />
+                        <Line endX="710.0" layoutX="-195.0" layoutY="306.0" rotate="90.0" />
                      </children>
                   </AnchorPane>
               </items>
             </SplitPane>
          </children></AnchorPane>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>
@@ -64,7 +65,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Label layoutX="29.0" layoutY="17.0" prefHeight="44.0" prefWidth="143.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="659.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="1108.0" AnchorPane.topAnchor="17.0">
+      <Label layoutX="29.0" layoutY="17.0" prefHeight="44.0" prefWidth="143.0" text="It's Training" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>

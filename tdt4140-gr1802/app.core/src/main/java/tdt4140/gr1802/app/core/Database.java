@@ -1,12 +1,15 @@
 package tdt4140.gr1802.app.core;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -30,6 +33,7 @@ public class Database {
 	private MongoCollection coachCollection;
 	private MongoCollection athleteCollection;
 	private MongoCollection activityCollection;
+	private MongoCollection quotesCollection; 
 	
 	public Database() {
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
@@ -46,6 +50,7 @@ public class Database {
 			document.append("Name",coach.getName());
 			document.append("Athletes", coach.getAthletes());
 			document.append("Requests", coach.getQueuedAthletes());
+			document.append("Notes", coach.getNotes());
 			coachCollection.insertOne(document);
 			System.out.println("coach added to database");
 		} else {
@@ -91,7 +96,8 @@ public class Database {
 			doc.append("kilometres", workout.getKilometres());
 
 			doc.append("pulse", workout.getPulsList());
-		
+			System.out.println("Database vis gpx data: "+workout.getGpxData());
+			doc.append("gpx", workout.getGpxData());
 			
 			//adds maxHR to athlete if it does not exist 
 			Document found = (Document) athleteCollection.find(new Document("Username", workout.getAthlete().getUsername())).first();
@@ -211,6 +217,17 @@ public class Database {
 		return athletes;
 	}
 	
+	/*private List<LatLong> stringToLatLong(List<String> stringList){
+		List<LatLong> latlonglist = new ArrayList<>();
+		for (String s : stringList) {
+			String[] temp = s.split(",");
+			double l1 = Double.parseDouble(temp[0]);
+			double l2 = Double.parseDouble(temp[1]);
+			latlonglist.add(new LatLong(l1,l2));
+		}
+		return latlonglist;
+	}*/
+	
 	// Returns the Workout from the database
 	public Workout getWorkout(Athlete athlete, String date) {
 		//finds the athlete of the workout, and accesses his workout-collection
@@ -223,8 +240,15 @@ public class Database {
 			return null;
 		}
 		//creates workout-object
-		Workout workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
-				found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility") );
+		Workout workout = null;
+		try {
+			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
+					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), null);
+			workout.setGpxData((List<List<Double>>)found.get("gpx"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return workout;
 	}
@@ -244,8 +268,8 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
-		        
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), null );
+		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
 		        workouts.add(workout);
 		    } 
 		} catch(Exception e) {
@@ -719,7 +743,7 @@ public class Database {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
 			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") );
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") , null);
 					        
 			    			activityWorkouts.add(workout);
 			    		}
@@ -732,8 +756,86 @@ public class Database {
 		return activityWorkouts;	
 	}
 	
+	//**************HOME-TAB*******************
+	public List<String> getCoachNotes(String coachUsername) {
+		Document found = (Document) coachCollection.find(new Document("Username", coachUsername)).first();
+		if (found == null) { return null; }
+		List<String> notes = (ArrayList<String>) found.get("Notes");
+		return notes;
+	}
+	
+	public void addCoachNotes(String username, String note) {
+		
+		Document found = (Document) coachCollection.find(new Document("Username", username )).first();
+		
+		if (found == null) { System.out.println("No athlete with this username"); return; }
+		
+		List<String> notes = (ArrayList<String>) found.get("Notes");
+		
+		Document found2 = (Document) coachCollection.find(new Document("Username", username)).first();
+
+		
+		notes.add(note);
+		
+		Bson updatedvalue = new Document("Notes", notes);
+		Bson updateoperation = new Document("$set", updatedvalue);
+		coachCollection.updateOne(found2, updateoperation);
+		
+	}
+	
+	public void updateCoachNotes(String username, String note) {
+		List<String> notes = getCoachNotes(username); 
+		
+		int index = -1; 
+		for (int i = 0; i < notes.size(); i++) {
+			if (notes.get(i).substring(0, 10).equals(note.substring(0,10))) {
+				index = i; 
+			}
+		}
+		
+		if (index != -1) { notes.remove(index); notes.add(index, note); }
+		
+		Document found = (Document) coachCollection.find(new Document("Username", username )).first();
+		
+		if (found == null) { System.out.println("No athlete with this username"); return; }
+		
+		
+		Document found2 = (Document) coachCollection.find(new Document("Username", username)).first();
+
+		
+		Bson updatedvalue = new Document("Notes", notes);
+		Bson updateoperation = new Document("$set", updatedvalue);
+		coachCollection.updateOne(found2, updateoperation);
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		Database db = new Database();
 		System.out.println(db.getAthletesForActivity("RUNNING"));
+		System.out.println(db.getCoachNotes("petter22"));
+		
+
 	}
+	
+	// QUOTES
+	
+	public List<String> getQuotes(){
+		List<String> quotes = new ArrayList();
+		MongoCollection quotesCollection = dataDatabase.getCollection("AthleteQuotes");
+		
+		try (MongoCursor<Document> cursor = quotesCollection.find().iterator()) {
+			while (cursor.hasNext()) {
+				Document doc = cursor.next(); 
+				if (doc.getString("text") != null) {
+					quotes.add(doc.getString("text"));
+				}
+			}
+		} catch(Exception e) {
+			System.out.println("Der møtte vi på veggen gitt!");
+			e.printStackTrace();
+		}
+		return quotes; 
+	}
+	
 }

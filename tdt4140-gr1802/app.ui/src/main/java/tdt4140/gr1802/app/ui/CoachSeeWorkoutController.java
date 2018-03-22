@@ -1,13 +1,33 @@
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MVCArray;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapShape;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+import com.lynden.gmapsfx.shapes.Polyline;
+import com.lynden.gmapsfx.shapes.PolylineOptions;
+
+import io.jenetics.jpx.GPX;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,9 +42,10 @@ import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.App;
 import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.GPXReader;
 import tdt4140.gr1802.app.core.Workout;
 
-public class CoachSeeWorkoutController {
+public class CoachSeeWorkoutController implements Initializable, MapComponentInitializedListener{
 	
 	@FXML
 	private Button btSeeAthletes;
@@ -65,6 +86,15 @@ public class CoachSeeWorkoutController {
 	@FXML
 	private NumberAxis yAxis;
 	
+	// GmapsFX
+    @FXML
+    private GoogleMapView mapView;
+    
+    private GoogleMap map;
+    
+    private GeocodingService geocodingService;
+    GPXReader gpxreader = new GPXReader();
+
 	@FXML
 	private Button homeScreenButton;
 	
@@ -78,7 +108,7 @@ public class CoachSeeWorkoutController {
 		this.workout = wo;
 	}
 	
-	public void initialize() {
+	public void initialize(URL location, ResourceBundle resources) {
 		// Set the Coach that is logged in
 		App.updateCoach();
 		this.coach = App.getCoach();
@@ -121,6 +151,9 @@ public class CoachSeeWorkoutController {
 		}
 		System.out.println("test5");
 		pulsLine.getData().add(series);
+		
+		//GmapsFX
+		mapView.addMapInializedListener(this);
 	}
 	
 	// Side-menu buttons
@@ -149,6 +182,78 @@ public class CoachSeeWorkoutController {
 		
 		window.setScene(scene);
 		window.show();
+	}
+
+	public void mapInitialized() {
+        geocodingService = new GeocodingService();
+        MapOptions mapOptions = new MapOptions();
+        List<List<Double>> liste = workout.getGpxData();
+        List<LatLong> liste2 = new ArrayList<>();
+        System.out.println("hei for test");
+        /*String path = workout.getGpxFilepath();
+        System.out.println("Stien: "+path);
+        URL url = this.getClass().getResource(path);
+        System.out.println("hei etter test");
+        InputStream s = null;
+        try {
+			s = url.openStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println(url);
+        System.out.println(s);
+        try {
+			liste = gpxreader.getLatLong(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        //System.out.println(liste);
+       */
+        
+        for (List<Double> l : liste) {
+        		liste2.add(new LatLong(l.get(0), l.get(1)));
+        }
+        
+        mapOptions.center(liste2.get(0))
+        .mapType(MapTypeIdEnum.ROADMAP)
+        .overviewMapControl(false)
+        .panControl(false)
+        .rotateControl(false)
+        .scaleControl(false)
+        .streetViewControl(false)
+        .zoomControl(false)
+        .zoom(12);
+
+        map = mapView.createMap(mapOptions);
+        
+        MarkerOptions markerOptions1 = new MarkerOptions();
+        markerOptions1.position(liste2.get(0)).label("S");
+        MarkerOptions markerOptions2 = new MarkerOptions();
+        markerOptions2.position(liste2.get(liste.size()-1)).label("F");
+        
+        Marker StartPointMarker = new Marker(markerOptions1);
+        Marker FinishPointMarker = new Marker(markerOptions2);
+        
+        map.addMarker(StartPointMarker);
+        map.addMarker(FinishPointMarker);
+        
+        //System.out.println("SIZE: "+ liste.size());
+        LatLong[] ary = new LatLong[liste2.size()];
+        int i = 0;
+        for (LatLong values : liste2) {
+        		ary[i] = values;
+        		i++;
+        }
+        //System.out.println(ary);
+       
+        MVCArray mvc = new MVCArray(ary);
+        PolylineOptions polyOpts = new PolylineOptions()
+        .path(mvc)
+        .strokeColor("pink")
+        .strokeWeight(2);
+        Polyline poly = new Polyline(polyOpts);
+        map.addMapShape((MapShape)poly);
 	}
 
 }

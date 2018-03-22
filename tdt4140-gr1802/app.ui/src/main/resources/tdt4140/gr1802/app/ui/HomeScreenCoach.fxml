@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,6 +21,12 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import com.lynden.gmapsfx.*?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.HomeScreenCoachController">
    <children>
@@ -41,7 +48,7 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1107.0" layoutY="36.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+            <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="36.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
                <font>
                   <Font size="14.0" />
                </font>
@@ -66,12 +73,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="592.0">
                      <children>
-                        <Text layoutX="888.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
+                        <Text layoutX="852.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top 3 athletes:">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <TableView fx:id="tableViewTop3" layoutX="874.0" layoutY="46.0" prefHeight="137.0" prefWidth="225.0">
+                        <TableView fx:id="tableViewTop3" layoutX="836.0" layoutY="43.0" prefHeight="137.0" prefWidth="225.0">
                            <columns>
                               <TableColumn fx:id="top3Name" prefWidth="128.0" text="Name" />
                               <TableColumn fx:id="top3Workouts" prefWidth="88.0" text="Workouts" />
@@ -95,16 +102,20 @@
                             <TableColumn fx:id="homeColumnDate" prefWidth="218.0" text="Last workout" />
                           </columns>
                         </TableView>
+                        <Text layoutX="18.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daily notes">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="homeTextFieldNote" layoutX="18.0" layoutY="446.0" prefHeight="155.0" prefWidth="359.0" />
+                        <ComboBox fx:id="homeComboBoxNoteDate" layoutX="134.0" layoutY="409.0" prefWidth="150.0" />
+                        <Button fx:id="homeBtnNotesOK" layoutX="292.0" layoutY="409.0" mnemonicParsing="false" onAction="#clickHomeOKNotesButton" text="OK" />
+                        <Button fx:id="homeBtnSave" layoutX="387.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickHomeSaveNoteButton" text="Save todays note" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Monthly">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab text="All time">
+            <Tab text="Ranking">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -123,10 +134,10 @@
                           <columns>
                             <TableColumn fx:id="rankAthletesColumn" prefWidth="115.0" text="Athlete" />
                               <TableColumn fx:id="rankNumberofSessionsColumn" prefWidth="147.0" text="Number of sessions" />
-                              <TableColumn fx:id="rankTotalDurationColumn" minWidth="0.0" prefWidth="164.0" text="Total duration" />
-                              <TableColumn fx:id="rankLowHRColumn" prefWidth="120.0" text="Time in low-zone" />
-                            <TableColumn fx:id="rankModerateHRColumn" prefWidth="164.0" text="Time in moderate-zone" />
-                              <TableColumn fx:id="rankHighHRColumn" prefWidth="131.0" text="Time in high-zone" />
+                              <TableColumn fx:id="rankTotalDurationColumn" minWidth="0.0" prefWidth="98.0" text="Total duration" />
+                              <TableColumn fx:id="rankLowHRColumn" prefWidth="143.0" text="Time in low-zone" />
+                            <TableColumn fx:id="rankModerateHRColumn" prefWidth="161.0" text="Time in moderate-zone" />
+                              <TableColumn fx:id="rankHighHRColumn" prefWidth="156.0" text="Time in high-zone" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -167,10 +178,16 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="Heatmap">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab text="Map">
+            		<content>
+            			<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+                      	<children> 
+                       			<GoogleMapView fx:id="mapView" prefHeight="750.0" prefWidth="761.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0.0"/>
+                             	<VBox alignment="TOP_CENTER" fillWidth="false" layoutX="26.0" layoutY="29.0" prefHeight="478.0" prefWidth="221.0" spacing="10.0" styleClass="panel-background" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="26.0" AnchorPane.topAnchor="88.0" BorderPane.alignment="CENTER">
+                           	</VBox>
+                       	</children>
+                 	</AnchorPane>
+             	</content>
             </Tab>
             <Tab text="Athletes">
               <content>

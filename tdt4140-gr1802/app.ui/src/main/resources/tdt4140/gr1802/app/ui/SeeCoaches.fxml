@@ -15,15 +15,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeCoachesController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.SeeCoachesController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <SplitPane layoutY="71.0" prefHeight="529.0" prefWidth="804.0">
+            <SplitPane layoutY="71.0" prefHeight="650.0" prefWidth="1378.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="94.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="638.0" prefWidth="1374.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="707.0" layoutX="-195.0" layoutY="300.0" rotate="90.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
@@ -32,7 +32,7 @@
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
                            </children>
                         </VBox>
-                        <TableView fx:id="tableView" layoutX="159.0" layoutY="-1.0" prefHeight="252.0" prefWidth="644.0" AnchorPane.bottomAnchor="276.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+                        <TableView fx:id="tableView" layoutX="159.0" layoutY="-1.0" prefHeight="410.0" prefWidth="1218.0">
                           <columns>
                               <TableColumn fx:id="usernameColumn" prefWidth="275.0" text="Username" />
                             <TableColumn fx:id="nameColumn" prefWidth="303.0" text="Name" />
@@ -40,10 +40,10 @@
                         </TableView>
                         <VBox layoutX="295.0" layoutY="451.0" prefHeight="37.0" prefWidth="98.0" />
                         <VBox layoutX="502.0" layoutY="451.0" prefHeight="46.0" prefWidth="90.0" />
-                        <Button fx:id="btRemove" layoutX="663.0" layoutY="264.0" mnemonicParsing="false" onAction="#removeCoachButton" prefHeight="25.0" prefWidth="93.0" text="Remove" />
-                        <TextField fx:id="newCoachTextField" layoutX="373.0" layoutY="404.0" />
-                        <Button fx:id="btAddCoach" layoutX="549.0" layoutY="404.0" mnemonicParsing="false" onAction="#addCoachButton" text="Add Coach" />
-                        <Text layoutX="413.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new coach:">
+                        <Button fx:id="btRemove" layoutX="1262.0" layoutY="426.0" mnemonicParsing="false" onAction="#removeCoachButton" prefHeight="25.0" prefWidth="93.0" text="Remove" />
+                        <TextField fx:id="newCoachTextField" layoutX="639.0" layoutY="528.0" />
+                        <Button fx:id="btAddCoach" layoutX="797.0" layoutY="528.0" mnemonicParsing="false" onAction="#addCoachButton" text="Add Coach" />
+                        <Text layoutX="644.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new coach:">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -67,8 +67,8 @@
             <Font name="Century Gothic" size="23.0" />
          </font>
       </Label>
-      <Line endX="706.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
-      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="605.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+      <Line endX="1280.0" layoutX="97.0" layoutY="71.0" startX="-100.0" />
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
          <font>
             <Font size="14.0" />
          </font>

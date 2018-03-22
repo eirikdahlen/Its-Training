@@ -1,6 +1,11 @@
 package tdt4140.gr1802.app.core;
 
+import static org.junit.Assert.assertFalse;
+
+import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
 
 public class AnalyzeWorkoutTest {
 	
@@ -44,8 +49,8 @@ public class AnalyzeWorkoutTest {
 	
 	public void testGetTimeInHRZones() {
 		//imports athlete and workout from db for testing
-		Athlete athlete1 = db.getAthlete("Olaf90");
-		Workout workout1 = db.getWorkout(athlete1, "14-12-2015 12:47:12");
+		Athlete athlete1 = db.getAthlete("williamkvaale");
+		Workout workout1 = db.getWorkout(athlete1, "25-01-2018 17:31:41");
 		
 		
 		List<Integer> TimeInHrZones = analyzeWorkout.getTimeInHRZones(workout1);
@@ -58,18 +63,20 @@ public class AnalyzeWorkoutTest {
 	
 	}
 	
+	@Test
 	public void testGetHRPercentage() {
 		
 		//imports athlete and workout from db for testing
-		Athlete athlete1 = db.getAthlete("Olaf90");
-		Workout workout1 = db.getWorkout(athlete1, "14-12-2015 12:47:12");
+		Athlete athlete1 = db.getAthlete("williamkvaale");
+		Workout workout1 = db.getWorkout(athlete1, "25-01-2018 17:31:41");
 		
 		
-		List<Integer> TimeInHrZones = analyzeWorkout.getTimeInHRZones(workout1);
+		List<Integer> TimeInHrZones = Arrays.asList(10,20,15);
 		
 		List<Integer> percentageInHRZones = analyzeWorkout.getHRPercentage(TimeInHrZones);
 		
-		System.out.println(percentageInHRZones);
+		assertFalse(percentageInHRZones.equals(Arrays.asList(12,12,10)));
+
 		
 	}
 }
