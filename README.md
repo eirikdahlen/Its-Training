@@ -39,7 +39,7 @@ app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnitt
 
 ## Kjøre tester 
 For å teste core-delen av programmet har vi jUnit-tester som ligger i app.core/src/test/java. 
-Her har vi en test-klasse til hver av klassene våre i src/main/java. 
+Her har vi test-klasser som er tilknyttet hver sin klasse i src/main/java. 
 
 For å teste ui-delen av programmet gjøres det ved hjelp av brukertester. 
 
