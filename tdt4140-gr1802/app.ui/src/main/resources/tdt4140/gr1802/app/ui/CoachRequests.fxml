@@ -55,7 +55,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Label layoutX="27.0" layoutY="15.0" prefHeight="39.0" prefWidth="141.0" text="It's Training" textFill="WHITE" AnchorPane.bottomAnchor="666.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="1112.0" AnchorPane.topAnchor="15.0">
+      <Label layoutX="27.0" layoutY="15.0" prefHeight="39.0" prefWidth="141.0" text="It's Training" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>
