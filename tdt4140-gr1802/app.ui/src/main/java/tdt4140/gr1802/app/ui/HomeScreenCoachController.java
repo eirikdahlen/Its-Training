@@ -29,6 +29,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,6 +51,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeCoach;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
@@ -64,6 +66,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	private Coach coach;
 	private Database db;
 	private AnalyzeWorkout analyzer = new AnalyzeWorkout();
+	private AnalyzeCoach coachAnalyzer = new AnalyzeCoach();
 	
 	public class ActivityAthlete {
 		private String username;
@@ -285,6 +288,11 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	private ObservableList<BarChart.Data<String, Number>> barChartDataAmount = FXCollections.observableArrayList();
 	
+	@FXML
+	private PieChart athlActTypesChart;
+	@FXML
+	private PieChart mvActTypesChart;
+	
     @FXML 
     private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisAmount;
     
@@ -296,7 +304,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
     
     List<Workout> workoutsForChoosenAthlete = new ArrayList<>();
     List<Athlete> allAthletes = new ArrayList<>();
-    
+  
     
 	 
 	//_________________________
@@ -340,7 +348,8 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 		
 		// **** ACTIVITIES TAB ****
-		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
+		List<String> allAct = db.getAllActivities();
+		actChoiceList = FXCollections.observableArrayList(allAct);
 		activitiesChoice.setItems(actChoiceList);
 		
 		
@@ -360,6 +369,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		cboxChooseAthlete.setItems(obsAthleteTab);
 		
 		allAthletes = new ArrayList<>();
+		
 		
 		//GmapsFX
 		mapView.addMapInializedListener(this);
@@ -529,6 +539,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
 		updateDurationChart(workoutsForChoosenAthlete, allAthletes);
 		updateAmountChart(workoutsForChoosenAthlete, allAthletes);
+		updateActivitesPieChart(choosenAthlete);
 	}
 
 	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
@@ -590,6 +601,34 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
         System.out.println("Chart amount" + chartAmount.getData());
 	}
 	
+	public void updateActivitesPieChart(Athlete athlete) {
+		List<Integer> athlAct = db.getAthleteActivityTypes(athlete.getUsername());
+		List<String> allAct = db.getAllActivities();
+		List<Integer> meanValueAct = coachAnalyzer.getAvgNrActivites(coach);
+		
+		// Fill PieChart for Athlete with data
+		ObservableList<PieChart.Data> pieChartDataAthl = FXCollections.observableArrayList();
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(0), athlAct.get(0)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(1), athlAct.get(1)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(2), athlAct.get(2)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(3), athlAct.get(3)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(4), athlAct.get(4)));
+
+		athlActTypesChart.setData(pieChartDataAthl);
+		athlActTypesChart.setTitle(athlete.getUsername());
+		
+		// Fill PieChart for Mean value with data
+		ObservableList<PieChart.Data> pieChartDataMv = FXCollections.observableArrayList();
+		pieChartDataMv.add(new PieChart.Data(allAct.get(0), meanValueAct.get(0)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(1), meanValueAct.get(1)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(2), meanValueAct.get(2)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(3), meanValueAct.get(3)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(4), meanValueAct.get(4)));
+
+		mvActTypesChart.setData(pieChartDataMv);
+		mvActTypesChart.setTitle("Mean Value");
+		
+	}
 
 		
 	// ---------------- MAP TAB -----------------------
