@@ -1,5 +1,6 @@
 package tdt4140.gr1802.app.core;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +20,10 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private int numbWorkouts;
 	
+	protected List<List<String>> sleepdata = new ArrayList <List<String>> ();
 	
 	private int maxHR;
+	
 	
 	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
 		this.username = username;
@@ -138,5 +141,10 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	public int getNrOfWorkouts(String activity) {
 		return database.getNrOfWorkoutsForAthlete(this, activity);
+	}
+	
+	public void addSleepData (URL path) {
+		CSVsleep csvSleep = new CSVsleep (path); 
+		sleepdata = csvSleep.getSleepData();	
 	}
 }

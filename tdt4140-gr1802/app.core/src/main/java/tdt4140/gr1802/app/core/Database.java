@@ -86,7 +86,7 @@ public class Database {
 			//finds the athlete of the workout, and accesses his workout-collection
 			//automatically creates new collection if it does not exists
 			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(workout.getAthlete().getUsername());
-		
+			
 			//creates document
 			Document doc = new Document("date", workout.getDateString());
 			
@@ -841,5 +841,20 @@ public class Database {
 		}
 		return quotes; 
 	}
+	
+	public void addSleepData (Athlete athlete) {
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		Bson updatedvalue = new Document("Sleepdata", athlete.sleepdata);
+		Bson updateoperation = new Document("$set", updatedvalue);
+		athleteCollection.updateOne(found, updateoperation);
+	}
+	
+	public List<List<String>> getSleepData (Athlete athlete) {
+		List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+		MongoCollection athleteCollection = athleteDatabase.getCollection(athlete.getUsername());
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		return sleepdata;
+	}
+	
 	
 }
