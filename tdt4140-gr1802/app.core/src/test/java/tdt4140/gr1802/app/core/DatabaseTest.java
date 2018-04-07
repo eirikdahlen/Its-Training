@@ -1,7 +1,9 @@
 
 package tdt4140.gr1802.app.core;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class DatabaseTest {
 		this.database = new Database();
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 	
 		//uncomment the tests to run
 		
@@ -84,6 +86,14 @@ public class DatabaseTest {
 		//____________________
 		//test.testAddMaxHR()
 		//check to see if athletes MaxHR is updated
+		
+		//____________________
+		//test.testAddSleepData();
+		//check to see if athletes sleepData is updated
+		
+		//______________________
+		test.testGetSleepData();
+		//check if output matches athlete's sleepdata in database
 			
 	}
 	
@@ -382,6 +392,33 @@ public class DatabaseTest {
 		Athlete athlete1 = new Athlete("Nils22", "passord", "Nils");
 		database.deleteAthleteRequestForCoach(coach1, athlete1.getUsername());
 	}
+	
+	//_______sleepdata_______
+	public void testAddSleepData() throws Exception {
+		Athlete athlete1 = new Athlete("TeddyWestside", "theodor", "Theodor");
+		
+		
+		URL filePath = new File("/Users/petter/Downloads/sleepdata_ida.csv").toURI().toURL();
+		CSVsleep test = new CSVsleep(filePath);
+		
+		List<List<String>> sleepdata = test.getSleepData();
+		athlete1.setSleepData(sleepdata);
+		
+		
+		database.addSleepData(athlete1);
+	}
+	
+	public void testGetSleepData() {
+		Athlete athlete1 = new Athlete("TeddyWestside", "theodor", "Theodor");
+		List<List<String>> sleepdata = database.getSleepData(athlete1);
+		System.out.println("sleep-data:");
+		for (List <String> s : sleepdata) {
+			System.out.println(""+s.get(0)+", "+s.get(1)+ ", " +s.get(2));
+		}
+	}
+	
+	//__________________
+	
 /*
 	public void testGetAllWorkoutsNonExistingAthlete() {
 		
@@ -488,6 +525,7 @@ public class DatabaseTest {
 		
 		
 	}
+
 
 	
 }
