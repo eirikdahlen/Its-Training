@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.AddWorkoutController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.AddSleepdataController">
    <children>
       <ImageView fitHeight="75.0" fitWidth="181.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,18 +33,16 @@
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
-                              <Button fx:id="btAddSleepdata" mnemonicParsing="false" onAction="#clickAddSleepdata" prefHeight="25.0" prefWidth="106.0" text="Add Sleepdata" />
                               <Button fx:id="btSeeWorkouts" mnemonicParsing="false" onAction="#clickSeeWorkouts" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
                               <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickSeeCoaches" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
+                              <Button fx:id="btAddSleepdata" mnemonicParsing="false" onAction="#clickAddSleepdata" prefHeight="25.0" prefWidth="106.0" text="Add Sleepdata" />
                            </children>
                         </VBox>
                         <Pane layoutX="159.0" prefHeight="655.0" prefWidth="1127.0">
                            <children>
                               <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter CSV Filepath" />
                               <Button fx:id="addButton" layoutX="29.0" layoutY="188.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
-                              <CheckBox fx:id="checkBox" layoutX="29.0" layoutY="142.0" mnemonicParsing="false" text="Private" />
-                              <TextField fx:id="gpxField" layoutX="29.0" layoutY="100.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter GPX Filepath" />
                            </children></Pane>
                      </children>
                   </AnchorPane>

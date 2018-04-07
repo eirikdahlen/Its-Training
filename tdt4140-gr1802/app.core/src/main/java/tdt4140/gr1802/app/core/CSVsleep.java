@@ -35,21 +35,15 @@ public class CSVsleep {
             br = new BufferedReader(new InputStreamReader(filePath.openStream()));
             while ((line = br.readLine()) != null) {
             		if (line.isEmpty() || i == 0 || i == 1) {
-            			System.out.println("Empty");
             		} else {
                 // use comma as separator
             			String[] linje = line.split(cvsSplitBy);
             			String date = linje[1].substring(0,10);
             			List <String> day = Arrays.asList(date, linje[2], linje[3]);
             			sleepdata.add(day);
-            			/*for (String e: day) {
-            				System.out.println(e);
-            			}*/
             		}
-                //System.out.println("kommer hit");
                 i++;
             }
-            
             //returns array
             return sleepdata;
 
@@ -57,6 +51,8 @@ public class CSVsleep {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+        		e.printStackTrace();
         } finally {
             if (br != null) {
                 try {

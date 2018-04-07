@@ -145,6 +145,6 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	public void addSleepData (URL path) {
 		CSVsleep csvSleep = new CSVsleep (path); 
-		sleepdata = csvSleep.getSleepData();	
+		sleepdata = csvSleep.getSleepData();
 	}
 }
