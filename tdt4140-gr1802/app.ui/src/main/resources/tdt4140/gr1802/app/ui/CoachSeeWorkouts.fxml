@@ -79,6 +79,6 @@
             <Font name="Century Gothic" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="homeScreenButton" layoutX="27.0" layoutY="23.0" mnemonicParsing="false" onAction="#backToHomeScreen" opacity="0.0" prefHeight="27.0" prefWidth="135.0" text="Button" />
+      <Button fx:id="homeScreenButton" layoutX="27.0" layoutY="23.0" mnemonicParsing="false" onAction="#backToHomeScreen" onMouseEntered="#homeScreenButtonCursorHand" onMouseExited="#homeScreenButtonCursorDefault" opacity="0.0" prefHeight="27.0" prefWidth="135.0" text="Button" />
    </children>
 </AnchorPane>
