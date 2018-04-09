@@ -14,5 +14,6 @@
 	<modules>
 		<module>app.core</module>
 		<module>app.ui</module>
+		<module>tdt4140-gr1802.web.server</module>
 	</modules>
 </project>
