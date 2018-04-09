@@ -40,7 +40,12 @@
 			<artifactId>tdt4140-gr1802.app.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+	<!-- https://mvnrepository.com/artifact/org.json/json -->
+	<dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20180130</version>
+	</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
