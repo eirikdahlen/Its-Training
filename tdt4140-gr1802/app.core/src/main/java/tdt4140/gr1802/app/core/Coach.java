@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -191,8 +192,8 @@ public class Coach extends User {
 		database.updateCoachNotes(this.username, asString);
 	}
 	
-	public List<List<Double>> getWorkoutsStartpoints(){
-		List<List<Double>> liste = new ArrayList<>();
+	public HashMap<Workout,List<Double>> getWorkoutsStartpoints(){
+		HashMap<Workout,List<Double>> dic = new HashMap<Workout, List<Double>>();
 		
         for (String ath : this.getAthletes()) {
     			Athlete athlete = database.getAthlete(ath);
@@ -200,11 +201,11 @@ public class Coach extends User {
     				for (Workout w : workouts) {
     					List<List<Double>> gpx = w.getGpxData();
     					if (gpx != null) {
-    						liste.add(gpx.get(0));
+    						dic.put(w,gpx.get(0));
     					}
     				}
         }
-        System.out.println("liste inni coach: "+liste);
-        return liste;
+        System.out.println("liste inni coach: "+dic);
+        return dic;
 	}
 }	
