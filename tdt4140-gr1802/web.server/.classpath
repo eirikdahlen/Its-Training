@@ -34,7 +34,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="src" path="/tdt4140-gr1802"/>
 	<classpathentry exported="true" kind="src" path="/tdt4140.gr1802.app.core"/>
-	<classpathentry exported="true" kind="lib" path="/Users/Theodor/.m2/repository/org/mongodb/bson/3.6.3/bson-3.6.3.jar">
+	<classpathentry kind="lib" path="/Users/Theodor/.m2/repository/org/mongodb/bson/3.6.3/bson-3.6.3.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="maven.groupId" value="org.mongodb"/>
@@ -43,7 +43,7 @@
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/Users/Theodor/.m2/repository/com/lynden/GMapsFX/2.12.0/GMapsFX-2.12.0.jar">
+	<classpathentry kind="lib" path="/Users/Theodor/.m2/repository/com/lynden/GMapsFX/2.12.0/GMapsFX-2.12.0.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="maven.groupId" value="com.lynden"/>
@@ -52,7 +52,7 @@
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/Users/Theodor/.m2/repository/org/mongodb/mongodb-driver/3.6.3/mongodb-driver-3.6.3.jar">
+	<classpathentry kind="lib" path="/Users/Theodor/.m2/repository/org/mongodb/mongodb-driver/3.6.3/mongodb-driver-3.6.3.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="maven.groupId" value="org.mongodb"/>
