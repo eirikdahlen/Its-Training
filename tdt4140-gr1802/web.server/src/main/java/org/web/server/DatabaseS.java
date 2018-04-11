@@ -694,7 +694,8 @@ public class DatabaseS {
 	public ArrayList<String> getAllActivities(){
 		ArrayList<String> activities = new ArrayList<String>();
 		
-		try (MongoCursor<Document> cursor = activityCollection.find().iterator()) {
+		try {
+			MongoCursor<Document> cursor = activityCollection.find().iterator();
 		    while (cursor.hasNext()) {
 		    		Document doc = cursor.next();
 		    		
@@ -712,7 +713,8 @@ public class DatabaseS {
 		int count = 0;
 		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
 		
-		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+		try {
+			MongoCursor<Document> cursor = userWorkoutCollection.find().iterator();
 		    while (cursor.hasNext()) {
 		    		Document doc = cursor.next();
 		    		
@@ -746,12 +748,13 @@ public class DatabaseS {
 	
 	public List<Workout> getWorkoutsForActivity(String activity){
 		List<Athlete> allAthletes = getAllAthletes();
-		List<Workout> activityWorkouts = new ArrayList<>();
+		List<Workout> activityWorkouts = new ArrayList<Workout>();
 		
 		for (Athlete ath : allAthletes) {
 			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(ath.getUsername());
 			
-			try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+			try {
+				MongoCursor<Document> cursor = userWorkoutCollection.find().iterator();
 			    while (cursor.hasNext()) {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
@@ -837,7 +840,8 @@ public class DatabaseS {
 		List<String> quotes = new ArrayList();
 		MongoCollection quotesCollection = dataDatabase.getCollection("AthleteQuotes");
 		
-		try (MongoCursor<Document> cursor = quotesCollection.find().iterator()) {
+		try {
+			MongoCursor<Document> cursor = quotesCollection.find().iterator();
 			while (cursor.hasNext()) {
 				Document doc = cursor.next(); 
 				if (doc.getString("text") != null) {
