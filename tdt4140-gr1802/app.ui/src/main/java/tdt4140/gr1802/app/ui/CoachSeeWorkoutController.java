@@ -28,6 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +39,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.App;
@@ -97,6 +99,8 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 
 	@FXML
 	private Button homeScreenButton;
+	@FXML
+	private Cursor cursor;
 	
 	private Coach coach;
 	private static Workout workout;
@@ -255,5 +259,14 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         Polyline poly = new Polyline(polyOpts);
         map.addMapShape((MapShape)poly);
 	}
+	
+    @FXML
+    public void homeScreenButtonCursorHand() {
+    	homeScreenButton.setCursor(Cursor.HAND);
+    }
+    @FXML
+    public void homeScreenButtonCursorDefault() {
+    	homeScreenButton.setCursor(Cursor.DEFAULT);
+    }
 
 }

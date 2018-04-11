@@ -5,6 +5,8 @@ Som utøver har man mulighet til å holde oversikt over sine treningsøkter og s
 Treningsplattformen tar i bruk en trener-utøver relasjon der utøver selv kan velge hvem som skal være trener,
 og trener kan selv velge hvilke utøvere som ønskes. 
 
+Dette prosjektet er en del av faget [TDT4140](https://www.ntnu.no/studier/emner/TDT4140#tab=omEmnet) og er basert på krav deretter.
+
 ## Kom i gang
 HTTPS-link er nødvendig for å kunne klone prosjektet. Denne finnes under prosjektet på GitLab.
 
