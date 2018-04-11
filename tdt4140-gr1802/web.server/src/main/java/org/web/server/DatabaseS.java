@@ -1,4 +1,4 @@
-package tdt4140.gr1802.app.core;
+package org.web.server;
 
 
 import java.io.IOException;
@@ -16,10 +16,18 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
+import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.Workout;
+
 import java.util.logging.Level;
 
-public class Database {
+
+public class DatabaseS {
 	
+	
+
 	//Connects to MongoDB 
 	private String uri = "mongodb://theodorastrupwiik:starwars123!@pu-shard-00-00-wgffn.mongodb.net:27017,pu-shard-00-01-wgffn.mongodb.net:27017,pu-shard-00-02-wgffn.mongodb.net:27017/admin?replicaSet=PU-shard-0&ssl=true";
 	private MongoClientURI clientURI = new MongoClientURI(uri);
@@ -35,7 +43,7 @@ public class Database {
 	private MongoCollection activityCollection;
 	private MongoCollection quotesCollection; 
 	
-	public Database() {
+	public DatabaseS() {
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
 		refresh();
 	}
@@ -203,7 +211,8 @@ public class Database {
 	public List<Athlete> getAllAthletes(){
 		List<Athlete> athletes = new ArrayList<Athlete>();
 		
-		try (MongoCursor<Document> cursor = athleteCollection.find().iterator()) {
+		try {
+			MongoCursor<Document> cursor = athleteCollection.find().iterator();
 		    while (cursor.hasNext()) {
 		    		Document doc = cursor.next();
 		    		
@@ -268,7 +277,7 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx") );
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx"));
 		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
 		        workouts.add(workout);
 		    } 
@@ -699,9 +708,9 @@ public class Database {
 		return activities;
 	}
 	
-	public int getNrOfWorkoutsForAthlete(String athlete, String activity) {
+	public int getNrOfWorkoutsForAthlete(Athlete athlete, String activity) {
 		int count = 0;
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete);
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
 		
 		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
 		    while (cursor.hasNext()) {
@@ -747,7 +756,7 @@ public class Database {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
 			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") , (List<List<Double>>)doc.get("gpx"));
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") ,(List<List<Double>>)doc.get("gpx"));
 					        
 			    			activityWorkouts.add(workout);
 			    		}
@@ -758,17 +767,6 @@ public class Database {
 			}
 		}
 		return activityWorkouts;	
-	}
-	
-	public List<Integer> getAthleteActivityTypes(String username){
-		List<Integer> list = new ArrayList<>();
-		
-		List<String> allAct = getAllActivities();
-		for (String act : allAct) {
-			int n = getNrOfWorkoutsForAthlete(username, act);
-			list.add(n);
-		}
-		return list;
 	}
 	
 	//**************HOME-TAB*******************
@@ -829,7 +827,7 @@ public class Database {
 		Database db = new Database();
 		System.out.println(db.getAthletesForActivity("RUNNING"));
 		System.out.println(db.getCoachNotes("petter22"));
-		System.out.println(db.getAthleteActivityTypes("TeddyWestside"));
+		
 
 	}
 	
@@ -852,6 +850,7 @@ public class Database {
 		}
 		return quotes; 
 	}
-
 	
+	
+
 }

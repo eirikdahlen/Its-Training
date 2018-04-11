@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+     
+  <!--  new parent -->
+  <parent>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-parent</artifactId>
+   <version>1.3.2.RELEASE</version>
+  </parent>
+  
+  <groupId>tdt4140-gr1802</groupId>
+  <artifactId>web.server</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>web.server</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+  	<!-- JUNIT  -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- SPRING BOOT -->
+    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+   	<!-- jackson core -->
+    <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.3</version>
+	</dependency>
+
+	<!-- jackson anno -->
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-annotations</artifactId>
+		<version>2.9.3</version>
+	</dependency>
+	
+	<!-- jackson databind -->
+	<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.3</version>
+	</dependency>
+        
+	<!-- MONGODB -->
+	<dependency>
+        		<groupId>org.mongodb</groupId>
+        		<artifactId>mongodb-driver</artifactId>
+        		<version>3.6.3</version>
+ 	</dependency>
+	
+	<!-- jENETICS -->
+	<dependency>
+   			<groupId>io.jenetics</groupId>
+   			<artifactId>jpx</artifactId>
+   			<version>1.2.3</version>
+	</dependency>
+	
+	<!-- GMAPS FX -->
+  	<dependency>
+    			<groupId>com.lynden</groupId>
+    			<artifactId>GMapsFX</artifactId>
+    			<version>2.12.0</version>
+	</dependency>
+	
+	<!-- APP.CORE -->
+	<dependency>
+			<groupId>tdt4140-gr1802</groupId>
+			<artifactId>tdt4140-gr1802.app.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<!-- JSON -->
+	<dependency>
+           <groupId>org.skyscreamer</groupId>
+           <artifactId>jsonassert</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>
