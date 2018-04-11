@@ -1,4 +1,5 @@
-package tdt4140.gr1802.app.core;
+package tdt4140.gr1812.app.backend.server;
+
 
 
 import java.io.IOException;
@@ -16,10 +17,18 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
+import tdt4140.gr1802.app.core.Athlete;
+import tdt4140.gr1802.app.core.Coach;
+import tdt4140.gr1802.app.core.Database;
+import tdt4140.gr1802.app.core.Workout;
+
 import java.util.logging.Level;
 
-public class Database {
+
+public class DatabaseS {
 	
+	
+
 	//Connects to MongoDB 
 	private String uri = "mongodb://theodorastrupwiik:starwars123!@pu-shard-00-00-wgffn.mongodb.net:27017,pu-shard-00-01-wgffn.mongodb.net:27017,pu-shard-00-02-wgffn.mongodb.net:27017/admin?replicaSet=PU-shard-0&ssl=true";
 	private MongoClientURI clientURI = new MongoClientURI(uri);
@@ -35,7 +44,7 @@ public class Database {
 	private MongoCollection activityCollection;
 	private MongoCollection quotesCollection; 
 	
-	public Database() {
+	public DatabaseS() {
 		java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(Level.SEVERE);
 		refresh();
 	}
@@ -122,7 +131,7 @@ public class Database {
 
 	}
 	
- //gjør denne
+
 	
 	public void addMaxHR(Athlete athlete, int maxHR) {
 		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
@@ -130,6 +139,8 @@ public class Database {
 		Bson updatedvalue = new Document("maxHR", maxHR);
 		Bson updateoperation = new Document("$set", updatedvalue);
 		athleteCollection.updateOne(found, updateoperation);
+		
+	
 		
 	}
 	
@@ -266,8 +277,8 @@ public class Database {
 
 		 
 		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx") );
-		        //workout.setGpxData((List<List<Double>>)doc.get("gpx"));
+						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx"));
+		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
 		        workouts.add(workout);
 		    } 
 		} catch(Exception e) {
@@ -571,8 +582,6 @@ public class Database {
 			List<String> coaches = (ArrayList<String>) found.get("Coaches");
 			return coaches;
 		}
-		
-		
 	}
 	
 	// Returns a list with all the Athletes usernames for the Coach
@@ -747,7 +756,7 @@ public class Database {
 			    		Document doc = cursor.next();
 			    		if (doc.getString("type").equals(activity)) {
 			    			Workout workout = new Workout( ath, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") , (List<List<Double>>)doc.get("gpx"));
+									doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility") ,(List<List<Double>>)doc.get("gpx"));
 					        
 			    			activityWorkouts.add(workout);
 			    		}
@@ -842,4 +851,6 @@ public class Database {
 		return quotes; 
 	}
 	
+	
+
 }

@@ -31,15 +31,17 @@
             <scope>test</scope>
         </dependency>
         <!-- MySQL database driver -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            </dependency>
+        
         <!-- end::tests[] -->
         <dependency>
         	<groupId>org.skyscreamer</groupId>
         	<artifactId>jsonassert</artifactId>
         </dependency>
+        <dependency>
+        		<groupId>org.mongodb</groupId>
+        		<artifactId>mongodb-driver</artifactId>
+        		<version>3.6.3</version>
+    		</dependency>
     </dependencies>
 
     <properties>
