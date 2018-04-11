@@ -59,15 +59,18 @@ public class LoginScreenController {
 	
 	public void loginButton(ActionEvent event, String typedUsername, String typedPassword) throws IOException {
 		login = new LogIn(typedUsername, typedPassword);
-
-		if (!login.checkUsernameAthlete(typedUsername) 
-				|| !login.checkUsernameCoach(typedUsername)) {
-			System.out.println("Username don't excists.");
-		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
-			System.out.println("Username don't matches password.");
-		} else if (login.validLogIn()) {
-			System.out.println("valid login");
-		}
+		
+		
+		//apparently only for printing, takes a lot of time
+		
+//		if (!login.checkUsernameAthlete(typedUsername) 
+//				|| !login.checkUsernameCoach(typedUsername)) {
+//			System.out.println("Username don't excists.");
+//		} else if (login.checkUsernameMatchPassword(typedUsername, typedPassword)) {
+//			System.out.println("Username don't matches password.");
+//		} else if (login.validLogIn()) {
+//			System.out.println("valid login");
+//		}
 		
 		/*
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Login.fxml"));

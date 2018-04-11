@@ -19,7 +19,6 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private int numbWorkouts;
 	
-	
 	private int maxHR;
 	
 	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
@@ -28,6 +27,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 		this.name = name;
 		this.coaches = coaches;
 		this.queuedCoaches = queuedCoaches;
+	
 	}
 	
 	public Athlete (String username, String password, String name) {
@@ -43,14 +43,16 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
-	public int getNumbWorkouts() {this.numbWorkouts = database.getAllWorkouts(this).size(); return this.numbWorkouts; }
+	public void setNumbWorkouts() { this.numbWorkouts = database.getAllWorkouts(this).size(); }
+	
+	//only works if numbWorkouts is already initialized
+	public int getNumbWorkouts() { return this.numbWorkouts; }
 	
 	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
 	
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
 	public int getMaxHR() {return this.maxHR; }
-	
 	
 	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
 	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.
@@ -120,7 +122,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	@Override
 	public int compareTo(Athlete o) {
-		return o.getAllWorkouts().size() - this.getAllWorkouts().size();
+		return o.getNumbWorkouts() - this.getNumbWorkouts();
 	}
 	
 	public Date getDateLastWorkout() {

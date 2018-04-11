@@ -24,13 +24,12 @@ public class LogIn {
 	
 	// Check if login is valid
 	public boolean validLogIn() {
-		if (checkUsernameAthlete(username) && checkUsernameMatchPassword(username, password)) {
-			inloggedUser = this.db.getAthlete(username);
-			return true;
-		} else if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
+		if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
 			inloggedUser = this.db.getCoach(username);
 			return true;
-		}
+		} else if (checkUsernameAthlete(username) && checkUsernameMatchPassword(username, password)) {
+			inloggedUser = this.db.getAthlete(username);
+			return true; }
 		return false; 
 	}
 	
