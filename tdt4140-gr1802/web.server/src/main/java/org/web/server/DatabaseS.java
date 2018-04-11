@@ -270,8 +270,8 @@ public class DatabaseS {
 		//automatically creates new collection if it does not exists
 		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
 		
-		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
-		
+		try {
+			MongoCursor<Document> cursor = userWorkoutCollection.find().iterator();
 		    while (cursor.hasNext()) {
 		    		Document doc = cursor.next();
 
@@ -730,7 +730,7 @@ public class DatabaseS {
 	
 	public List<Athlete> getAthletesForActivity(String activity){
 		List<Athlete> allAthletes = getAllAthletes();
-		List<Athlete> activityAthletes = new ArrayList<>();
+		List<Athlete> activityAthletes = new ArrayList<Athlete>();
 		
 		for (Athlete ath : allAthletes) {
 			
