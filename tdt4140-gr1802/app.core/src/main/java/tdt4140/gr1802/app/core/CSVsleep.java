@@ -39,7 +39,8 @@ public class CSVsleep {
                 // use comma as separator
             			String[] linje = line.split(cvsSplitBy);
             			String date = linje[1].substring(0,10);
-            			List <String> day = Arrays.asList(date, linje[2], linje[3]);
+            			String quality = linje[2].substring(0, linje[2].length()-1);
+            			List <String> day = Arrays.asList(date, quality, linje[3]);
             			sleepdata.add(day);
             		}
                 i++;

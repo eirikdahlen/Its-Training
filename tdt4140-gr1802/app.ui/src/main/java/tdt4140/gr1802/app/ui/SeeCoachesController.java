@@ -51,6 +51,9 @@ public class SeeCoachesController {
 	private Button btAddWorkout;
 	
 	@FXML
+	private Button btAddSleepdata ;
+	
+	@FXML
 	private Button btSeeWorkouts;
 	
 	@FXML

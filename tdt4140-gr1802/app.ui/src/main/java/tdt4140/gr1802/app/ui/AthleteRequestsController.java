@@ -41,6 +41,7 @@ public class AthleteRequestsController {
 	
 	@FXML
 	private Button btSeeAthletes;
+
 	
 	@FXML
 	private Button btAthleteRequests;

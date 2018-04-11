@@ -43,6 +43,9 @@ public class AthleteWorkoutController {
 	private Button btCoachRequests;
 	
 	@FXML
+	private Button btAddSleepdata;
+	
+	@FXML
 	private Label txtLabelUsername;
 	
 	@FXML

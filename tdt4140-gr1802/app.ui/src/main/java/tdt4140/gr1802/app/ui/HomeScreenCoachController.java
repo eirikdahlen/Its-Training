@@ -173,6 +173,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	@FXML
 	private Button btAthleteRequests;
 	
+	
 	@FXML
 	private Label txtLabelUsername;
 	
@@ -648,8 +649,5 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		window.setScene(scene);
 		window.show();
 	}
-	
-	
-	
 	
 }

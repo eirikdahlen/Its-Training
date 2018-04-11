@@ -42,6 +42,9 @@ public class HomeScreenAthleteController {
 	private Button btSeeCoaches;
 	
 	@FXML
+	private Button btAddSleepdata ;
+	
+	@FXML
 	private Button btCoachRequests;
 	
 	@FXML

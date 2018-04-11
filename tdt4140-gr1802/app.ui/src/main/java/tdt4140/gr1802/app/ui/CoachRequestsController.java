@@ -38,6 +38,9 @@ public class CoachRequestsController {
 	private Button btSeeWorkouts;
 	
 	@FXML
+	private Button btAddSleepdata ;
+	
+	@FXML
 	private Button btSeeCoaches;
 	
 	@FXML

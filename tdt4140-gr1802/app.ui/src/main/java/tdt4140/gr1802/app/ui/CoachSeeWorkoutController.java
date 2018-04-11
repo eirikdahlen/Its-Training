@@ -53,6 +53,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	@FXML
 	private Button btAthleteRequests;
 	
+	
 	@FXML
 	private Label txtLabelUsername;
 	

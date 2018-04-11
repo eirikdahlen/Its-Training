@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.CoachSeeSleepdataController">
+   <children>
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane layoutY="71.0" prefHeight="649.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="71.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="649.0" prefWidth="1280.0">
+                     <children>
+                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
+                        <Line endX="706.0" startX="-100.0" />
+                        <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
+                              <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
+                           </children>
+                        </VBox>
+                        <LineChart layoutX="329.0" layoutY="104.0">
+                          <xAxis>
+                            <CategoryAxis fx:id="xAxisSleepdata" label= "Date" prefHeight="33.0" prefWidth="362.0" side="BOTTOM"/>                            
+                          </xAxis>
+                          <yAxis>
+                          	<NumberAxis fx:id="yAxisLength" label="Hours" prefHeight="155.0" prefWidth="46.0" side="LEFT" />
+                          </yAxis>
+                          <yAxis>
+                            <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="RIGHT" />
+                          </yAxis>
+                        </LineChart>
+                        <Label fx:id="txtAthleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="250.0">
+                        		<font>
+                        			<Font name="System Bold" size="18.0" />
+                         	</font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+            <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="36.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <ImageView fitHeight="76.0" fitWidth="183.0" layoutX="-7.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="645.5038452148438" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="1106.0" AnchorPane.topAnchor="2.0">
+         <image>
+            <Image url="@Images/homescreen_pink.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <Label layoutX="21.0" layoutY="15.0" prefHeight="44.0" prefWidth="135.0" text="It's Training" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtLabelUsername" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1050.0" layoutY="30.0" prefHeight="18.0" prefWidth="175.0" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      
+   </children>
+</AnchorPane>
