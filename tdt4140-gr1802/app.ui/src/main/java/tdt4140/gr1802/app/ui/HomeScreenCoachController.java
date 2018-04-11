@@ -90,13 +90,11 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		private double lowHR;
 		private double medHR;
 		private double highHR;
-		
-		
+			
 		public RankAthlete(Athlete athlete, boolean tirthy){
 			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
 			this.userName = athlete.getUsername();
-			
-			
+				
 			List<Workout> workoutList = db.getAllWorkouts(athlete);
 			for (int i = 0; i < workoutList.size();i++) {
 				if (! workoutList.get(i).getVisibility()) {
@@ -109,26 +107,19 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 				LocalDate dateRank = LocalDate.now().minusDays(30);
 				Date sinceDateRank = java.sql.Date.valueOf(dateRank);
 				//slett fra workout-liste
-				
-				
+						
 				for (int i = 0; i < workoutList.size();i++) {
 					if (workoutList.get(i).getDate().before(sinceDateRank)) {
-						workoutList.remove(i);
-						
-					}
-				}
-				
-			}
-			
+						workoutList.remove(i);	}
+				}		
+			}		
 			this.numbWorkouts = workoutList.size();
 			this.totalDuration = analyzer.getTotalDuration(workoutList);
 			this.lowHR = analyzer.getTimeInHRZones(workoutList).get(0);
 			this.medHR = analyzer.getTimeInHRZones(workoutList).get(1);
-			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);
-			
+			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);		
 		}
-		
-		
+			
 		public String getUserName() {
 			return userName;
 		}
@@ -146,12 +137,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		}
 		public double getHighHR() {
 			return highHR;
-		}
-		
-		
-		
-		
-		
+		}	
 	}
 	
 	public class DateAthlete {
@@ -311,13 +297,14 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		System.out.println(coach.getName());
 		System.out.println(homeTabWelcomeText);
 		homeTabWelcomeText.setText("Welcome " + coach.getName() + "!");
+		
 		// Fill Top 3
+		System.out.println("HALLO!");
 		List<Athlete> top3 = coach.getTop3Athletes();
 		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
 		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		tableViewTop3.setItems(obsList);
-		
 		
 		// Fill dates not working out
 		List<String> dateChoices = new ArrayList<>();

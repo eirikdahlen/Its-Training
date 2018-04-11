@@ -109,29 +109,32 @@ public class Coach extends User {
 			database.deleteCoachForAthlete(database.getAthlete(athlete), this.getUsername());
 		}
 	}
-	
+
 	// Get coach top 3 athletes 
 	public List<Athlete> getTop3Athletes() {
-		List<Athlete> sorted = new ArrayList<>();
-		List<Athlete> top3 = new ArrayList<>();
-		
-		for (String name : athletes) {
-			database.getAthlete(name).getAllWorkouts();
-			sorted.add(database.getAthlete(name));
-		}
-		System.out.println("sorted before sort: " + sorted);
-		if (sorted.size() > 1) { Collections.sort(sorted);}
-		
-		if (sorted.size() <= 3) {
-			top3.addAll(sorted);
-		} else {
-			top3.add(sorted.get(0)); top3.add(sorted.get(1)); top3.add(sorted.get(2));
 
+		//list of Athletes
+		List<Athlete> sortedAthletes = new ArrayList<>();	
+		//list to be returned
+		List<Athlete> top3 = new ArrayList<>();
+	
+		for (String name : athletes) {
+			Athlete athl = database.getAthlete(name);
+			//ensures that the athlete object has an up to date numbWorkouts-field 
+			athl.setNumbWorkouts();
+			sortedAthletes.add(athl);
 		}
 		
-		return top3; 
+		if (sortedAthletes.size() > 1) { 
+			Collections.sort(sortedAthletes); }
+		if (sortedAthletes.size() <= 3) { 
+			top3.addAll(sortedAthletes); } 
+		else { 
+			top3.add(sortedAthletes.get(0)); top3.add(sortedAthletes.get(1)); top3.add(sortedAthletes.get(2));}
 		
+		return top3;	
 	}
+	
 	// ----- get athletes not working out since -----
 	// TODO: Move this method to analyze athletes? 
 	public List<Athlete> getAthletesNotWorkingOutSince(Date date) {
