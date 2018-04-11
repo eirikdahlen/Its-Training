@@ -32,8 +32,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="/tdt4140-gr1802"/>
-	<classpathentry kind="src" path="/tdt4140.gr1802.app.core"/>
+	<classpathentry exported="true" kind="src" path="/tdt4140-gr1802"/>
+	<classpathentry exported="true" kind="src" path="/tdt4140.gr1802.app.core"/>
 	<classpathentry exported="true" kind="lib" path="/Users/Theodor/.m2/repository/org/mongodb/bson/3.6.3/bson-3.6.3.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
