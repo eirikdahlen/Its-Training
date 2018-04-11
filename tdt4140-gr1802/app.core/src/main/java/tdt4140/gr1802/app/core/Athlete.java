@@ -139,6 +139,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	}
 	
 	public int getNrOfWorkouts(String activity) {
-		return database.getNrOfWorkoutsForAthlete(this, activity);
+		return database.getNrOfWorkoutsForAthlete(this.getUsername(), activity);
 	}
+	
 }
