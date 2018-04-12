@@ -127,7 +127,7 @@ public class AnalyzeWorkout {
 		
 	}
 	
-	public List<Integer> getAnalyzedHRZonesMeanValueForAll(List<Athlete> athletes) {
+	public List<Integer> getAnalyzedHRZonesMeanValueForAll(List<Athlete> athletes) throws Exception {
 		int totLow = 0;
 		int totModerate = 0;
 		int totHigh = 0;
@@ -163,7 +163,7 @@ public class AnalyzeWorkout {
 		return duration;
 	}
 	
-	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) {
+	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) throws Exception {
 		int duration = 0;
 		int counter = 0;
 		for (Athlete athlete : athletes) {

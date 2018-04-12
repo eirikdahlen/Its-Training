@@ -80,7 +80,7 @@ public class SeeWorkoutsController{
 	private Workout workout;
 
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
-	public ObservableList<Workout> getWorkouts(){
+	public ObservableList<Workout> getWorkouts() throws Exception{
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
 		System.out.println("getWorkouts" + athlete.getAllWorkouts());
 		for (Workout wo:athlete.getAllWorkouts()) {
@@ -89,7 +89,7 @@ public class SeeWorkoutsController{
 		return workouts;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		//App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.database = App.getDb();

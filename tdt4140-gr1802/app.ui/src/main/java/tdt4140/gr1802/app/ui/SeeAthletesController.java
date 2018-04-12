@@ -70,7 +70,7 @@ public class SeeAthletesController {
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
 	// returns an ObservableList with all the Athletes registered to the coach logged in
-	public ObservableList<Athlete> getAthletes(){
+	public ObservableList<Athlete> getAthletes() throws Exception{
 		// Loops through the athletes for a coach and adds to list of athletes in application
 		for (String uname : coach.getAthletes()) {
 			Athlete athlete = database.getAthlete(uname);
@@ -81,7 +81,7 @@ public class SeeAthletesController {
 		return athletes;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateCoach();
 		this.coach = App.getCoach();
 		
@@ -121,7 +121,7 @@ public class SeeAthletesController {
 		
 	}
 	
-	public void removeButton(ActionEvent event) throws IOException{
+	public void removeButton(ActionEvent event) throws Exception{
 		// ObservableList with the selectedRow
 		ObservableList<Athlete> selectedRow;
 		selectedRow = tableView.getSelectionModel().getSelectedItems();
@@ -138,7 +138,7 @@ public class SeeAthletesController {
 		}
 	}
 	
-	public void addAthleteButton(ActionEvent event) throws RuntimeException, InvocationTargetException{
+	public void addAthleteButton(ActionEvent event) throws Exception{
 		// Get the String in the TextField
 		String newAthlete = addAthleteTextField.getText();
 		

@@ -90,7 +90,7 @@ public class AthleteWorkoutController {
 	
 	ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.txtLabelUsername.setText(this.athlete.getUsername());

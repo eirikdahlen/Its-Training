@@ -254,6 +254,9 @@ public class DatabaseS {
 			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
 					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), (List<List<Double>>)found.get("gpx"));
 			workout.setGpxData((List<List<Double>>)found.get("gpx"));
+			if (found.get("gpx") == null) {
+				workout.setGpxData(null);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

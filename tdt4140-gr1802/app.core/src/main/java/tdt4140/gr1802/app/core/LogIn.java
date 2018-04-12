@@ -23,7 +23,7 @@ public class LogIn {
 	}
 	
 	// Check if login is valid
-	public boolean validLogIn() {
+	public boolean validLogIn() throws Exception {
 		if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
 			inloggedUser = this.db.getCoach(username);
 			return true;
@@ -44,7 +44,7 @@ public class LogIn {
 	}
 	
 	// Check if username match with corresponding password
-	public boolean checkUsernameMatchPassword(String username, String password) {
+	public boolean checkUsernameMatchPassword(String username, String password) throws Exception {
 		System.out.println(username);
 		System.out.println(password);
 		System.out.println(db);

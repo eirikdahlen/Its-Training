@@ -43,12 +43,12 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
-	public void setNumbWorkouts() { this.numbWorkouts = database.getAllWorkouts(this).size(); }
+	public void setNumbWorkouts() throws Exception { this.numbWorkouts = database.getAllWorkouts(this).size(); }
 	
 	//only works if numbWorkouts is already initialized
 	public int getNumbWorkouts() { return this.numbWorkouts; }
 	
-	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
+	public List<Workout> getAllWorkouts() throws Exception{ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
 	
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
@@ -63,7 +63,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	}
 
 	// Method for the athlete to approve coach-request (coaches in "queuedCoaches") 
-	public void approveCoach (String coachUsername) {
+	public void approveCoach (String coachUsername) throws Exception {
 		if (queuedCoaches.contains(coachUsername)) {
 			Coach coach = database.getCoach(coachUsername);
 			queuedCoaches.remove(coachUsername);
@@ -88,7 +88,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	}
 	
 	//  Calls the queueAthlete-method in the Coach-class, and queue them self in queuedAthletes at the Coach-object
-	public void sendCoachRequest (String coach) {
+	public void sendCoachRequest (String coach) throws Exception {
 		Coach c = database.getCoach(coach);
 		if (coaches.contains(coach)) {
 			System.out.println("Athlete is already asigned to this coach...");
@@ -112,7 +112,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	}
 	
 	// Remove the coach from the coach-list and update the database for both the athlete and the coach.
-	public void removeCoach(String coach) {
+	public void removeCoach(String coach) throws Exception {
 		if (hasCoach(coach)) {
 			coaches.remove(coach);
 			database.deleteCoachForAthlete(this, coach);
@@ -125,7 +125,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 		return o.getNumbWorkouts() - this.getNumbWorkouts();
 	}
 	
-	public Date getDateLastWorkout() {
+	public Date getDateLastWorkout() throws Exception {
 		List<Workout> sorted = new ArrayList<>();
 		sorted.addAll(this.getAllWorkouts());
 		

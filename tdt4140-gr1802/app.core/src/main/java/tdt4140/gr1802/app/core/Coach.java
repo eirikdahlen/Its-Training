@@ -52,7 +52,7 @@ public class Coach extends User {
 	}
 	
 	// Method for the coach to approve athlete-request (athlete in "queuedAthletes") 
-	public void approveAthlete (String athleteUsername) {
+	public void approveAthlete (String athleteUsername) throws Exception {
 		if (queuedAthletes.contains(athleteUsername)) {
 			Athlete athlete = database.getAthlete(athleteUsername);
 			queuedAthletes.remove(athleteUsername);
@@ -78,7 +78,7 @@ public class Coach extends User {
 	}
 	
 	// Calls the queueCoach-method in the Athlete-class, and queue them self in queuedCoaches at the Athlete-object
-	public void sendAthleteRequest (String athlete) {
+	public void sendAthleteRequest (String athlete) throws Exception {
 		Athlete a = database.getAthlete(athlete);
 		if (athletes.contains(athlete)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;
@@ -103,7 +103,7 @@ public class Coach extends User {
 	}
 	
 	// Remove the athlete from the athlete-list and update the database for both the athlete and the coach.
-	public void removeAthlete(String athlete) {
+	public void removeAthlete(String athlete) throws Exception {
 		if (hasAthlete(athlete)) {
 			athletes.remove(athlete);
 			database.deleteAthleteForCoach(this, athlete);
@@ -112,7 +112,7 @@ public class Coach extends User {
 	}
 
 	// Get coach top 3 athletes 
-	public List<Athlete> getTop3Athletes() {
+	public List<Athlete> getTop3Athletes() throws Exception {
 
 		//list of Athletes
 		List<Athlete> sortedAthletes = new ArrayList<>();	
@@ -138,7 +138,7 @@ public class Coach extends User {
 	
 	// ----- get athletes not working out since -----
 	// TODO: Move this method to analyze athletes? 
-	public List<Athlete> getAthletesNotWorkingOutSince(Date date) {
+	public List<Athlete> getAthletesNotWorkingOutSince(Date date) throws Exception {
 		List<Athlete> resultAthletes = new ArrayList<>();
 		
 		for (String athName : this.athletes) {
@@ -195,7 +195,7 @@ public class Coach extends User {
 		database.updateCoachNotes(this.username, asString);
 	}
 	
-	public HashMap<Workout,List<Double>> getWorkoutsStartpoints(){
+	public HashMap<Workout,List<Double>> getWorkoutsStartpoints() throws Exception{
 		HashMap<Workout,List<Double>> dic = new HashMap<Workout, List<Double>>();
 		
         for (String ath : this.getAthletes()) {

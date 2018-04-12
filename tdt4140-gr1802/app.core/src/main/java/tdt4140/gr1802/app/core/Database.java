@@ -2,12 +2,16 @@ package tdt4140.gr1802.app.core;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.mongodb.MongoClient;
@@ -135,34 +139,43 @@ public class Database {
 	}
 	
 	// Returns the Coach from the database
-	public Coach getCoach(String username) {
-		Document found = (Document) coachCollection.find(new Document("Username", username)).first();
+public Coach getCoach(String username) throws Exception {
+    	
+    	
+    	HashMap<String, String> myMap = new HashMap<String, String>(); 
 		
-		if(found == null) {
-			System.out.println("no Coach goes by this username");
-			return null;
-		}
-		Coach coach = new Coach(found.getString("Username"), found.getString("Password") ,found.getString("Name") , (List<String>) found.get("Athletes") , (List<String>) found.get("Requests"));
-	
-		return coach;
-	}
+	myMap.put("name", username);
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getCoach");
+    String c = objektet.get("Athletes").toString();
+    String[] str = c.split("_");
+    String r = objektet.get("Requests").toString();
+    String[] str2 = c.split("_");
+    List<String> athleteList = new ArrayList<String>();
+    List<String> requests = new ArrayList<String>();
+    
+    for(String s : str) {
+    	athleteList.add((String) s);
+    }
+    for(String s : str2) {
+    	requests.add((String ) s);
+    }
+           
+    Coach coach = new Coach(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), athleteList, requests);
+  
+    return coach;
+    	
+    }
 	
 	// Returning the password to the user
-	public String getPassword(String username) {
-		if (! this.usernameExists(username) ) {
-			System.out.println("username does not exist");
-			return null;
-		}
-		if (athleteUsernameExists(username) ) {
-			Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
-			String password = found.getString("Password");
-			return password;
-		} else {
-			Document found = (Document) coachCollection.find(new Document("Username", username)).first();
-			String password = found.getString("Password");
-			return password;
-		}
-	}
+public String getPassword(String username) throws Exception {
+	
+ 	HashMap<String, String> myMap = new HashMap<String, String>(); 
+ 	myMap.put("name", username);
+ 	String pass;
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getPass");
+    pass = objektet.get("Password").toString();
+    return pass;
+}
 	
 	// Initializing variables, should be changed.
 	public void refresh() {
@@ -177,25 +190,45 @@ public class Database {
 	}
 	
 	// Returns the Athlete from the database
-	public Athlete getAthlete(String username) {
-		
-		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
-		
-		if (found == null) {
-			System.out.println("no athlete with this username");
-			return null;
-		}
-		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
-	
-		try {
-			athlete.setMaxHR( found.getInteger("maxHR") );
-		} catch (Exception e) {
-			//sets maxHR to 0 if it is not present in db
-			athlete.setMaxHR(0);
-			
-		}
-		return athlete;
-	}
+//	public Athlete getAthlete(String username) {
+//		
+//		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
+//		
+//		if (found == null) {
+//			System.out.println("no athlete with this username");
+//			return null;
+//		}
+//		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+//	
+//		try {
+//			athlete.setMaxHR( found.getInteger("maxHR") );
+//		} catch (Exception e) {
+//			//sets maxHR to 0 if it is not present in db
+//			athlete.setMaxHR(0);
+//			
+//		}
+//		return athlete;
+//	}
+	  
+    public Athlete getAthlete(String username) throws Exception {
+    	
+    	
+    	HashMap<String, String> myMap = new HashMap<String, String>(); 
+	System.out.println("get Athlete inni");
+	myMap.put("name", username);
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAthlete");
+    String c = objektet.get("Coaches").toString();
+    String[] str = c.split("_");
+    String r = objektet.get("Requests").toString();
+    String[] str2 = r.split("_");
+    List<String> coachList = Arrays.asList(str);   //new ArrayList<String>();
+    List<String> requests = Arrays.asList(str2);
+           
+    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), coachList, requests);
+    athl.setMaxHR(Integer.parseInt("190"));
+    return athl;
+    	
+    }
 	
 	public List<Athlete> getAllAthletes(){
 		List<Athlete> athletes = new ArrayList<Athlete>();
@@ -226,55 +259,132 @@ public class Database {
 	}*/
 	
 	// Returns the Workout from the database
-	public Workout getWorkout(Athlete athlete, String date) {
-		//finds the athlete of the workout, and accesses his workout-collection
-		//automatically creates new collection if it does not exists
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
-		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
-		
-		if (found == null) {
-			System.out.println("no workout with this datetime");
-			return null;
-		}
-		//creates workout-object
-		Workout workout = null;
-		try {
-			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
-					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), (List<List<Double>>)found.get("gpx"));
-			workout.setGpxData((List<List<Double>>)found.get("gpx"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return workout;
-	}
+//	public Workout getWorkout(Athlete athlete, String date) {
+//		//finds the athlete of the workout, and accesses his workout-collection
+//		//automatically creates new collection if it does not exists
+//		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+//		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
+//		
+//		if (found == null) {
+//			System.out.println("no workout with this datetime");
+//			return null;
+//		}
+//		//creates workout-object
+//		Workout workout = null;
+//		try {
+//			workout = new Workout( athlete, found.getString("date"),found.getString("type")  , found.getInteger("duration" )  , 
+//					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), (List<List<Double>>)found.get("gpx"));
+//			workout.setGpxData((List<List<Double>>)found.get("gpx"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return workout;
+//	}
 	
-	// Returns a list of all the Workouts for a spesific Athlete
-	public List<Workout> getAllWorkouts(Athlete athlete) {
-		List<Workout> workouts = new ArrayList<Workout>();
-		
-		//finds the athlete of the workout, and accesses his workout-collection
-		//automatically creates new collection if it does not exists
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
-		
-		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
-		
-		    while (cursor.hasNext()) {
-		    		Document doc = cursor.next();
 
-		 
-		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
-						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx") );
-		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
-		        workouts.add(workout);
-		    } 
-		} catch(Exception e) {
-			System.out.println("oi her var det litt smaafeil gitt");
-			e.printStackTrace();
-		}
-		return workouts;
-	}
+
+
+public Workout getWorkout(Athlete athl, String date) throws Exception {
 	
+ 	HashMap<String, String> myMap = new HashMap<String, String>(); 
+ 	List<String> argList = new ArrayList<String>();
+ 	argList.add(athl.getUsername());
+ 	argList.add(date);
+ 	String str = String.join("_", argList );
+ 	myMap.put("name", str);
+ 	
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getWorkout");
+    System.out.println("get workout, rett for puls");
+    //System.out.println(objektet.get("Pulse"));
+    String pulseString = objektet.get("Pulse").toString();
+    String[] pulseStr = pulseString.split("_");
+    List<String> pulse = Arrays.asList(pulseStr);
+    boolean vis = true;
+    if(objektet.get("Visibility").toString().equals("false")) {
+    	vis = false;
+    }
+    
+    
+    String gpxString = objektet.get("GpxData").toString();
+    if(gpxString.equals("null")) {
+    		InputStream gpxFilepath = null;
+    		Workout wo = new Workout(athl, objektet.getString("Date"), objektet.getString("Type"),Integer.parseInt(objektet.get("Duration").toString()), Double.parseDouble(objektet.get("Kilometres").toString()), pulse, vis, gpxFilepath );
+		return wo;
+    }
+    List<String> gpxArray = Arrays.asList(gpxString.split("X"));
+    List<List<Double>> gpxData = new ArrayList<List<Double>>();
+    
+    
+    
+    for(String s : gpxArray) {
+    	List<Double> gpxPair = new ArrayList<Double>();
+    
+    	
+    	gpxPair.add(Double.parseDouble(s.split("_")[0] ));
+    	gpxPair.add(Double.parseDouble(s.split("_")[1]   ));
+    	gpxData.add(gpxPair);
+    }
+    
+    
+    Workout wo = new Workout(athl, objektet.getString("Date"), objektet.getString("Type"),Integer.parseInt(objektet.get("Duration").toString()), Double.parseDouble(objektet.get("Kilometres").toString()), pulse, vis, gpxData );
+    		
+
+    return wo;
+}
+
+	
+	 //Returns a list of all the Workouts for a spesific Athlete
+//	public List<Workout> getAllWorkouts(Athlete athlete) {
+//		List<Workout> workouts = new ArrayList<Workout>();
+//		
+//		//finds the athlete of the workout, and accesses his workout-collection
+//		//automatically creates new collection if it does not exists
+//		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+//		
+//		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
+//		
+//		    while (cursor.hasNext()) {
+//		    		Document doc = cursor.next();
+//
+//		 
+//		        Workout workout = new Workout( athlete, doc.getString("date"),doc.getString("type")  , doc.getInteger("duration" )  , 
+//						doc.getDouble("kilometres") , (List<String>) doc.get("pulse"), doc.getBoolean("Visibility"), (List<List<Double>>)doc.get("gpx") );
+//		        workout.setGpxData((List<List<Double>>)doc.get("gpx"));
+//		        workouts.add(workout);
+//		    } 
+//		} catch(Exception e) {
+//			System.out.println("oi her var det litt smaafeil gitt");
+//			e.printStackTrace();
+//		}
+//		return workouts;
+//	}
+//
+//
+public List<Workout> getAllWorkouts(Athlete athl) throws Exception {
+	//System.out.println("inni get all workouts");
+ 	HashMap<String, String> myMap = new HashMap<String, String>(); 
+ 	myMap.put("name", athl.getUsername());
+ 	TestBackendConnector co = new TestBackendConnector();
+ 	
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAllWorkouts");
+    System.out.println("inni get all workouts");
+    //System.out.println(objektet.get("liste").toString());
+    List<String> dates = Arrays.asList(objektet.get("liste").toString().split("_"));
+    List<Workout> workouts = new ArrayList<Workout>();
+    int i = 0;
+    for(String dat: dates) {
+    	System.out.println(i);
+    	i++;
+    	System.out.println(dat);
+    		workouts.add(co.getWorkout(athl, dat) );
+    }
+    
+    return workouts;
+}
+
+//
+//	
 	// Add Coach to the Athletes Coach-list
 	public void addCoachToAthlete(Athlete athlete, String coachUsername) {
 		////method for adding coach to athlete's coach-list

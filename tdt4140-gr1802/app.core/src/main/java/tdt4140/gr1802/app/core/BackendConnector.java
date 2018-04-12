@@ -53,9 +53,9 @@ public final class BackendConnector {
                         while ((inputLine = in.readLine()) != null) {
                                 response.append(inputLine);
                         }
-                        System.out.print("-----");
-                        System.out.print(response.toString());
-                        System.out.print("-----");
+                        //System.out.print("-----");
+                        //System.out.print(response.toString());
+                        //System.out.print("-----");
                         in.close();
                         return new JSONObject(response.toString()); 
                 } catch (Exception e) {

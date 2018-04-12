@@ -74,7 +74,7 @@ public class SeeCoachesController {
 	
 	
 	// Returns an ObervableList with the Coaches registered to the Athlete logged in
-	public ObservableList<Coach> getCoaches(){
+	public ObservableList<Coach> getCoaches() throws Exception{
 		for (String uname : athlete.getCoaches()) {
 			Coach coach = database.getCoach(uname);
 			if (coach != null) {
@@ -84,7 +84,7 @@ public class SeeCoachesController {
 		return coaches;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.database = App.getDb(); 
@@ -104,7 +104,7 @@ public class SeeCoachesController {
 		
 	}
 	
-	public void addCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{
+	public void addCoachButton(ActionEvent event) throws Exception{
 		// Get the String from the TextField
 		String newCoach = newCoachTextField.getText();
 		
@@ -122,7 +122,7 @@ public class SeeCoachesController {
 		newCoachTextField.clear();
 	}
 	
-	public void removeCoachButton(ActionEvent event) throws RuntimeException, InvocationTargetException{
+	public void removeCoachButton(ActionEvent event) throws Exception{
 		// ObservableList with the selectedRow
 		ObservableList<Coach> selectedRows;
 		selectedRows = tableView.getSelectionModel().getSelectedItems();

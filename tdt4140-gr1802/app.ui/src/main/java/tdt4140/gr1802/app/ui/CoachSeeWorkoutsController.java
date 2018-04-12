@@ -75,7 +75,7 @@ public class CoachSeeWorkoutsController {
 	}
 
 	// Help-method that returns an ObservableList with all the Workouts for the chosen Athlete
-	public ObservableList<Workout> getWorkouts(){
+	public ObservableList<Workout> getWorkouts() throws Exception{
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
 		for (Workout wo : athlete.getAllWorkouts()) {
 			//Check if visible for coaches before adding
@@ -85,7 +85,7 @@ public class CoachSeeWorkoutsController {
 		return workouts;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		// set up the columns in the table
 		txtAthlete.setText("Athlete: " + athlete.getName());
 		

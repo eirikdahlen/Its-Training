@@ -114,7 +114,12 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		// Set the Coach that is logged in
-		App.updateCoach();
+		try {
+			App.updateCoach();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.coach = App.getCoach();
 		
 		//Set username label

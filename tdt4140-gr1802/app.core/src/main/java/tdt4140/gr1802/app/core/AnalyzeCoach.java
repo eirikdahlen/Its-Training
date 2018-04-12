@@ -11,7 +11,7 @@ public class AnalyzeCoach {
 	AnalyzeWorkouts analyzeWorkouts = new AnalyzeWorkouts();
 	
 	
-	public int getTotalTrainingTime(Coach coach) {
+	public int getTotalTrainingTime(Coach coach) throws Exception {
 		int totalTime = 0;
 		
 		List<String> athletesUsername = coach.getAthletes();

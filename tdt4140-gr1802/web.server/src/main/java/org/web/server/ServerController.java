@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
-
 import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 import tdt4140.gr1802.app.core.Workout;
-
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -24,7 +22,6 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 @RestController
 
@@ -39,9 +36,7 @@ public class ServerController {
 		//DatabaseS db = new DatabaseS();
 		Athlete athl = db.getAthlete(name);
 		
-		//Workout wo = db.getWorkout(athl, "12-03-2018 14:24:57" );
-		//String str = String.join(",", wo.getPulsList());
-		
+
 		JSONObject obj = new JSONObject();
 		//obj.put("status", str);
 		obj.put("Username", name);
@@ -50,14 +45,12 @@ public class ServerController {
 		obj.put("Coaches", String.join("_", athl.getCoaches()) );
 		obj.put("Requests", String.join("_", athl.getQueuedCoaches()) );
 		obj.put("MAXHR", athl.getMaxHR());
-		//obj.put("", arg1);
-		return obj.toString() ;
 		
-
+		return obj.toString();
+		
     }
 	
 
-	
 	// Maps to GetCoach EndPoint
 	@RequestMapping("/getCoach")
     public String getCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
@@ -80,8 +73,6 @@ public class ServerController {
 		
 
     }
-	
-	
 	
 	// Maps to GetPass-Endpoint
 		@RequestMapping("/getPass")
@@ -112,7 +103,6 @@ public class ServerController {
 				System.out.println(obj.toString());
 			}
 			
-			
 			List<String> stringList = new ArrayList<String>();
 			for(JSONObject o : obList) {
 				stringList.add( o.toString() );
@@ -135,7 +125,24 @@ public class ServerController {
 			Workout wo = db.getWorkout(athl, date);
 			//Workout wo = db.getWorkout(athl, "12-03-2018 14:24:57" );
 //			String str = String.join(",", wo.getPulsList());
+			List<String> gpxStringList = new ArrayList<String>();
+			if(wo.getGpxData() == null) {
+				gpxStringList.add("null");
+			}
+			try {
+				List<List<Double>> lis = wo.getGpxData();
+				for(int i = 0; i < lis.size(); i++) {
+					
+					gpxStringList.add( Double.toString(lis.get(i).get(0)) + "_"   + Double.toString(lis.get(i).get(1) ) );	
+				}
+			}
+			catch(Exception e){
+				System.out.println("heisann på degsann");
+				//gpxStringList.add("null");
+			}
 			
+			
+
 			JSONObject obj = new JSONObject();
 			//obj.put("status", str);
 			obj.put("Athlete", username);
@@ -143,12 +150,32 @@ public class ServerController {
 			obj.put("Type", wo.getType());
 			obj.put("Duration", wo.getDuration() );
 			obj.put("Kilometres", wo.getKilometres());
-			obj.put("Pulse",  wo.getPulsList()   );
-			obj.put("Visibility", wo.getVisibility() );
-			obj.put("GpxData", wo.getGpxData());
+			obj.put("Pulse",  String.join("_", wo.getPulsList() ));
+			obj.put("Visibility", Boolean.toString(wo.getVisibility()) );
+			
+			obj.put("GpxData", String.join("X", gpxStringList ));
 			return obj.toString() ;
 			
 
+	    }
+		
+		
+
+		@RequestMapping("/getAllWorkouts")
+	    public String getAllWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+
+			//DatabaseS db = new DatabaseS();
+			
+			List<Workout> workouts = db.getAllWorkouts(db.getAthlete(name));
+			List<String> datesString = new ArrayList<String>();
+			for(Workout wo : workouts) {
+				datesString.add(wo.getDateString());
+			}
+			
+			JSONObject obj = new JSONObject();
+			obj.put("liste", String.join("_", datesString));
+			return obj.toString() ;
+			
 	    }
 		
 		@RequestMapping("/addCoachToAthlete")
