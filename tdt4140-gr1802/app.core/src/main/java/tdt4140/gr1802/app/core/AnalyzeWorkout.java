@@ -7,7 +7,6 @@ import java.util.List;
 public class AnalyzeWorkout {
 	//class for analysis-methods for a single workout
 	
-	//TODO: add this as static-field in workout?
 	//PULSE_ZONES: percentages for calculating HR-zones. We'll use <75% for low, 75-90% for moderate and 90%-max for high.
 	private final double low = 0.75;
 	private final double moderate = 0.90;

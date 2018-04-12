@@ -543,7 +543,6 @@ public class ServerController {
 			try {
 			int HR = found.getInteger("maxHR");
 			} catch (Exception e) {
-				System.out.println("feil på maxHR");
 				System.out.println("athlete does not have maxHR, adds from workout");
 				this.addMaxHR(workout.getAthlete(), workout.getAthleteMaxHR() );	
 			}

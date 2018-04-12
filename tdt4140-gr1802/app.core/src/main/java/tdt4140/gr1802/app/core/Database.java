@@ -106,7 +106,6 @@ public class Database {
 			try {
 			int HR = found.getInteger("maxHR");
 			} catch (Exception e) {
-				System.out.println("feil på maxHR");
 				System.out.println("athlete does not have maxHR, adds from workout");
 				this.addMaxHR(workout.getAthlete(), workout.getAthleteMaxHR() );	
 			}
@@ -188,11 +187,9 @@ public class Database {
 		}
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
 	
-		//TODO: fikse opp i dette, legge til i konstruktør
 		try {
 			athlete.setMaxHR( found.getInteger("maxHR") );
 		} catch (Exception e) {
-			System.out.println("feil på get maxHR");
 			//sets maxHR to 0 if it is not present in db
 			athlete.setMaxHR(0);
 			
@@ -246,7 +243,6 @@ public class Database {
 					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), (List<List<Double>>)found.get("gpx"));
 			workout.setGpxData((List<List<Double>>)found.get("gpx"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

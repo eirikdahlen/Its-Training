@@ -202,7 +202,6 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         try {
 			s = url.openStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         System.out.println(url);

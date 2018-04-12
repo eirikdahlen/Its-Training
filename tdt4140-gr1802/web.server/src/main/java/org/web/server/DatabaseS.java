@@ -255,7 +255,6 @@ public class DatabaseS {
 					found.getDouble("kilometres") , (List<String>) found.get("pulse"), found.getBoolean("Visibility"), (List<List<Double>>)found.get("gpx"));
 			workout.setGpxData((List<List<Double>>)found.get("gpx"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
