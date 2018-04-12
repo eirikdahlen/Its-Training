@@ -142,7 +142,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testGetAllWorkouts() throws IOException {
+	public void testGetAllWorkouts() throws Exception {
 		
 
 		//creates athlete and workout for testing 
@@ -408,7 +408,7 @@ public class DatabaseTest {
 	//_______jUnit_______
 
 	@Test
-	public void testGetAthlete() {
+	public void testGetAthlete() throws Exception {
 
 		//adds athlete for testing
 		Athlete athlete1 = new Athlete("TeddyWestside", "theodor","Bajsunge");
@@ -427,7 +427,7 @@ public class DatabaseTest {
 	
 	
 	@Test
-	public void testGetCoach() {
+	public void testGetCoach() throws Exception {
 
 		//adds coack for testing
 		Coach coach1 = new Coach("petter22", "petter123","Petter");
@@ -446,7 +446,7 @@ public class DatabaseTest {
 	
 	
 	@Test
-	public void testGetWorkout() throws IOException {
+	public void testGetWorkout() throws Exception {
 
 		//creates athlete and workout for testing 
 		Athlete athlete1 = new Athlete("williamkvaale","test123","William Kvaale");
@@ -470,7 +470,7 @@ public class DatabaseTest {
 
 	
 	@Test
-	public void testGetPulseList() throws IOException {
+	public void testGetPulseList() throws Exception {
 		
 		Athlete athl = new Athlete("williamkvaale","test123","William Kvaale");
 		
