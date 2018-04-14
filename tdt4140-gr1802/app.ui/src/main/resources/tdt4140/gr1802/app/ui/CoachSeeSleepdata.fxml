@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.CoachSeeSleepdataController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1802.app.ui.CoachSeeSleepdataController">
    <children>
       <AnchorPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,17 +23,17 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="649.0" prefWidth="1280.0">
                      <children>
-                        <Line endX="100.0" layoutX="609.0" layoutY="82.0" rotate="90.0" startX="-1000.0" AnchorPane.bottomAnchor="444.5" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="92.5" AnchorPane.topAnchor="81.5" />
-                        <Line endX="706.0" startX="-100.0" />
+                        <Line endX="100.0" layoutX="610.0" layoutY="96.0" rotate="90.0" startX="-1000.0" AnchorPane.leftAnchor="-390.5" AnchorPane.rightAnchor="567.5" AnchorPane.topAnchor="95.5" />
+                        <Line endX="1500.0" startX="-100.0" />
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="200.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btSeeAthletes" mnemonicParsing="false" onAction="#clickSeeAthletes" prefHeight="25.0" prefWidth="106.0" text="See Athletes" />
                               <Button fx:id="btAthleteRequests" mnemonicParsing="false" onAction="#clickAthleteRequests" text="Athlete Requests" />
                            </children>
                         </VBox>
-                        <LineChart layoutX="329.0" layoutY="104.0">
+                        <LineChart fx:id="chartDuration" layoutX="170.0" layoutY="114.0" prefHeight="248.0" prefWidth="1047.0" title="Duration">
                           <xAxis>
-                            <CategoryAxis fx:id="xAxisSleepdata" label= "Date" prefHeight="33.0" prefWidth="362.0" side="BOTTOM"/>                            
+                            <CategoryAxis label="Date" prefHeight="33.0" prefWidth="362.0" side="BOTTOM" fx:id="xAxisDuration" />                            
                           </xAxis>
                           <yAxis>
                           	<NumberAxis fx:id="yAxisLength" label="Hours" prefHeight="155.0" prefWidth="46.0" side="LEFT" />
@@ -41,11 +42,25 @@
                             <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="RIGHT" />
                           </yAxis>
                         </LineChart>
-                        <Label fx:id="txtAthleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="250.0">
+                        <Label fx:id="txtAthleteLabel" alignment="TOP_CENTER" layoutX="545.0" layoutY="62.0" prefWidth="250.0">
                         		<font>
                         			<Font name="System Bold" size="18.0" />
                          	</font>
                         </Label>
+                        <LineChart fx:id="chartQuality" layoutX="200.0" layoutY="362.0" prefHeight="238.0" prefWidth="1047.0" title="Quality">
+                           <xAxis>
+                              <CategoryAxis label="Date" prefHeight="33.0" prefWidth="362.0" side="BOTTOM" fx:id="xAxisQuality" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="RIGHT" />
+                           </yAxis>
+                        </LineChart>
+                        <Text layoutX="607.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sleepdata">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="619.0" layoutY="598.0" mnemonicParsing="false" onAction="#backToSeeAthletes" text="Back to Athletes" />
                      </children>
                   </AnchorPane>
               </items>

@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -28,10 +30,11 @@ import tdt4140.gr1802.app.core.Athlete;
 import tdt4140.gr1802.app.core.Coach;
 import tdt4140.gr1802.app.core.Database;
 
-public class CoachSeeSleepdataController {
+public class CoachSeeSleepdataController implements Initializable {
 	
 	private Coach coach;
 	private Database db;
+	private static Athlete choosenAthlete;
 	
 	
 	public class ActivityAthlete {
@@ -60,9 +63,6 @@ public class CoachSeeSleepdataController {
 	@FXML
 	private Label txtAthleteLabel ;
 	
-	
-	private Athlete choosenAthlete;
-	
 	@FXML 
 	private ChoiceBox<Athlete> cboxChooseAthlete;
 	
@@ -72,13 +72,13 @@ public class CoachSeeSleepdataController {
 	private ObservableList<BarChart.Data<String, Number>> barChartSleepdata= FXCollections.observableArrayList();
 	
 	@FXML 
-    private CategoryAxis xAxisSleepdata ;
+    private CategoryAxis xAxisDuration, xAxisQuality ;
 	
     @FXML 
-    private NumberAxis yAxisQuality, yAxisLength ;
+    private NumberAxis yAxisLength, yAxisQuality ;
     
     @FXML 
-    private LineChart<String, Number> chartSleepdata ;    
+    private LineChart<String, Number> chartDuration, chartQuality ;    
     //List<Athlete> allAthletes = new ArrayList<>();
     
     
@@ -89,11 +89,12 @@ public class CoachSeeSleepdataController {
     public void initialize(URL location, ResourceBundle resources) {
 		App.updateCoach();
 		this.coach = App.getCoach();
-		//this.db = App.getDb();
+		this.db = App.getDb();
+		
 		this.txtLabelUsername.setText(this.coach.getUsername());
-		this.txtAthleteLabel.setText(choosenAthlete.getUsername());
-
-		updateSleepdata(this.choosenAthlete) ;
+		// txtAthleteLabel.setText(choosenAthlete.getUsername());
+		System.out.println("Heihei");
+		updateSleepdata(choosenAthlete) ;
 		
     }
     /*
@@ -107,31 +108,38 @@ public class CoachSeeSleepdataController {
     		List<List<String>> sleepdata = athlete.getSleepData();
     		XYChart.Series<String, Number> quality = new XYChart.Series<>();
     		XYChart.Series<String, Number> length = new XYChart.Series<>();
-    		chartSleepdata = new LineChart <> (xAxisSleepdata, yAxisQuality);
-    		chartSleepdata.getData().clear();
-    		quality.setName("Quality");
-    		length.setName("Length");
+    		chartDuration.getData().clear();
+    		chartQuality.getData().clear();
     		yAxisQuality.setAutoRanging(false);
     		yAxisQuality.setLowerBound(0);
     		yAxisQuality.setUpperBound(100);
     		yAxisQuality.setTickUnit(10);
     		yAxisLength.setAutoRanging(false);
     		yAxisLength.setLowerBound(0);
-    		yAxisLength.setUpperBound(14);
+    		yAxisLength.setUpperBound(11);
     		yAxisLength.setTickUnit(2);
     		System.out.println("McKommerHit");
+    		System.out.println();
     		
     		for (List<String> l : sleepdata) {
-    			quality.getData().add(new XYChart.Data<>(l.get(0), Integer.parseInt(l.get(1))));
-    			//length.getData().add(new XYChart.Data<>(l.get(0), Integer.parseInt(l.get(2))));
+    			if (l.get(1).equals("0%")) {
+    				quality.getData().add(new XYChart.Data<>(l.get(0), Integer.parseInt(l.get(1).substring(0, 1))));
+    			} else {
+    				String s = l.get(2);
+        			String[] s1 = s.split(":");
+        			int i = Integer.parseInt(s1[1])/60;
+        			int j = Integer.parseInt(s1[0]) + i;
+    				quality.getData().add(new XYChart.Data<>(l.get(0), Integer.parseInt(l.get(1).substring(0, 2))));
+        			length.getData().add(new XYChart.Data<>(l.get(0), j));
+    			}
     		}
-    		/*
-    		quality.getData().add(new XYChart.Data("jan",6));
-    		quality.getData().add(new XYChart.Data("feb",10));
-    		length.getData().add(new XYChart.Data("jan",10));
-    		length.getData().add(new XYChart.Data("feb",6));
-    		*/
-    		chartSleepdata.getData().add(quality);
+    		
+    		quality.getData().add(new XYChart.Data<String, Number>("jan",70));
+    		quality.getData().add(new XYChart.Data<String, Number>("feb",64));
+    		length.getData().add(new XYChart.Data<String, Number>("jan",6));
+    		length.getData().add(new XYChart.Data<String, Number>("feb",7));
+    		chartQuality.getData().add(quality);
+    		chartDuration.getData().add(length);
     		//chartSleepdata.getData().addAll(length);
 
     }
@@ -155,5 +163,22 @@ public class CoachSeeSleepdataController {
  		window.setScene(scene);
  		window.show();
  	}
+ 	
+ 	public void backToHomeScreen(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenCoach.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
+ 	public void backToSeeAthletes(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("SeeAthletes.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
  	
 }
