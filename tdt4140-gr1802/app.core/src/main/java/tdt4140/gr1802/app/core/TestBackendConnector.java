@@ -18,15 +18,17 @@ import tdt4140.gr1802.app.core.Coach;
 public class TestBackendConnector {
     public static void main(String[] args) throws Exception {
         // Prints "Hello, World" to the terminal window.
-    		HashMap<String, String> myMap = new HashMap<String, String>(); 
-    		Athlete athl = new Athlete("TeddyWestside", null, null);
+    		TestBackendConnector conn = new TestBackendConnector();
     		
+    		System.out.println("__SERVERTEST___");
+    		String password = conn.getPassword("TeddyWestside");
+    		System.out.println("theodor = " + password);
+    		System.out.println("___SERVERTEST FERDIG__");
     		
-    		TestBackendConnector co = new TestBackendConnector();
-    		//co.getWorkout(athl, date)
-    		System.out.println("get all workouts starter nuuuu");
-    		Coach coc = new Coach("petter22", null, null);
-    		co.addRequestAthleteToCoach(coc, "frikkha");
+    		Coach coach1 = conn.getCoach("petter22");
+    		System.out.println("__**PRINTER FRA GET COACH**__");
+    		System.out.println(coach1.getName());
+    		System.out.println("__**print get coach slutt**__");
         /*
          * JSONObject obj = new JSONObject();
 		//obj.put("status", str);
@@ -54,19 +56,32 @@ public class TestBackendConnector {
 		
 	myMap.put("name", username);
     JSONObject objektet = BackendConnector.makeRequest(myMap, "getAthlete");
-    String c = objektet.get("Coaches").toString();
-    String[] str = c.split("_");
-    String r = objektet.get("Requests").toString();
-    String[] str2 = r.split("_");
-    List<String> coachList = Arrays.asList(str);   //new ArrayList<String>();
-    List<String> requests = Arrays.asList(str2);
+
+    System.out.println("_inni getAthlete__");
     System.out.println(objektet.get("Username").toString());
-    System.out.println(objektet.get("Passord").toString());
+    System.out.println(objektet.get("Password").toString());
     System.out.println(objektet.get("Name").toString());
+
+    System.out.println("___SLUTT INNI GETATHLETE__");
+    
+    JSONArray array = (JSONArray) objektet.get("Coaches");
+    JSONArray array2 = (JSONArray) objektet.get("Requests");
+    List<String> coachList = new ArrayList<String>();
+    List<String> requestList = new ArrayList<String>();
+    
+    for (int i=0; i<array.length(); i++) {
+        coachList.add( array.getString(i) );
+    }
+     
+    for (int i=0; i<array2.length(); i++) {
+        requestList.add( array2.getString(i) );
+    }
+    
+    System.out.println("test");
     System.out.println(coachList);
-    System.out.println(requests);
-           
-    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), coachList, requests);
+    System.out.println(requestList);
+
+    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Password").toString(), objektet.get("Name").toString(), coachList, requestList);
   
     return athl;
     	
@@ -74,28 +89,39 @@ public class TestBackendConnector {
 
 public Coach getCoach(String username) throws Exception {
     	
-    	
-    	HashMap<String, String> myMap = new HashMap<String, String>(); 
+
+	HashMap<String, String> myMap = new HashMap<String, String>(); 
 		
 	myMap.put("name", username);
-    JSONObject objektet = BackendConnector.makeRequest(myMap, "getCoach");
-    String c = objektet.get("Athletes").toString();
-    String[] str = c.split("_");
-    String r = objektet.get("Requests").toString();
-    String[] str2 = c.split("_");
-    List<String> athleteList = new ArrayList<String>();
-    List<String> requests = new ArrayList<String>();
-    
-    for(String s : str) {
-    	athleteList.add((String) s);
-    }
-    for(String s : str2) {
-    	requests.add((String ) s);
-    }
-           
-    Coach coach = new Coach(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), athleteList, requests);
-  
-    return coach;
+	JSONObject objektet = BackendConnector.makeRequest(myMap, "getCoach");
+	
+	System.out.println("_inni getCoach__");
+	System.out.println(objektet.get("Username").toString());
+	System.out.println(objektet.get("Password").toString());
+	System.out.println(objektet.get("Name").toString());
+	
+	System.out.println("___SLUTT INNI GETCoach__");
+	
+	JSONArray array = (JSONArray) objektet.get("Athletes");
+	JSONArray array2 = (JSONArray) objektet.get("Requests");
+	List<String> athleteList = new ArrayList<String>();
+	List<String> requestList = new ArrayList<String>();
+	
+	for (int i=0; i<array.length(); i++) {
+	    athleteList.add( array.getString(i) );
+	}
+	 
+	for (int i=0; i<array2.length(); i++) {
+	    requestList.add( array2.getString(i) );
+	}
+	
+	System.out.println("test");
+	System.out.println(athleteList);
+	System.out.println(requestList);
+	
+	Coach coach = new Coach(objektet.get("Username").toString(), objektet.get("Password").toString() , objektet.get("Name").toString() , athleteList, requestList);
+
+	return coach;
     	
     }
 

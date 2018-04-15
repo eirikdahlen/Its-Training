@@ -188,8 +188,14 @@ public class DatabaseS {
 	
 	
 	public Document getAthleteS(String username) {
-		return getAthleteS(username);
+		return (Document) athleteCollection.find(new Document("Username", username)).first();
 	}
+	
+	public Document getCoacheS(String username) {
+		return (Document) coachCollection.find(new Document("Username", username)).first();
+	}
+	
+	
 	
 	// Returns the Athlete from the database
 	public Athlete getAthlete(String username) {

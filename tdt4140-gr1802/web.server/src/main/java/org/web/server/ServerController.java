@@ -69,19 +69,8 @@ public class ServerController {
     public String getCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 		System.out.println("getCoach pa server");
 		//DatabaseS db = new DatabaseS();
-		Coach co = db.getCoach(name);
+		String obj = db.getCoacheS(name).toJson();
 		
-		//Workout wo = db.getWorkout(athl, "12-03-2018 14:24:57" );
-		//String str = String.join(",", wo.getPulsList());
-		JSONObject obj = new JSONObject();
-		
-		obj.put("Username", co.getName());
-		obj.put("Passord", co.getPassword());
-		obj.put("Name", co.getName());
-		obj.put("Athletes", String.join("_", co.getAthletes()) );
-		obj.put("Requests", String.join("_", co.getQueuedAthletes()) );
-		System.out.println("get coach for response");
-		//obj.put("", arg1);
 		return obj.toString() ;
     }
 	
@@ -93,7 +82,7 @@ public class ServerController {
 			
 			JSONObject obj = new JSONObject();
 			obj.put("Password", pass);
-			return obj.toString() ;
+			return obj.toString();
 	    }
 		
 		// Maps to GetAllAthletes-Endpoint
