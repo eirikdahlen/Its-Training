@@ -28,7 +28,7 @@ public class AnalyzeCoach {
 		
 	}
 	
-	public List<Integer> getAvgNrActivites(Coach coach){
+	public List<Integer> getAvgNrActivites(Coach coach) throws Exception{
 		List<String> athletes = coach.getAthletes();
 		
 		List<Integer> list = new ArrayList<>();

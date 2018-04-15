@@ -56,7 +56,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
 	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.
-	public void queueCoach (String newCoach) {
+	public void queueCoach (String newCoach) throws Exception {
 		queuedCoaches.add(newCoach);
 		// add to queue in database
 		database.addRequestCoachToAthlete(this, newCoach);
@@ -138,7 +138,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 		return lastWorkout.getDate();
 	}
 	
-	public int getNrOfWorkouts(String activity) {
+	public int getNrOfWorkouts(String activity) throws Exception {
 		return database.getNrOfWorkoutsForAthlete(this.getUsername(), activity);
 	}
 	

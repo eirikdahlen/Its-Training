@@ -174,7 +174,7 @@ public class SeeWorkoutsController{
 		window.show();
 	}
 	
-	public void hideWorkout(ActionEvent event) {
+	public void hideWorkout(ActionEvent event) throws Exception {
 		ObservableList<Workout> selectedRows;
 		selectedRows = tableView.getSelectionModel().getSelectedItems();
 		

@@ -79,7 +79,7 @@ public class AddWorkoutController {
 	
 	
 	// Method called when "Add" button clicked
-	public void clickAddButton (ActionEvent event) throws IOException {
+	public void clickAddButton (ActionEvent event) throws Exception {
 		try {
 			// The text in the application is used as a filepath, adds workout to the DB
 			String path = filepathTextField.getText();

@@ -18,7 +18,7 @@ public class LogIn {
 	public User getUser() { return this.inloggedUser; }
 	
 	// Checks if the Username exists
-	public boolean checkUserNameExits(String username) { 
+	public boolean checkUserNameExits(String username) throws Exception { 
 		return checkUsernameAthlete(username) || checkUsernameCoach(username);
 	}
 	
@@ -34,12 +34,12 @@ public class LogIn {
 	}
 	
 	// Check if username is registered as Athlete in database
-	public boolean checkUsernameAthlete(String username) {
+	public boolean checkUsernameAthlete(String username) throws Exception {
 		return db.athleteUsernameExists(username);
 	}
 	
 	// Check if username is registered as Coach in database
-	public boolean checkUsernameCoach(String username) {
+	public boolean checkUsernameCoach(String username) throws Exception {
 		return db.coachUsernameExists(username);
 	}
 	

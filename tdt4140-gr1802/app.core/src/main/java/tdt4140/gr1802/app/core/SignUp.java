@@ -41,7 +41,7 @@ public class SignUp {
 	}
 	
 	// Check if username exists in database
-	public boolean checkUserNameNotExitsInDB() {
+	public boolean checkUserNameNotExitsInDB() throws Exception {
 		System.out.println(this.username);
 		System.out.println(db);
 		if (db.coachUsernameExists(this.username) || (db.athleteUsernameExists(this.username))) {
@@ -72,7 +72,7 @@ public class SignUp {
 	}
 	
 	// Add new user to the database
-	public void addNewUserToDB() {
+	public void addNewUserToDB() throws Exception {
 		if (isAthlete) {
 			db.createAthlete((Athlete) newUser);
 		} else {
@@ -81,7 +81,7 @@ public class SignUp {
 	}
 	
 	// Return if the signup is valid
-	public boolean validSignUp() {
+	public boolean validSignUp() throws Exception {
 		if (checkUserNameNotExitsInDB() &&
 				checkNameOnlyLetters() &&
 				checkPasswordLength() &&

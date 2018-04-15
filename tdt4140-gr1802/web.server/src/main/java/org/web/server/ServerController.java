@@ -18,6 +18,7 @@ import tdt4140.gr1802.app.core.Workout;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONException;
@@ -30,7 +31,7 @@ public class ServerController {
 	private DatabaseS db = new DatabaseS();
 	
 	// Maps to signup-endpoint
-	@RequestMapping("/getAthlete")
+	@RequestMapping("/getAthlete") //Checkolini not working properly
     public String getAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 		//DatabaseS db = new DatabaseS();
@@ -52,30 +53,28 @@ public class ServerController {
 	
 
 	// Maps to GetCoach EndPoint
-	@RequestMapping("/getCoach")
+	@RequestMapping("/getCoach")  //checkolini  noe rart her tror jeg
     public String getCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
-
+		System.out.println("getCoach pa server");
 		//DatabaseS db = new DatabaseS();
 		Coach co = db.getCoach(name);
 		
 		//Workout wo = db.getWorkout(athl, "12-03-2018 14:24:57" );
 		//String str = String.join(",", wo.getPulsList());
-		
 		JSONObject obj = new JSONObject();
-		//obj.put("status", str);
-		obj.put("Username", name);
+		
+		obj.put("Username", co.getName());
 		obj.put("Passord", co.getPassword());
 		obj.put("Name", co.getName());
 		obj.put("Athletes", String.join("_", co.getAthletes()) );
 		obj.put("Requests", String.join("_", co.getQueuedAthletes()) );
+		System.out.println("get coach for response");
 		//obj.put("", arg1);
 		return obj.toString() ;
-		
-
     }
 	
 	// Maps to GetPass-Endpoint
-		@RequestMapping("/getPass")
+		@RequestMapping("/getPass")  //checkolini  works
 	    public String getPass(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			String pass = db.getPassword(name);
@@ -86,42 +85,37 @@ public class ServerController {
 	    }
 		
 		// Maps to GetAllAthletes-Endpoint
-		@RequestMapping("/getAllAthletes")
+		@RequestMapping("/getAllAthletes")     			//Checkolini   works
 	    public String getAllAthletes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<Athlete> athletes = db.getAllAthletes();
 			List<JSONObject> obList = new ArrayList<JSONObject>();
+			JSONArray arr = new JSONArray();
 			
 			for( Athlete athl : athletes) {
 				JSONObject obj = new JSONObject();
 				obj.put("Username", athl.getUsername());
 				obj.put("Passord", athl.getPassword());
 				obj.put("Name", athl.getName());
-				obj.put("Coaches",athl.getCoaches()  );
-				obj.put("Requests", athl.getQueuedCoaches() );
-				obList.add(obj);
-				System.out.println(obj.toString());
+				obj.put("Coaches", String.join("<", athl.getCoaches() ) );
+				obj.put("Requests", String.join("<", athl.getQueuedCoaches() ));
+				obj.put("MAXHR", athl.getMaxHR());
+				arr.put(obj);
+				
 			}
-			
-			List<String> stringList = new ArrayList<String>();
-			for(JSONObject o : obList) {
-				stringList.add( o.toString() );
-			}
-			
-			JSONObject obj = new JSONObject();
-			obj.put("Athletes", String.join("-", stringList));
-			
-			return obj.toString() ;
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", arr);
+			return feedback.toString() ;
 	    }
 		
-		@RequestMapping("/getWorkout")
-	    public String getWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/getWorkout") //checkolini   works
+	    public String getWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    							@RequestParam("date") String date) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String date = name.split("_")[1];
 			
-			Athlete athl = db.getAthlete(username);
+			
+			Athlete athl = db.getAthlete(name);
 			Workout wo = db.getWorkout(athl, date);
 			//Workout wo = db.getWorkout(athl, "12-03-2018 14:24:57" );
 //			String str = String.join(",", wo.getPulsList());
@@ -145,7 +139,7 @@ public class ServerController {
 
 			JSONObject obj = new JSONObject();
 			//obj.put("status", str);
-			obj.put("Athlete", username);
+			obj.put("Athlete", name);
 			obj.put("Date", wo.getDateString());
 			obj.put("Type", wo.getType());
 			obj.put("Duration", wo.getDuration() );
@@ -161,66 +155,96 @@ public class ServerController {
 		
 		
 
-		@RequestMapping("/getAllWorkouts")
+		@RequestMapping("/getAllWorkouts")  //checkolini     works
 	    public String getAllWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
 			
 			List<Workout> workouts = db.getAllWorkouts(db.getAthlete(name));
-			List<String> datesString = new ArrayList<String>();
+			
+			JSONArray jArray = new JSONArray();
+			
 			for(Workout wo : workouts) {
-				datesString.add(wo.getDateString());
+				JSONObject obj = new JSONObject();
+				obj.put("Athlete", name);
+				obj.put("Date", wo.getDateString());
+				obj.put("Type", wo.getType());
+				obj.put("Duration", wo.getDuration() );
+				obj.put("Kilometres", wo.getKilometres());
+				obj.put("Pulse",  String.join("_", wo.getPulsList() ));
+				obj.put("Visibility", Boolean.toString(wo.getVisibility()) );
+				List<String> gpxStringList = new ArrayList<String>();
+				if(wo.getGpxData() == null) {
+					gpxStringList.add("null");
+				}
+				try {
+					List<List<Double>> lis = wo.getGpxData();
+					for(int i = 0; i < lis.size(); i++) {
+						
+						gpxStringList.add( Double.toString(lis.get(i).get(0)) + "_"   + Double.toString(lis.get(i).get(1) ) );	
+					}
+				}
+				catch(Exception e){
+					System.out.println("heisann på degsann");
+					//gpxStringList.add("null");
+				}
+				obj.put("GpxData", String.join("X", gpxStringList ));
+				jArray.put(obj);
+				
+				
 			}
 			
-			JSONObject obj = new JSONObject();
-			obj.put("liste", String.join("_", datesString));
-			return obj.toString() ;
+			
+			
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", jArray);
+			return feedback.toString() ;
 			
 	    }
-		
-		@RequestMapping("/addCoachToAthlete")
+
+		@RequestMapping("/addCoachToAthlete") // chekcolini   fails
 	    public void addCoachToAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
 			String username = name.split("_")[0];
 			String coach = name.split("_")[1];
 			
-			db.addCoachToAthlete(db.getAthlete(username), coach);
+			db.addCoachToAthlete(username, coach);
 			
 	    }
 		
-		@RequestMapping("/addAthleteToCoach")
+		@RequestMapping("/addAthleteToCoach")  //checkolini  fails
 	    public void addAthleteToCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
 			String username = name.split("_")[0];
 			String athlete = name.split("_")[1];
 			
-			db.addAthleteToCoach(db.getCoach(username), athlete);
+			db.addAthleteToCoach(username, athlete);
 			
 	    }
 		
-		@RequestMapping("/addRequestAthleteToCoach")
-	    public void addRequestAthleteToCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/addRequestAthleteToCoach") // checkolini   fails
+	    public void addRequestAthleteToCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name
+	    										) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String athlete = name.split("_")[1];
 			
-			db.addRequestAthleteToCoach(db.getCoach(username), athlete);
+			
+			db.addRequestAthleteToCoach(name, "petter22");
 			
 	    }
 
-		@RequestMapping("/addRequestCoachToAthlete")
-	    public void addRequestCoachToAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/addRequestCoachToAthlete") // checkolini   fails
+		public void addRequestCoachToAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+				@RequestParam("coach") String coach) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String coach = name.split("_")[1];
-			
-			db.addCoachToAthlete(db.getAthlete(username), coach);
-			
-	    }
+
+
+			db.addRequestCoachToAthlete(name, coach);
+
+		}
 
 		@RequestMapping("/deleteCoachForAthlete")
 	    public void deleteCoachforAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
@@ -266,15 +290,15 @@ public class ServerController {
 			
 	    }
 		
-		@RequestMapping("/getRequestForCoach")
+		@RequestMapping("/getRequestsForCoach") // checkolini ?
 	    public String getRequestsforCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
-			obj.put("Requests", db.getRequestsForCoach(db.getCoach(name)));
+			obj.put("Requests", String.join("_", db.getRequestsForCoach(name)));
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/getRequestForAthlete")
+		@RequestMapping("/getRequestsForAthlete") //checkolini ?
 	    public String getRequestsforAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
@@ -286,21 +310,20 @@ public class ServerController {
 		
 		
 		
-		@RequestMapping("/dateTimeExists")
-	    public String dateTimeExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/dateTimeExists") // checkolini ?
+	    public String dateTimeExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    								@RequestParam("date") String date) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String date = name.split("_")[1];
 			
 			JSONObject obj = new JSONObject();
-			obj.put("value", db.datetimeExists(db.getAthlete(username), date));
+			obj.put("value", db.datetimeExists(name, date));
 			
 			return obj.toString();
 	    }
 		
 
-		@RequestMapping("/usernameExists")
+		@RequestMapping("/usernameExists") // checkolini works
 	    public String usernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -311,7 +334,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/athleteUsernameExists")
+		@RequestMapping("/athleteUsernameExists") // checkolini works
 	    public String AthleteUsernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -321,7 +344,7 @@ public class ServerController {
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/coachUsernameExists")
+		@RequestMapping("/coachUsernameExists") //checkolini works
 	    public String coachUsernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -331,7 +354,7 @@ public class ServerController {
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/isAthlete")
+		@RequestMapping("/isAthlete") // checkolini works
 	    public String isAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -343,16 +366,16 @@ public class ServerController {
 		
 		
 		
-		@RequestMapping("/setVisibility")
-	    public void setVisibility(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/setVisibility") // checkolini ? 
+	    public void setVisibility(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    							@RequestParam("date") String workou,
+	    							@RequestParam("username") String athlet) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String bool = name.split("_")[0];
-			String wo = name.split("_")[1];
-			String athl = name.split("_")[2];
-			
-			Athlete athlete = db.getAthlete(athl);
-			Workout work = db.getWorkout(athlete, wo);
+			String bool = name;
+
+			Athlete athlete = db.getAthlete(athlet);
+			Workout work = db.getWorkout(athlete, workou);
 			
 			if(bool.equals("true")) {
 				db.setWorkoutVisibility(true, work, athlete);
@@ -364,128 +387,166 @@ public class ServerController {
 	    }
 		
 		
-		@RequestMapping("/getAllActivities")
+		@RequestMapping("/getAllActivities") // checkolini works
 	    public String getAllActivities(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
-			obj.put("Activities", db.getAllActivities());
+			obj.put("Activities", String.join("<", db.getAllActivities()));
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/getNrWorkoutsForAthlete")
-	    public String getNrWorkoutsForAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		
+		@RequestMapping("/getNrWorkoutsForAthlete") //checkolini works
+	    public String getNrWorkoutsForAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    										@RequestParam("activity") String activity) throws Exception{
 
-			String athlete = name.split("_")[0];
-			String activity = name.split("_")[1];
+			
 			JSONObject obj = new JSONObject();
-			obj.put("Nr", db.getNrOfWorkoutsForAthlete(db.getAthlete(athlete), activity));
+			obj.put("Nr", db.getNrOfWorkoutsForAthlete(name, activity));
 			return obj.toString();
 	    }
 		
 
-		@RequestMapping("/getAthletesForActivity")
+		@RequestMapping("/getAthletesForActivity") //checkolini works
 	    public String getAthletesForActivity(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<Athlete> liste = db.getAthletesForActivity(name);
-			JSONObject obj = new JSONObject();
-			obj.put("Athletes", liste);
-			return obj.toString();
+			JSONArray arr = new JSONArray();
+			
+			for(Athlete a : liste) {
+				JSONObject obj = new JSONObject();
+				obj.put("Username", a.getUsername());
+				obj.put("Passord", a.getPassword());
+				obj.put("Name", a.getName());
+				obj.put("Coaches", String.join("_", a.getCoaches()) );
+				obj.put("Requests", String.join("_", a.getQueuedCoaches()) );
+				obj.put("MAXHR", a.getMaxHR());
+				arr.put(obj);
+			}
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", arr);
+			
+			return feedback.toString();
 	    }
 		
 
-		@RequestMapping("/getWorkoutsForActivity")
+		@RequestMapping("/getWorkoutsForActivity") //checkolini works
 	    public String getWorkoutsForActivity(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
-			List<Workout> liste = db.getWorkoutsForActivity(name);
-			JSONObject obj = new JSONObject();
-			obj.put("Workouts", liste);
-			return obj.toString();
+			List<Workout> workouts = db.getWorkoutsForActivity(name);
+			JSONArray jArray = new JSONArray();
+			
+			for(Workout wo : workouts) {
+				JSONObject obj = new JSONObject();
+				obj.put("Athlete", wo.getAthlete().getUsername());
+				obj.put("Date", wo.getDateString());
+				obj.put("Type", wo.getType());
+				obj.put("Duration", wo.getDuration() );
+				obj.put("Kilometres", wo.getKilometres());
+				obj.put("Pulse",  String.join("_", wo.getPulsList() ));
+				obj.put("Visibility", Boolean.toString(wo.getVisibility()) );
+				List<String> gpxStringList = new ArrayList<String>();
+				if(wo.getGpxData() == null) {
+					gpxStringList.add("null");
+				}
+				try {
+					List<List<Double>> lis = wo.getGpxData();
+					for(int i = 0; i < lis.size(); i++) {
+						
+						gpxStringList.add( Double.toString(lis.get(i).get(0)) + "_"   + Double.toString(lis.get(i).get(1) ) );	
+					}
+				}
+				catch(Exception e){
+					System.out.println("heisann på degsann");
+					//gpxStringList.add("null");
+				}
+				obj.put("GpxData", String.join("X", gpxStringList ));
+				jArray.put(obj);
+				
+				
+			}
+			
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", jArray);
+			return feedback.toString() ;
+			
 	    }
 		
 
-		@RequestMapping("/getCoachNotes")
+		@RequestMapping("/getCoachNotes") //checkolini works
 	    public String getCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<String> liste = db.getCoachNotes(name);
-			JSONObject obj = new JSONObject();
-			obj.put("Notes", liste);
-			return obj.toString();
+			JSONArray arr = new JSONArray();
+			for(String s : liste) {
+				JSONObject obj = new JSONObject();
+				obj.put("note", s);
+				arr.put(obj);
+			}
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", arr);
+			return feedback.toString();
 	    }
 		
-		@RequestMapping("/addCoachNotes")
-	    public void addCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
+		@RequestMapping("/addCoachNotes") //checkolini  fails
+	    public void addCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    		@RequestParam(name="note") String note) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String note = name.split("_")[1];
-			
-			db.addCoachNotes(username, note);
+			db.addCoachNotes(note, note);
 	    }
 		
-		@RequestMapping("/updateCoachNotes")
-	    public void updateCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
-
-			//DatabaseS db = new DatabaseS();
-			String username = name.split("_")[0];
-			String note = name.split("_")[1];
-			
-			db.updateCoachNotes(username, note);
+		@RequestMapping("/updateCoachNotes")  //checkolini   ?
+	    public void updateCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    								@RequestParam("note") String note) throws Exception{
+			db.updateCoachNotes(name, note);
 	    }
 		
 
-		@RequestMapping("/getQuotes")
+		@RequestMapping("/getQuotes") //checkolini  works
 	    public String getQuotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
-
-			List<String> liste = db.getQuotes();
-			JSONObject obj = new JSONObject();
-			obj.put("Notes", liste);
-			return obj.toString();
+			List<String> quotes = db.getQuotes();
+			JSONArray arr = new JSONArray();
+			for(String s : quotes) {
+				JSONObject obj = new JSONObject();
+				obj.put("quote", s);
+				arr.put(obj);
+			}
+			JSONObject feedback = new JSONObject();
+			feedback.put("arr", arr);
+			return feedback.toString();
 	    }
 		
 
-		@RequestMapping("/createCoach")
+		@RequestMapping("/createCoach") // feil?
 	    public void createCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			// name on following form 0username_1password_2name_3Athletes(a,b,c,d,)_4Req(a,b,c,d)
 			//DatabaseS db = new DatabaseS();
-			String[] coachValues = name.split("_");
-			String username = coachValues[0];
-			String password = coachValues[1];
-			String fullName = coachValues[2];
-			List<String> athlList = new ArrayList<String>();
-			List<String> requestList = new ArrayList<String>();
-			for (String str : coachValues[3].split(",")) {
-				athlList.add(str);
-			}
-			for (String str : coachValues[4].split(",")) {
-				requestList.add(str);
-			}
+			List<String> athlList = Arrays.asList(name.split("<"));
+			List<String> athls = Arrays.asList(athlList.get(3).split("_"));
+			List<String> rAthls = Arrays.asList(athlList.get(4).split("_"));
 			
-			Coach coach = new Coach(username, password, fullName, athlList, requestList);
+			Coach coach = new Coach(athlList.get(0),athlList.get(1) , athlList.get(2), athls, rAthls);
 			db.createCoach(coach);
 	    }
 		
-		@RequestMapping("/createAthlete")
-	    public void createAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
-
-			// name on following form 0username_1password_2name_3_MAXHR_4Coaches(a,b,c,d,)_5Req(a,b,c,d)
-			//DatabaseS db = new DatabaseS();
-			String[] athleteValues = name.split("_");
-			String username = athleteValues[0];
-			String password = athleteValues[1];
-			String fullName = athleteValues[2];
-			int maxhr = Integer.parseInt(athleteValues[3]);
-			List<String> coachList = new ArrayList<String>();
-			List<String> requestList = new ArrayList<String>();
-			for (String str : athleteValues[4].split(",")) {
-				coachList.add(str);
-			}
-			for (String str : athleteValues[5].split(",")) {
-				requestList.add(str);
-			}
+		@RequestMapping("/createAthlete") // noe feil?
+	    public void createAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
+	    		@RequestParam(value="password") String pass,
+	    		@RequestParam(value="fName") String fName,
+	    		@RequestParam(value="coaches") String coaches,
+	    		@RequestParam(value="requestCoaches") String requestCoaches) throws Exception{
+			System.out.println(name);
+			System.out.println(pass);
+			System.out.println(fName);
+			System.out.println(coaches);
 			
-			Athlete athl = new Athlete(username, password, fullName, coachList, requestList);
-			athl.setMaxHR(maxhr);
+			List<String> cList = Arrays.asList(coaches.split("<"));
+			List<String> requestCList = Arrays.asList(requestCoaches.split("<"));
+			
+			Athlete athl = new Athlete(name, pass, fName, cList, requestCList);
+			//athl.setMaxHR(maxhr);
 			db.createAthlete(athl);
 	    }
 		

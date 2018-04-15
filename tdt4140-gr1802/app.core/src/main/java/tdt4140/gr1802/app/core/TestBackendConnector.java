@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bson.Document;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +24,9 @@ public class TestBackendConnector {
     		
     		TestBackendConnector co = new TestBackendConnector();
     		//co.getWorkout(athl, date)
-    		System.out.println(co.getAllWorkouts(athl).get(0).getDateString());
+    		System.out.println("get all workouts starter nuuuu");
+    		Coach coc = new Coach("petter22", null, null);
+    		co.addRequestAthleteToCoach(coc, "frikkha");
         /*
          * JSONObject obj = new JSONObject();
 		//obj.put("status", str);
@@ -109,34 +113,89 @@ public List<Workout> getAllWorkouts(Athlete athl) throws Exception {
 	//System.out.println("inni get all workouts");
  	HashMap<String, String> myMap = new HashMap<String, String>(); 
  	myMap.put("name", athl.getUsername());
- 	TestBackendConnector co = new TestBackendConnector();
+ 	//TestBackendConnector co = new TestBackendConnector();
  	
-    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAllWorkouts");
-    System.out.println("inni get all workouts");
-    //System.out.println(objektet.get("liste").toString());
-    List<String> dates = Arrays.asList(objektet.get("liste").toString().split("_"));
-    List<Workout> workouts = new ArrayList<Workout>();
-    int i = 0;
-    for(String dat: dates) {
-    	System.out.println(i);
-    	i++;
-    	System.out.println(dat);
-    		workouts.add(co.getWorkout(athl, dat) );
+    JSONObject obj = BackendConnector.makeRequest(myMap, "getAllWorkouts");
+    JSONArray jArray = obj.getJSONArray("arr");
+    List<Workout> woList = new ArrayList<Workout>();
+    for(int i = 0; i < jArray.length(); i++) {
+    System.out.println(Double.parseDouble((jArray.getJSONObject(i).get("Kilometres").toString())));
+    		
     }
     
-    return workouts;
+    return woList;
 }
+
+public void addRequestCoachToAthlete(Athlete athlete, String coach) throws Exception {
+	
+	String str = athlete.getUsername() + "_" + coach;
+	HashMap<String, String> myMap = new HashMap<String, String>();
+	myMap.put("name", str);
+	BackendConnector.makeRequest(myMap, "addRequestCoachToAthlete");
+}
+public void addRequestAthleteToCoach(Coach coach, String athlete) throws Exception {
+	
+	
+	HashMap<String, String> myMap = new HashMap<String, String>();
+	myMap.put("name", coach.getUsername());
+	myMap.put("athlete", athlete);
+	
+	BackendConnector.makeRequest(myMap, "addRequestAthleteToCoach");
+}
+
+public void mcTester(String coach, String athlete) throws Exception {
+	
+	
+	HashMap<String, String> myMap = new HashMap<String, String>();
+	myMap.put("name", coach);
+	myMap.put("name", athlete);
+	
+	BackendConnector.makeRequest(myMap, "addRequestAthleteToCoach");
+}
+
+public List<String> getRequestsForCoach(Coach coach) throws Exception {
+	
+	//String str = coach.getUsername();
+	HashMap<String, String> myMap = new HashMap<String, String>();
+	myMap.put("name", coach.getUsername());
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getRequestsForCoach");
+	List<String> reqs = Arrays.asList(objektet.get("Requests").toString().split("_"));
+    
+	return reqs;
+}
+
+public boolean dateTimeExists(Athlete athl, String date) throws Exception {
+	
+	//String str = coach.getUsername();
+	HashMap<String, String> myMap = new HashMap<String, String>();
+	myMap.put("name", athl.getUsername());
+	myMap.put("date", date);
+    JSONObject objektet = BackendConnector.makeRequest(myMap, "getRequestsForCoach");
+	String reqs = (objektet.get("value").toString());
+    if(reqs.equals("true")) {
+    		return true;
+    }
+	
+	return false;
+}
+
+
+
+
 
 
 
 public Workout getWorkout(Athlete athl, String date) throws Exception {
 	
- 	HashMap<String, String> myMap = new HashMap<String, String>(); 
- 	List<String> argList = new ArrayList<String>();
- 	argList.add(athl.getUsername());
- 	argList.add(date);
- 	String str = String.join("_", argList );
- 	myMap.put("name", str);
+ 	HashMap<String, String> myMap = new HashMap<String, String>();
+ 	
+// 	List<String> argList = new ArrayList<String>();
+// 	argList.add(athl.getUsername());
+// 	argList.add(date);
+// 	String str = String.join("_", argList );
+ 	
+ 	myMap.put("name", athl.getUsername());
+ 	myMap.put("date", date);
  	
     JSONObject objektet = BackendConnector.makeRequest(myMap, "getWorkout");
     System.out.println("get workout, rett for puls");
@@ -158,21 +217,15 @@ public Workout getWorkout(Athlete athl, String date) throws Exception {
     }
     List<String> gpxArray = Arrays.asList(gpxString.split("X"));
     List<List<Double>> gpxData = new ArrayList<List<Double>>();
-    
-    
-    
+
     for(String s : gpxArray) {
     	List<Double> gpxPair = new ArrayList<Double>();
-    
-    	
+
     	gpxPair.add(Double.parseDouble(s.split("_")[0] ));
     	gpxPair.add(Double.parseDouble(s.split("_")[1]   ));
     	gpxData.add(gpxPair);
     }
-    
-    
     Workout wo = new Workout(athl, objektet.getString("Date"), objektet.getString("Type"),Integer.parseInt(objektet.get("Duration").toString()), Double.parseDouble(objektet.get("Kilometres").toString()), pulse, vis, gpxData );
-    		
 
     return wo;
 }

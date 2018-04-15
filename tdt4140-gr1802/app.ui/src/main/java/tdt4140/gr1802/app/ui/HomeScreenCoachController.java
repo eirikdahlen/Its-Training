@@ -356,22 +356,36 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		homeComboBoxDate.setItems(obsDateChoices);
 		
 		// Fill dates for notes 
-		List<LocalDate> dates = this.coach.getDatesWithNotes();
-		if (! dates.contains(LocalDate.now())) {
-			dates.add(LocalDate.now());
+		List<LocalDate> dates;
+		try {
+			dates = this.coach.getDatesWithNotes();
+			if (! dates.contains(LocalDate.now())) {
+				dates.add(LocalDate.now());
+			}
+			
+			ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
+			FXCollections.sort(obsDates);
+			
+			// Add todays date as well
+			homeComboBoxNoteDate.setItems(obsDates);
+			
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		
-		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
-		FXCollections.sort(obsDates);
-		
-		// Add todays date as well
-		homeComboBoxNoteDate.setItems(obsDates);
 		
 		
 		
 		// **** ACTIVITIES TAB ****
-		List<String> allAct = db.getAllActivities();
-		actChoiceList = FXCollections.observableArrayList(allAct);
+		List<String> allAct;
+		try {
+			allAct = db.getAllActivities();
+			actChoiceList = FXCollections.observableArrayList(allAct);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		activitiesChoice.setItems(actChoiceList);
 		
 		
@@ -414,7 +428,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	}
 	
 	// ***** ACTIVITIES TAB ****
-	public void clickShowActivities(ActionEvent event) {
+	public void clickShowActivities(ActionEvent event) throws Exception {
 		// Get selected activity
 		String activity = activitiesChoice.getSelectionModel().getSelectedItem();
 		
@@ -476,7 +490,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		System.out.println(obsToShowAthletes);	
 	}
 	
-	public void clickHomeOKNotesButton(ActionEvent event) {
+	public void clickHomeOKNotesButton(ActionEvent event) throws Exception {
 		LocalDate chosenDate = homeComboBoxNoteDate.getValue();
 		String note = this.coach.getNote(chosenDate);
 		homeTextFieldNote.setText(note);
@@ -490,7 +504,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 	}
 	
-	public void clickHomeSaveNoteButton(ActionEvent event) {
+	public void clickHomeSaveNoteButton(ActionEvent event) throws Exception {
 		
 		if (! homeComboBoxNoteDate.getValue().isEqual(LocalDate.now())) {
 			// Chosen date is not today, should not save new
@@ -633,7 +647,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
         System.out.println("Chart amount" + chartAmount.getData());
 	}
 	
-	public void updateActivitesPieChart(Athlete athlete) {
+	public void updateActivitesPieChart(Athlete athlete) throws Exception {
 		List<Integer> athlAct = db.getAthleteActivityTypes(athlete.getUsername());
 		List<String> allAct = db.getAllActivities();
 		List<Integer> meanValueAct = coachAnalyzer.getAvgNrActivites(coach);

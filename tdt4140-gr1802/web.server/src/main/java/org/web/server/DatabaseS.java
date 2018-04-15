@@ -90,7 +90,7 @@ public class DatabaseS {
 	// Create Workout in database
 	public void createWorkout(Workout workout) {
 		//checks if datetime is available for particular athlete 
-		if ( ! datetimeExists(workout.getAthlete(), workout.getDateString())) {
+		if ( ! datetimeExists(workout.getAthlete().getUsername(), workout.getDateString())) {
 			//finds the athlete of the workout, and accesses his workout-collection
 			//automatically creates new collection if it does not exists
 			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(workout.getAthlete().getUsername());
@@ -194,6 +194,7 @@ public class DatabaseS {
 			System.out.println("no athlete with this username");
 			return null;
 		}
+		
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
 	
 		//TODO: fikse opp i dette, legge til i konstruktør
@@ -291,9 +292,9 @@ public class DatabaseS {
 	}
 	
 	// Add Coach to the Athletes Coach-list
-	public void addCoachToAthlete(Athlete athlete, String coachUsername) {
+	public void addCoachToAthlete(String athlete, String coachUsername) {
 		////method for adding coach to athlete's coach-list
-		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete)).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");
@@ -314,20 +315,20 @@ public class DatabaseS {
 
 				//updates document with updated coach-array
 				
-				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete)).first();
 
 				Bson updatedvalue = new Document("Coaches", coaches);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				athleteCollection.updateOne(found2, updateoperation);
-				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s coach-list.");
+				System.out.println("adding " + coachUsername + " to "+athlete + "'s coach-list.");
 			}	
 		}
 	}
 	
 	// Add Athlete to the Coach Athletes-list
-	public void addAthleteToCoach(Coach coach, String athleteUsername) {
+	public void addAthleteToCoach(String username, String athleteUsername) {
 		//method for adding athlete to coach's athlete-list
-		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
+		Document found = (Document) coachCollection.find(new Document("Username", username )).first();
 		
 		if (found == null) {
 			System.out.println("no coach with this username");
@@ -349,21 +350,21 @@ public class DatabaseS {
 		
 				//updates document with updated coach-array
 				
-				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+				Document found2 = (Document) coachCollection.find(new Document("Username", username)).first();
 
 				Bson updatedvalue = new Document("Athletes", athletes);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				coachCollection.updateOne(found2, updateoperation);
-				System.out.println("adding " + athleteUsername + " to "+coach.getUsername() + "'s athlete-list.");
+				System.out.println("adding " + athleteUsername + " to "+username + "'s athlete-list.");
 			}
 		}
 	}
 	
 	
 	// Add Athlete to Coaches RequestAthlete-list
-	public void addRequestAthleteToCoach(Coach coach, String athleteUsername) {
+	public void addRequestAthleteToCoach(String coach, String athleteUsername) {
 		//method for adding athlete to coach's requests
-		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername() )).first();
+		Document found = (Document) coachCollection.find(new Document("Username", coach )).first();
 		
 		if (found == null) {
 			System.out.println("no coach with this username");
@@ -384,20 +385,20 @@ public class DatabaseS {
 				requestAthletes.add(athleteUsername);
 			
 				//updates document with updated coach-array
-				Document found2 = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+				Document found2 = (Document) coachCollection.find(new Document("Username", coach)).first();
 
 				Bson updatedvalue = new Document("Requests", requestAthletes);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				coachCollection.updateOne(found2, updateoperation);
-				System.out.println("adding " + athleteUsername + " to "+coach.getUsername() + "'s request-list.");
+				System.out.println("adding " + athleteUsername + " to "+coach + "'s request-list.");
 			}
 		}
 	}
 	
 	// Add Atlete to Coaches RequestAthlete-list
-	public void addRequestCoachToAthlete(Athlete athlete, String coachUsername) {
+	public void addRequestCoachToAthlete(String athlete, String coachUsername) {
 		//method for adding coach to athlete's requests
-		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername() )).first();
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete )).first();
 		
 		if (found == null) {
 			System.out.println("no athlete with this username");
@@ -419,12 +420,12 @@ public class DatabaseS {
 		
 				//updates document with updated coach-array
 				
-				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+				Document found2 = (Document) athleteCollection.find(new Document("Username", athlete)).first();
 
 				Bson updatedvalue = new Document("Requests", requestCoaches);
 				Bson updateoperation = new Document("$set", updatedvalue);
 				athleteCollection.updateOne(found2, updateoperation);
-				System.out.println("adding " + coachUsername + " to "+athlete.getUsername() + "'s request-list.");
+				System.out.println("adding " + coachUsername + " to "+athlete + "'s request-list.");
 			}	
 		}
 	}
@@ -537,6 +538,8 @@ public class DatabaseS {
 		}	
 	}
 	
+	
+	
 	// Delete Athlete from Coaches RequestAthlete-list
 	public void deleteAthleteRequestForCoach(Coach coach, String athleteUsername) {
 		//method for adding athlete to coach's athlete-list
@@ -587,7 +590,7 @@ public class DatabaseS {
 	}
 	
 	// Returns a list with all the Athletes usernames for the Coach
-	public List<String> getAthleteForCoach(Coach coach) {
+	public List<String> getAthletesForCoach(Coach coach) {
 		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
 		System.out.println("HENTER ATHLETES FOR COACH");
 		if (found == null) {
@@ -600,8 +603,8 @@ public class DatabaseS {
 	}
 	
 	// Returns a list with all the AthleteRequests usernames for the Coach
-	public List<String> getRequestsForCoach(Coach coach) {
-		Document found = (Document) coachCollection.find(new Document("Username", coach.getUsername())).first();
+	public List<String> getRequestsForCoach(String coach) {
+		Document found = (Document) coachCollection.find(new Document("Username", coach)).first();
 		if (found == null) {
 			System.out.println("no coach with this username");
 			return null;
@@ -625,8 +628,8 @@ public class DatabaseS {
 	}
 	
 	// Check if athlete has a Workout at the datetime
-	public boolean datetimeExists(Athlete athlete, String date) {
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+	public boolean datetimeExists(String athlete, String date) {
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete);
 		Document found = (Document) userWorkoutCollection.find(new Document("date", date)).first();
 		
 		if (found != null) {
@@ -711,9 +714,9 @@ public class DatabaseS {
 		return activities;
 	}
 	
-	public int getNrOfWorkoutsForAthlete(Athlete athlete, String activity) {
+	public int getNrOfWorkoutsForAthlete(String athlete, String activity) {
 		int count = 0;
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete);
 		
 		try {
 			MongoCursor<Document> cursor = userWorkoutCollection.find().iterator();
@@ -829,10 +832,10 @@ public class DatabaseS {
 	}
 	
 	public static void main(String[] args) {
-		Database db = new Database();
-		System.out.println(db.getAthletesForActivity("RUNNING"));
-		System.out.println(db.getCoachNotes("petter22"));
-		
+//		Database db = new Database();
+//		System.out.println(db.getAthletesForActivity("RUNNING"));
+//		System.out.println(db.getCoachNotes("petter22"));
+//		
 
 	}
 	

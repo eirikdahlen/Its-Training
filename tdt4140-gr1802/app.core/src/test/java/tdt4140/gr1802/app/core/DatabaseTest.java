@@ -88,7 +88,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateAthlete() {
+	public void testCreateAthlete() throws Exception {
 		
 
 		
@@ -101,7 +101,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateCoach() {
+	public void testCreateCoach() throws Exception {
 		
 		//adds coack for testing
 		Coach coach1 = new Coach("Petter74", "passord", "Petter");
@@ -118,7 +118,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateWorkout() throws IOException {
+	public void testCreateWorkout() throws Exception {
 		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "passord", "Kjetil");
@@ -172,7 +172,7 @@ public class DatabaseTest {
 		}
 	}
 	
-	public void testAddCoachToAthlete() {
+	public void testAddCoachToAthlete() throws Exception {
 		
 		//get coachList first -> print list -> update coach_list -> print again
 		
@@ -213,7 +213,7 @@ public class DatabaseTest {
 	
 	}
 	
-	public void testAddAthleteToCoach() {
+	public void testAddAthleteToCoach() throws Exception {
 		
 		//get coachList first -> print list -> update coach_list -> print again
 		
@@ -255,7 +255,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testAddRequestAthleteToCoach() {
+	public void testAddRequestAthleteToCoach() throws Exception {
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
@@ -298,7 +298,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testAddRequestCoachToAthlete() {
+	public void testAddRequestCoachToAthlete() throws Exception {
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______

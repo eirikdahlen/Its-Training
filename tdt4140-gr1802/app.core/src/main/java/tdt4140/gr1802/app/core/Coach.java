@@ -45,7 +45,7 @@ public class Coach extends User {
 	
 	// Method called by a athlete-object. The athlete that calls this method wants to be this coaches athlete. The athlete will be
 	// queued in "queuedAthletes" so that the coach later can accept the athlete as his/her coach.
-	public void queueAthlete (String newAthlete) {
+	public void queueAthlete (String newAthlete) throws Exception {
 		queuedAthletes.add(newAthlete) ;
 		// add to queue in database
 		database.addRequestAthleteToCoach(this, newAthlete);
@@ -150,7 +150,7 @@ public class Coach extends User {
 		return resultAthletes;	
 	}
 	
-	public HashMap<LocalDate, String> getNotesMap() {
+	public HashMap<LocalDate, String> getNotesMap() throws Exception {
 		List<String> notes = database.getCoachNotes(this.username);
 		HashMap<LocalDate, String> dateString = new HashMap<>();
 		
@@ -167,13 +167,13 @@ public class Coach extends User {
 		return dateString;
 	}
 	
-	public List<LocalDate> getDatesWithNotes() {
+	public List<LocalDate> getDatesWithNotes() throws Exception {
 		List<LocalDate> dates = new ArrayList<>();
 		dates.addAll(getNotesMap().keySet());	
 		return dates;
 	}
 	
-	public String getNote(LocalDate date) {
+	public String getNote(LocalDate date) throws Exception {
 		HashMap<LocalDate, String> map = getNotesMap();
 		
 		for (HashMap.Entry<LocalDate, String> entry : map.entrySet()) {
@@ -185,12 +185,12 @@ public class Coach extends User {
 		return "";
 	}
 	
-	public void saveNote(LocalDate date, String text) {
+	public void saveNote(LocalDate date, String text) throws Exception {
 		String asString = date.toString() + " " + text;
 		database.addCoachNotes(this.username, asString);
 	}
 	
-	public void updateNote(LocalDate date, String text) {
+	public void updateNote(LocalDate date, String text) throws Exception {
 		String asString = date.toString() + " " + text; 
 		database.updateCoachNotes(this.username, asString);
 	}

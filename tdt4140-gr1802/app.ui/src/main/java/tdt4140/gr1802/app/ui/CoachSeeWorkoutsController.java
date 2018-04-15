@@ -77,7 +77,7 @@ public class CoachSeeWorkoutsController {
 	// Help-method that returns an ObservableList with all the Workouts for the chosen Athlete
 	public ObservableList<Workout> getWorkouts() throws Exception{
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
-		for (Workout wo : athlete.getAllWorkouts()) {
+		for (Workout wo : athlete.getAllWorkouts() ) {
 			//Check if visible for coaches before adding
 			System.out.println("henter alle workoutsene");
 			if(wo.getVisibility()) {workouts.add(wo);}
