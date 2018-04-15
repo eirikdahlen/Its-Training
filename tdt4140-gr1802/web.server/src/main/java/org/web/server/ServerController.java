@@ -1,5 +1,6 @@
 package org.web.server;
 
+import org.bson.BSONObject;
 import org.bson.Document;
 
 import org.bson.conversions.Bson;
@@ -35,19 +36,30 @@ public class ServerController {
     public String getAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 		//DatabaseS db = new DatabaseS();
-		Athlete athl = db.getAthlete(name);
-		
+		String obj = db.getAthleteS(name).toJson();
 
-		JSONObject obj = new JSONObject();
+		//String obj = athl.toString();   //new JSONObject();
 		//obj.put("status", str);
-		obj.put("Username", name);
-		obj.put("Passord", athl.getPassword());
-		obj.put("Name", athl.getName());
-		obj.put("Coaches", String.join("_", athl.getCoaches()) );
-		obj.put("Requests", String.join("_", athl.getQueuedCoaches()) );
-		obj.put("MAXHR", athl.getMaxHR());
+//		obj.put("Username", name);
+//		obj.put("Passord", athl.getPassword());
+//		obj.put("Name", athl.getName());
+//		if(athl.getCoaches() == null) {
+//			List<String> lis = new ArrayList<String>();
+//			lis.add("null");
+//			obj.put("Coaches", lis);
+//		}else {
+//			obj.put("Coaches", String.join("_", athl.getCoaches()) );
+//		}
+//		if(athl.getQueuedCoaches() == null) {
+//			List<String> lis = new ArrayList<String>();
+//			lis.add("null");
+//			obj.put("Requests", lis);
+//		}else {
+//			obj.put("Requests", String.join("_", athl.getCoaches()) );
+//		}
+//		obj.put("MAXHR", athl.getMaxHR());
 		
-		return obj.toString();
+		return obj;
 		
     }
 	

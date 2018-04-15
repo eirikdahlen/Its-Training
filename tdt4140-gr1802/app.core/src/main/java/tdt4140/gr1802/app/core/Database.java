@@ -219,46 +219,64 @@ public String getPassword(String username) throws Exception {
 		this.activityCollection = dataDatabase.getCollection("ActivityTypes");
 	}
 	
-	// Returns the Athlete from the database
-//	public Athlete getAthlete(String username) {
-//		
-//		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
-//		
-//		if (found == null) {
-//			System.out.println("no athlete with this username");
-//			return null;
-//		}
-//		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
-//	
-//		try {
-//			athlete.setMaxHR( found.getInteger("maxHR") );
-//		} catch (Exception e) {
-//			//sets maxHR to 0 if it is not present in db
-//			athlete.setMaxHR(0);
-//			
-//		}
-//		return athlete;
+	 //Returns the Athlete from the database
+	public Athlete getAthlete(String username) {
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
+		
+		if (found == null) {
+			System.out.println("no athlete with this username");
+			return null;
+		}
+		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+	
+		try {
+			athlete.setMaxHR( found.getInteger("maxHR") );
+		} catch (Exception e) {
+			//sets maxHR to 0 if it is not present in db
+			athlete.setMaxHR(0);
+			
+		}
+		return athlete;
+	}
+//	  
+//    public Athlete getAthlete(String username) throws Exception {
+//    	
+//    	
+//    	HashMap<String, String> myMap = new HashMap<String, String>(); 
+//	System.out.println("get Athlete inni");
+//	myMap.put("name", username);
+//    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAthlete");
+//    Document found = Document.parse(objektet.toString());
+//    if (found == null) {
+//		System.out.println("no athlete with this username");
+//		return null;
 //	}
-	  
-    public Athlete getAthlete(String username) throws Exception {
-    	
-    	
-    	HashMap<String, String> myMap = new HashMap<String, String>(); 
-	System.out.println("get Athlete inni");
-	myMap.put("name", username);
-    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAthlete");
-    String c = objektet.get("Coaches").toString();
-    String[] str = c.split("_");
-    String r = objektet.get("Requests").toString();
-    String[] str2 = r.split("_");
-    List<String> coachList = Arrays.asList(str);   //new ArrayList<String>();
-    List<String> requests = Arrays.asList(str2);
+//	Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+//
+//	//TODO: fikse opp i dette, legge til i konstruktør
+//	try {
+//		athlete.setMaxHR( found.getInteger("maxHR") );
+//	} catch (Exception e) {
+//		System.out.println("feil på get maxHR");
+//		//sets maxHR to 0 if it is not present in db
+//		athlete.setMaxHR(0);
+//		
+//	}
+//	return athlete;
     
-    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), coachList, requests);
-    athl.setMaxHR(Integer.parseInt("190"));
-    return athl;
+//    String c = objektet.get("Coaches").toString();
+//    String[] str = c.split("_");
+//    String r = objektet.get("Requests").toString();
+//    String[] str2 = r.split("_");
+//    List<String> coachList = Arrays.asList(str);   //new ArrayList<String>();
+//    List<String> requests = Arrays.asList(str2);
+//    
+//    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Passord").toString(), objektet.get("Name").toString(), coachList, requests);
+//    athl.setMaxHR(Integer.parseInt("190"));
+//    return athl;
     	
-    }
+   // }
 	
 	public List<Athlete> getAllAthletes() throws Exception{
 		List<Athlete> athletes = new ArrayList<Athlete>();

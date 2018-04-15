@@ -185,6 +185,12 @@ public class DatabaseS {
 		this.activityCollection = dataDatabase.getCollection("ActivityTypes");
 	}
 	
+	
+	
+	public Document getAthleteS(String username) {
+		return getAthleteS(username);
+	}
+	
 	// Returns the Athlete from the database
 	public Athlete getAthlete(String username) {
 		
@@ -194,7 +200,6 @@ public class DatabaseS {
 			System.out.println("no athlete with this username");
 			return null;
 		}
-		
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
 	
 		//TODO: fikse opp i dette, legge til i konstruktør
@@ -537,8 +542,6 @@ public class DatabaseS {
 			}		
 		}	
 	}
-	
-	
 	
 	// Delete Athlete from Coaches RequestAthlete-list
 	public void deleteAthleteRequestForCoach(Coach coach, String athleteUsername) {
