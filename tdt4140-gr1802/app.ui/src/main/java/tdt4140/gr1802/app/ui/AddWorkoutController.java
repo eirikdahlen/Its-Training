@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadException;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -117,6 +118,15 @@ public class AddWorkoutController {
 			filepathTextField.setText("Filepath is not valid");
 		}
 	}
+	
+	@FXML
+    public void homeScreenButtonCursorHand() {
+    	homeScreenButton.setCursor(Cursor.HAND);
+    }
+    @FXML
+    public void homeScreenButtonCursorDefault() {
+    	homeScreenButton.setCursor(Cursor.DEFAULT);
+    }
 	
 	
 	// Side-menu buttons

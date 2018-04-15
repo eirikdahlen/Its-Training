@@ -719,9 +719,9 @@ public class Database {
 		return activities;
 	}
 	
-	public int getNrOfWorkoutsForAthlete(Athlete athlete, String activity) {
+	public int getNrOfWorkoutsForAthlete(String athlete, String activity) {
 		int count = 0;
-		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete.getUsername());
+		MongoCollection userWorkoutCollection = workoutDatabase.getCollection(athlete);
 		
 		try (MongoCursor<Document> cursor = userWorkoutCollection.find().iterator()) {
 		    while (cursor.hasNext()) {
@@ -778,6 +778,17 @@ public class Database {
 			}
 		}
 		return activityWorkouts;	
+	}
+	
+	public List<Integer> getAthleteActivityTypes(String username){
+		List<Integer> list = new ArrayList<>();
+		
+		List<String> allAct = getAllActivities();
+		for (String act : allAct) {
+			int n = getNrOfWorkoutsForAthlete(username, act);
+			list.add(n);
+		}
+		return list;
 	}
 	
 	//**************HOME-TAB*******************
@@ -838,7 +849,7 @@ public class Database {
 		Database db = new Database();
 		System.out.println(db.getAthletesForActivity("RUNNING"));
 		System.out.println(db.getCoachNotes("petter22"));
-		
+		System.out.println(db.getAthleteActivityTypes("TeddyWestside"));
 
 	}
 	
@@ -861,6 +872,7 @@ public class Database {
 		}
 		return quotes; 
 	}
+
 	
 	public void addSleepData (Athlete athlete) {
 		//forutsetter at alle athletes har sleepdata, men denne kan være empty. har en try-block for det uansett
