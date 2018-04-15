@@ -42,25 +42,25 @@
                             <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="RIGHT" />
                           </yAxis>
                         </LineChart>
-                        <Label fx:id="txtAthleteLabel" alignment="TOP_CENTER" layoutX="545.0" layoutY="62.0" prefWidth="250.0">
+                        <Label fx:id="txtAthleteLabel" alignment="TOP_CENTER" layoutX="569.0" layoutY="76.0" prefWidth="250.0">
                         		<font>
                         			<Font name="System Bold" size="18.0" />
                          	</font>
                         </Label>
-                        <LineChart fx:id="chartQuality" layoutX="200.0" layoutY="362.0" prefHeight="238.0" prefWidth="1047.0" title="Quality">
+                        <LineChart fx:id="chartQuality" layoutX="170.0" layoutY="362.0" prefHeight="238.0" prefWidth="1047.0" title="Quality">
                            <xAxis>
                               <CategoryAxis label="Date" prefHeight="33.0" prefWidth="362.0" side="BOTTOM" fx:id="xAxisQuality" />
                            </xAxis>
                            <yAxis>
-                              <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="RIGHT" />
+                              <NumberAxis fx:id="yAxisQuality" label="Percent" prefHeight="155.0" prefWidth="46.0" side="LEFT" />
                            </yAxis>
                         </LineChart>
-                        <Text layoutX="607.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sleepdata">
+                        <Text layoutX="631.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sleepdata">
                            <font>
                               <Font size="29.0" />
                            </font>
                         </Text>
-                        <Button layoutX="619.0" layoutY="598.0" mnemonicParsing="false" onAction="#backToSeeAthletes" text="Back to Athletes" />
+                        <Button layoutX="649.0" layoutY="600.0" mnemonicParsing="false" onAction="#backToSeeAthletes" text="Back to Athletes" />
                      </children>
                   </AnchorPane>
               </items>

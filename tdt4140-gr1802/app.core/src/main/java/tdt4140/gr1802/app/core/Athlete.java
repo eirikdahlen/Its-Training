@@ -155,4 +155,13 @@ public class Athlete extends User implements Comparable<Athlete> {
 	public List<List<String>> getSleepData() {
 		return this.sleepdata;
 	}
+	
+	public List<List<String>> getRecentSleepData() {
+		List<List<String>> recentSleepdata = new ArrayList<List<String>>();
+		for (int i = sleepdata.size() - 14; i < sleepdata.size(); i++) {
+			recentSleepdata.add(sleepdata.get(i));
+		}
+		return recentSleepdata;
+	}
+	
 }

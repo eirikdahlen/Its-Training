@@ -92,7 +92,7 @@ public class CoachSeeSleepdataController implements Initializable {
 		this.db = App.getDb();
 		
 		this.txtLabelUsername.setText(this.coach.getUsername());
-		// txtAthleteLabel.setText(choosenAthlete.getUsername());
+		this.txtAthleteLabel.setText(choosenAthlete.getUsername());
 		System.out.println("Heihei");
 		updateSleepdata(choosenAthlete) ;
 		
@@ -105,7 +105,7 @@ public class CoachSeeSleepdataController implements Initializable {
     */
     
     private void updateSleepdata(Athlete athlete) {
-    		List<List<String>> sleepdata = athlete.getSleepData();
+    		List<List<String>> sleepdata = athlete.getRecentSleepData();
     		XYChart.Series<String, Number> quality = new XYChart.Series<>();
     		XYChart.Series<String, Number> length = new XYChart.Series<>();
     		chartDuration.getData().clear();
@@ -127,17 +127,12 @@ public class CoachSeeSleepdataController implements Initializable {
     			} else {
     				String s = l.get(2);
         			String[] s1 = s.split(":");
-        			int i = Integer.parseInt(s1[1])/60;
-        			int j = Integer.parseInt(s1[0]) + i;
+        			double i = Double.parseDouble(s1[1])/60;
+        			double j = Double.parseDouble(s1[0]) + i;
     				quality.getData().add(new XYChart.Data<>(l.get(0), Integer.parseInt(l.get(1).substring(0, 2))));
         			length.getData().add(new XYChart.Data<>(l.get(0), j));
     			}
     		}
-    		
-    		quality.getData().add(new XYChart.Data<String, Number>("jan",70));
-    		quality.getData().add(new XYChart.Data<String, Number>("feb",64));
-    		length.getData().add(new XYChart.Data<String, Number>("jan",6));
-    		length.getData().add(new XYChart.Data<String, Number>("feb",7));
     		chartQuality.getData().add(quality);
     		chartDuration.getData().add(length);
     		//chartSleepdata.getData().addAll(length);
