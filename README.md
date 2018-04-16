@@ -34,7 +34,7 @@ app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnitt
 ### Forutsetninger
 - Java SE Runtime Environment 8
 - Java SE Development Kit 8
-- IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
+- IDE ([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
 ## Instrukser for kjøring
 - For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen _Server.java_ filen i _web.server_-mappen.
