@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadException;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -133,6 +134,15 @@ public class SeeWorkoutsController{
 		window.show();
 	}
 	
+	@FXML
+    public void homeScreenButtonCursorHand() {
+    	homeScreenButton.setCursor(Cursor.HAND);
+    }
+    @FXML
+    public void homeScreenButtonCursorDefault() {
+    	homeScreenButton.setCursor(Cursor.DEFAULT);
+    }
+    
 	// Side-menu buttons, changes scenes
 	public void clickAddWorkout(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("AddWorkout.fxml"));

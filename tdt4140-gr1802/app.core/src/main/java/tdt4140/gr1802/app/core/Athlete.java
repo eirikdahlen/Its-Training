@@ -46,7 +46,9 @@ public class Athlete extends User implements Comparable<Athlete> {
 
 	public List<String> getQueuedCoaches() { return queuedCoaches; }
 	
-	public int getNumbWorkouts() {this.numbWorkouts = database.getAllWorkouts(this).size(); return this.numbWorkouts; }
+	public void setNumbWorkouts() { this.numbWorkouts = database.getAllWorkouts(this).size(); }
+	
+	public int getNumbWorkouts() { return this.numbWorkouts; }
 	
 	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
 	
@@ -121,9 +123,9 @@ public class Athlete extends User implements Comparable<Athlete> {
 		}
 	}
 
-	@Override
+    @Override
 	public int compareTo(Athlete o) {
-		return o.getAllWorkouts().size() - this.getAllWorkouts().size();
+		return o.getNumbWorkouts() - this.getNumbWorkouts();
 	}
 	
 	public Date getDateLastWorkout() {
@@ -140,7 +142,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	}
 	
 	public int getNrOfWorkouts(String activity) {
-		return database.getNrOfWorkoutsForAthlete(this, activity);
+		return database.getNrOfWorkoutsForAthlete(this.getUsername(), activity);
 	}
 	
 	public void addSleepData (URL path) {

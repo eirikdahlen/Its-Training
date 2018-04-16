@@ -2,6 +2,7 @@ package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
@@ -11,7 +12,10 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MVCArray;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
@@ -22,6 +26,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.shapes.Polyline;
 import com.lynden.gmapsfx.shapes.PolylineOptions;
+import com.lynden.gmapsfx.util.MarkerImageFactory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +34,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,6 +56,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import tdt4140.gr1802.app.core.AnalyzeCoach;
+import netscape.javascript.JSObject;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.AnalyzeWorkouts;
 import tdt4140.gr1802.app.core.App;
@@ -64,6 +72,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	private Coach coach;
 	private Database db;
 	private AnalyzeWorkout analyzer = new AnalyzeWorkout();
+	private AnalyzeCoach coachAnalyzer = new AnalyzeCoach();
 	
 	public class ActivityAthlete {
 		private String username;
@@ -90,13 +99,11 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		private double lowHR;
 		private double medHR;
 		private double highHR;
-		
-		
+			
 		public RankAthlete(Athlete athlete, boolean tirthy){
 			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
 			this.userName = athlete.getUsername();
-			
-			
+				
 			List<Workout> workoutList = db.getAllWorkouts(athlete);
 			for (int i = 0; i < workoutList.size();i++) {
 				if (! workoutList.get(i).getVisibility()) {
@@ -109,26 +116,19 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 				LocalDate dateRank = LocalDate.now().minusDays(30);
 				Date sinceDateRank = java.sql.Date.valueOf(dateRank);
 				//slett fra workout-liste
-				
-				
+						
 				for (int i = 0; i < workoutList.size();i++) {
 					if (workoutList.get(i).getDate().before(sinceDateRank)) {
-						workoutList.remove(i);
-						
-					}
-				}
-				
-			}
-			
+						workoutList.remove(i);	}
+				}		
+			}		
 			this.numbWorkouts = workoutList.size();
 			this.totalDuration = analyzer.getTotalDuration(workoutList);
 			this.lowHR = analyzer.getTimeInHRZones(workoutList).get(0);
 			this.medHR = analyzer.getTimeInHRZones(workoutList).get(1);
-			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);
-			
+			this.highHR = analyzer.getTimeInHRZones(workoutList).get(2);		
 		}
-		
-		
+			
 		public String getUserName() {
 			return userName;
 		}
@@ -146,12 +146,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		}
 		public double getHighHR() {
 			return highHR;
-		}
-		
-		
-		
-		
-		
+		}	
 	}
 	
 	public class DateAthlete {
@@ -164,6 +159,24 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 		public String getName() { return this.name; }
 		public Date getLastWorkout() { return this.lastWorkout; }
+	}
+	
+	public class MarkerWorkout{
+		private Workout workout;
+		private LatLong co;
+		
+		public MarkerWorkout(Workout w, List<Double> c) {
+			this.workout = w;
+			this.co = new LatLong(c.get(0), c.get(1));
+		}
+		
+		public Workout getWorkout() {
+			return workout;
+		}
+		public LatLong getCo(){
+			return co;
+		}
+		
 	}
 	
 	// Declaring variables for elements in fxml
@@ -286,6 +299,11 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	private ObservableList<BarChart.Data<String, Number>> barChartDataAmount = FXCollections.observableArrayList();
 	
+	@FXML
+	private PieChart athlActTypesChart;
+	@FXML
+	private PieChart mvActTypesChart;
+	
     @FXML 
     private CategoryAxis xAxisHR, xAxisDuration, xAxisWorkoutType, xAxisAmount;
     
@@ -297,7 +315,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
     
     List<Workout> workoutsForChoosenAthlete = new ArrayList<>();
     List<Athlete> allAthletes = new ArrayList<>();
-    
+  
     
 	 
 	//_________________________
@@ -312,13 +330,14 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		System.out.println(coach.getName());
 		System.out.println(homeTabWelcomeText);
 		homeTabWelcomeText.setText("Welcome " + coach.getName() + "!");
+		
 		// Fill Top 3
+		System.out.println("HALLO!");
 		List<Athlete> top3 = coach.getTop3Athletes();
 		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
 		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
 		tableViewTop3.setItems(obsList);
-		
 		
 		// Fill dates not working out
 		List<String> dateChoices = new ArrayList<>();
@@ -341,7 +360,8 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 		
 		// **** ACTIVITIES TAB ****
-		actChoiceList = FXCollections.observableArrayList(db.getAllActivities());
+		List<String> allAct = db.getAllActivities();
+		actChoiceList = FXCollections.observableArrayList(allAct);
 		activitiesChoice.setItems(actChoiceList);
 		
 		
@@ -361,6 +381,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		cboxChooseAthlete.setItems(obsAthleteTab);
 		
 		allAthletes = new ArrayList<>();
+		
 		
 		//GmapsFX
 		mapView.addMapInializedListener(this);
@@ -530,6 +551,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		updateHRZonesChart(workoutsForChoosenAthlete, allAthletes);
 		updateDurationChart(workoutsForChoosenAthlete, allAthletes);
 		updateAmountChart(workoutsForChoosenAthlete, allAthletes);
+		updateActivitesPieChart(choosenAthlete);
 	}
 
 	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
@@ -591,6 +613,34 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
         System.out.println("Chart amount" + chartAmount.getData());
 	}
 	
+	public void updateActivitesPieChart(Athlete athlete) {
+		List<Integer> athlAct = db.getAthleteActivityTypes(athlete.getUsername());
+		List<String> allAct = db.getAllActivities();
+		List<Integer> meanValueAct = coachAnalyzer.getAvgNrActivites(coach);
+		
+		// Fill PieChart for Athlete with data
+		ObservableList<PieChart.Data> pieChartDataAthl = FXCollections.observableArrayList();
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(0), athlAct.get(0)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(1), athlAct.get(1)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(2), athlAct.get(2)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(3), athlAct.get(3)));
+		pieChartDataAthl.add(new PieChart.Data(allAct.get(4), athlAct.get(4)));
+
+		athlActTypesChart.setData(pieChartDataAthl);
+		athlActTypesChart.setTitle(athlete.getUsername());
+		
+		// Fill PieChart for Mean value with data
+		ObservableList<PieChart.Data> pieChartDataMv = FXCollections.observableArrayList();
+		pieChartDataMv.add(new PieChart.Data(allAct.get(0), meanValueAct.get(0)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(1), meanValueAct.get(1)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(2), meanValueAct.get(2)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(3), meanValueAct.get(3)));
+		pieChartDataMv.add(new PieChart.Data(allAct.get(4), meanValueAct.get(4)));
+
+		mvActTypesChart.setData(pieChartDataMv);
+		mvActTypesChart.setTitle("Mean Value");
+		
+	}
 
 		
 	// ---------------- MAP TAB -----------------------
@@ -598,16 +648,17 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 			System.out.println("Halllllloeojgpjerg");
 	        geocodingService = new GeocodingService();
 	        MapOptions mapOptions = new MapOptions();
-	        List<List<Double>> liste = coach.getWorkoutsStartpoints();
-	        List<LatLong> liste2 = new ArrayList<>();
-	        System.out.println("liste: " + liste);
+	        HashMap<Workout,List<Double>> dic = coach.getWorkoutsStartpoints();
+	        List<MarkerWorkout> listMarkWorkout = new ArrayList<>();
+	        System.out.println("dic"+dic);
 	        
-	        
-	        for (List<Double> l : liste) {
-	        		liste2.add(new LatLong(l.get(0), l.get(1)));
+	      
+	        for (Map.Entry<Workout, List<Double>> entry : dic.entrySet()) {
+	        		Workout wo = entry.getKey();
+	        		List<Double> co = entry.getValue();
+	        		MarkerWorkout markerWorkout = new MarkerWorkout(wo, co);
+	        		listMarkWorkout.add(markerWorkout);
 	        }
-	        System.out.println(liste2.size());
-	        
 	        mapOptions.center(new LatLong(56.948341, 12.452795))
 	        .mapType(MapTypeIdEnum.ROADMAP)
 	        .overviewMapControl(false)
@@ -620,12 +671,95 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 
 	        map = mapView.createMap(mapOptions);
 	        
-	        for (LatLong latlong : liste2) {
+	        List<String> markerIcons = new ArrayList<>();
+	        markerIcons.add("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+	        markerIcons.add("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+	        markerIcons.add("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+	        markerIcons.add("http://maps.google.com/mapfiles/ms/icons/yellow-dot.png");
+	        
+	        int counter = 0;
+	        
+	        // Dictionary to store which markercolor is assigned to which athlete
+	        Map<Athlete, Integer> markerAthleteMap = new HashMap<Athlete, Integer>();
+	        
+	        for (MarkerWorkout markerWo : listMarkWorkout) {
 	        		MarkerOptions mo = new MarkerOptions();
-	        		mo.position(latlong);
+	        		
+	        		// Check if Athlete already is assigned an index (Markercolor)
+	        		if (markerAthleteMap.containsKey(markerWo.getWorkout().getAthlete())) {
+	        			mo.icon(markerIcons.get(markerAthleteMap.get(markerWo.getWorkout().getAthlete())));
+	        		} else {
+	        			markerAthleteMap.put(markerWo.getWorkout().getAthlete(), counter);
+	        			mo.icon(markerIcons.get(markerAthleteMap.get(markerWo.getWorkout().getAthlete())));
+	        			counter++;
+	        			if (counter >= markerIcons.size()) {
+	        				counter = 0;
+	        			}
+	        		}
+	        		mo.position(markerWo.getCo());
 	        		Marker marker = new Marker(mo);
 	        		map.addMarker(marker);
+	        		
+	        		// Make Infobox
+	        		InfoWindowOptions infoOptions = new InfoWindowOptions();
+	        		infoOptions.content("<h2>"+markerWo.getWorkout().getAthlete().getUsername()+"</h2><h4>"+markerWo.getWorkout().getType()+"</h4><h4>Duration: "+markerWo.getWorkout().getDuration()+" min</h4><h4>Date: "+markerWo.getWorkout().getDateString()+"</h4>").position(markerWo.getCo());
+	        		InfoWindow window = new InfoWindow(infoOptions);
+	        		
+	        		List<List<Double>> gpxData = markerWo.getWorkout().getGpxData();
+	        		List<LatLong> list = new ArrayList<>();
+	        		
+	        		for (List<Double> l : gpxData) {
+	            		list.add(new LatLong(l.get(0), l.get(1)));
+	        		}
+	        		
+	        		// When marker clicked, open Infobox
+	    	        map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+		        		window.open(map, marker);
+		        	
+		        		// Show route
+		        		MarkerOptions mo1 = new MarkerOptions();
+		        		mo1.position(list.get(0)).label("S").icon(markerIcons.get(markerAthleteMap.get(markerWo.getWorkout().getAthlete())));
+		        		MarkerOptions mo2 = new MarkerOptions();
+		        		mo2.position(list.get(list.size()-1)).label("F").icon(markerIcons.get(markerAthleteMap.get(markerWo.getWorkout().getAthlete())));
+		                
+		        		Marker StartPointMarker = new Marker(mo1);
+		        		Marker FinishPointMarker = new Marker(mo2);
+		        		
+		        		map.addMarker(StartPointMarker);
+		        		map.addMarker(FinishPointMarker);
+		                
+		          	LatLong[] ary = new LatLong[list.size()];
+		         	int i = 0;
+		         	for (LatLong values : list) {
+		               	ary[i] = values;
+		               	i++;
+		         	}
+		               
+		         	MVCArray mvc = new MVCArray(ary);
+		         	PolylineOptions polyOpts = new PolylineOptions()
+		         	.path(mvc)
+		         	.strokeColor("pink")
+		         	.strokeWeight(2);
+		         	Polyline poly = new Polyline(polyOpts);
+		         	map.addMapShape((MapShape)poly);
+		         	
+		    	        map.addUIEventHandler(StartPointMarker, UIEventType.click, (JSObject o) -> {
+	    	        			map.removeMarker(StartPointMarker);
+	    	        			map.removeMarker(FinishPointMarker);
+	    	        			map.removeMapShape(poly);
+	    	        			window.close();
+		    	        });
+		    	        
+		    	        map.addUIEventHandler(map, UIEventType.click, (JSObject ob) -> {
+    	        			map.removeMarker(StartPointMarker);
+    	        			map.removeMarker(FinishPointMarker);
+    	        			map.removeMapShape(poly);
+    	        			window.close();
+	    	        });
+		        });
+	    	        
 	        }
+	        
 	}
 	
 	
