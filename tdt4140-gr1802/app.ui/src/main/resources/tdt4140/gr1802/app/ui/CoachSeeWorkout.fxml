@@ -44,31 +44,31 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <Label fx:id="dateLabel" layoutX="66.0" layoutY="31.0" prefHeight="17.0" prefWidth="145.0" />
-                                                <Label fx:id="typeLabel" layoutX="77.0" layoutY="84.0" prefHeight="17.0" prefWidth="164.0" />
-                                                <Label fx:id="durationLabel" layoutX="91.0" layoutY="133.0" prefHeight="17.0" prefWidth="96.0" />
-                                                <Label fx:id="maxHRLabel" layoutX="88.0" layoutY="231.0" prefHeight="17.0" prefWidth="135.0" />
-                                                <Text layoutX="27.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+                                                <Label fx:id="dateLabel" layoutX="103.0" layoutY="73.0" prefHeight="17.0" prefWidth="145.0" />
+                                                <Label fx:id="typeLabel" layoutX="114.0" layoutY="126.0" prefHeight="17.0" prefWidth="164.0" />
+                                                <Label fx:id="durationLabel" layoutX="128.0" layoutY="175.0" prefHeight="17.0" prefWidth="96.0" />
+                                                <Label fx:id="maxHRLabel" layoutX="125.0" layoutY="273.0" prefHeight="17.0" prefWidth="135.0" />
+                                                <Text layoutX="64.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
                                                    <font>
                                                       <Font name="System Bold" size="14.0" />
                                                    </font>
                                                 </Text>
-                                                <Text layoutX="29.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:">
+                                                <Text layoutX="66.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:">
                                                    <font>
                                                       <Font name="System Bold" size="14.0" />
                                                    </font>
                                                 </Text>
-                                                <Text layoutX="27.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MaxHR:">
+                                                <Text layoutX="64.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MaxHR:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Text>
-                                                <Text layoutX="27.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:">
+                                                <Text layoutX="64.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Text>
-                                                <PieChart fx:id="pulszonesChart" layoutX="571.0" layoutY="51.0" prefHeight="248.0" prefWidth="262.0" title="Puls zones" />
+                                                <PieChart fx:id="pulszonesChart" layoutX="609.0" layoutY="51.0" prefHeight="286.0" prefWidth="430.0" title="Puls zones" />
                                                 <LineChart fx:id="pulsLine" layoutX="18.0" layoutY="354.0" prefHeight="248.0" prefWidth="1048.0">
                                                   <xAxis>
                                                     <CategoryAxis side="BOTTOM" fx:id="xAxis" />
@@ -77,12 +77,12 @@
                                                     <NumberAxis fx:id="yAxis" side="LEFT" />
                                                   </yAxis>
                                                 </LineChart>
-                                                <Text layoutX="28.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AvgHR:">
+                                                <Text layoutX="65.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AvgHR:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Text>
-                                                <Label fx:id="avgHRLabel" layoutX="91.0" layoutY="184.0" prefHeight="17.0" prefWidth="107.0" />
+                                                <Label fx:id="avgHRLabel" layoutX="128.0" layoutY="226.0" prefHeight="17.0" prefWidth="107.0" />
                                                 <Label fx:id="athleteLabel" layoutX="385.0" layoutY="14.0" prefWidth="250.0">
                                                    <font>
                                                       <Font name="System Bold" size="18.0" />

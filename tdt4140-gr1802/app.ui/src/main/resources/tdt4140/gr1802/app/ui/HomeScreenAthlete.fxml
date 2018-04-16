@@ -36,10 +36,10 @@
                         <Pane layoutX="159.0" prefHeight="650.0" prefWidth="1121.0">
                            <children>
                               <HBox layoutX="56.0" layoutY="232.0" prefHeight="64.0" prefWidth="532.0" />
-                              <PieChart fx:id="zoneChart" layoutX="379.0" layoutY="83.0" prefHeight="349.0" prefWidth="418.0" />
-                              <Text layoutX="383.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low:" />
-                              <Text layoutX="494.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moderate:" />
-                              <Text layoutX="638.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High:" />
+                              <PieChart fx:id="zoneChart" layoutX="334.0" layoutY="90.0" prefHeight="349.0" prefWidth="418.0" />
+                              <Text layoutX="369.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low:" />
+                              <Text layoutX="480.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moderate:" />
+                              <Text layoutX="624.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="High:" />
                               <Label fx:id="lowLabel" layoutX="417.0" layoutY="457.0" prefHeight="17.0" prefWidth="73.0" />
                               <Label fx:id="moderateLabel" layoutX="565.0" layoutY="457.0" prefHeight="17.0" prefWidth="63.0" />
                               <Label fx:id="highLabel" layoutX="675.0" layoutY="457.0" prefHeight="17.0" prefWidth="63.0" />

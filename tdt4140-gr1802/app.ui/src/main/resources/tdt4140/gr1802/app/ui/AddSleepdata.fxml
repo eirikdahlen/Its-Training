@@ -41,7 +41,7 @@
                         <Pane layoutX="159.0" prefHeight="655.0" prefWidth="1127.0">
                            <children>
                               <TextField fx:id="filepathTextField" layoutX="29.0" layoutY="65.0" prefHeight="27.0" prefWidth="501.0" promptText="Enter CSV Filepath" />
-                              <Button fx:id="addButton" layoutX="29.0" layoutY="188.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
+                              <Button fx:id="addButton" layoutX="29.0" layoutY="115.0" mnemonicParsing="false" onAction="#clickAddButton" prefHeight="27.0" prefWidth="107.0" text="Add" />
                            </children></Pane>
                      </children>
                   </AnchorPane>
