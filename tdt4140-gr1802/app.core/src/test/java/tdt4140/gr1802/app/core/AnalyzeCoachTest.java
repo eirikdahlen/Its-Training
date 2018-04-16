@@ -6,7 +6,7 @@ public class AnalyzeCoachTest {
 	Database db = new Database();
 	AnalyzeCoach analyzeCoach = new AnalyzeCoach();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		AnalyzeCoachTest test = new AnalyzeCoachTest();
 		
 		
@@ -19,7 +19,7 @@ public class AnalyzeCoachTest {
 	
 	//tests
 	
-	public void testGetTotalTrainingTime() {
+	public void testGetTotalTrainingTime() throws Exception {
 		//tests with coach that already exists in database
 		
 		//creates coach for testing

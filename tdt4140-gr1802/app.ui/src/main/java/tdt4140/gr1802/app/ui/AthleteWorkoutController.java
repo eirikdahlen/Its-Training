@@ -1,3 +1,4 @@
+
 package tdt4140.gr1802.app.ui;
 
 import java.io.IOException;
@@ -8,8 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.fxml.LoadException;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -94,7 +95,7 @@ public class AthleteWorkoutController {
 	
 	ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.txtLabelUsername.setText(this.athlete.getUsername());
@@ -148,7 +149,6 @@ public class AthleteWorkoutController {
     public void homeScreenButtonCursorHand() {
     	homeScreenButton.setCursor(Cursor.HAND);
     }
-    
     @FXML
     public void homeScreenButtonCursorDefault() {
     	homeScreenButton.setCursor(Cursor.DEFAULT);

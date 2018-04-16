@@ -87,7 +87,12 @@ public class CoachSeeSleepdataController implements Initializable {
 	}
     
     public void initialize(URL location, ResourceBundle resources) {
-		App.updateCoach();
+		try {
+			App.updateCoach();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.coach = App.getCoach();
 		this.db = App.getDb();
 		

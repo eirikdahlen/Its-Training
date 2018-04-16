@@ -98,7 +98,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateAthlete() {
+	public void testCreateAthlete() throws Exception {
 		
 
 		
@@ -111,7 +111,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateCoach() {
+	public void testCreateCoach() throws Exception {
 		
 		//adds coack for testing
 		Coach coach1 = new Coach("Petter74", "passord", "Petter");
@@ -128,7 +128,7 @@ public class DatabaseTest {
 	}
 	
 	
-	public void testCreateWorkout() throws IOException {
+	public void testCreateWorkout() throws Exception {
 		
 		//adds athlete and workout for testing
 		Athlete athlete1 = new Athlete("Kjetil123", "passord", "Kjetil");
@@ -152,7 +152,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testGetAllWorkouts() throws IOException {
+	public void testGetAllWorkouts() throws Exception {
 		
 
 		//creates athlete and workout for testing 
@@ -182,7 +182,7 @@ public class DatabaseTest {
 		}
 	}
 	
-	public void testAddCoachToAthlete() {
+	public void testAddCoachToAthlete() throws Exception {
 		
 		//get coachList first -> print list -> update coach_list -> print again
 		
@@ -223,7 +223,7 @@ public class DatabaseTest {
 	
 	}
 	
-	public void testAddAthleteToCoach() {
+	public void testAddAthleteToCoach() throws Exception {
 		
 		//get coachList first -> print list -> update coach_list -> print again
 		
@@ -265,7 +265,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testAddRequestAthleteToCoach() {
+	public void testAddRequestAthleteToCoach() throws Exception {
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
@@ -308,7 +308,7 @@ public class DatabaseTest {
 		
 	}
 	
-	public void testAddRequestCoachToAthlete() {
+	public void testAddRequestCoachToAthlete() throws Exception {
 		//get coachList first -> print list -> update coach_list -> print again
 		
 		//____________THIS PART OF CODE IS GetCoachesForAthlete-method_______
@@ -445,7 +445,7 @@ public class DatabaseTest {
 	//_______jUnit_______
 
 	@Test
-	public void testGetAthlete() {
+	public void testGetAthlete() throws Exception {
 
 		//adds athlete for testing
 		Athlete athlete1 = new Athlete("TeddyWestside", "theodor","Bajsunge");
@@ -464,7 +464,7 @@ public class DatabaseTest {
 	
 	
 	@Test
-	public void testGetCoach() {
+	public void testGetCoach() throws Exception {
 
 		//adds coack for testing
 		Coach coach1 = new Coach("petter22", "petter123","Petter");
@@ -483,7 +483,7 @@ public class DatabaseTest {
 	
 	
 	@Test
-	public void testGetWorkout() throws IOException {
+	public void testGetWorkout() throws Exception {
 
 		//creates athlete and workout for testing 
 		Athlete athlete1 = new Athlete("williamkvaale","test123","William Kvaale");
@@ -507,7 +507,7 @@ public class DatabaseTest {
 
 	
 	@Test
-	public void testGetPulseList() throws IOException {
+	public void testGetPulseList() throws Exception {
 		
 		Athlete athl = new Athlete("williamkvaale","test123","William Kvaale");
 		

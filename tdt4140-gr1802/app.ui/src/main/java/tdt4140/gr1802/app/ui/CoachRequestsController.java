@@ -66,7 +66,7 @@ public class CoachRequestsController {
 	
 	
 	// Help-method that returns an ObservableList with all the Coach-requests
-	public ObservableList<Coach> getCoaches(){
+	public ObservableList<Coach> getCoaches() throws Exception{
 		for (String uname:athlete.getQueuedCoaches()) {
 			Coach coach = database.getCoach(uname);
 			if (coach != null) {
@@ -76,7 +76,7 @@ public class CoachRequestsController {
 		return coaches;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.database = App.getDb();
@@ -97,7 +97,7 @@ public class CoachRequestsController {
 		
 	}
 	
-	public void acceptButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException{
+	public void acceptButton(ActionEvent event) throws Exception{
 		ObservableList<Coach> selectedRows;
 		
 		// Gives us the rows that are selected

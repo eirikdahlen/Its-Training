@@ -13,7 +13,7 @@ public class AnalyzeWorkoutTest {
 	Database db = new Database();
 	AnalyzeWorkout analyzeWorkout = new AnalyzeWorkout();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		AnalyzeWorkoutTest test = new AnalyzeWorkoutTest();
 		
 		
@@ -33,7 +33,7 @@ public class AnalyzeWorkoutTest {
 		//___________
 	}
 	
-	public void testGetHRZones() {
+	public void testGetHRZones() throws Exception {
 		//imports athlete and workout from db for testing
 		Athlete athlete1 = db.getAthlete("Olaf90");
 		Workout workout1 = db.getWorkout(athlete1, "14-12-2015 12:47:12");
@@ -47,7 +47,7 @@ public class AnalyzeWorkoutTest {
 		
 	}
 	
-	public void testGetTimeInHRZones() {
+	public void testGetTimeInHRZones() throws Exception {
 		//imports athlete and workout from db for testing
 		Athlete athlete1 = db.getAthlete("williamkvaale");
 		Workout workout1 = db.getWorkout(athlete1, "25-01-2018 17:31:41");
@@ -64,7 +64,7 @@ public class AnalyzeWorkoutTest {
 	}
 	
 	@Test
-	public void testGetHRPercentage() {
+	public void testGetHRPercentage() throws Exception {
 		
 		//imports athlete and workout from db for testing
 		Athlete athlete1 = db.getAthlete("williamkvaale");

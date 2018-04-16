@@ -18,12 +18,12 @@ public class LogIn {
 	public User getUser() { return this.inloggedUser; }
 	
 	// Checks if the Username exists
-	public boolean checkUserNameExits(String username) { 
+	public boolean checkUserNameExits(String username) throws Exception { 
 		return checkUsernameAthlete(username) || checkUsernameCoach(username);
 	}
 	
 	// Check if login is valid
-	public boolean validLogIn() {
+	public boolean validLogIn() throws Exception {
 		if (checkUsernameCoach(username) && checkUsernameMatchPassword(username, password)) {
 			inloggedUser = this.db.getCoach(username);
 			return true;
@@ -34,17 +34,17 @@ public class LogIn {
 	}
 	
 	// Check if username is registered as Athlete in database
-	public boolean checkUsernameAthlete(String username) {
+	public boolean checkUsernameAthlete(String username) throws Exception {
 		return db.athleteUsernameExists(username);
 	}
 	
 	// Check if username is registered as Coach in database
-	public boolean checkUsernameCoach(String username) {
+	public boolean checkUsernameCoach(String username) throws Exception {
 		return db.coachUsernameExists(username);
 	}
 	
 	// Check if username match with corresponding password
-	public boolean checkUsernameMatchPassword(String username, String password) {
+	public boolean checkUsernameMatchPassword(String username, String password) throws Exception {
 		System.out.println(username);
 		System.out.println(password);
 		System.out.println(db);

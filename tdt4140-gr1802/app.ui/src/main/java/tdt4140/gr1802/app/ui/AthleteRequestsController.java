@@ -61,7 +61,7 @@ public class AthleteRequestsController {
 	}
 	
 	// Help-method that returns an ObervableList with all the Athlete-requests
-	public ObservableList<Athlete> getAthletes(){
+	public ObservableList<Athlete> getAthletes() throws Exception{
 		// Adds all the queued athletes in the database
 		for (String uname : coach.getQueuedAthletes()) {
 			Athlete athlete = database.getAthlete(uname);
@@ -74,7 +74,7 @@ public class AthleteRequestsController {
 	
 	
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateCoach();
 		coach = App.getCoach();
 		this.database = App.getDb();
@@ -113,7 +113,7 @@ public class AthleteRequestsController {
 		window.show();
 	}
 	
-	public void acceptButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException{
+	public void acceptButton(ActionEvent event) throws Exception{
 		ObservableList<Athlete> selectedRows;
 		
 		// Gives us the rows that are selected

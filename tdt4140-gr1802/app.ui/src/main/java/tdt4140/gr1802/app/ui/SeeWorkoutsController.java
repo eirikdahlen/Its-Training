@@ -84,7 +84,7 @@ public class SeeWorkoutsController{
 	private Workout workout;
 
 	// Returns an ObservableList with the Workouts registered for the Athlete logged in
-	public ObservableList<Workout> getWorkouts(){
+	public ObservableList<Workout> getWorkouts() throws Exception{
 		ObservableList<Workout> workouts = FXCollections.observableArrayList();
 		System.out.println("getWorkouts" + athlete.getAllWorkouts());
 		for (Workout wo:athlete.getAllWorkouts()) {
@@ -93,7 +93,7 @@ public class SeeWorkoutsController{
 		return workouts;
 	}
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		//App.updateAthlete();
 		this.athlete = App.getAthlete();
 		this.database = App.getDb();
@@ -178,7 +178,7 @@ public class SeeWorkoutsController{
 		window.show();
 	}
 	
-	public void hideWorkout(ActionEvent event) {
+	public void hideWorkout(ActionEvent event) throws Exception {
 		ObservableList<Workout> selectedRows;
 		selectedRows = tableView.getSelectionModel().getSelectedItems();
 		
@@ -197,5 +197,18 @@ public class SeeWorkoutsController{
 		window.setScene(scene);
 		window.show();
 	}
+	
+	public void clickAddSleepdata(ActionEvent event) throws IOException{
+		Parent root = FXMLLoader.load(getClass().getResource("AddSleepdata.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
+	
+	
+	
+	
 	
 }
