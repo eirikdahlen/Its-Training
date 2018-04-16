@@ -54,6 +54,7 @@
                                   <TableColumn fx:id="nameColumn" prefWidth="358.0" text="Name" />
                                 </columns>
                               </TableView>
+                              <Button fx:id="btSeeSleepdata" layoutX="397.0" layoutY="323.0" mnemonicParsing="false" onAction="#seeSleepdataButton" text="See Sleepdata" />
                               <Button fx:id="btRemove" layoutX="633.0" layoutY="323.0" mnemonicParsing="false" onAction="#removeButton" text="Remove" />
                               <Button fx:id="btSeeWorkouts" layoutX="515.0" layoutY="323.0" mnemonicParsing="false" onAction="#seeWorkoutsButton" text="See Workouts" />
                               <Button fx:id="btAddAthlete" layoutX="633.0" layoutY="438.0" mnemonicParsing="false" onAction="#addAthleteButton" text="Add Athlete" />

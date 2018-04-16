@@ -1,5 +1,6 @@
 package tdt4140.gr1802.app.core;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,10 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	private int numbWorkouts;
 	
+	protected List<List<String>> sleepdata = new ArrayList <List<String>> ();
+	
 	private int maxHR;
+	
 	
 	public Athlete (String username, String password, String name, List <String> coaches, List <String> queuedCoaches) {
 		this.username = username;
@@ -27,7 +31,6 @@ public class Athlete extends User implements Comparable<Athlete> {
 		this.name = name;
 		this.coaches = coaches;
 		this.queuedCoaches = queuedCoaches;
-	
 	}
 	
 	public Athlete (String username, String password, String name) {
@@ -45,7 +48,6 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	public void setNumbWorkouts() { this.numbWorkouts = database.getAllWorkouts(this).size(); }
 	
-	//only works if numbWorkouts is already initialized
 	public int getNumbWorkouts() { return this.numbWorkouts; }
 	
 	public List<Workout> getAllWorkouts(){ this.numbWorkouts = database.getAllWorkouts(this).size(); return database.getAllWorkouts(this); }
@@ -53,6 +55,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 	public void setMaxHR(int maxHR) {this.maxHR = maxHR; }
 	
 	public int getMaxHR() {return this.maxHR; }
+	
 	
 	// Method called by a coach-object. The coach that calls this method wants to be this athletes trainer. The coach will be
 	// queued in "queuedCoaches" so that the athlete later can accept the coach as his/her coach.
@@ -120,7 +123,7 @@ public class Athlete extends User implements Comparable<Athlete> {
 		}
 	}
 
-	@Override
+    @Override
 	public int compareTo(Athlete o) {
 		return o.getNumbWorkouts() - this.getNumbWorkouts();
 	}
@@ -140,6 +143,27 @@ public class Athlete extends User implements Comparable<Athlete> {
 	
 	public int getNrOfWorkouts(String activity) {
 		return database.getNrOfWorkoutsForAthlete(this.getUsername(), activity);
+	}
+	
+	public void addSleepData (URL path) {
+		CSVsleep csvSleep = new CSVsleep (path); 
+		sleepdata = csvSleep.getSleepData();
+	}
+	
+	public void setSleepData(List<List<String>> sleepData) {
+		this.sleepdata = sleepData;
+	}
+	
+	public List<List<String>> getSleepData() {
+		return this.sleepdata;
+	}
+	
+	public List<List<String>> getRecentSleepData() {
+		List<List<String>> recentSleepdata = new ArrayList<List<String>>();
+		for (int i = sleepdata.size() - 14; i < sleepdata.size(); i++) {
+			recentSleepdata.add(sleepdata.get(i));
+		}
+		return recentSleepdata;
 	}
 	
 }

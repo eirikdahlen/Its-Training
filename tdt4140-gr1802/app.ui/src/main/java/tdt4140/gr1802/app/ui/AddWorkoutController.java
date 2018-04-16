@@ -176,5 +176,15 @@ public class AddWorkoutController {
 		window.setScene(scene);
 		window.show();
 	}
+	
+	public void clickAddSleepdata (ActionEvent event) throws IOException, LoadException{
+		// Open new window 
+		Parent root = FXMLLoader.load(getClass().getResource("AddSleepdata.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
 
 }

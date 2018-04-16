@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.fxml.LoadException;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,6 +42,9 @@ public class AthleteWorkoutController {
 	
 	@FXML
 	private Button btCoachRequests;
+	
+	@FXML
+	private Button btAddSleepdata;
 	
 	@FXML
 	private Label txtLabelUsername;
@@ -144,6 +148,7 @@ public class AthleteWorkoutController {
     public void homeScreenButtonCursorHand() {
     	homeScreenButton.setCursor(Cursor.HAND);
     }
+    
     @FXML
     public void homeScreenButtonCursorDefault() {
     	homeScreenButton.setCursor(Cursor.DEFAULT);
@@ -187,6 +192,16 @@ public class AthleteWorkoutController {
 		
 		public void backToHomeScreen(ActionEvent event) throws IOException{
 			Parent root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
+			Scene scene = new Scene(root,1280,720);
+			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			
+			window.setScene(scene);
+			window.show();
+		}
+		
+		public void clickAddSleepdata (ActionEvent event) throws IOException, LoadException{
+			// Open new window 
+			Parent root = FXMLLoader.load(getClass().getResource("AddSleepdata.fxml"));
 			Scene scene = new Scene(root,1280,720);
 			Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			

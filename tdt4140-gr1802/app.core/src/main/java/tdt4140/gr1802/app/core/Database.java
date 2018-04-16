@@ -70,6 +70,13 @@ public class Database {
 			document.append("maxHR", 0);
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
+			
+			//Adds empty sleep-data list to athlete 
+			List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+			document.append("Sleepdata", sleepdata);
+			
+			
+			
 			athleteCollection.insertOne(document);	
 			System.out.println("athlete added to database");
 		} else {
@@ -86,7 +93,7 @@ public class Database {
 			//finds the athlete of the workout, and accesses his workout-collection
 			//automatically creates new collection if it does not exists
 			MongoCollection userWorkoutCollection = workoutDatabase.getCollection(workout.getAthlete().getUsername());
-		
+			
 			//creates document
 			Document doc = new Document("date", workout.getDateString());
 			
@@ -187,7 +194,7 @@ public class Database {
 			return null;
 		}
 		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
-	
+		
 		//TODO: fikse opp i dette, legge til i konstruktør
 		try {
 			athlete.setMaxHR( found.getInteger("maxHR") );
@@ -197,6 +204,19 @@ public class Database {
 			athlete.setMaxHR(0);
 			
 		}
+		
+		//TODO: fikse opp i dette, legge til i konstruktør
+		//for sleepdata
+		try {
+			athlete.setSleepData((List<List<String>>) found.get("Sleepdata"));
+		} catch (Exception e) {
+			System.out.println("Fant ikke sleepdata");
+			athlete.setSleepData(  new ArrayList <List<String>> ()    );
+			
+		}
+		
+		
+		
 		return athlete;
 	}
 	
@@ -852,6 +872,55 @@ public class Database {
 		}
 		return quotes; 
 	}
+
+	
+	public void addSleepData (Athlete athlete) {
+		//forutsetter at alle athletes har sleepdata, men denne kan være empty. har en try-block for det uansett
+		
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+			try {
+				Bson updatedvalue = new Document("Sleepdata", athlete.getSleepData());
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found, updateoperation);
+				
+				} catch (Exception e) {
+					System.out.println("inside try/catch block addSleepData");
+				} 			
+		
+		}	
+		
+	}
+	
+	public List<List<String>> getSleepData (Athlete athlete) {
+		List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println(athlete.getUsername());
+			System.out.println("inside getSleepData, no athlete with this username");
+			return null;
+		} else {
+			try {
+			sleepdata = (List<List<String>>) found.get("Sleepdata");
+			return sleepdata;
+			} catch (Exception e) {
+				System.out.println("inside try/catch block getSleepData");
+				return null;
+			}
+					
+		}
+		
+	}
+	
+	
 
 	
 }
