@@ -39,6 +39,9 @@ public class CoachRequestsController {
 	private Button btSeeWorkouts;
 	
 	@FXML
+	private Button btAddSleepdata ;
+	
+	@FXML
 	private Button btSeeCoaches;
 	
 	@FXML
@@ -170,6 +173,16 @@ public class CoachRequestsController {
 	
 	public void backToHomeScreen(ActionEvent event) throws IOException{
 		Parent root = FXMLLoader.load(getClass().getResource("HomeScreenAthlete.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(scene);
+		window.show();
+	}
+	
+	public void clickAddSleepdata (ActionEvent event) throws IOException, LoadException{
+		// Open new window 
+		Parent root = FXMLLoader.load(getClass().getResource("AddSleepdata.fxml"));
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 		

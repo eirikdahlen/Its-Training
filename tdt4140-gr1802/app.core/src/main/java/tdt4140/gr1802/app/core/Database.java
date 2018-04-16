@@ -1,3 +1,4 @@
+
 package tdt4140.gr1802.app.core;
 
 
@@ -79,27 +80,26 @@ public class Database {
 	// Create Athlete in database
 	public void createAthlete(Athlete athlete) throws Exception {
 		//Checks if username is available 
-				if ( ! this.usernameExists(athlete.getUsername()) ) {
-					//Adds an athlete-document to athlete-collection
-					Document document = new Document("Username", athlete.getUsername());
-					document.append("Password", athlete.getPassword());
-					document.append("Name",athlete.getName());
-					document.append("maxHR", 0);
-					document.append("Coaches", athlete.getCoaches());
-					document.append("Requests", athlete.getQueuedCoaches());
-					athleteCollection.insertOne(document);	
-					System.out.println("athlete added to database");
-				} else {
-					System.out.println("Username in use. Could not add Athlete");
-				}
-//		System.out.println("mcmcmcmcmcmcmrmrmrrmrmmrmrmcmcmcmcmcmc");
-//		HashMap<String, String> myMap = new HashMap<String, String>(); 
-//		myMap.put("name", athlete.getUsername());
-//		myMap.put("password", athlete.getPassword());
-//		myMap.put("fName", athlete.getName());
-//		myMap.put("Coaches", String.join("<", athlete.getCoaches()));
-//		myMap.put("requestCoaches", String.join("<", athlete.getQueuedCoaches()));
-//		BackendConnector.makeRequest(myMap, "createAthlete");
+		if ( ! this.usernameExists(athlete.getUsername()) ) {
+			//Adds an athlete-document to athlete-collection
+			Document document = new Document("Username", athlete.getUsername());
+			document.append("Password", athlete.getPassword());
+			document.append("Name",athlete.getName());
+			document.append("maxHR", 0);
+			document.append("Coaches", athlete.getCoaches());
+			document.append("Requests", athlete.getQueuedCoaches());
+			
+			//Adds empty sleep-data list to athlete 
+			List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+			document.append("Sleepdata", sleepdata);
+			
+			
+			
+			athleteCollection.insertOne(document);	
+			System.out.println("athlete added to database");
+		} else {
+			System.out.println("Username in use. Could not add Athlete");
+		}
 	}
 	
 
@@ -213,26 +213,37 @@ public String getPassword(String username) throws Exception {
 
     public Athlete getAthlete(String username) throws Exception {
 
-    	HashMap<String, String> myMap = new HashMap<String, String>(); 
+    	Document found = (Document) athleteCollection.find(new Document("Username", username)).first();
 		
-	myMap.put("name", username);
-    JSONObject objektet = BackendConnector.makeRequest(myMap, "getAthlete");
-    JSONArray array = (JSONArray) objektet.get("Coaches");
-    JSONArray array2 = (JSONArray) objektet.get("Requests");
-    List<String> coachList = new ArrayList<String>();
-    List<String> requestList = new ArrayList<String>();
-    
-    for (int i=0; i<array.length(); i++) {
-        coachList.add( array.getString(i) );
-    }
-     
-    for (int i=0; i<array2.length(); i++) {
-        requestList.add( array2.getString(i) );
-    }
-    
-    Athlete athl = new Athlete(objektet.get("Username").toString(), objektet.get("Password").toString(), objektet.get("Name").toString(), coachList, requestList);
-    athl.setMaxHR(  Integer.parseInt( objektet.get("maxHR").toString() )   );
-    return athl;
+		if (found == null) {
+			System.out.println("no athlete with this username");
+			return null;
+		}
+		Athlete athlete = new Athlete( found.getString("Username"), found.getString("Password"), found.getString("Name"), (List<String>) found.get("Coaches") , (List<String>) found.get("Requests"));
+		
+		//TODO: fikse opp i dette, legge til i konstruktør
+		try {
+			athlete.setMaxHR( found.getInteger("maxHR") );
+		} catch (Exception e) {
+			System.out.println("feil på get maxHR");
+			//sets maxHR to 0 if it is not present in db
+			athlete.setMaxHR(0);
+			
+		}
+		
+		//TODO: fikse opp i dette, legge til i konstruktør
+		//for sleepdata
+		try {
+			athlete.setSleepData((List<List<String>>) found.get("Sleepdata"));
+		} catch (Exception e) {
+			System.out.println("Fant ikke sleepdata");
+			athlete.setSleepData(  new ArrayList <List<String>> ()    );
+			
+		}
+		
+		
+		
+		return athlete;
     	
     }
 	
@@ -1009,6 +1020,53 @@ public boolean datetimeExists(Athlete athl, String date) throws Exception {
 		
 		return quotes; 
 	}
-
 	
+	public void addSleepData (Athlete athlete) {
+		//forutsetter at alle athletes har sleepdata, men denne kan være empty. har en try-block for det uansett
+		
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+			try {
+				Bson updatedvalue = new Document("Sleepdata", athlete.getSleepData());
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found, updateoperation);
+				
+				} catch (Exception e) {
+					System.out.println("inside try/catch block addSleepData");
+				} 			
+		
+		}	
+		
+	}
+	
+	
+	public List<List<String>> getSleepData (Athlete athlete) {
+		List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println(athlete.getUsername());
+			System.out.println("inside getSleepData, no athlete with this username");
+			return null;
+		} else {
+			try {
+			sleepdata = (List<List<String>>) found.get("Sleepdata");
+			return sleepdata;
+			} catch (Exception e) {
+				System.out.println("inside try/catch block getSleepData");
+				return null;
+			}
+					
+		}
+		
+	}
+	
+
 }

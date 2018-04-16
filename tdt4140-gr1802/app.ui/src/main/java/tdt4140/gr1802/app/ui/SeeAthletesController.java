@@ -46,6 +46,9 @@ public class SeeAthletesController {
 	private Button btSeeWorkouts;
 	
 	@FXML
+	private Button btSeeSleepdata ;
+	
+	@FXML
 	private Button btRemove;
 	
 	@FXML
@@ -66,6 +69,7 @@ public class SeeAthletesController {
 	@FXML
 	private Button homeScreenButton;
 	
+	private CoachSeeSleepdataController coachSeeSleepdata = new CoachSeeSleepdataController();
 	private CoachSeeWorkoutsController coachSeeWorkouts = new CoachSeeWorkoutsController();
 	private ObservableList<Athlete> athletes = FXCollections.observableArrayList();
 	
@@ -113,6 +117,27 @@ public class SeeAthletesController {
 		
 		// Load new scene with the Athlete's workouts
 		Parent root = FXMLLoader.load(getClass().getResource("CoachSeeWorkouts.fxml"));
+		Scene scene = new Scene(root,1280,720);
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+			
+		window.setScene(scene);
+		window.show();
+		
+	}
+
+	public void seeSleepdataButton(ActionEvent event) throws IOException, RuntimeException, InvocationTargetException {
+		// ObservableList with the selectedRow
+		ObservableList<Athlete> selectedRow;
+		selectedRow = tableView.getSelectionModel().getSelectedItems();
+		
+		// The Athlete selected
+		Athlete athlete = selectedRow.get(0);
+		
+		// Set Athlete in  the CoachSeeWorkoutsController
+		coachSeeSleepdata.setAthlete(athlete);
+		
+		// Load new scene with the Athlete's workouts
+		Parent root = FXMLLoader.load(getClass().getResource("CoachSeeSleepdata.fxml"));
 		Scene scene = new Scene(root,1280,720);
 		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			

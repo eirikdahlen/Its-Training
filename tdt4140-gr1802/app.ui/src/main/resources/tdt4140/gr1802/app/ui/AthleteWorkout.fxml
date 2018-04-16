@@ -29,6 +29,7 @@
                         <VBox layoutX="22.0" layoutY="64.0" prefHeight="104.0" prefWidth="107.0">
                            <children>
                               <Button fx:id="btAddWorkout" mnemonicParsing="false" onAction="#clickAddWorkout" prefHeight="25.0" prefWidth="106.0" text="Add Workout" />
+                              <Button fx:id="btAddSleepdata" mnemonicParsing="false" onAction="#clickAddSleepdata" prefHeight="25.0" prefWidth="106.0" text="Add Sleepdata" />
                               <Button fx:id="btSeeWorkouts" mnemonicParsing="false" onAction="#clickSeeWorkouts" prefHeight="25.0" prefWidth="106.0" text="See Workouts" />
                               <Button fx:id="btSeeCoaches" mnemonicParsing="false" onAction="#clickSeeCoaches" prefHeight="25.0" prefWidth="106.0" text="See Coaches" />
                               <Button fx:id="btCoachRequests" mnemonicParsing="false" onAction="#clickCoachRequest" prefHeight="25.0" prefWidth="106.0" text="Coach Requests" />
