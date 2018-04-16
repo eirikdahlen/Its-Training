@@ -85,7 +85,7 @@ public class Database {
 			Document document = new Document("Username", athlete.getUsername());
 			document.append("Password", athlete.getPassword());
 			document.append("Name",athlete.getName());
-			document.append("maxHR", 0);
+			document.append("maxHR", 180);
 			document.append("Coaches", athlete.getCoaches());
 			document.append("Requests", athlete.getQueuedCoaches());
 			
