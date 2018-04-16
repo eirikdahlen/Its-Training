@@ -29,18 +29,16 @@ public class CSVsleep {
         String cvsSplitBy = ";";
         
         try {
-        	List<List<String>> sleepdata = new ArrayList<List<String>>(); 
-        	int i = 0;
-        	System.out.println("SHA");
-            br = new BufferedReader(new InputStreamReader(filePath.openStream()));
-            line = br.readLine();
-            System.out.println(line);
-            while (line != null) {
+	        	List<List<String>> sleepdata = new ArrayList<List<String>>(); 
+	        	int i = 0;
+	        	System.out.println("SHA");
+	        	br = new BufferedReader(new InputStreamReader(filePath.openStream()));
+	        	while ((line = br.readLine()) != null) {
             		if (line.isEmpty() || i == 0 || i == 1) {
             			System.out.println("okeliii AS");
             		} else {
             			System.out.println("256-SHA");
-                // use comma as separator
+            			// use comma as separator
             			String[] linje = line.split(cvsSplitBy);
             			String date = linje[1].substring(0,10);
             			System.out.println(linje[2].substring(0, linje[2].length()-1));
