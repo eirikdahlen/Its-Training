@@ -92,7 +92,7 @@ public class DatabaseTest {
 		//check to see if athletes sleepData is updated
 		
 		//______________________
-		test.testGetSleepData();
+		//test.testGetSleepData();
 		//check if output matches athlete's sleepdata in database
 			
 	}
@@ -443,7 +443,7 @@ public class DatabaseTest {
 	
 	
 	//_______jUnit_______
-
+	/*
 	@Test
 	public void getAthleteTest() throws Exception {
 
@@ -525,7 +525,7 @@ public class DatabaseTest {
 		
 		
 	}
-
+*/
 	
 }
 	
