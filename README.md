@@ -25,8 +25,8 @@ Vi har tre hovedmapper i prosjektet vårt:
 Logikk for tilknytning og opplastning til server/database ligger også i denne mappen.
 
 - *app.ui* inneholder kontrolleren og fxml-filene. 
--- app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
--- app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
+app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
+app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
 
 - *web.server* inneholder en server bygget av spring, samt en servercontroller og en klasse som kommuniserer med MongoDB-databasen.
 
@@ -37,8 +37,8 @@ Logikk for tilknytning og opplastning til server/database ligger også i denne m
 - IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
 ## Instrukser for kjøring
-- For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen 'Server.java' filen i 'web.server'-mappen.
-- For å starte programmet kan en kjøre jar-filen vi leverte, eller kjøre filen 'FxApp.java' under 'app.ui'-mappen.
+- For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen _Server.java_ filen i _web.server_-mappen.
+- For å starte programmet kan en kjøre jar-filen vi leverte, eller kjøre filen _FxApp.java_ under _app.ui_-mappen.
 - Ved innlogging kan en best se funksjonaliteten med trener-brukeren "petter22" som har passord "petter123"
 - Tilgang til utøversiden får en med brukernavn "TeddyWestside" og passord "theodor".
 
@@ -56,7 +56,7 @@ Deretter er det bare å følge instruksjonene.
 
 ## Bygget med
 - [Maven](https://maven.apache.org/)
-- JavaFX
+- [JavaFX](https://docs.oracle.com/javase/8/javafx/api/toc.htm)
 - [GMapsFX](https://github.com/rterp/GMapsFX)
 - [JPX - Java GPX library](https://github.com/jenetics/jpx)
 - [Spring](https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html)
