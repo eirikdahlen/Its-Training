@@ -159,6 +159,8 @@ public class CoachSeeSleepdataController implements Initializable {
     		}
     		chartQuality.getData().add(quality);
     		chartDuration.getData().add(length);
+    		chartQuality.setLegendVisible(false);
+    		chartDuration.setLegendVisible(false);
     		//chartSleepdata.getData().addAll(length);
 
     }

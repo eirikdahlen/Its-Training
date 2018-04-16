@@ -43,9 +43,7 @@ public class CSVsleep {
             			String date = linje[1].substring(0,10);
             			System.out.println(linje[2].substring(0, linje[2].length()-1));
             			String quality = linje[2].substring(0, linje[2].length()-1);
-            			String duration = linje[3].substring(0,1);
-            			System.out.println(duration);
-            			List <String> day = Arrays.asList(date, quality, duration);
+            			List <String> day = Arrays.asList(date, quality, linje[3]);
             			sleepdata.add(day);
             		}
                 i++;
