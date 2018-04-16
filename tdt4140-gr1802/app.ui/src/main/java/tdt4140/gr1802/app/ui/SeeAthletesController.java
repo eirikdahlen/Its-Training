@@ -84,6 +84,7 @@ public class SeeAthletesController {
 		return athletes;
 	}
 	
+	// Yo
 	public void initialize() {
 		App.updateCoach();
 		this.coach = App.getCoach();
