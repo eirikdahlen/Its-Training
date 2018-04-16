@@ -29,7 +29,7 @@ public class AnalyzeWorkoutTest {
 	
 		//___________
 		//System.out.println("percentage in zones:");
-		test.testGetHRPercentage();
+		//test.testGetHRPercentage();
 		//___________
 	}
 	
