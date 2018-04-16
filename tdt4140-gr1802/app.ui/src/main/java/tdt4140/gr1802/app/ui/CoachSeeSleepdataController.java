@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -69,6 +70,9 @@ public class CoachSeeSleepdataController implements Initializable {
 	@FXML 
 	private Button btShowAthlete;
 	
+	@FXML 
+	private Button homeScreenButton;
+	
 	private ObservableList<BarChart.Data<String, Number>> barChartSleepdata= FXCollections.observableArrayList();
 	
 	@FXML 
@@ -97,6 +101,16 @@ public class CoachSeeSleepdataController implements Initializable {
 		updateSleepdata(choosenAthlete) ;
 		
     }
+    
+	@FXML
+    public void homeScreenButtonCursorHand() {
+    	homeScreenButton.setCursor(Cursor.HAND);
+    }
+    @FXML
+    public void homeScreenButtonCursorDefault() {
+    	homeScreenButton.setCursor(Cursor.DEFAULT);
+    }
+    
     /*
     public void searchAthlete(ActionEvent event) {
 		choosenAthlete = db.getAthlete(cboxChooseAthlete.getValue().getUsername());

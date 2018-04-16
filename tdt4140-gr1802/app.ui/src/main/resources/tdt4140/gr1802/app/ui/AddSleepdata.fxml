@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -61,6 +60,6 @@
             <Font name="Century Gothic" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="homeScreenButton" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToHomeScreen" opacity="0.0" prefHeight="27.0" prefWidth="136.0" text="Button" />
+      <Button fx:id="homeScreenButton" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#backToHomeScreen" onMouseEntered="#homeScreenButtonCursorHand" onMouseExited="#homeScreenButtonCursorDefault" opacity="0.0" prefHeight="27.0" prefWidth="136.0" text="Button" />
    </children>
 </AnchorPane>

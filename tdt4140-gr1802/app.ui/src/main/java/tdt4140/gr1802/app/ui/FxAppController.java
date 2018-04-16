@@ -31,6 +31,8 @@ public class FxAppController {
     private Button btbSignUp;
     @FXML
     private Label txtLabelFeedback;
+    @FXML
+    private Label txtLoadingText;
    
     private LoginScreenController loginScreenController = new LoginScreenController();
     private SignUpScreenController signUpScreenController = new SignUpScreenController();
@@ -54,6 +56,7 @@ public class FxAppController {
     
     @FXML
     void loginButton(ActionEvent event) throws IOException {
+    	
 		app = new App();
 	
 		loginScreenController = new LoginScreenController();
@@ -65,6 +68,11 @@ public class FxAppController {
 		
 		// Check valid login and set TextAreaFeedback text
 		boolean validLogin = false;
+		System.out.println("shjfkldbv");
+		if (true) {
+			txtLoadingText.setText("Loading...");
+		}
+		
 		
 		// If-statements checking username and password
 		if (!loginScreenController.getLogin().checkUserNameExits(typedUsername)) {
