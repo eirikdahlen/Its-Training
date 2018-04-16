@@ -55,8 +55,7 @@ public class FxAppController {
     }
     
     @FXML
-    void loginButton(ActionEvent event) throws IOException {
-    	
+    void loginButton(ActionEvent event) throws Exception {
 		app = new App();
 	
 		loginScreenController = new LoginScreenController();

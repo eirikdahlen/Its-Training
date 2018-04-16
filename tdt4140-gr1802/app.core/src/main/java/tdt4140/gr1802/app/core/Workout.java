@@ -41,6 +41,41 @@ public class Workout implements Comparable<Workout>{
 	
 	private GPXReader gpxReader = new GPXReader();
 	
+	//constructor with List<List<Double>>
+    public Workout(Athlete athl, String dateString, String type, int duration, double kilometres, List<String> pulsList, boolean bool, List<List<Double>> gpxliste) throws IOException {
+        this.athlete = athl;
+        this.dateString = dateString;
+        this.type = type;
+        this.duration = duration;
+        this.kilometres = kilometres;
+        this.pulsList = pulsList;
+        this.visibleForCoaches = bool;
+        this.gpxData = gpxliste;
+        
+        if (!pulsList.isEmpty()) {
+            
+            int sum = 0;
+            this.maxHR = 0;
+            for (String puls: pulsList) {
+                int m = Integer.parseInt(puls);
+                sum += m;
+                if (m > this.maxHR ) {
+                    this.maxHR = m;
+                }
+            }
+            this.averageHR = sum / pulsList.size();
+    
+        }
+        
+        //parse string to date-object
+        try {
+            this.date = parseDate(this.dateString);
+        }
+        catch(Exception fnf) {
+                fnf.printStackTrace();
+        }        
+    }
+	
 
 	public Workout(Athlete athl, URL path, InputStream gpxFilepath) throws IOException {
 		this.filePath = path;
@@ -73,6 +108,8 @@ public class Workout implements Comparable<Workout>{
 		}
 		
 	}
+	
+	
 	
 	public Workout(Athlete athl, URL filepath, boolean bool, InputStream gpxFilepath) throws IOException {
 		this.filePath = filepath;
@@ -217,7 +254,7 @@ public class Workout implements Comparable<Workout>{
 	
 	public int getAthleteMaxHR() { return this.athleteMaxHR; }
 	
-	protected void setGpxData(List<List<Double>> list) {
+	public void setGpxData(List<List<Double>> list) {
 		this.gpxData = list;
 	}
 	

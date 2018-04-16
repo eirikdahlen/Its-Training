@@ -100,7 +100,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		private double medHR;
 		private double highHR;
 			
-		public RankAthlete(Athlete athlete, boolean tirthy){
+		public RankAthlete(Athlete athlete, boolean tirthy) throws Exception{
 			AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
 			this.userName = athlete.getUsername();
 				
@@ -321,7 +321,12 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	//_________________________
 	
 	public void initialize(URL location, ResourceBundle resources) {
-		App.updateCoach();
+		try {
+			App.updateCoach();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		this.coach = App.getCoach();
 		this.db = App.getDb();
 		this.txtLabelUsername.setText(this.coach.getUsername());
@@ -333,7 +338,13 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 		// Fill Top 3
 		System.out.println("HALLO!");
-		List<Athlete> top3 = coach.getTop3Athletes();
+		List<Athlete> top3 = null;
+		try {
+			top3 = coach.getTop3Athletes();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		ObservableList<Athlete> obsList = FXCollections.observableArrayList(top3);
 		top3Name.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
 		top3Workouts.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("numbWorkouts"));
@@ -346,22 +357,36 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		homeComboBoxDate.setItems(obsDateChoices);
 		
 		// Fill dates for notes 
-		List<LocalDate> dates = this.coach.getDatesWithNotes();
-		if (! dates.contains(LocalDate.now())) {
-			dates.add(LocalDate.now());
+		List<LocalDate> dates;
+		try {
+			dates = this.coach.getDatesWithNotes();
+			if (! dates.contains(LocalDate.now())) {
+				dates.add(LocalDate.now());
+			}
+			
+			ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
+			FXCollections.sort(obsDates);
+			
+			// Add todays date as well
+			homeComboBoxNoteDate.setItems(obsDates);
+			
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		
-		ObservableList<LocalDate> obsDates = FXCollections.observableArrayList(dates);
-		FXCollections.sort(obsDates);
-		
-		// Add todays date as well
-		homeComboBoxNoteDate.setItems(obsDates);
 		
 		
 		
 		// **** ACTIVITIES TAB ****
-		List<String> allAct = db.getAllActivities();
-		actChoiceList = FXCollections.observableArrayList(allAct);
+		List<String> allAct;
+		try {
+			allAct = db.getAllActivities();
+			actChoiceList = FXCollections.observableArrayList(allAct);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		activitiesChoice.setItems(actChoiceList);
 		
 		
@@ -376,7 +401,12 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		ObservableList<Athlete> obsAthleteTab = FXCollections.observableArrayList();
 
 		for (String athleteName : coach.getAthletes()) {
-			obsAthleteTab.add(db.getAthlete(athleteName));
+			try {
+				obsAthleteTab.add(db.getAthlete(athleteName));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		cboxChooseAthlete.setItems(obsAthleteTab);
 		
@@ -387,14 +417,19 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		mapView.addMapInializedListener(this);
 		
 		for (String athlete : coach.getAthletes()) {
-			allAthletes.add(db.getAthlete(athlete));
+			try {
+				allAthletes.add(db.getAthlete(athlete));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	
 	}
 	
 	// ***** ACTIVITIES TAB ****
-	public void clickShowActivities(ActionEvent event) {
+	public void clickShowActivities(ActionEvent event) throws Exception {
 		// Get selected activity
 		String activity = activitiesChoice.getSelectionModel().getSelectedItem();
 		
@@ -427,7 +462,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	// ------------- HOME/WELCOME ------------- 
 	
-	public void clickHomeOKButton(ActionEvent event) {
+	public void clickHomeOKButton(ActionEvent event) throws Exception {
 		String chosenTimePeriod = homeComboBoxDate.getValue();
 		if (chosenTimePeriod == null) { return; }
 		
@@ -456,7 +491,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		System.out.println(obsToShowAthletes);	
 	}
 	
-	public void clickHomeOKNotesButton(ActionEvent event) {
+	public void clickHomeOKNotesButton(ActionEvent event) throws Exception {
 		LocalDate chosenDate = homeComboBoxNoteDate.getValue();
 		String note = this.coach.getNote(chosenDate);
 		homeTextFieldNote.setText(note);
@@ -470,7 +505,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		
 	}
 	
-	public void clickHomeSaveNoteButton(ActionEvent event) {
+	public void clickHomeSaveNoteButton(ActionEvent event) throws Exception {
 		
 		if (! homeComboBoxNoteDate.getValue().isEqual(LocalDate.now())) {
 			// Chosen date is not today, should not save new
@@ -495,7 +530,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	//_______ALL-TIME TAB_____
 	
-		public void clickShowRanking(ActionEvent event) {
+		public void clickShowRanking(ActionEvent event) throws Exception {
 			// Get selected activity
 			String rankingChoiceSelected = rankingChoice.getSelectionModel().getSelectedItem();
 			ObservableList<RankAthlete> obsRank = FXCollections.observableArrayList();
@@ -544,7 +579,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 	
 	//_____________ATHLETE TAB_______________
 	
-	public void searchAthlete(ActionEvent event) {
+	public void searchAthlete(ActionEvent event) throws Exception {
 		choosenAthlete = db.getAthlete(cboxChooseAthlete.getValue().getUsername());
 		workoutsForChoosenAthlete = db.getAllWorkouts(choosenAthlete);
 		
@@ -554,7 +589,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 		updateActivitesPieChart(choosenAthlete);
 	}
 
-	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+	private void updateHRZonesChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) throws Exception {
 		List<Integer> dataHRZonesAthlete = analyzer.getAnalyzedHRZonesMeanValueForAthlete(workoutsForAthlete);
 		List<Integer> dataHRZonesAll = analyzer.getAnalyzedHRZonesMeanValueForAll(allAthletes);
 		
@@ -585,7 +620,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
         
 	}
 	
-	private void updateDurationChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) {
+	private void updateDurationChart(List<Workout> workoutsForAthlete, List<Athlete> allAthletes) throws Exception {
 		int dataDurationAthlete = analyzer.getAnalyzedDurationMeanValueForAthlete(workoutsForAthlete);
 		int dataDurationAll = analyzer.getAnalyzedDurtionMeanValueForAll(allAthletes);
 		
@@ -613,7 +648,7 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
         System.out.println("Chart amount" + chartAmount.getData());
 	}
 	
-	public void updateActivitesPieChart(Athlete athlete) {
+	public void updateActivitesPieChart(Athlete athlete) throws Exception {
 		List<Integer> athlAct = db.getAthleteActivityTypes(athlete.getUsername());
 		List<String> allAct = db.getAllActivities();
 		List<Integer> meanValueAct = coachAnalyzer.getAvgNrActivites(coach);
@@ -648,7 +683,13 @@ public class HomeScreenCoachController implements Initializable, MapComponentIni
 			System.out.println("Halllllloeojgpjerg");
 	        geocodingService = new GeocodingService();
 	        MapOptions mapOptions = new MapOptions();
-	        HashMap<Workout,List<Double>> dic = coach.getWorkoutsStartpoints();
+	        HashMap<Workout, List<Double>> dic = null;
+			try {
+				dic = coach.getWorkoutsStartpoints();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        List<MarkerWorkout> listMarkWorkout = new ArrayList<>();
 	        System.out.println("dic"+dic);
 	        

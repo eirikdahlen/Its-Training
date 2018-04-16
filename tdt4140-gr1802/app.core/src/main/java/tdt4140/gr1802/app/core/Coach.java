@@ -45,14 +45,14 @@ public class Coach extends User {
 	
 	// Method called by a athlete-object. The athlete that calls this method wants to be this coaches athlete. The athlete will be
 	// queued in "queuedAthletes" so that the coach later can accept the athlete as his/her coach.
-	public void queueAthlete (String newAthlete) {
+	public void queueAthlete (String newAthlete) throws Exception {
 		queuedAthletes.add(newAthlete) ;
 		// add to queue in database
 		database.addRequestAthleteToCoach(this, newAthlete);
 	}
 	
 	// Method for the coach to approve athlete-request (athlete in "queuedAthletes") 
-	public void approveAthlete (String athleteUsername) {
+	public void approveAthlete (String athleteUsername) throws Exception {
 		if (queuedAthletes.contains(athleteUsername)) {
 			Athlete athlete = database.getAthlete(athleteUsername);
 			queuedAthletes.remove(athleteUsername);
@@ -78,7 +78,7 @@ public class Coach extends User {
 	}
 	
 	// Calls the queueCoach-method in the Athlete-class, and queue them self in queuedCoaches at the Athlete-object
-	public void sendAthleteRequest (String athlete) {
+	public void sendAthleteRequest (String athlete) throws Exception {
 		Athlete a = database.getAthlete(athlete);
 		if (athletes.contains(athlete)) {
 			throw new IllegalArgumentException("Athlete is already asigned to this coach...") ;
@@ -103,7 +103,7 @@ public class Coach extends User {
 	}
 	
 	// Remove the athlete from the athlete-list and update the database for both the athlete and the coach.
-	public void removeAthlete(String athlete) {
+	public void removeAthlete(String athlete) throws Exception {
 		if (hasAthlete(athlete)) {
 			athletes.remove(athlete);
 			database.deleteAthleteForCoach(this, athlete);
@@ -112,7 +112,7 @@ public class Coach extends User {
 	}
 
 	// Get coach top 3 athletes 
-	public List<Athlete> getTop3Athletes() {
+	public List<Athlete> getTop3Athletes() throws Exception {
 
 		//list of Athletes
 		List<Athlete> sortedAthletes = new ArrayList<>();	
@@ -138,7 +138,7 @@ public class Coach extends User {
 	
 	// ----- get athletes not working out since -----
 	// TODO: Move this method to analyze athletes? 
-	public List<Athlete> getAthletesNotWorkingOutSince(Date date) {
+	public List<Athlete> getAthletesNotWorkingOutSince(Date date) throws Exception {
 		List<Athlete> resultAthletes = new ArrayList<>();
 		
 		for (String athName : this.athletes) {
@@ -150,7 +150,7 @@ public class Coach extends User {
 		return resultAthletes;	
 	}
 	
-	public HashMap<LocalDate, String> getNotesMap() {
+	public HashMap<LocalDate, String> getNotesMap() throws Exception {
 		List<String> notes = database.getCoachNotes(this.username);
 		HashMap<LocalDate, String> dateString = new HashMap<>();
 		
@@ -167,13 +167,13 @@ public class Coach extends User {
 		return dateString;
 	}
 	
-	public List<LocalDate> getDatesWithNotes() {
+	public List<LocalDate> getDatesWithNotes() throws Exception {
 		List<LocalDate> dates = new ArrayList<>();
 		dates.addAll(getNotesMap().keySet());	
 		return dates;
 	}
 	
-	public String getNote(LocalDate date) {
+	public String getNote(LocalDate date) throws Exception {
 		HashMap<LocalDate, String> map = getNotesMap();
 		
 		for (HashMap.Entry<LocalDate, String> entry : map.entrySet()) {
@@ -185,17 +185,17 @@ public class Coach extends User {
 		return "";
 	}
 	
-	public void saveNote(LocalDate date, String text) {
+	public void saveNote(LocalDate date, String text) throws Exception {
 		String asString = date.toString() + " " + text;
 		database.addCoachNotes(this.username, asString);
 	}
 	
-	public void updateNote(LocalDate date, String text) {
+	public void updateNote(LocalDate date, String text) throws Exception {
 		String asString = date.toString() + " " + text; 
 		database.updateCoachNotes(this.username, asString);
 	}
 	
-	public HashMap<Workout,List<Double>> getWorkoutsStartpoints(){
+	public HashMap<Workout,List<Double>> getWorkoutsStartpoints() throws Exception{
 		HashMap<Workout,List<Double>> dic = new HashMap<Workout, List<Double>>();
 		
         for (String ath : this.getAthletes()) {

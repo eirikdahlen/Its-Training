@@ -39,6 +39,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 import tdt4140.gr1802.app.core.AnalyzeWorkout;
 import tdt4140.gr1802.app.core.App;
@@ -53,7 +54,6 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	
 	@FXML
 	private Button btAthleteRequests;
-	
 	
 	@FXML
 	private Label txtLabelUsername;
@@ -99,7 +99,7 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 
 	@FXML
 	private Button homeScreenButton;
-	
+	@FXML
 	private Cursor cursor;
 	
 	private Coach coach;
@@ -114,7 +114,12 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		// Set the Coach that is logged in
-		App.updateCoach();
+		try {
+			App.updateCoach();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.coach = App.getCoach();
 		
 		//Set username label
@@ -202,7 +207,6 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         try {
 			s = url.openStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         System.out.println(url);
@@ -260,11 +264,10 @@ public class CoachSeeWorkoutController implements Initializable, MapComponentIni
         map.addMapShape((MapShape)poly);
 	}
 	
-	@FXML
+    @FXML
     public void homeScreenButtonCursorHand() {
     	homeScreenButton.setCursor(Cursor.HAND);
     }
-    
     @FXML
     public void homeScreenButtonCursorDefault() {
     	homeScreenButton.setCursor(Cursor.DEFAULT);

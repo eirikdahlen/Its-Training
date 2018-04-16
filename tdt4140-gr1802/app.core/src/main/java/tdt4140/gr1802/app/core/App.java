@@ -25,9 +25,9 @@ public class App {
 	
 	
 	// Method for getting hold of the current status of the coaches attributes
-	public static void updateCoach() { coach = db.getCoach(coach.getUsername()); }
+	public static void updateCoach() throws Exception { coach = db.getCoach(coach.getUsername()); }
 	
 	// Method for getting hold of the current status of the athletes attributes
-	public static void updateAthlete() { athlete = db.getAthlete(athlete.getUsername()); }
+	public static void updateAthlete() throws Exception { athlete = db.getAthlete(athlete.getUsername()); }
 	
 }

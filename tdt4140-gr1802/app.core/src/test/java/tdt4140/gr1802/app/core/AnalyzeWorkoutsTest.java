@@ -29,7 +29,7 @@ public class AnalyzeWorkoutsTest {
 
 	}
 	
-	public void testGetTimeInHRZones() {
+	public void testGetTimeInHRZones() throws Exception {
 		//imports athlete and workout from db for testing
 		Athlete athlete1 = db.getAthlete("williamkvaale");
 		List<Workout> workoutList = db.getAllWorkouts(athlete1);

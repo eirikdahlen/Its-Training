@@ -18,25 +18,34 @@ git clone https://gitlab.stud.iie.ntnu.no/tdt4140-2018/02.git
 Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
 ## Mappestruktur
-Vi har to hovedmapper i prosjektet vårt:
+Vi har tre hovedmapper i prosjektet vårt:
 
 app.core, 
-app.ui
+app.ui,
+web.server
 
 
 app.core inneholder all logikk og kode for å knytte elementene sammen.
-Logikk for tilknytning og opplastning til database ligger også i denne mappen.
+Logikk for tilknytning og opplastning til server/database ligger også i denne mappen.
 
 app.ui inneholder kontrolleren og fxml-filene. 
 
 app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
 app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
 
+web.server inneholder en server bygget av spring, samt en servercontroller og en klasse som kommuniserer med MongoDB-databasen.
+
 
 ### Forutsetninger
 - Java SE Runtime Environment 8
 - Java SE Development Kit 8
 - IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
+
+##Instrukser for kjøring
+- For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen Server.java filen i web.server mappen.
+- For å starte programmet kan en kjøre jar-filen vi leverte, eller kjøre filen fxApp under app.ui mappen.
+- Ved innlogging kan en best se funksjonaliteten med trener-brukeren "petter22" som har passord "petter123"
+- Tilgang til utøversiden får en med brukernavn "TeddyWestside" og passord "theodor".
 
 
 ## Kjøre tester 

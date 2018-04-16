@@ -74,7 +74,7 @@ public class HomeScreenAthleteController {
 	ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 	private AnalyzeWorkouts analyzer = new AnalyzeWorkouts();
 	
-	public void initialize() {
+	public void initialize() throws Exception {
 		App.updateAthlete();
 		this.db = App.getDb();
 		this.athlete = App.getAthlete();

@@ -74,7 +74,7 @@ public class SignUpScreenController{
 	
 	//If all conditions are satisfied, user gets redirected to login-screen. 
 	@FXML
-	public void signUpButtonPressed(ActionEvent event) throws IOException {
+	public void signUpButtonPressed(ActionEvent event) throws Exception {
 		String typedName = txtFieldName.getText();
 		String typedUsername = txtFieldUsername.getText();
 		String typedPassword = txtFieldPassword.getText();

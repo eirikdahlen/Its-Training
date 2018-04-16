@@ -7,7 +7,6 @@ import java.util.List;
 public class AnalyzeWorkout {
 	//class for analysis-methods for a single workout
 	
-	//TODO: add this as static-field in workout?
 	//PULSE_ZONES: percentages for calculating HR-zones. We'll use <75% for low, 75-90% for moderate and 90%-max for high.
 	private final double low = 0.75;
 	private final double moderate = 0.90;
@@ -128,7 +127,7 @@ public class AnalyzeWorkout {
 		
 	}
 	
-	public List<Integer> getAnalyzedHRZonesMeanValueForAll(List<Athlete> athletes) {
+	public List<Integer> getAnalyzedHRZonesMeanValueForAll(List<Athlete> athletes) throws Exception {
 		int totLow = 0;
 		int totModerate = 0;
 		int totHigh = 0;
@@ -164,7 +163,7 @@ public class AnalyzeWorkout {
 		return duration;
 	}
 	
-	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) {
+	public int getAnalyzedDurtionMeanValueForAll(List<Athlete> athletes) throws Exception {
 		int duration = 0;
 		int counter = 0;
 		for (Athlete athlete : athletes) {
