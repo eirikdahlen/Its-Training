@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.LoadException;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -57,6 +58,9 @@ public class SeeWorkoutsController{
 	
 	@FXML
 	private Button btAddWorkout;
+	
+	@FXML
+	private Button btAddSleepdata ;
 	
 	@FXML
 	private Button btSeeWorkouts;

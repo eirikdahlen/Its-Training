@@ -1,3 +1,4 @@
+
 package tdt4140.gr1802.app.core;
 
 
@@ -1009,6 +1010,57 @@ public boolean datetimeExists(Athlete athl, String date) throws Exception {
 		
 		return quotes; 
 	}
+	
+	public void addSleepData (Athlete athlete) {
+		//forutsetter at alle athletes har sleepdata, men denne kan være empty. har en try-block for det uansett
+		
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println("no athlete with this username");
+		} else {
+			List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+			try {
+				Bson updatedvalue = new Document("Sleepdata", athlete.getSleepData());
+				Bson updateoperation = new Document("$set", updatedvalue);
+				athleteCollection.updateOne(found, updateoperation);
+				
+				} catch (Exception e) {
+					System.out.println("inside try/catch block addSleepData");
+				} 			
+		
+		}	
+		
+	}
+	
+	public List<List<String>> getSleepData (Athlete athlete) {
+		List<List<String>> sleepdata = new ArrayList <List<String>> () ;
+
+		
+		Document found = (Document) athleteCollection.find(new Document("Username", athlete.getUsername())).first();
+	
+		if (found == null) {
+			System.out.println(athlete.getUsername());
+			System.out.println("inside getSleepData, no athlete with this username");
+			return null;
+		} else {
+			try {
+			sleepdata = (List<List<String>>) found.get("Sleepdata");
+			return sleepdata;
+			} catch (Exception e) {
+				System.out.println("inside try/catch block getSleepData");
+				return null;
+			}
+					
+		}
+		
+	}
+	
+	
 
 	
+
 }
+	
+	
