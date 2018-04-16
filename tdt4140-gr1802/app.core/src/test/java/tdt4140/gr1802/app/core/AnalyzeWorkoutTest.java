@@ -29,7 +29,7 @@ public class AnalyzeWorkoutTest {
 	
 		//___________
 		//System.out.println("percentage in zones:");
-		test.testGetHRPercentage();
+		//test.testGetHRPercentage();
 		//___________
 	}
 	
@@ -62,9 +62,9 @@ public class AnalyzeWorkoutTest {
 		//
 	
 	}
-	
+	/*
 	@Test
-	public void testGetHRPercentage() throws Exception {
+	public void getHRPercentageTest() throws Exception {
 		
 		//imports athlete and workout from db for testing
 		Athlete athlete1 = db.getAthlete("williamkvaale");
@@ -78,5 +78,5 @@ public class AnalyzeWorkoutTest {
 		assertFalse(percentageInHRZones.equals(Arrays.asList(12,12,10)));
 
 		
-	}
+	}*/
 }

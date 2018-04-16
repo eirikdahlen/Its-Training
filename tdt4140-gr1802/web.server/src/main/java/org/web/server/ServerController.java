@@ -32,7 +32,7 @@ public class ServerController {
 	private DatabaseS db = new DatabaseS();
 	
 	// Maps to signup-endpoint
-	@RequestMapping("/getAthlete") //Checkolini not working properly
+	@RequestMapping("/getAthlete") //Check
     public String getAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 		//DatabaseS db = new DatabaseS();
@@ -65,7 +65,7 @@ public class ServerController {
 	
 
 	// Maps to GetCoach EndPoint
-	@RequestMapping("/getCoach")  //checkolini  noe rart her tror jeg
+	@RequestMapping("/getCoach")  //check
     public String getCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 		System.out.println("getCoach pa server");
 		//DatabaseS db = new DatabaseS();
@@ -75,7 +75,7 @@ public class ServerController {
     }
 	
 	// Maps to GetPass-Endpoint
-		@RequestMapping("/getPass")  //checkolini  works
+		@RequestMapping("/getPass")  //check
 	    public String getPass(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			String pass = db.getPassword(name);
@@ -86,7 +86,7 @@ public class ServerController {
 	    }
 		
 		// Maps to GetAllAthletes-Endpoint
-		@RequestMapping("/getAllAthletes")     			//Checkolini   works
+		@RequestMapping("/getAllAthletes")  //Check
 	    public String getAllAthletes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<Athlete> athletes = db.getAllAthletes();
@@ -109,7 +109,7 @@ public class ServerController {
 			return feedback.toString() ;
 	    }
 		
-		@RequestMapping("/getWorkout") //checkolini   works
+		@RequestMapping("/getWorkout") //check
 	    public String getWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    							@RequestParam("date") String date) throws Exception{
 
@@ -156,7 +156,7 @@ public class ServerController {
 		
 		
 
-		@RequestMapping("/getAllWorkouts")  //checkolini     works
+		@RequestMapping("/getAllWorkouts")  //check
 	    public String getAllWorkout(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
@@ -203,7 +203,7 @@ public class ServerController {
 			
 	    }
 
-		@RequestMapping("/addCoachToAthlete") // chekcolini   fails
+		@RequestMapping("/addCoachToAthlete") // check
 	    public void addCoachToAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
@@ -214,7 +214,7 @@ public class ServerController {
 			
 	    }
 		
-		@RequestMapping("/addAthleteToCoach")  //checkolini  fails
+		@RequestMapping("/addAthleteToCoach")  //check
 	    public void addAthleteToCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
@@ -225,7 +225,7 @@ public class ServerController {
 			
 	    }
 		
-		@RequestMapping("/addRequestAthleteToCoach") // checkolini   fails
+		@RequestMapping("/addRequestAthleteToCoach") // check
 	    public void addRequestAthleteToCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name
 	    										) throws Exception{
 
@@ -236,7 +236,7 @@ public class ServerController {
 			
 	    }
 
-		@RequestMapping("/addRequestCoachToAthlete") // checkolini   fails
+		@RequestMapping("/addRequestCoachToAthlete") // check
 		public void addRequestCoachToAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 				@RequestParam("coach") String coach) throws Exception{
 
@@ -291,7 +291,7 @@ public class ServerController {
 			
 	    }
 		
-		@RequestMapping("/getRequestsForCoach") // checkolini ?
+		@RequestMapping("/getRequestsForCoach") // check
 	    public String getRequestsforCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
@@ -299,7 +299,7 @@ public class ServerController {
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/getRequestsForAthlete") //checkolini ?
+		@RequestMapping("/getRequestsForAthlete") //check
 	    public String getRequestsforAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
@@ -311,7 +311,7 @@ public class ServerController {
 		
 		
 		
-		@RequestMapping("/dateTimeExists") // checkolini ?
+		@RequestMapping("/dateTimeExists") // check
 	    public String dateTimeExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    								@RequestParam("date") String date) throws Exception{
 
@@ -324,7 +324,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/usernameExists") // checkolini works
+		@RequestMapping("/usernameExists") // check
 	    public String usernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -335,7 +335,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/athleteUsernameExists") // checkolini works
+		@RequestMapping("/athleteUsernameExists") // check
 	    public String AthleteUsernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -345,7 +345,7 @@ public class ServerController {
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/coachUsernameExists") //checkolini works
+		@RequestMapping("/coachUsernameExists") //check
 	    public String coachUsernameExists(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -355,7 +355,7 @@ public class ServerController {
 			return obj.toString();
 	    }
 		
-		@RequestMapping("/isAthlete") // checkolini works
+		@RequestMapping("/isAthlete") // check
 	    public String isAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			
@@ -367,7 +367,7 @@ public class ServerController {
 		
 		
 		
-		@RequestMapping("/setVisibility") // checkolini ? 
+		@RequestMapping("/setVisibility") // check 
 	    public void setVisibility(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    							@RequestParam("date") String workou,
 	    							@RequestParam("username") String athlet) throws Exception{
@@ -388,7 +388,7 @@ public class ServerController {
 	    }
 		
 		
-		@RequestMapping("/getAllActivities") // checkolini works
+		@RequestMapping("/getAllActivities") // check
 	    public String getAllActivities(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			JSONObject obj = new JSONObject();
@@ -397,7 +397,7 @@ public class ServerController {
 	    }
 		
 		
-		@RequestMapping("/getNrWorkoutsForAthlete") //checkolini works
+		@RequestMapping("/getNrWorkoutsForAthlete") //check
 	    public String getNrWorkoutsForAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    										@RequestParam("activity") String activity) throws Exception{
 
@@ -408,7 +408,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/getAthletesForActivity") //checkolini works
+		@RequestMapping("/getAthletesForActivity") //check
 	    public String getAthletesForActivity(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<Athlete> liste = db.getAthletesForActivity(name);
@@ -431,7 +431,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/getWorkoutsForActivity") //checkolini works
+		@RequestMapping("/getWorkoutsForActivity") //check
 	    public String getWorkoutsForActivity(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<Workout> workouts = db.getWorkoutsForActivity(name);
@@ -474,7 +474,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/getCoachNotes") //checkolini works
+		@RequestMapping("/getCoachNotes") //check
 	    public String getCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			List<String> liste = db.getCoachNotes(name);
@@ -489,7 +489,7 @@ public class ServerController {
 			return feedback.toString();
 	    }
 		
-		@RequestMapping("/addCoachNotes") //checkolini  fails
+		@RequestMapping("/addCoachNotes") //check
 	    public void addCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
@@ -497,14 +497,14 @@ public class ServerController {
 			db.addCoachNotes(str[0], str[1]);
 	    }
 		
-		@RequestMapping("/updateCoachNotes")  //checkolini   ?
+		@RequestMapping("/updateCoachNotes")  //check
 	    public void updateCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    								@RequestParam(name="note") String note) throws Exception{
 			db.updateCoachNotes(name, note);
 	    }
 		
 
-		@RequestMapping("/getQuotes") //checkolini  works
+		@RequestMapping("/getQuotes") //check
 	    public String getQuotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 			List<String> quotes = db.getQuotes();
 			JSONArray arr = new JSONArray();
@@ -519,7 +519,7 @@ public class ServerController {
 	    }
 		
 
-		@RequestMapping("/createCoach") // feil?
+		@RequestMapping("/createCoach")
 	    public void createCoach(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			// name on following form 0username_1password_2name_3Athletes(a,b,c,d,)_4Req(a,b,c,d)
@@ -532,7 +532,7 @@ public class ServerController {
 			db.createCoach(coach);
 	    }
 		
-		@RequestMapping("/createAthlete") // noe feil?
+		@RequestMapping("/createAthlete") 
 	    public void createAthlete(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
 	    		@RequestParam(value="password") String pass,
 	    		@RequestParam(value="fName") String fName,
