@@ -43,7 +43,8 @@
                                     <TableColumn fx:id="maxHRColumn" prefWidth="101.0" text="Max HR" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="hideButton" layoutX="997.0" layoutY="578.0" mnemonicParsing="false" onAction="#hideWorkout" prefHeight="37.0" prefWidth="63.0" text="Hide" />
+                              <Button fx:id="hideButton" layoutX="875.0" layoutY="578.0" mnemonicParsing="false" onAction="#hideWorkout" prefHeight="37.0" prefWidth="63.0" text="Hide" />
+                              <Button fx:id="btSeeWorkout" layoutX="966.0" layoutY="578.0" mnemonicParsing="false" onAction="#clickSeeWorkout" prefHeight="37.0" prefWidth="115.0" text="See Workout" />
                            </children>
                         </Pane>
                         <Line endX="1280.0" startX="-400.0" AnchorPane.bottomAnchor="656.3" AnchorPane.leftAnchor="-391.5" AnchorPane.rightAnchor="518.9000000000001" AnchorPane.topAnchor="-0.5" />

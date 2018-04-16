@@ -80,6 +80,9 @@ public class SeeWorkoutsController{
 	@FXML
 	private Label txtLabelUsername;
 	
+	@FXML
+	private Button btSeeWorkout;
+	
 	private AthleteWorkoutController athleteWorkoutController = new AthleteWorkoutController();
 	private Workout workout;
 
