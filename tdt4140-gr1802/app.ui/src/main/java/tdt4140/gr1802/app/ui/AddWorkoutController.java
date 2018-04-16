@@ -56,6 +56,7 @@ public class AddWorkoutController {
 	@FXML
 	private TextField gpxField;
 	
+	@FXML
 	private Button homeScreenButton; 
 	
 	private Database db;

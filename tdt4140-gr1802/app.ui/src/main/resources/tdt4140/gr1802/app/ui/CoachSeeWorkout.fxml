@@ -127,7 +127,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Label layoutX="26.0" layoutY="17.0" prefHeight="39.0" prefWidth="121.0" text="It's Training" textFill="WHITE">
+      <Label layoutX="26.0" layoutY="17.0" prefHeight="39.0" prefWidth="130.0" text="It's Training" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="23.0" />
          </font>
