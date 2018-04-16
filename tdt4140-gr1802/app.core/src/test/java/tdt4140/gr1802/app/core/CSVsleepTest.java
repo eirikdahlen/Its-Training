@@ -18,9 +18,9 @@ public class CSVsleepTest {
 		CSVsleep reader = new CSVsleep(url);
 		List<List<String>> sleepData = reader.getSleepData();
 		List<String> correct = new ArrayList<>();
-		correct.add("30.11.2016");
-		correct.add("63 ");
-		correct.add("06:09");
+		correct.add("2016-11-30");
+		correct.add("63");
+		correct.add("6:09");
 		List<List<String>> correctList = new ArrayList<>();
 		correctList.add(correct);
 		assertEquals(sleepData, correctList);
