@@ -13,7 +13,7 @@ import org.json.*;
 
 public final class BackendConnector {
         
-        static String baseUrl = "http://10.22.36.132:8000/"; 
+        static String baseUrl = "http://192.168.1.139:8000/"; 
         public static JSONObject makeRequest(HashMap<String, String> dict, String path) throws Exception { 
                 
                 HttpURLConnection con = null;
