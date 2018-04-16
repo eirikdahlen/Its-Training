@@ -20,20 +20,15 @@ Mangler du git? Installasjon finner du [her](https://git-scm.com/book/en/v2/Gett
 ## Mappestruktur
 Vi har tre hovedmapper i prosjektet vårt:
 
-app.core, 
-app.ui,
-web.server
 
-
-app.core inneholder all logikk og kode for å knytte elementene sammen.
+- *app.core* inneholder all logikk og kode for å knytte elementene sammen.
 Logikk for tilknytning og opplastning til server/database ligger også i denne mappen.
 
-app.ui inneholder kontrolleren og fxml-filene. 
+- *app.ui* inneholder kontrolleren og fxml-filene. 
+-- app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
+-- app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
 
-app.ui/src/main/java inneholder alle kontrollere, som knytter core-logikken opp mot grensesnittet. 
-app.ui/src/main/resources innholder alle fxml-filene, som bygger opp grensesnittet vårt. 
-
-web.server inneholder en server bygget av spring, samt en servercontroller og en klasse som kommuniserer med MongoDB-databasen.
+- *web.server* inneholder en server bygget av spring, samt en servercontroller og en klasse som kommuniserer med MongoDB-databasen.
 
 
 ### Forutsetninger
@@ -41,9 +36,9 @@ web.server inneholder en server bygget av spring, samt en servercontroller og en
 - Java SE Development Kit 8
 - IDE([Eclipse](https://www.eclipse.org/downloads/) er brukt under dette prosjektet)
 
-##Instrukser for kjøring
-- For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen Server.java filen i web.server mappen.
-- For å starte programmet kan en kjøre jar-filen vi leverte, eller kjøre filen fxApp under app.ui mappen.
+## Instrukser for kjøring
+- For at programmet skal kunne kjøre må serveren kjøres samtidig. Serveren startes ved å kjøre filen 'Server.java' filen i 'web.server'-mappen.
+- For å starte programmet kan en kjøre jar-filen vi leverte, eller kjøre filen 'FxApp.java' under 'app.ui'-mappen.
 - Ved innlogging kan en best se funksjonaliteten med trener-brukeren "petter22" som har passord "petter123"
 - Tilgang til utøversiden får en med brukernavn "TeddyWestside" og passord "theodor".
 
@@ -60,8 +55,11 @@ gå til **_File_** -> **_Export.._** -> velge **_Runnable JAR_** -> velge **_fxA
 Deretter er det bare å følge instruksjonene. 
 
 ## Bygget med
-- Maven
+- [Maven](https://maven.apache.org/)
 - JavaFX
+- [GMapsFX](https://github.com/rterp/GMapsFX)
+- [JPX - Java GPX library](https://github.com/jenetics/jpx)
+- [Spring](https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html)
 
 ## Anerkjennelser
 Takk til oss, fagstaben for god hjelp på Piazza og våre studentassistenter Andreas og Bartosz for god oppfølging :+1:.  
