@@ -94,7 +94,12 @@ public class CoachSeeSleepdataController implements Initializable {
 		this.txtLabelUsername.setText(this.coach.getUsername());
 		this.txtAthleteLabel.setText(choosenAthlete.getUsername());
 		System.out.println("Heihei");
-		updateSleepdata(choosenAthlete) ;
+		try {
+			updateSleepdata(choosenAthlete) ;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
     }
     /*
@@ -104,7 +109,7 @@ public class CoachSeeSleepdataController implements Initializable {
     }
     */
     
-    private void updateSleepdata(Athlete athlete) {
+    private void updateSleepdata(Athlete athlete) throws Exception{
     		List<List<String>> sleepdata = athlete.getRecentSleepData();
     		XYChart.Series<String, Number> quality = new XYChart.Series<>();
     		XYChart.Series<String, Number> length = new XYChart.Series<>();
