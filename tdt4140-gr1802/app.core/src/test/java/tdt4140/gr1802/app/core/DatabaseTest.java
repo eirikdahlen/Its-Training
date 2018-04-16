@@ -443,7 +443,7 @@ public class DatabaseTest {
 	
 	
 	//_______jUnit_______
-
+/*
 	@Test
 	public void testGetAthlete() throws Exception {
 
@@ -525,8 +525,7 @@ public class DatabaseTest {
 		
 		
 	}
-
-
+*/
 	
 }
 	
