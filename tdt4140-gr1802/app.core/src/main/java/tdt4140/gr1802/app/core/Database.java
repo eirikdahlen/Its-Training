@@ -971,8 +971,8 @@ public boolean datetimeExists(Athlete athl, String date) throws Exception {
 	public void addCoachNotes(String username, String note) throws Exception {
 		
 		HashMap<String, String> myMap = new HashMap<String, String>();
-		myMap.put("name", username);
-		myMap.put("note", note);
+		String str = username + "_" + note;
+		myMap.put("name", str);
 		BackendConnector.makeRequest(myMap, "addCoachNotes");
 
 	}

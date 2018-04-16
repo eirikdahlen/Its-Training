@@ -490,16 +490,16 @@ public class ServerController {
 	    }
 		
 		@RequestMapping("/addCoachNotes") //checkolini  fails
-	    public void addCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
-	    		@RequestParam(name="note") String note) throws Exception{
+	    public void addCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) throws Exception{
 
 			//DatabaseS db = new DatabaseS();
-			db.addCoachNotes(note, note);
+			String[] str = name.split("_");
+			db.addCoachNotes(str[0], str[1]);
 	    }
 		
 		@RequestMapping("/updateCoachNotes")  //checkolini   ?
 	    public void updateCoachNotes(@RequestParam(name="name", required=false, defaultValue="Stranger") String name,
-	    								@RequestParam("note") String note) throws Exception{
+	    								@RequestParam(name="note") String note) throws Exception{
 			db.updateCoachNotes(name, note);
 	    }
 		
